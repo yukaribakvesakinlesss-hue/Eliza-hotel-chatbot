@@ -2,7 +2,7 @@
 export default async function handler(req, res) {
   const VERIFY_TOKEN = 'eliza_hotel_secret_2026';
 
-  // 1. Meta Webhook Doğrulama (GET İsteği)
+  // 1. Meta Webhook Doğrulama
   if (req.method === 'GET') {
     const mode = req.query['hub.mode'];
     const token = req.query['hub.verify_token'];
@@ -15,7 +15,7 @@ export default async function handler(req, res) {
     }
   }
 
-  // 2. WhatsApp'tan Gelen Mesajı Yanıtlama (POST İsteği)
+  // 2. WhatsApp Mesajı Yanıtlama
   if (req.method === 'POST') {
     try {
       const body = req.body;
@@ -24,6 +24,8 @@ export default async function handler(req, res) {
         const messageObj = body.entry[0].changes[0].value.messages[0];
         const fromNumber = messageObj.from;
         const userText = messageObj.text ? messageObj.text.body : '';
+
+        console.log(` WhatsApp'tan Mesaj Geldi: "${userText}" - Gönderen: ${fromNumber}`);
 
         if (userText) {
           const systemPrompt = `
@@ -51,6 +53,7 @@ GENEL BİLGİLER:
 - Transfer: Havalimanları için ücretli transfer mevcuttur.
 `;
 
+          // OpenAI Çağrısı
           const openAiRes = await fetch('https://api.openai.com/v1/chat/completions', {
             method: 'POST',
             headers: {
@@ -69,23 +72,32 @@ GENEL BİLGİLER:
           });
 
           const openAiData = await openAiRes.json();
-          const aiReply = openAiData.choices[0].message.content;
+          const aiReply = openAiData.choices && openAiData.choices[0] ? openAiData.choices[0].message.content : null;
 
-          const phoneNumberId = process.env.WHATSAPP_PHONE_ID;
-          const whatsappToken = process.env.WHATSAPP_TOKEN;
+          console.log(' OpenAI Yanıtı Hazır:', aiReply);
 
-          await fetch(`https://graph.facebook.com/v20.0/${phoneNumberId}/messages`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${whatsappToken}`
-            },
-            body: JSON.stringify({
-              messaging_product: 'whatsapp',
-              to: fromNumber,
-              text: { body: aiReply }
-            })
-          });
+          if (aiReply) {
+            const phoneNumberId = process.env.WHATSAPP_PHONE_ID;
+            const whatsappToken = process.env.WHATSAPP_TOKEN;
+
+            console.log(` Meta WhatsApp Gönderiliyor... (PhoneID: ${phoneNumberId})`);
+
+            const metaRes = await fetch(`https://graph.facebook.com/v21.0/${phoneNumberId}/messages`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${whatsappToken}`
+              },
+              body: JSON.stringify({
+                messaging_product: 'whatsapp',
+                to: fromNumber,
+                text: { body: aiReply }
+              })
+            });
+
+            const metaData = await metaRes.json();
+            console.log(' Meta WhatsApp Yanıt Sonucu:', metaRes.status, JSON.stringify(metaData));
+          }
         }
       }
 
