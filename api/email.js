@@ -1,6 +1,5 @@
 // api/email.js
 export default async function handler(req, res) {
-  // Yalnızca POST isteklerini kabul et
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Yalnızca POST istekleri kabul edilir.' });
   }
@@ -17,7 +16,7 @@ export default async function handler(req, res) {
     // Eliza Hotel Çok Dilli E-Posta Sistem Promptu
     const systemPrompt = `
 Sen, İstanbul Tarihi Yarımada'da yer alan butik "Eliza Hotel"in resmi kurumsal e-posta asistanısın.
-Görevin; misafirlerden veya acentelerden gelen e-postaları okumak, analiz etmek ve yanıtlamaktır.
+Görevin; misafirlerden gelen e-postaları analiz etmek ve kurumsal bir dille yanıtlamaktır.
 
 DESTEKLENEN DİLLER:
 - Türkçe, İngilizce, Arapça, Rusça, Fransızca, İspanyolca, Çince, Almanca.
@@ -26,10 +25,10 @@ DESTEKLENEN DİLLER:
 AKILLI AYRIM KURALI:
 1. STANDART SORULAR:
    - Kahvaltı dahil mi, check-in (14:00) / check-out (12:00) saatleri, Wi-Fi, havalimanı transferi, konum, oda olanakları, rezervasyon linki.
-   - Aksiyon: "STATUS: AUTO_REPLY" etiketi koy ve misafire doğrudan gönderilecek eksiksiz, nazik bir kurumsal yanıt yaz.
+   - Aksiyon: "status": "AUTO_REPLY" yap ve misafire doğrudan gönderilecek eksiksiz, nazik bir kurumsal yanıt yaz.
 2. ÖZEL TALEPLER (İNSAN ONAYI GEREKENLER):
-   - Grup rezervasyonu (birden fazla oda/kalabalık), acente anlaşması, özel fiyat pazarlığı, şirket faturası, şikayet.
-   - Aksiyon: "STATUS: NEEDS_REVIEW" etiketi koy. Resepsiyon personelinin incelemesi için özel bir taslak not oluştur.
+   - Grup rezervasyonu, acente anlaşması, özel fiyat pazarlığı, şirket faturası, şikayet.
+   - Aksiyon: "status": "NEEDS_REVIEW" yap ve personelin incelemesi için özel bir taslak hazırla.
 
 OTEL BİLGİLERİ:
 - Tesis: Eliza Hotel (27 Odalı Butik Otel).
@@ -48,7 +47,7 @@ Yanıtını MUTLAKA şu formatta ver:
 }
 `;
 
-    // OpenAI GPT-4o mini'ye Gönder
+    // 1. OpenAI GPT-4o mini Analizi
     const openAiRes = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -59,7 +58,7 @@ Yanıtını MUTLAKA şu formatta ver:
         model: 'gpt-4o-mini',
         messages: [
           { role: 'system', content: systemPrompt },
-          { role: 'user', content: `Gelen E-posta Konusu: ${subject}\n\nİçerik:\n${emailBody}` }
+          { role: 'user', content: `Gönderen: ${fromEmail}\nKonu: ${subject}\n\nİçerik:\n${emailBody}` }
         ],
         temperature: 0.3,
         response_format: { type: "json_object" }
@@ -71,11 +70,42 @@ Yanıtını MUTLAKA şu formatta ver:
 
     console.log(' E-Posta Yanıtı Hazırlandı:', result);
 
+    // 2. Resend API ile E-Postayı Gönder
+    const emailHtml = `
+      <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; padding: 20px; border: 1px solid #eee; border-radius: 8px;">
+        <h3 style="color: #1a2a3a; border-bottom: 2px solid #c5a059; padding-bottom: 8px; margin-top: 0;">Eliza Hotel Istanbul</h3>
+        <p style="white-space: pre-line;">${result.replyText}</p>
+        <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;" />
+        <p style="font-size: 12px; color: #777;">
+          <strong>Eliza Hotel Istanbul</strong><br/>
+          Mimar Hayrettin Mah. Doğramacı Sk. No:19/5, Fatih / İstanbul<br/>
+          Tel: +90 212 520 81 00 | Web: <a href="https://www.elizahotelistanbul.com" style="color: #c5a059;">elizahotelistanbul.com</a>
+        </p>
+      </div>
+    `;
+
+    const resendRes = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.RESEND_API_KEY}`
+      },
+      body: JSON.stringify({
+        from: 'Eliza Hotel <onboarding@resend.dev>',
+        to: [fromEmail],
+        subject: result.subject,
+        html: emailHtml
+      })
+    });
+
+    const resendData = await resendRes.json();
+    console.log(' Resend Gönderim Sonucu:', resendData);
+
     return res.status(200).json({
       success: true,
       decision: result.status,
       subject: result.subject,
-      reply: result.replyText
+      resendId: resendData.id
     });
   } catch (error) {
     console.error('E-Posta API Hatası:', error);
