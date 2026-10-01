@@ -1,8 +1,7 @@
-// api/whatsapp.js
+// api/whatsapp.js - Üst Düzey Kurumsal ve Akıllı WhatsApp Asistanı
 export default async function handler(req, res) {
   const VERIFY_TOKEN = 'eliza_hotel_secret_2026';
 
-  // 1. Meta Webhook Doğrulama
   if (req.method === 'GET') {
     const mode = req.query['hub.mode'];
     const token = req.query['hub.verify_token'];
@@ -11,11 +10,10 @@ export default async function handler(req, res) {
     if (mode === 'subscribe' && token === VERIFY_TOKEN) {
       return res.status(200).send(challenge);
     } else {
-      return res.status(403).json({ error: 'Doğrulama belirteci geçersiz.' });
+      return res.status(403).json({ error: 'Doğrulama geçersiz.' });
     }
   }
 
-  // 2. WhatsApp Mesajı Yanıtlama & Akıllı Yorum Filtresi
   if (req.method === 'POST') {
     try {
       const body = req.body;
@@ -23,42 +21,56 @@ export default async function handler(req, res) {
       if (body.object && body.entry && body.entry[0].changes && body.entry[0].changes[0].value.messages) {
         const messageObj = body.entry[0].changes[0].value.messages[0];
         const fromNumber = messageObj.from;
-        const userText = messageObj.text ? messageObj.text.body : '';
 
-        console.log(` WhatsApp'tan Mesaj Geldi: "${userText}" - Gönderen: ${fromNumber}`);
+        let userText = '';
+        let buttonId = '';
 
-        if (userText) {
+        if (messageObj.type === 'text') {
+          userText = messageObj.text ? messageObj.text.body : '';
+        } else if (messageObj.type === 'interactive' && messageObj.interactive && messageObj.interactive.type === 'button_reply') {
+          buttonId = messageObj.interactive.button_reply.id;
+          userText = messageObj.interactive.button_reply.title;
+        }
+
+        console.log(` Gelen Etkileşim -> Metin: "${userText}", Buton ID: "${buttonId}", Gönderen: ${fromNumber}`);
+
+        if (userText || buttonId) {
           const systemPrompt = `
-Sen, İstanbul Tarihi Yarımada'da yer alan butik "Eliza Hotel"in resmi çok dilli WhatsApp misafir asistanısın.
-Görevin; misafirlerin rezervasyon, oda özellikleri, kahvaltı ve konum sorularını yanıtlamak, aynı zamanda çıkış yapan misafirlerin memnuniyet değerlendirmelerini akıllıca filtrelemektir.
+Sen, İstanbul Tarihi Yarımada'da yer alan butik "Eliza Hotel"in kurumsal ve profesyonel WhatsApp asistanısın.
 
-DESTEKLENEN DİLLER:
-- Türkçe, İngilizce, Arapça, Rusça, Fransızca, İspanyolca, Çince, Almanca.
+KURUMSAL TON KURALI:
+- Asla gereksiz samimiyete girme veya aşırı ezilip büzülme. Ağırbaşlı, lüks butik otel standardında, net ve kendinden emin konuş.
+- Cümlelerin kısa ve öz olsun (en fazla 2-3 cümle).
 - Misafir hangi dilde yazarsa DOĞRUDAN o dilde yanıt ver.
 
-AKILLI GOOGLE YORUM FİLTRESİ (ÇOK ÖNEMLİ):
-Misafir bir puan verdiğinde (1 ile 5 arası rakam) veya konaklamasını değerlendiren bir geri bildirim yazdığında:
-1. POZİTİF DEĞERLENDİRME (4 VEYA 5 PUAN, "Harikaydı", "Çok memnun kaldık" vb.):
-   - Çok sıcak ve içten bir dille teşekkür et.
-   - 1 dakikasını ayırıp bunu Google Haritalar'da paylaşmasının otele çok büyük destek olacağını belirt.
-   - Doğrudan şu Google Haritalar linkini ver:
-     https://www.google.com/maps/search/?api=1&query=Eliza+Hotel+Mimar+Hayrettin+Fatih+Istanbul
-2. NEGATİF DEĞERLENDİRME (1, 2 VEYA 3 PUAN, Şikayet, Memnuniyetsizlik vb.):
-   - KESİNLİKLE GOOGLE LİNKİNİ VERME!
-   - Yaşanan aksaklık için içtenlikle özür dile.
-   - Durumu otel müdürüne ileteceğini söyle ve neyi eksik yaptığımızı, nasıl telafi edebileceğimizi kısaca sormasını rica et.
+AKILLI ANKET VE YORUM YÖNETİMİ:
+1. POZİTİF DEĞERLENDİRME (rate_5 veya rate_4 tıklandıysa):
+   - Kısa ve net teşekkür et.
+   - Google Haritalar linkini MUTLAKA mesajın EN ALTINDA, tek başına bir satırda ver.
+   - Örnek Format:
+"Değerli geri bildiriminiz için teşekkür ederiz. Sizi Eliza Hotel'de ağırlamaktan memnuniyet duyduk. Deneyiminizi Google'da paylaşarak bize destek olabilirsiniz:
 
-OTEL BİLGİLERİ (STANDART SORULAR İÇİN):
-- Konsept: "Oda Kahvaltı" (Bed & Breakfast) konseptindedir. Kahvaltı fiyata dahildir.
+👉 https://www.google.com/maps/search/?api=1&query=Eliza+Hotel+Mimar+Hayrettin+Fatih+Istanbul"
+
+2. NEGATİF DEĞERLENDİRME (rate_low tıklandıysa):
+   - KESİNLİKLE GOOGLE LİNKİNİ VERME!
+   - Saygın ve net ol.
+   - Format:
+"Geri bildiriminiz bizim için değerlidir. Beklentinizin altında kalan detayları kısaca paylaşabilir misiniz? Notunuz doğrudan otel yönetimimiz tarafından incelenecektir."
+
+3. MİSAFİR ŞİKAYET SEBEBİNİ YAZDIĞINDA:
+   - Kısa ve kurumsal kapat:
+"Görüşleriniz otel yönetimimize iletilmiştir. Zaman ayırdığınız için teşekkür eder, iyi günler dileriz."
+
+GENEL OTEL BİLGİLERİ (STANDART SORULAR İÇİN):
+- Konsept: "Oda Kahvaltı" (Bed & Breakfast) - Kahvaltı fiyata dahildir.
 - Odalar: Double, Twin, Quadruple, Family Room (Klima, TV, Wi-Fi, Minibar, Kettle, Banyo, Saç Kurutma, Balkon, Çalışma Masası, Ütü).
 - Rezervasyon Linki: https://www.elizahotelistanbul.com
 - İletişim: +90 212 520 81 00
 - Konum: Fatih / İstanbul (Beyazıt Tramvayı 250 m, Çemberlitaş Tramvayı 300 m).
 - Giriş: 14:00 | Çıkış: 12:00. Otopark YOKTUR. Evcil Hayvan KABUL EDİLMEMEKTEDİR.
-- Transfer: Sabiha Gökçen ve İstanbul Havalimanı için ücretli transfer mevcuttur.
 `;
 
-          // OpenAI Çağrısı
           const openAiRes = await fetch('https://api.openai.com/v1/chat/completions', {
             method: 'POST',
             headers: {
@@ -69,23 +81,21 @@ OTEL BİLGİLERİ (STANDART SORULAR İÇİN):
               model: 'gpt-4o-mini',
               messages: [
                 { role: 'system', content: systemPrompt },
-                { role: 'user', content: userText }
+                { role: 'user', content: buttonId ? `Kullanıcı şu butona tıkladı: [ID: ${buttonId}, Başlık: ${userText}]` : userText }
               ],
-              temperature: 0.3,
-              max_tokens: 500
+              temperature: 0.2,
+              max_tokens: 250
             })
           });
 
           const openAiData = await openAiRes.json();
           const aiReply = openAiData.choices && openAiData.choices[0] ? openAiData.choices[0].message.content : null;
 
-          console.log(' OpenAI Yanıtı Hazır:', aiReply);
-
           if (aiReply) {
             const phoneNumberId = process.env.WHATSAPP_PHONE_ID;
             const whatsappToken = process.env.WHATSAPP_TOKEN;
 
-            const metaRes = await fetch(`https://graph.facebook.com/v21.0/${phoneNumberId}/messages`, {
+            await fetch(`https://graph.facebook.com/v21.0/${phoneNumberId}/messages`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -97,9 +107,6 @@ OTEL BİLGİLERİ (STANDART SORULAR İÇİN):
                 text: { body: aiReply }
               })
             });
-
-            const metaData = await metaRes.json();
-            console.log(' Meta WhatsApp Yanıt Sonucu:', metaRes.status, JSON.stringify(metaData));
           }
         }
       }
