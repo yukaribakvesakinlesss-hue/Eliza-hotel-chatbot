@@ -1,6 +1,5 @@
-// api/review.js - Eliza Hotel Check-Out & Review Booster Paneli
+// api/review.js - Doğrudan Tıklanabilir Kutucuklu (Button) Anket Paneli
 export default async function handler(req, res) {
-  // 1. Tarayıcıdan Açıldığında Resepsiyon Paneli (GET)
   if (req.method === 'GET') {
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     return res.status(200).send(`
@@ -9,7 +8,7 @@ export default async function handler(req, res) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Eliza Hotel - Check-Out Yorum Paneli</title>
+  <title>Eliza Hotel - Kutucuklu Anket Paneli</title>
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f4f6f8; margin: 0; padding: 30px; display: flex; justify-content: center; }
     .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); width: 100%; max-width: 500px; }
@@ -25,14 +24,14 @@ export default async function handler(req, res) {
 </head>
 <body>
   <div class="card">
-    <h2>Eliza Hotel Check-Out Paneli</h2>
-    <p style="font-size: 13px; color: #666;">Çıkış yapan misafire WhatsApp memnuniyet anketi gönderin:</p>
+    <h2>Eliza Hotel Kutucuklu Anket Paneli</h2>
+    <p style="font-size: 13px; color: #666;">Misafire tıklanabilir kutucuklu anket gönderin:</p>
     
     <label>Misafirin Adı Soyadı:</label>
-    <input type="text" id="guestName" placeholder="Örn: John Smith veya Gülcan Hanım" value="Gülcan Hanım" />
+    <input type="text" id="guestName" value="Gülcan Hanım" />
 
-    <label>Misafirin Telefon Numarası (Nasıl yazarsanız yazın sistem düzeltir):</label>
-    <input type="text" id="phoneNumber" placeholder="Örn: +90 554 024 86 98 veya 0554..." value="905540248698" />
+    <label>Misafirin Telefon Numarası:</label>
+    <input type="text" id="phoneNumber" value="905540248698" />
 
     <label>Mesajın Dili:</label>
     <select id="language">
@@ -45,7 +44,7 @@ export default async function handler(req, res) {
       <option value="de">Almanca (DE)</option>
     </select>
 
-    <button onclick="sendReviewRequest()" id="btn">Check-Out Memnuniyet Mesajı Gönder</button>
+    <button onclick="sendReviewRequest()" id="btn">Kutucuklu Anketi Gönder</button>
 
     <div id="result"></div>
   </div>
@@ -54,7 +53,7 @@ export default async function handler(req, res) {
     async function sendReviewRequest() {
       const btn = document.getElementById('btn');
       const resultDiv = document.getElementById('result');
-      btn.innerText = 'WhatsApp Mesajı Gönderiliyor...';
+      btn.innerText = 'Gönderiliyor...';
       btn.disabled = true;
       resultDiv.style.display = 'none';
 
@@ -70,19 +69,19 @@ export default async function handler(req, res) {
         });
 
         const data = await res.json();
-        btn.innerText = 'Check-Out Memnuniyet Mesajı Gönder';
+        btn.innerText = 'Kutucuklu Anketi Gönder';
         btn.disabled = false;
         resultDiv.style.display = 'block';
 
         if (data.success) {
           resultDiv.className = 'success';
-          resultDiv.innerHTML = '<strong>Mesaj Başarıyla Gönderildi!</strong><br/>WhatsApp uygulamanızı kontrol edin, anket ulaştı.';
+          resultDiv.innerHTML = '<strong>Anket Başarıyla Gönderildi!</strong><br/>WhatsApp uygulamanızı kontrol edin, tıklanabilir kutucuklar ekrana geldi.';
         } else {
           resultDiv.className = 'error';
-          resultDiv.innerText = 'Hata: ' + (data.error || 'Mesaj gönderilemedi.');
+          resultDiv.innerText = 'Hata: ' + (data.error || 'Mesaj iletilemedi.');
         }
       } catch (err) {
-        btn.innerText = 'Check-Out Memnuniyet Mesajı Gönder';
+        btn.innerText = 'Kutucuklu Anketi Gönder';
         btn.disabled = false;
         resultDiv.style.display = 'block';
         resultDiv.className = 'error';
@@ -95,43 +94,75 @@ export default async function handler(req, res) {
     `);
   }
 
-  // 2. Butona Basıldığında Güvenli Mesaj Gönderimi (POST)
   if (req.method === 'POST') {
     try {
       const { guestName, phoneNumber, language } = req.body;
 
-      // Hata Kalkanı 1: Telefon Numarası Temizleme ve Formatlama
       let cleanPhone = String(phoneNumber || '').replace(/\D/g, '');
       if (cleanPhone.startsWith('00')) cleanPhone = cleanPhone.substring(2);
       else if (cleanPhone.startsWith('0') && cleanPhone.length === 11) cleanPhone = '9' + cleanPhone;
       else if (cleanPhone.length === 10 && cleanPhone.startsWith('5')) cleanPhone = '90' + cleanPhone;
 
-      if (!cleanPhone || cleanPhone.length < 8) {
-        return res.status(400).json({ error: 'Geçersiz telefon numarası girdiniz. Lütfen numarayı kontrol edin.' });
-      }
-
-      // Hata Kalkanı 2: Ortam Değişkeni Kontrolleri
       const phoneNumberId = process.env.WHATSAPP_PHONE_ID;
       const whatsappToken = process.env.WHATSAPP_TOKEN;
 
-      if (!phoneNumberId || !whatsappToken) {
-        return res.status(500).json({ error: 'Vercel üzerinde WHATSAPP_PHONE_ID veya WHATSAPP_TOKEN tanımlı değil.' });
-      }
-
-      // Çok Dilli Mesaj Şablonları
-      const messages = {
-        tr: `Sayın ${guestName || 'Misafirimiz'}, Eliza Hotel'de konakladığınız için teşekkür ederiz. Umarız İstanbul seyahatiniz harika geçmiştir!\n\nHizmetimizi 1 ile 5 arasında nasıl değerlendirirsiniz? (Örn: 5 yazarak cevaplayabilirsiniz)`,
-        en: `Dear ${guestName || 'Guest'}, thank you for staying with us at Eliza Hotel. We hope you had a wonderful time in Istanbul!\n\nHow would you rate your stay with us from 1 to 5? (e.g. Reply with 5)`,
-        ar: `عزيزي ${guestName || 'النزيل'}، شكراً لإقامتك في فندق إليزا. نأمل أن تكون رحلتك إلى إسطنبول رائعة!\n\nكيف تقيم إقامتك معنا من 1 إلى 5؟ (مثال: أرسل الرقم 5)`,
-        ru: `Уважаемый(ая) ${guestName || 'Гость'}, благодаrim вас за пребывание в Eliza Hotel. Надеемся, ваша поездка в Стамбул прошла замечательно!\n\nКак бы вы оценили проживание от 1 до 5? (например, ответьте 5)`,
-        fr: `Cher(e) ${guestName || 'Client(e)'}, merci d'avoir séjourné à Eliza Hotel. Nous espérons que votre séjour à Istanbul a été agréable !\n\nComment évalueriez-vous votre séjour de 1 à 5 ? (ex. Répondez avec 5)`,
-        es: `Estimado/a ${guestName || 'Huésped'}, gracias por alojarse en Eliza Hotel. ¡Esperamos que haya disfrutado de su viaje a Estambul!\n\n¿Cómo calificaría su estancia del 1 al 5? (ej. Responda con 5)`,
-        de: `Sehr geehrte(r) ${guestName || 'Gast'}, vielen Dank für Ihren Aufenthalt im Eliza Hotel. Wir hoffen, Sie hatten eine wunderbare Zeit in Istanbul!\n\nWie würden Sie Ihren Aufenthalt von 1 bis 5 bewerten? (z.B. Antworten Sie mit 5)`
+      // 20 karakter sınırına tam uyumlu butonlar
+      const buttonSets = {
+        tr: {
+          body: `Sayın ${guestName || 'Misafirimiz'}, Eliza Hotel'de konakladığınız için teşekkür ederiz. Umarız İstanbul seyahatiniz harika geçmiştir!\n\nKonaklamanızı nasıl değerlendirirsiniz?`,
+          b1: '⭐⭐⭐⭐⭐ 5 - Mükemmel',
+          b2: '⭐⭐⭐⭐ 4 - Çok İyi',
+          b3: '👎 1-3 Düşük Puan'
+        },
+        en: {
+          body: `Dear ${guestName || 'Guest'}, thank you for staying with us at Eliza Hotel. We hope you had a wonderful time in Istanbul!\n\nHow would you rate your stay?`,
+          b1: '⭐⭐⭐⭐⭐ 5 - Excellent',
+          b2: '⭐⭐⭐⭐ 4 - Very Good',
+          b3: '👎 1-3 Low Rating'
+        },
+        ar: {
+          body: `عزيزي ${guestName || 'النزيل'}، شكراً لإقامتك في فندق إليزا. نأمل أن تكون رحلتك إلى إسطنبول رائعة!\n\nكيف تقيم إقامتك معنا؟`,
+          b1: '⭐⭐⭐⭐⭐ 5 ممتاز',
+          b2: '⭐⭐⭐⭐ 4 جيد جداً',
+          b3: '👎 1-3 تقييم منخفض'
+        },
+        ru: {
+          body: `Уважаемый(ая) ${guestName || 'Гость'}, благодарим вас за пребывание в Eliza Hotel. Надеемся, поездка прошла отлично!\n\nКак вы оцениваете проживание?`,
+          b1: '⭐⭐⭐⭐⭐ 5 - Отлично',
+          b2: '⭐⭐⭐⭐ 4 - Хорошо',
+          b3: '👎 1-3 Плохо'
+        }
       };
 
-      const surveyText = messages[language] || messages['en'];
+      const set = buttonSets[language] || buttonSets['en'];
 
-      console.log(` Check-Out Anketi Gönderiliyor -> Numara: ${cleanPhone}, Dil: ${language}`);
+      // WhatsApp Resmi Tıklanabilir Kutucuk (Button) Formatı
+      const payload = {
+        messaging_product: 'whatsapp',
+        recipient_type: 'individual',
+        to: cleanPhone,
+        type: 'interactive',
+        interactive: {
+          type: 'button',
+          header: {
+            type: 'text',
+            text: 'Eliza Hotel Istanbul'
+          },
+          body: {
+            text: set.body
+          },
+          footer: {
+            text: 'Lütfen aşağıdaki kutucuklardan birine dokunun:'
+          },
+          action: {
+            buttons: [
+              { type: 'reply', reply: { id: 'rate_5', title: set.b1 } },
+              { type: 'reply', reply: { id: 'rate_4', title: set.b2 } },
+              { type: 'reply', reply: { id: 'rate_low', title: set.b3 } }
+            ]
+          }
+        }
+      };
 
       const metaRes = await fetch(`https://graph.facebook.com/v21.0/${phoneNumberId}/messages`, {
         method: 'POST',
@@ -139,27 +170,22 @@ export default async function handler(req, res) {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${whatsappToken}`
         },
-        body: JSON.stringify({
-          messaging_product: 'whatsapp',
-          to: cleanPhone,
-          text: { body: surveyText }
-        })
+        body: JSON.stringify(payload)
       });
 
       const metaData = await metaRes.json();
 
       if (!metaRes.ok) {
         console.error('Meta API Hatası:', metaData);
-        const errMsg = metaData.error ? metaData.error.message : 'Meta mesajı kabul etmedi.';
-        return res.status(metaRes.status).json({ error: `WhatsApp Hatası: ${errMsg}` });
+        return res.status(metaRes.status).json({ error: metaData.error ? metaData.error.message : 'Meta mesajı kabul etmedi.' });
       }
 
       return res.status(200).json({ success: true, messageId: metaData.messages ? metaData.messages[0].id : null });
     } catch (error) {
-      console.error('Review API Sunucu Hatası:', error);
-      return res.status(500).json({ error: 'Sunucu tarafında beklenmedik bir hata oluştu.' });
+      console.error('Review API Hatası:', error);
+      return res.status(500).json({ error: 'Sunucu hatası oluştu.' });
     }
   }
 
-  return res.status(405).json({ error: 'Yalnızca GET ve POST istekleri kabul edilir.' });
+  return res.status(405).json({ error: 'Geçersiz istek türü.' });
 }
