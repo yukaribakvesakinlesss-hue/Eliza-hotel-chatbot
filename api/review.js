@@ -1,4 +1,4 @@
-// api/review.js - 8 Dilde Tıklanabilir Kutucuklu Anket Paneli
+// api/review.js - Kilitli Çok Dilli Check-Out Paneli
 export default async function handler(req, res) {
   if (req.method === 'GET') {
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
@@ -8,14 +8,14 @@ export default async function handler(req, res) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Eliza Hotel - Çok Dilli Anket Paneli</title>
+  <title>Eliza Hotel - Anket Paneli</title>
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f4f6f8; margin: 0; padding: 30px; display: flex; justify-content: center; }
     .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); width: 100%; max-width: 500px; }
     h2 { margin-top: 0; color: #1a2a3a; border-bottom: 2px solid #c5a059; padding-bottom: 10px; }
     label { font-size: 13px; font-weight: 600; color: #444; display: block; margin-top: 15px; margin-bottom: 5px; }
     input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
-    button { margin-top: 25px; width: 100%; padding: 12px; background: #c5a059; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+    button { margin-top: 25px; width: 100%; padding: 12px; background: #c5a059; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: 600; cursor: pointer; }
     button:hover { background: #b08d4b; }
     #result { margin-top: 20px; padding: 15px; border-radius: 6px; display: none; font-size: 14px; line-height: 1.5; }
     .success { background: #e8f5e9; border: 1px solid #a5d6a7; color: #2e7d32; }
@@ -25,7 +25,7 @@ export default async function handler(req, res) {
 <body>
   <div class="card">
     <h2>Eliza Hotel Çok Dilli Anket Paneli</h2>
-    <p style="font-size: 13px; color: #666;">Misafire kendi dilinde butonlu WhatsApp anketi gönderin:</p>
+    <p style="font-size: 13px; color: #666;">Misafire kendi dilinde butonlu anket gönderin:</p>
     
     <label>Misafirin Adı Soyadı:</label>
     <input type="text" id="guestName" value="Gülcan Hanım" />
@@ -35,14 +35,14 @@ export default async function handler(req, res) {
 
     <label>Mesajın Dili:</label>
     <select id="language">
-      <option value="tr">Türkçe (TR)</option>
-      <option value="en">İngilizce (EN)</option>
       <option value="ar">Arapça (AR)</option>
       <option value="zh">Çince (ZH)</option>
+      <option value="en">İngilizce (EN)</option>
       <option value="ru">Rusça (RU)</option>
       <option value="fr">Fransızca (FR)</option>
       <option value="es">İspanyolca (ES)</option>
       <option value="de">Almanca (DE)</option>
+      <option value="tr">Türkçe (TR)</option>
     </select>
 
     <button onclick="sendReviewRequest()" id="btn">Kutucuklu Anketi Gönder</button>
@@ -76,7 +76,7 @@ export default async function handler(req, res) {
 
         if (data.success) {
           resultDiv.className = 'success';
-          resultDiv.innerHTML = '<strong>Anket Başarıyla Gönderildi!</strong><br/>WhatsApp uygulamanızı kontrol edin, butonlar ekranda belirdi.';
+          resultDiv.innerHTML = '<strong>Anket Başarıyla Gönderildi!</strong><br/>WhatsApp uygulamanızı kontrol edin.';
         } else {
           resultDiv.className = 'error';
           resultDiv.innerText = 'Hata: ' + (data.error || 'Mesaj iletilemedi.');
@@ -107,20 +107,7 @@ export default async function handler(req, res) {
       const phoneNumberId = process.env.WHATSAPP_PHONE_ID;
       const whatsappToken = process.env.WHATSAPP_TOKEN;
 
-      // 8 Dilde Kusursuz Gövde Metinleri ve Butonlar (20 Karakter Sınırına Tam Uyumlu)
       const buttonSets = {
-        tr: {
-          body: `Sayın ${guestName || 'Misafirimiz'}, Eliza Hotel'de konakladığınız için teşekkür ederiz. Umarız İstanbul seyahatiniz harika geçmiştir!\n\nKonaklamanızı nasıl değerlendirirsiniz?`,
-          b1: '⭐⭐⭐⭐⭐ 5 - Mükemmel',
-          b2: '⭐⭐⭐⭐ 4 - Çok İyi',
-          b3: '👎 1-3 Düşük Puan'
-        },
-        en: {
-          body: `Dear ${guestName || 'Guest'}, thank you for staying with us at Eliza Hotel. We hope you had a wonderful time in Istanbul!\n\nHow would you rate your stay?`,
-          b1: '⭐⭐⭐⭐⭐ 5 - Excellent',
-          b2: '⭐⭐⭐⭐ 4 - Very Good',
-          b3: '👎 1-3 Low Rating'
-        },
         ar: {
           body: `عزيزي ${guestName || 'النزيل'}، شكراً لإقامتك في فندق إليزا. نأمل أن تكون رحلتك إلى إسطنبول رائعة!\n\nكيف تقيم إقامتك معنا؟`,
           b1: '⭐⭐⭐⭐⭐ 5 ممتاز',
@@ -132,6 +119,12 @@ export default async function handler(req, res) {
           b1: '⭐⭐⭐⭐⭐ 5分 极好',
           b2: '⭐⭐⭐⭐ 4分 很好',
           b3: '👎 1-3分 不满意'
+        },
+        en: {
+          body: `Dear ${guestName || 'Guest'}, thank you for staying with us at Eliza Hotel. We hope you had a wonderful time in Istanbul!\n\nHow would you rate your stay?`,
+          b1: '⭐⭐⭐⭐⭐ 5 - Excellent',
+          b2: '⭐⭐⭐⭐ 4 - Very Good',
+          b3: '👎 1-3 Low Rating'
         },
         ru: {
           body: `Уважаемый(ая) ${guestName || 'Гость'}, благодарим вас за пребывание в Eliza Hotel. Надеемся, поездка прошла отлично!\n\nКак вы оцениваете проживание?`,
@@ -156,10 +149,16 @@ export default async function handler(req, res) {
           b1: '⭐⭐⭐⭐⭐ 5 - Sehr gut',
           b2: '⭐⭐⭐⭐ 4 - Gut',
           b3: '👎 1-3 Nicht gut'
+        },
+        tr: {
+          body: `Sayın ${guestName || 'Misafirimiz'}, Eliza Hotel'de konakladığınız için teşekkür ederiz. Umarız İstanbul seyahatiniz harika geçmiştir!\n\nKonaklamanızı nasıl değerlendirirsiniz?`,
+          b1: '⭐⭐⭐⭐⭐ 5 - Mükemmel',
+          b2: '⭐⭐⭐⭐ 4 - Çok İyi',
+          b3: '👎 1-3 Düşük Puan'
         }
       };
 
-      const selectedLang = buttonSets[language] ? language : 'en';
+      const selectedLang = buttonSets[language] ? language : 'ar';
       const set = buttonSets[selectedLang];
 
       const payload = {
@@ -177,7 +176,7 @@ export default async function handler(req, res) {
             text: set.body
           },
           footer: {
-            text: 'Lütfen bir seçeneğe dokunun'
+            text: 'Please select an option'
           },
           action: {
             buttons: [
@@ -212,5 +211,5 @@ export default async function handler(req, res) {
     }
   }
 
-  return res.status(405).json({ error: 'Geçersiz istek türü.' });
+  return res.status(405).json({ error: 'Geçersiz istek.' });
 }
