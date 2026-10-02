@@ -1,4 +1,4 @@
-// api/review.js - Doğrudan Tıklanabilir Kutucuklu (Button) Anket Paneli
+// api/review.js - 8 Dilde Tıklanabilir Kutucuklu Anket Paneli
 export default async function handler(req, res) {
   if (req.method === 'GET') {
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
@@ -8,7 +8,7 @@ export default async function handler(req, res) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Eliza Hotel - Kutucuklu Anket Paneli</title>
+  <title>Eliza Hotel - Çok Dilli Anket Paneli</title>
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f4f6f8; margin: 0; padding: 30px; display: flex; justify-content: center; }
     .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); width: 100%; max-width: 500px; }
@@ -24,8 +24,8 @@ export default async function handler(req, res) {
 </head>
 <body>
   <div class="card">
-    <h2>Eliza Hotel Kutucuklu Anket Paneli</h2>
-    <p style="font-size: 13px; color: #666;">Misafire tıklanabilir kutucuklu anket gönderin:</p>
+    <h2>Eliza Hotel Çok Dilli Anket Paneli</h2>
+    <p style="font-size: 13px; color: #666;">Misafire kendi dilinde butonlu WhatsApp anketi gönderin:</p>
     
     <label>Misafirin Adı Soyadı:</label>
     <input type="text" id="guestName" value="Gülcan Hanım" />
@@ -38,6 +38,7 @@ export default async function handler(req, res) {
       <option value="tr">Türkçe (TR)</option>
       <option value="en">İngilizce (EN)</option>
       <option value="ar">Arapça (AR)</option>
+      <option value="zh">Çince (ZH)</option>
       <option value="ru">Rusça (RU)</option>
       <option value="fr">Fransızca (FR)</option>
       <option value="es">İspanyolca (ES)</option>
@@ -75,7 +76,7 @@ export default async function handler(req, res) {
 
         if (data.success) {
           resultDiv.className = 'success';
-          resultDiv.innerHTML = '<strong>Anket Başarıyla Gönderildi!</strong><br/>WhatsApp uygulamanızı kontrol edin, tıklanabilir kutucuklar ekrana geldi.';
+          resultDiv.innerHTML = '<strong>Anket Başarıyla Gönderildi!</strong><br/>WhatsApp uygulamanızı kontrol edin, butonlar ekranda belirdi.';
         } else {
           resultDiv.className = 'error';
           resultDiv.innerText = 'Hata: ' + (data.error || 'Mesaj iletilemedi.');
@@ -106,7 +107,7 @@ export default async function handler(req, res) {
       const phoneNumberId = process.env.WHATSAPP_PHONE_ID;
       const whatsappToken = process.env.WHATSAPP_TOKEN;
 
-      // 20 karakter sınırına tam uyumlu butonlar
+      // 8 Dilde Kusursuz Gövde Metinleri ve Butonlar (20 Karakter Sınırına Tam Uyumlu)
       const buttonSets = {
         tr: {
           body: `Sayın ${guestName || 'Misafirimiz'}, Eliza Hotel'de konakladığınız için teşekkür ederiz. Umarız İstanbul seyahatiniz harika geçmiştir!\n\nKonaklamanızı nasıl değerlendirirsiniz?`,
@@ -126,17 +127,41 @@ export default async function handler(req, res) {
           b2: '⭐⭐⭐⭐ 4 جيد جداً',
           b3: '👎 1-3 تقييم منخفض'
         },
+        zh: {
+          body: `尊敬的 ${guestName || '贵宾'}，感谢您入住伊丽莎酒店（Eliza Hotel）。希望您的伊斯坦布尔之行愉快！\n\n您如何评价本次入住体验？`,
+          b1: '⭐⭐⭐⭐⭐ 5分 极好',
+          b2: '⭐⭐⭐⭐ 4分 很好',
+          b3: '👎 1-3分 不满意'
+        },
         ru: {
           body: `Уважаемый(ая) ${guestName || 'Гость'}, благодарим вас за пребывание в Eliza Hotel. Надеемся, поездка прошла отлично!\n\nКак вы оцениваете проживание?`,
           b1: '⭐⭐⭐⭐⭐ 5 - Отлично',
           b2: '⭐⭐⭐⭐ 4 - Хорошо',
           b3: '👎 1-3 Плохо'
+        },
+        fr: {
+          body: `Cher(e) ${guestName || 'Client(e)'}, merci d'avoir séjourné à Eliza Hotel. Nous espérons que votre séjour a été agréable !\n\nComment évaluez-vous votre séjour ?`,
+          b1: '⭐⭐⭐⭐⭐ 5 - Excellent',
+          b2: '⭐⭐⭐⭐ 4 - Très bien',
+          b3: '👎 1-3 Insatisfait'
+        },
+        es: {
+          body: `Estimado/a ${guestName || 'Huésped'}, gracias por alojarse en Eliza Hotel. ¡Esperamos que haya disfrutado de su viaje!\n\n¿Cómo calificaría su estancia?`,
+          b1: '⭐⭐⭐⭐⭐ 5 - Excelente',
+          b2: '⭐⭐⭐⭐ 4 - Muy bueno',
+          b3: '👎 1-3 Insatisfecho'
+        },
+        de: {
+          body: `Sehr geehrte(r) ${guestName || 'Gast'}, vielen Dank für Ihren Aufenthalt im Eliza Hotel. Wir hoffen, Sie hatten eine gute Zeit!\n\nWie bewerten Sie Ihren Aufenthalt?`,
+          b1: '⭐⭐⭐⭐⭐ 5 - Sehr gut',
+          b2: '⭐⭐⭐⭐ 4 - Gut',
+          b3: '👎 1-3 Nicht gut'
         }
       };
 
-      const set = buttonSets[language] || buttonSets['en'];
+      const selectedLang = buttonSets[language] ? language : 'en';
+      const set = buttonSets[selectedLang];
 
-      // WhatsApp Resmi Tıklanabilir Kutucuk (Button) Formatı
       const payload = {
         messaging_product: 'whatsapp',
         recipient_type: 'individual',
@@ -152,13 +177,13 @@ export default async function handler(req, res) {
             text: set.body
           },
           footer: {
-            text: 'Lütfen aşağıdaki kutucuklardan birine dokunun:'
+            text: 'Lütfen bir seçeneğe dokunun'
           },
           action: {
             buttons: [
-              { type: 'reply', reply: { id: 'rate_5', title: set.b1 } },
-              { type: 'reply', reply: { id: 'rate_4', title: set.b2 } },
-              { type: 'reply', reply: { id: 'rate_low', title: set.b3 } }
+              { type: 'reply', reply: { id: `rate_5_${selectedLang}`, title: set.b1 } },
+              { type: 'reply', reply: { id: `rate_4_${selectedLang}`, title: set.b2 } },
+              { type: 'reply', reply: { id: `rate_low_${selectedLang}`, title: set.b3 } }
             ]
           }
         }
