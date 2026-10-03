@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eliza Hotel Istanbul | Tarihi Yarımada'da Lüks Butik Otel</title>
+  <meta name="description" content="Eliza Hotel Istanbul, Tarihi Yarımada'nın kalbinde Çemberlitaş ve Beyazıt tramvayına yürüme mesafesinde 27 odalı lüks butik konaklama deneyimi sunar." />
+  
+  <!-- Google Fonts & FontAwesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: {
+              DEFAULT: '#0b1f3a',
+              dark: '#071527',
+              light: '#13325c',
+              royal: '#0f2b5c'
+            },
+            gold: {
+              DEFAULT: '#c5a059',
+              light: '#d4af37',
+              dark: '#a8843d',
+              pale: '#f5ecd7'
+            }
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-sans bg-slate-50 text-slate-800 antialiased selection:bg-gold selection:text-white">
+
+  <!-- ==================== ÜST BİLGİ ÇUBUĞU (TOP BAR) ==================== -->
+  <div class="bg-navy-dark text-slate-300 text-xs py-2 px-4 border-b border-navy-light/40">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+      <div class="flex items-center gap-6">
+        <span><i class="fa-solid fa-location-dot text-gold mr-1.5"></i> Fatih / Tarihi Yarımada, İstanbul</span>
+        <a href="tel:+902125208100" class="hover:text-gold transition"><i class="fa-solid fa-phone text-gold mr-1.5"></i> +90 212 520 81 00</a>
+      </div>
+      <div class="flex items-center gap-4">
+        <span class="text-gold font-medium"><i class="fa-solid fa-shield-halved mr-1"></i> En İyi Fiyat Garantisi</span>
+        <div class="flex items-center gap-2 border-l border-slate-700 pl-4">
+          <span class="cursor-pointer text-white font-semibold">TR</span>
+          <span class="text-slate-500">|</span>
+          <a href="#rooms" class="cursor-pointer hover:text-gold">EN</a>
+          <span class="text-slate-500">|</span>
+          <a href="#rooms" class="cursor-pointer hover:text-gold">العربية</a>
+          <span class="text-slate-500">|</span>
+          <a href="#rooms" class="cursor-pointer hover:text-gold">RU</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== ANA MENÜ (NAVBAR) ==================== -->
+  <nav class="sticky top-0 z-40 bg-navy/95 backdrop-blur-md border-b border-gold/20 shadow-xl transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-12 h-12 rounded-full border-2 border-gold flex items-center justify-center bg-navy-dark shadow-md group-hover:border-gold-light transition">
+          <span class="font-serif text-2xl font-bold text-gold">E</span>
+        </div>
+        <div>
+          <span class="font-serif text-2xl font-bold tracking-wider text-white block uppercase">Eliza Hotel</span>
+          <span class="text-[10px] tracking-[0.25em] text-gold uppercase block -mt-1 font-semibold">Istanbul • Boutique</span>
+        </div>
+      </a>
+
+      <!-- Masaüstü Linkler -->
+      <div class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-200">
+        <a href="#about" class="hover:text-gold transition">Hakkımızda</a>
+        <a href="#rooms" class="hover:text-gold transition">Odalarımız</a>
+        <a href="#location" class="hover:text-gold transition flex items-center gap-1.5"><i class="fa-solid fa-map-pin text-gold"></i> Konum & Harita</a>
+        <a href="#amenities" class="hover:text-gold transition">Ayrıcalıklar</a>
+        <a href="#upsell" class="hover:text-gold transition text-gold-light"><i class="fa-solid fa-star text-gold mr-1"></i> VIP Hizmetler</a>
+        <a href="#contact" class="hover:text-gold transition">İletişim</a>
+      </div>
+
+      <!-- Sağ Buton -->
+      <div class="flex items-center gap-4">
+        <a href="https://wa.me/902125208100" target="_blank" class="hidden sm:flex items-center gap-2 text-xs bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 px-3 py-2 rounded-full hover:bg-emerald-600 hover:text-white transition">
+          <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp Destek
+        </a>
+        <a href="#booking-bar" class="bg-gradient-to-r from-gold-dark to-gold text-white font-semibold text-sm px-6 py-2.5 rounded-full shadow-lg shadow-gold/20 hover:scale-105 active:scale-95 transition-all">
+          Rezervasyon Yap
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ==================== GİRİŞ ALANI (HERO SECTION) ==================== -->
+  <section class="relative min-h-[90vh] flex items-center justify-center bg-navy overflow-hidden">
+    <!-- Arka Plan Görseli ve Karartma Katmanı -->
+    <div class="absolute inset-0 z-0">
+      <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=2000&q=80" alt="Eliza Hotel Istanbul" class="w-full h-full object-cover opacity-35 scale-105 animate-pulse duration-[10000ms]" />
+      <div class="absolute inset-0 bg-gradient-to-t from-navy via-navy/80 to-transparent"></div>
+    </div>
+
+    <div class="relative z-10 max-w-5xl mx-auto px-4 text-center pt-16 pb-32">
+      <!-- Rozet -->
+      <div class="inline-flex items-center gap-2 bg-gold/15 border border-gold/40 text-gold-pale px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest mb-6 backdrop-blur-sm">
+        <i class="fa-solid fa-crown text-gold"></i> Tarihi Yarımada'da 27 Odalı Butik Deneyim
+      </div>
+
+      <h1 class="font-serif text-4xl sm:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6 drop-shadow-md">
+        Zamanın Durduğu Yerde, <br /><span class="italic text-transparent bg-clip-text bg-gradient-to-r from-gold-light via-gold to-gold-pale">Tarihin Tam Kalbinde</span>
+      </h1>
+
+      <p class="text-slate-300 text-base sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed font-light">
+        Kapalıçarşı ve Çemberlitaş’a yürüme mesafesinde, zengin açık büfe kahvaltı ve lüks butik konforuyla unutulmaz bir İstanbul konaklaması.
+      </p>
+
+      <div class="flex flex-wrap justify-center gap-4 text-sm text-slate-300 mb-12">
+        <span class="flex items-center gap-2"><i class="fa-solid fa-mug-saucer text-gold"></i> Oda Kahvaltı Dahil</span>
+        <span class="text-slate-600">•</span>
+        <span class="flex items-center gap-2"><i class="fa-solid fa-wifi text-gold"></i> Hızlı Fiber Wi-Fi</span>
+        <span class="text-slate-600">•</span>
+        <span class="flex items-center gap-2"><i class="fa-solid fa-train-subway text-gold"></i> Tramvaya 3 Dk</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== HIZLI REZERVASYON BARI (STICKY/HERO) ==================== -->
+  <div id="booking-bar" class="relative z-20 max-w-6xl mx-auto px-4 -mt-20 mb-24">
+    <div class="bg-white rounded-2xl shadow-2xl p-6 sm:p-8 border border-gold/30">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Giriş Tarihi (Check-in)</label>
+          <div class="relative">
+            <input type="date" id="checkin-date" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2.5 px-3 text-sm focus:outline-none focus:border-gold font-medium" />
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Çıkış Tarihi (Check-out)</label>
+          <div class="relative">
+            <input type="date" id="checkout-date" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2.5 px-3 text-sm focus:outline-none focus:border-gold font-medium" />
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Oda & Misafir</label>
+          <select id="guest-count" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2.5 px-3 text-sm focus:outline-none focus:border-gold font-medium">
+            <option>1 Oda, 2 Yetişkin</option>
+            <option>1 Oda, 1 Yetişkin</option>
+            <option>1 Oda, 3 Yetişkin</option>
+            <option>1 Oda, 4 Yetişkin (Aile)</option>
+            <option>2 Oda, 4 Yetişkin</option>
+          </select>
+        </div>
+        <div>
+          <a href="https://www.elizahotelistanbul.com" target="_blank" class="w-full flex items-center justify-center gap-2 bg-navy hover:bg-navy-royal text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all group">
+            <span class="text-gold">Müsaitlik Sorgula</span>
+            <i class="fa-solid fa-arrow-right text-xs group-hover:translate-x-1 transition"></i>
+          </a>
+        </div>
+      </div>
+      <div class="flex flex-wrap items-center justify-between gap-2 mt-4 pt-4 border-t border-slate-100 text-xs text-slate-500">
+        <span class="flex items-center gap-1.5"><i class="fa-solid fa-check text-emerald-600"></i> Komisyonsuz Doğrudan Rezervasyon</span>
+        <span class="flex items-center gap-1.5"><i class="fa-solid fa-check text-emerald-600"></i> Ücretsiz İptal Seçenekleri</span>
+        <span class="flex items-center gap-1.5"><i class="fa-solid fa-tag text-gold"></i> Kupon Kodu Geçerlidir (VIPELIZA)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== HAKKIMIZDA & BUTİK KONSEPT ==================== -->
+  <section id="about" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div>
+        <div class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gold mb-3">
+          <span class="w-8 h-[2px] bg-gold"></span> Butik Ayrıcalık
+        </div>
+        <h2 class="font-serif text-3xl sm:text-5xl font-bold text-navy leading-tight mb-6">
+          Tarihi Yarımada'da Kendinizi Evinizde Hissedin
+        </h2>
+        <p class="text-slate-600 leading-relaxed mb-6 font-light">
+          İstanbul’un bin yıllık tarihi dokusunun merkezinde, Fatih Mimar Hayrettin Mahallesi’nde yer alan <strong>Eliza Hotel</strong>; 27 özenle dekore edilmiş odasıyla butik bir huzur vahası sunar.
+        </p>
+        <p class="text-slate-600 leading-relaxed mb-8 font-light">
+          Çemberlitaş Sütunu’na 300 metre, Beyazıt Tramvayına sadece 250 metre mesafedeki otelimizden Kapalıçarşı, Sultanahmet Meydanı ve Ayasofya’ya yürüyerek dakikalar içinde ulaşabilirsiniz.
+        </p>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-slate-200 text-center">
+          <div class="p-3 bg-white rounded-lg shadow-sm border border-slate-100">
+            <span class="font-serif text-2xl font-bold text-navy block">27</span>
+            <span class="text-xs text-slate-500 font-medium">Lüks Oda</span>
+          </div>
+          <div class="p-3 bg-white rounded-lg shadow-sm border border-slate-100">
+            <span class="font-serif text-2xl font-bold text-gold block">3 Dk</span>
+            <span class="text-xs text-slate-500 font-medium">Tramvaya Yürüme</span>
+          </div>
+          <div class="p-3 bg-white rounded-lg shadow-sm border border-slate-100">
+            <span class="font-serif text-2xl font-bold text-navy block">7/24</span>
+            <span class="text-xs text-slate-500 font-medium">Resepsiyon</span>
+          </div>
+          <div class="p-3 bg-white rounded-lg shadow-sm border border-slate-100">
+            <span class="font-serif text-2xl font-bold text-emerald-600 block">4.8</span>
+            <span class="text-xs text-slate-500 font-medium">Misafir Memnuniyeti</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Görsel Kolajı -->
+      <div class="relative">
+        <div class="rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
+          <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1000&q=80" alt="Eliza Hotel Oda Konforu" class="w-full h-[450px] object-cover hover:scale-105 transition duration-700" />
+        </div>
+        <div class="absolute -bottom-6 -left-6 bg-navy text-white p-6 rounded-xl shadow-xl max-w-xs border-2 border-gold hidden sm:block">
+          <div class="flex items-center gap-3 mb-2">
+            <i class="fa-solid fa-utensils text-2xl text-gold"></i>
+            <span class="font-serif font-bold text-lg">Zengin Kahvaltı</span>
+          </div>
+          <p class="text-xs text-slate-300 leading-relaxed font-light">Tüm oda tiplerimizde güne taze ve leziz açık büfe kahvaltımız ile başlayın.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ODALARIMIZ (ROOMS CARDS) ==================== -->
+  <section id="rooms" class="py-20 bg-slate-100 border-y border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <div class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gold mb-3">
+          <span class="w-8 h-[2px] bg-gold"></span> Konforlu Konaklama
+        </div>
+        <h2 class="font-serif text-3xl sm:text-5xl font-bold text-navy mb-4">
+          Zarafetle Tasarlanmış Odalarımız
+        </h2>
+        <p class="text-slate-600 text-sm sm:text-base font-light">
+          İhtiyacınıza uygun, klima, yüksek hızlı Wi-Fi, düz ekran TV, balkon ve çay/kahve olanaklarıyla donatılmış 4 farklı oda tipi.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        
+        <!-- ODA 1: Standard Double -->
+        <div class="bg-white rounded-2xl overflow-hidden shadow-lg border border-slate-200 flex flex-col group hover:-translate-y-1.5 transition-all duration-300">
+          <div class="relative h-56 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=800&q=80" alt="Standard Double Room" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
+            <div class="absolute top-3 left-3 bg-navy/90 text-gold text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider backdrop-blur-sm border border-gold/30">
+              Oda Kahvaltı Dahil
+            </div>
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="font-serif text-xl font-bold text-navy mb-2">Standard Double Room</h3>
+              <p class="text-xs text-slate-500 mb-4">Geniş çift kişilik yatak, çiftler ve iş seyahatleri için ideal huzurlu atmosfer.</p>
+              
+              <!-- Olanak İkonları -->
+              <div class="grid grid-cols-2 gap-2 text-xs text-slate-600 mb-6 bg-slate-50 p-3 rounded-lg border border-slate-100">
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-wind text-gold"></i> Klima / Isıtma</span>
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-mug-hot text-gold"></i> Kahve Makinesi</span>
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-tv text-gold"></i> Uydu TV</span>
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-shower text-gold"></i> Özel Banyo</span>
+              </div>
+            </div>
+            <div>
+              <div class="flex items-baseline justify-between mb-4 border-t pt-3">
+                <span class="text-xs text-slate-400">Gecelik Başlayan</span>
+                <span class="font-serif text-2xl font-bold text-navy">€86 <span class="text-xs font-sans text-slate-500">/gece</span></span>
+              </div>
+              <a href="https://www.elizahotelistanbul.com" target="_blank" class="w-full block text-center bg-navy hover:bg-gold text-white font-semibold py-2.5 rounded-lg transition duration-200 text-sm">
+                Rezervasyon Yap
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ODA 2: Standard Twin -->
+        <div class="bg-white rounded-2xl overflow-hidden shadow-lg border border-slate-200 flex flex-col group hover:-translate-y-1.5 transition-all duration-300">
+          <div class="relative h-56 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=800&q=80" alt="Standard Twin Room" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
+            <div class="absolute top-3 left-3 bg-navy/90 text-gold text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider backdrop-blur-sm border border-gold/30">
+              Oda Kahvaltı Dahil
+            </div>
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="font-serif text-xl font-bold text-navy mb-2">Standard Twin Room</h3>
+              <p class="text-xs text-slate-500 mb-4">İki ayrı tek kişilik yatak, arkadaşlar ve iş arkadaşları için konforlu seçim.</p>
+              
+              <div class="grid grid-cols-2 gap-2 text-xs text-slate-600 mb-6 bg-slate-50 p-3 rounded-lg border border-slate-100">
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-bed text-gold"></i> 2 Ayrı Yatak</span>
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-mug-hot text-gold"></i> Su Isıtıcısı</span>
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-snowflake text-gold"></i> Minibar</span>
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-shirt text-gold"></i> Ütü Olanakları</span>
+              </div>
+            </div>
+            <div>
+              <div class="flex items-baseline justify-between mb-4 border-t pt-3">
+                <span class="text-xs text-slate-400">Gecelik Başlayan</span>
+                <span class="font-serif text-2xl font-bold text-navy">€86 <span class="text-xs font-sans text-slate-500">/gece</span></span>
+              </div>
+              <a href="https://www.elizahotelistanbul.com" target="_blank" class="w-full block text-center bg-navy hover:bg-gold text-white font-semibold py-2.5 rounded-lg transition duration-200 text-sm">
+                Rezervasyon Yap
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ODA 3: Quadruple Room -->
+        <div class="bg-white rounded-2xl overflow-hidden shadow-lg border border-slate-200 flex flex-col group hover:-translate-y-1.5 transition-all duration-300">
+          <div class="relative h-56 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80" alt="Quadruple Room" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
+            <div class="absolute top-3 left-3 bg-navy/90 text-gold text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider backdrop-blur-sm border border-gold/30">
+              Oda Kahvaltı Dahil
+            </div>
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="font-serif text-xl font-bold text-navy mb-2">Quadruple Room</h3>
+              <p class="text-xs text-slate-500 mb-4">4 kişilik geniş konaklama kapasitesi. Arkadaş grupları için ferah ve ekonomik.</p>
+              
+              <div class="grid grid-cols-2 gap-2 text-xs text-slate-600 mb-6 bg-slate-50 p-3 rounded-lg border border-slate-100">
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-users text-gold"></i> 4 Kişilik</span>
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-door-open text-gold"></i> Balkon</span>
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-wifi text-gold"></i> Fiber Wi-Fi</span>
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-shield-halved text-gold"></i> Özel Kasa</span>
+              </div>
+            </div>
+            <div>
+              <div class="flex items-baseline justify-between mb-4 border-t pt-3">
+                <span class="text-xs text-slate-400">Gecelik Başlayan</span>
+                <span class="font-serif text-2xl font-bold text-navy">€120 <span class="text-xs font-sans text-slate-500">/gece</span></span>
+              </div>
+              <a href="https://www.elizahotelistanbul.com" target="_blank" class="w-full block text-center bg-navy hover:bg-gold text-white font-semibold py-2.5 rounded-lg transition duration-200 text-sm">
+                Rezervasyon Yap
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ODA 4: Family Room -->
+        <div class="bg-white rounded-2xl overflow-hidden shadow-lg border border-slate-200 flex flex-col group hover:-translate-y-1.5 transition-all duration-300">
+          <div class="relative h-56 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=800&q=80" alt="Family Room" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
+            <div class="absolute top-3 left-3 bg-navy/90 text-gold text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider backdrop-blur-sm border border-gold/30">
+              Oda Kahvaltı Dahil
+            </div>
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="font-serif text-xl font-bold text-navy mb-2">Family Room (Aile Odası)</h3>
+              <p class="text-xs text-slate-500 mb-4">Çocuklu aileler için tasarlanmış geniş yaşam alanı, özel banyo ve dinlenme konforu.</p>
+              
+              <div class="grid grid-cols-2 gap-2 text-xs text-slate-600 mb-6 bg-slate-50 p-3 rounded-lg border border-slate-100">
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-child text-gold"></i> Aileye Uygun</span>
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-wind text-gold"></i> Çift Klima</span>
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-bath text-gold"></i> Geniş Banyo</span>
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-laptop text-gold"></i> Çalışma Alanı</span>
+              </div>
+            </div>
+            <div>
+              <div class="flex items-baseline justify-between mb-4 border-t pt-3">
+                <span class="text-xs text-slate-400">Gecelik Başlayan</span>
+                <span class="font-serif text-2xl font-bold text-navy">€145 <span class="text-xs font-sans text-slate-500">/gece</span></span>
+              </div>
+              <a href="https://www.elizahotelistanbul.com" target="_blank" class="w-full block text-center bg-navy hover:bg-gold text-white font-semibold py-2.5 rounded-lg transition duration-200 text-sm">
+                Rezervasyon Yap
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ÖZEL VE CAPCANLI HARİTA ALANI (LOCATION SHOWCASE) ==================== -->
+  <section id="location" class="py-20 bg-navy text-white relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <div class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gold mb-3">
+          <i class="fa-solid fa-compass"></i> Kusursuz Konum
+        </div>
+        <h2 class="font-serif text-3xl sm:text-5xl font-bold text-white mb-4">
+          İstanbul’un Tarihi Kalbindesiniz
+        </h2>
+        <p class="text-slate-300 text-sm sm:text-base font-light">
+          Mimar Hayrettin Mahallesi, Doğramacı Sokak’ta yer alan Eliza Hotel; Sultanahmet, Ayasofya ve Kapalıçarşı’nın tam kesişim noktasındadır.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        
+        <!-- Sol Taraf: Yürüme Mesafeleri Kartları -->
+        <div class="lg:col-span-5 space-y-3">
+          <div class="p-4 bg-navy-dark/90 rounded-xl border border-gold/30 flex items-center justify-between hover:border-gold transition">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-gold/10 text-gold flex items-center justify-center font-bold">
+                <i class="fa-solid fa-train-subway"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold text-sm text-white">Beyazıt Tramvay Durağı</h4>
+                <p class="text-xs text-slate-400">T1 Kabataş - Bağcılar Hattı</p>
+              </div>
+            </div>
+            <span class="text-xs font-bold text-gold bg-gold/15 px-3 py-1 rounded-full">3 Dk (250 m)</span>
+          </div>
+
+          <div class="p-4 bg-navy-dark/90 rounded-xl border border-gold/30 flex items-center justify-between hover:border-gold transition">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-gold/10 text-gold flex items-center justify-center font-bold">
+                <i class="fa-solid fa-monument"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold text-sm text-white">Çemberlitaş Sütunu</h4>
+                <p class="text-xs text-slate-400">Tarihi Bizans Dikilitaşı</p>
+              </div>
+            </div>
+            <span class="text-xs font-bold text-gold bg-gold/15 px-3 py-1 rounded-full">4 Dk (300 m)</span>
+          </div>
+
+          <div class="p-4 bg-navy-dark/90 rounded-xl border border-gold/30 flex items-center justify-between hover:border-gold transition">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-gold/10 text-gold flex items-center justify-center font-bold">
+                <i class="fa-solid fa-bag-shopping"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold text-sm text-white">Tarihi Kapalıçarşı (Grand Bazaar)</h4>
+                <p class="text-xs text-slate-400">Dünyanın en eski kapalı çarşısı</p>
+              </div>
+            </div>
+            <span class="text-xs font-bold text-gold bg-gold/15 px-3 py-1 rounded-full">6 Dk (500 m)</span>
+          </div>
+
+          <div class="p-4 bg-navy-dark/90 rounded-xl border border-gold/30 flex items-center justify-between hover:border-gold transition">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-gold/10 text-gold flex items-center justify-center font-bold">
+                <i class="fa-solid fa-mosque"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold text-sm text-white">Sultanahmet Camii & Hipodrom</h4>
+                <p class="text-xs text-slate-400">Mavi Camii ve At Meydanı</p>
+              </div>
+            </div>
+            <span class="text-xs font-bold text-gold bg-gold/15 px-3 py-1 rounded-full">10 Dk (850 m)</span>
+          </div>
+
+          <div class="p-4 bg-navy-dark/90 rounded-xl border border-gold/30 flex items-center justify-between hover:border-gold transition">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-gold/10 text-gold flex items-center justify-center font-bold">
+                <i class="fa-solid fa-archway"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold text-sm text-white">Ayasofya & Yerebatan Sarnıcı</h4>
+                <p class="text-xs text-slate-400">Dünya Mirası Eserler</p>
+              </div>
+            </div>
+            <span class="text-xs font-bold text-gold bg-gold/15 px-3 py-1 rounded-full">12 Dk (1.1 km)</span>
+          </div>
+        </div>
+
+        <!-- Sağ Taraf: Canlı Google Harita Penceresi -->
+        <div class="lg:col-span-7">
+          <div class="rounded-2xl overflow-hidden shadow-2xl border-2 border-gold/40 h-[480px] relative">
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3010.536780775585!2d28.966453976587424!3d41.00806497135017!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab995837db5ab%3A0x6b0931d8e0340b6!2sEliza%20Hotel!5e0!3m2!1str!2str!4v1727878000000!5m2!1str!2str" 
+              class="w-full h-full border-0 filter contrast-105" 
+              allowfullscreen="" 
+              loading="lazy" 
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+            
+            <!-- Harita Üstü Hızlı Yol Tarifi Butonu -->
+            <div class="absolute bottom-4 right-4 bg-navy-dark/95 backdrop-blur-md px-4 py-2.5 rounded-xl border border-gold shadow-lg flex items-center gap-3">
+              <span class="text-xs text-white">Adres: Mimar Hayrettin, Doğramacı Sk. No:19/5, Fatih</span>
+              <a href="https://www.google.com/maps/search/?api=1&query=Eliza+Hotel+Mimar+Hayrettin+Fatih+Istanbul" target="_blank" class="bg-gold hover:bg-gold-light text-navy text-xs font-bold px-3 py-1.5 rounded-lg transition">
+                Yol Tarifi Al <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== UPSELL (EK GELİR) BÖLÜMÜ ==================== -->
+  <section id="upsell" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <div class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gold mb-3">
+        <span class="w-8 h-[2px] bg-gold"></span> Konaklamanızı Taçlandırın
+      </div>
+      <h2 class="font-serif text-3xl sm:text-5xl font-bold text-navy mb-4">
+        Otelimize Özel VIP Hizmetler
+      </h2>
+      <p class="text-slate-600 text-sm sm:text-base font-light">
+        Konaklamanızı daha konforlu kılacak özel ayrıcalıkları rezervasyonunuza tek tıkla ekleyebilirsiniz.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      
+      <!-- UPSELL 1: VIP Transfer -->
+      <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-md hover:border-gold transition flex flex-col justify-between">
+        <div>
+          <div class="w-12 h-12 rounded-xl bg-gold/10 text-gold flex items-center justify-center text-xl mb-4">
+            <i class="fa-solid fa-van-shuttle"></i>
+          </div>
+          <h4 class="font-serif text-lg font-bold text-navy mb-2">VIP Havalimanı Karşılama</h4>
+          <p class="text-xs text-slate-500 mb-4 leading-relaxed">
+            İstanbul (IST) veya Sabiha Gökçen (SAW) havalimanlarından Mercedes Vito ile kapıya transfer.
+          </p>
+        </div>
+        <div class="border-t pt-4 flex items-center justify-between">
+          <span class="font-serif text-xl font-bold text-navy">+45 €</span>
+          <a href="https://wa.me/902125208100?text=Merhaba,%20VIP%20transfer%20hakkinda%20bilgi%20almak%20istiyorum." target="_blank" class="text-xs font-bold text-gold hover:text-navy transition flex items-center gap-1">
+            Rezerve Et <i class="fa-solid fa-chevron-right text-[10px]"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- UPSELL 2: Late Check-Out -->
+      <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-md hover:border-gold transition flex flex-col justify-between">
+        <div>
+          <div class="w-12 h-12 rounded-xl bg-gold/10 text-gold flex items-center justify-center text-xl mb-4">
+            <i class="fa-solid fa-clock"></i>
+          </div>
+          <h4 class="font-serif text-lg font-bold text-navy mb-2">Geç Çıkış (Late Check-Out)</h4>
+          <p class="text-xs text-slate-500 mb-4 leading-relaxed">
+            Uçuşunuz akşamsa odanızı saat 15:30'a kadar kullanın, bavul taşıma derdinden kurtulun.
+          </p>
+        </div>
+        <div class="border-t pt-4 flex items-center justify-between">
+          <span class="font-serif text-xl font-bold text-navy">+25 €</span>
+          <a href="https://wa.me/902125208100?text=Merhaba,%20Late%20Check-out%20eklemek%20istiyorum." target="_blank" class="text-xs font-bold text-gold hover:text-navy transition flex items-center gap-1">
+            Rezerve Et <i class="fa-solid fa-chevron-right text-[10px]"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- UPSELL 3: Boğaz Turu -->
+      <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-md hover:border-gold transition flex flex-col justify-between">
+        <div>
+          <div class="w-12 h-12 rounded-xl bg-gold/10 text-gold flex items-center justify-center text-xl mb-4">
+            <i class="fa-solid fa-ship"></i>
+          </div>
+          <h4 class="font-serif text-lg font-bold text-navy mb-2">Lüks Boğaz Yat Turu</h4>
+          <p class="text-xs text-slate-500 mb-4 leading-relaxed">
+            Gün batımında ikramlar ve rehber eşliğinde unutulmaz 2 saatlik Boğaz gezisi.
+          </p>
+        </div>
+        <div class="border-t pt-4 flex items-center justify-between">
+          <span class="font-serif text-xl font-bold text-navy">+40 €</span>
+          <a href="https://wa.me/902125208100?text=Merhaba,%20Bogaz%20turu%20icin%20bilgi%20almak%20istiyorum." target="_blank" class="text-xs font-bold text-gold hover:text-navy transition flex items-center gap-1">
+            Rezerve Et <i class="fa-solid fa-chevron-right text-[10px]"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- UPSELL 4: Türk Hamamı -->
+      <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-md hover:border-gold transition flex flex-col justify-between">
+        <div>
+          <div class="w-12 h-12 rounded-xl bg-gold/10 text-gold flex items-center justify-center text-xl mb-4">
+            <i class="fa-solid fa-hot-tub-person"></i>
+          </div>
+          <h4 class="font-serif text-lg font-bold text-navy mb-2">Tarihi Türk Hamamı & Kese</h4>
+          <p class="text-xs text-slate-500 mb-4 leading-relaxed">
+            Yürüyüş mesafesindeki tarihi hamamda geleneksel kese, köpük ve aromaterapi masajı.
+          </p>
+        </div>
+        <div class="border-t pt-4 flex items-center justify-between">
+          <span class="font-serif text-xl font-bold text-navy">+50 €</span>
+          <a href="https://wa.me/902125208100?text=Merhaba,%20Hamam%20rezervasyonu%20istiyorum." target="_blank" class="text-xs font-bold text-gold hover:text-navy transition flex items-center gap-1">
+            Rezerve Et <i class="fa-solid fa-chevron-right text-[10px]"></i>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== AYRICALIKLAR (AMENITIES) ==================== -->
+  <section id="amenities" class="py-16 bg-slate-50 border-t border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div class="flex flex-col items-center">
+          <div class="w-14 h-14 rounded-full bg-gold/15 text-gold flex items-center justify-center text-2xl mb-4">
+            <i class="fa-solid fa-utensils"></i>
+          </div>
+          <h4 class="font-semibold text-navy text-sm mb-1">Açık Büfe Kahvaltı</h4>
+          <p class="text-xs text-slate-500">Tüm odalarda fiyata dahil taze yerel lezzetler</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <div class="w-14 h-14 rounded-full bg-gold/15 text-gold flex items-center justify-center text-2xl mb-4">
+            <i class="fa-solid fa-headset"></i>
+          </div>
+          <h4 class="font-semibold text-navy text-sm mb-1">7/24 Canlı Resepsiyon</h4>
+          <p class="text-xs text-slate-500">Çok dilli personel ve günün her saati destek</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <div class="w-14 h-14 rounded-full bg-gold/15 text-gold flex items-center justify-center text-2xl mb-4">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <h4 class="font-semibold text-navy text-sm mb-1">Güvenli Ödeme</h4>
+          <p class="text-xs text-slate-500">MasterCard, VISA, Amex ve Nakit geçerlidir</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <div class="w-14 h-14 rounded-full bg-gold/15 text-gold flex items-center justify-center text-2xl mb-4">
+            <i class="fa-solid fa-wifi"></i>
+          </div>
+          <h4 class="font-semibold text-navy text-sm mb-1">Ücretsiz Fiber Wi-Fi</h4>
+          <p class="text-xs text-slate-500">Tüm odalarda ve genel alanlarda kesintisiz internet</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SSS (FAQ ACCORDION) ==================== -->
+  <section class="py-16 max-w-4xl mx-auto px-4">
+    <h3 class="font-serif text-2xl sm:text-3xl font-bold text-navy text-center mb-8">Sıkça Sorulan Sorular</h3>
+    <div class="space-y-3">
+      <details class="bg-white p-4 rounded-xl border border-slate-200 cursor-pointer shadow-sm group">
+        <summary class="font-semibold text-sm text-navy flex items-center justify-between">
+          <span>Giriş ve çıkış saatleri nelerdir?</span>
+          <i class="fa-solid fa-chevron-down text-xs text-gold group-open:rotate-180 transition"></i>
+        </summary>
+        <p class="text-xs text-slate-600 mt-3 pt-3 border-t font-light leading-relaxed">
+          Giriş (Check-in) saatimiz 14:00, çıkış (Check-out) saatimiz ise 12:00'dir. Resepsiyonumuz 24 saat açıktır.
+        </p>
+      </details>
+      <details class="bg-white p-4 rounded-xl border border-slate-200 cursor-pointer shadow-sm group">
+        <summary class="font-semibold text-sm text-navy flex items-center justify-between">
+          <span>Kahvaltı konaklamaya dahil mi?</span>
+          <i class="fa-solid fa-chevron-down text-xs text-gold group-open:rotate-180 transition"></i>
+        </summary>
+        <p class="text-xs text-slate-600 mt-3 pt-3 border-t font-light leading-relaxed">
+          Evet! Eliza Hotel'de tüm konaklamalar "Oda Kahvaltı" (Bed & Breakfast) konseptindedir ve açık büfe kahvaltı fiyata dahildir.
+        </p>
+      </details>
+      <details class="bg-white p-4 rounded-xl border border-slate-200 cursor-pointer shadow-sm group">
+        <summary class="font-semibold text-sm text-navy flex items-center justify-between">
+          <span>Otopark ve evcil hayvan durumu nedir?</span>
+          <i class="fa-solid fa-chevron-down text-xs text-gold group-open:rotate-180 transition"></i>
+        </summary>
+        <p class="text-xs text-slate-600 mt-3 pt-3 border-t font-light leading-relaxed">
+          Tarihi Yarımada'nın dokusu gereği tesisimiz bünyesinde otopark bulunmamaktadır. Ayrıca evcil hayvan kabul edilmemektedir.
+        </p>
+      </details>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer id="contact" class="bg-navy-dark text-slate-400 py-16 border-t border-navy-light/40 text-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+        <div class="space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full border border-gold flex items-center justify-center bg-navy">
+              <span class="font-serif text-lg font-bold text-gold">E</span>
+            </div>
+            <span class="font-serif text-xl font-bold text-white tracking-wider">ELIZA HOTEL</span>
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed font-light">
+            Tarihi Yarımada'nın büyülü atmosferinde, modern konforla geleneksel Türk misafirperverliğini buluşturan bağımsız butik otel.
+          </p>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold text-sm mb-4 border-b border-slate-800 pb-2">Hızlı Bağlantılar</h4>
+          <ul class="space-y-2 text-xs">
+            <li><a href="#about" class="hover:text-gold transition">Hakkımızda</a></li>
+            <li><a href="#rooms" class="hover:text-gold transition">Odalarımız & Fiyatlar</a></li>
+            <li><a href="#location" class="hover:text-gold transition">Konum & Yürüme Yolları</a></li>
+            <li><a href="#upsell" class="hover:text-gold transition">VIP Havalimanı Transferi</a></li>
+            <li><a href="https://www.elizahotelistanbul.com" target="_blank" class="hover:text-gold transition">Online Rezervasyon</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold text-sm mb-4 border-b border-slate-800 pb-2">İletişim</h4>
+          <ul class="space-y-3 text-xs">
+            <li class="flex items-start gap-2.5">
+              <i class="fa-solid fa-location-dot text-gold mt-0.5"></i>
+              <span>Mimar Hayrettin Mah. Doğramacı Sk. No:19/5, 34126 Fatih / İstanbul</span>
+            </li>
+            <li class="flex items-center gap-2.5">
+              <i class="fa-solid fa-phone text-gold"></i>
+              <a href="tel:+902125208100" class="hover:text-white transition">+90 212 520 81 00</a>
+            </li>
+            <li class="flex items-center gap-2.5">
+              <i class="fa-solid fa-envelope text-gold"></i>
+              <a href="mailto:info@elizahotelistanbul.com" class="hover:text-white transition">info@elizahotelistanbul.com</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold text-sm mb-4 border-b border-slate-800 pb-2">Hızlı Destek & WhatsApp</h4>
+          <p class="text-xs text-slate-400 mb-4 font-light">Rezervasyon ve havalimanı transferi talepleriniz için WhatsApp destek hattımız 7/24 aktiftir.</p>
+          <a href="https://wa.me/902125208100" target="_blank" class="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold py-2.5 px-4 rounded-lg transition shadow-md">
+            <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp ile Yazın
+          </a>
+        </div>
+      </div>
+
+      <div class="border-t border-slate-800 pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+        <p>© 2026 Eliza Hotel Istanbul. Tüm Hakları Saklıdır.</p>
+        <div class="flex gap-4">
+          <span>Gizlilik Politikası</span>
+          <span>KVKK</span>
+          <span>Rezervasyon Şartları</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== LÜKS ENTEGRE CHATBOT WIDGETI (GOLDEN & PARLAMENTO MAVİSİ) ==================== -->
+  <div id="eliza-chatbot-root"></div>
+
+  <style>
+    #eliza-chat-button {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0b1f3a, #0f2b5c);
+      border: 2px solid #c5a059;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 999999;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    #eliza-chat-button:hover {
+      transform: scale(1.08);
+      box-shadow: 0 6px 25px rgba(197, 160, 89, 0.4);
+    }
+    #eliza-chat-button svg {
+      width: 28px;
+      height: 28px;
+      fill: #c5a059;
+    }
+    #eliza-chat-window {
+      position: fixed;
+      bottom: 95px;
+      right: 25px;
+      width: 370px;
+      max-width: calc(100vw - 40px);
+      height: 530px;
+      max-height: calc(100vh - 120px);
+      background: #ffffff;
+      border-radius: 18px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+      border: 1px solid #c5a059;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 999999;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    #eliza-chat-header {
+      background: #0b1f3a;
+      color: #ffffff;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid #c5a059;
+    }
+    #eliza-chat-header h4 {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 0.5px;
+    }
+    #eliza-chat-header span {
+      font-size: 11px;
+      color: #c5a059;
+      display: block;
+      margin-top: 2px;
+    }
+    #eliza-chat-close {
+      background: none;
+      border: none;
+      color: #ffffff;
+      font-size: 24px;
+      cursor: pointer;
+      opacity: 0.8;
+    }
+    #eliza-chat-close:hover { opacity: 1; }
+    #eliza-chat-messages {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+      background: #f8fafc;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .eliza-msg {
+      max-width: 82%;
+      padding: 11px 15px;
+      border-radius: 14px;
+      font-size: 13.5px;
+      line-height: 1.45;
+      word-break: break-word;
+    }
+    .eliza-msg.bot {
+      background: #ffffff;
+      color: #1e293b;
+      align-self: flex-start;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+    .eliza-msg.bot a {
+      color: #0f2b5c;
+      font-weight: bold;
+      text-decoration: underline;
+    }
+    .eliza-msg.user {
+      background: #0b1f3a;
+      color: #ffffff;
+      align-self: flex-end;
+    }
+    .eliza-typing {
+      align-self: flex-start;
+      font-size: 12px;
+      color: #64748b;
+      font-style: italic;
+      display: none;
+    }
+    #eliza-chat-footer {
+      padding: 12px;
+      background: #ffffff;
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      gap: 8px;
+    }
+    #eliza-chat-input {
+      flex: 1;
+      padding: 10px 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 20px;
+      outline: none;
+      font-size: 13.5px;
+    }
+    #eliza-chat-input:focus { border-color: #c5a059; }
+    #eliza-chat-send {
+      background: #c5a059;
+      color: #0b1f3a;
+      border: none;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    #eliza-chat-send:hover { background: #b08d4b; color: white; }
+  </style>
+
+  <div id="eliza-chat-window">
+    <div id="eliza-chat-header">
+      <div>
+        <h4>ELIZA HOTEL ISTANBUL</h4>
+        <span>Dijital Asistan (8 Dilde 7/24 Canlı)</span>
+      </div>
+      <button id="eliza-chat-close">&times;</button>
+    </div>
+    <div id="eliza-chat-messages">
+      <div class="eliza-msg bot">
+        Merhaba! Eliza Hotel Istanbul'a hoş geldiniz. Size Türkçe, English, العربية, Русский, Français, Español ve Deutsch dillerinde yardımcı olabilirim. Nasıl yardımcı olabilirim?
+      </div>
+      <div id="eliza-typing" class="eliza-typing">Eliza Asistan yazıyor...</div>
+    </div>
+    <form id="eliza-chat-footer">
+      <input type="text" id="eliza-chat-input" placeholder="Bir soru yazın..." autocomplete="off" />
+      <button type="submit" id="eliza-chat-send">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+          <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+        </svg>
+      </button>
+    </form>
+  </div>
+
+  <div id="eliza-chat-button" title="Eliza Asistan ile Sohbet Edin">
+    <svg viewBox="0 0 24 24">
+      <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
+    </svg>
+  </div>
+
+  <script>
+    (function () {
+      const API_URL = '/api/chat';
+      const chatBtn = document.getElementById('eliza-chat-button');
+      const chatWindow = document.getElementById('eliza-chat-window');
+      const closeBtn = document.getElementById('eliza-chat-close');
+      const chatForm = document.getElementById('eliza-chat-footer');
+      const chatInput = document.getElementById('eliza-chat-input');
+      const msgContainer = document.getElementById('eliza-chat-messages');
+      const typingIndicator = document.getElementById('eliza-typing');
+
+      let history = [];
+
+      chatBtn.addEventListener('click', () => {
+        chatWindow.style.display = chatWindow.style.display === 'flex' ? 'none' : 'flex';
+        if (chatWindow.style.display === 'flex') chatInput.focus();
+      });
+
+      closeBtn.addEventListener('click', () => {
+        chatWindow.style.display = 'none';
+      });
+
+      chatForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const text = chatInput.value.trim();
+        if (!text) return;
+
+        appendMessage(text, 'user');
+        chatInput.value = '';
+        typingIndicator.style.display = 'block';
+        msgContainer.scrollTop = msgContainer.scrollHeight;
+
+        try {
+          const res = await fetch(API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: text, history: history })
+          });
+
+          const data = await res.json();
+          typingIndicator.style.display = 'none';
+
+          if (data.reply) {
+            appendMessage(data.reply, 'bot');
+            history.push({ role: 'user', content: text });
+            history.push({ role: 'assistant', content: data.reply });
+          } else {
+            appendMessage('Üzgünüm, şu anda yanıt veremiyorum.', 'bot');
+          }
+        } catch (err) {
+          typingIndicator.style.display = 'none';
+          appendMessage('Bağlantı hatası oluştu.', 'bot');
+        }
+      });
+
+      function formatTextWithLinks(rawText) {
+        let formatted = rawText.replace(/\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+        formatted = formatted.replace(/\n/g, '<br/>');
+        return formatted;
+      }
+
+      function appendMessage(text, sender) {
+        const div = document.createElement('div');
+        div.className = `eliza-msg ${sender}`;
+        if (sender === 'bot') {
+          div.innerHTML = formatTextWithLinks(text);
+        } else {
+          div.innerText = text;
+        }
+        msgContainer.insertBefore(div, typingIndicator);
+        msgContainer.scrollTop = msgContainer.scrollHeight;
+      }
+    })();
+  </script>
+
+</body>
+</html>
