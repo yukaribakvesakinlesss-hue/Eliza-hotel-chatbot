@@ -1,1 +1,1028 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eliza Hotel Istanbul | Dijital Misafir Asistanı & Rezervasyon</title>
+  <meta name="description" content="Eliza Hotel Istanbul - Tarihi Yarımada'da, Beyazıt ve Çemberlitaş'a birkaç adım mesafede butik konaklama deneyimi ve 7/24 Dijital Misafir Asistanı.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #94713c;
+      --primary-dark: #6e5025;
+      --primary-light: #f5eedf;
+      --secondary: #1a1e24;
+      --bg: #faf8f5;
+      --card-bg: #ffffff;
+      --text: #2d3139;
+      --text-muted: #69707d;
+      --border: #e6dfd5;
+      --whatsapp: #25D366;
+      --shadow-sm: 0 4px 12px rgba(26, 30, 36, 0.05);
+      --shadow-lg: 0 16px 36px rgba(26, 30, 36, 0.12);
+      --radius: 12px;
+    }
 
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Header */
+    header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: var(--secondary);
+    }
+    .logo-sub {
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      color: var(--primary);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .logo-main {
+      font-family: 'Cinzel', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.8rem;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+      font-size: 0.92rem;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+    .btn-whatsapp-header {
+      background-color: var(--whatsapp);
+      color: #fff !important;
+      padding: 0.6rem 1.1rem;
+      border-radius: 50px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+      font-size: 0.88rem;
+      box-shadow: 0 4px 10px rgba(37, 211, 102, 0.25);
+      transition: transform 0.2s, opacity 0.2s;
+    }
+    .btn-whatsapp-header:hover {
+      opacity: 0.95;
+      transform: translateY(-1px);
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      background: linear-gradient(180deg, rgba(26,30,36,0.75) 0%, rgba(26,30,36,0.65) 100%),
+                  url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1800&auto=format&fit=crop') center/cover no-repeat;
+      color: #fff;
+      padding: 7rem 1.5rem 6rem;
+      text-align: center;
+    }
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(148, 113, 60, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 0.4rem 1.2rem;
+      border-radius: 50px;
+      font-size: 0.82rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 2.8rem;
+      line-height: 1.2;
+      margin-bottom: 1.2rem;
+      font-weight: 700;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.88);
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+    }
+
+    /* Quick Booking Strip */
+    .booking-strip {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 1.2rem;
+      max-width: 950px;
+      margin: -2.5rem auto 4rem;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) 160px;
+      gap: 1rem;
+      align-items: center;
+      position: relative;
+      z-index: 10;
+    }
+    .strip-item label {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+    .strip-item input, .strip-item select {
+      width: 100%;
+      border: 1px solid var(--border);
+      padding: 0.6rem;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+    .btn-search {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 0.75rem;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.92rem;
+      transition: background 0.2s;
+    }
+    .btn-search:hover {
+      background: var(--primary-dark);
+    }
+
+    /* Section styling */
+    .section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 1.5rem;
+    }
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .section-title h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 2.2rem;
+      color: var(--secondary);
+      margin-bottom: 0.5rem;
+    }
+    .section-title p {
+      color: var(--text-muted);
+      font-size: 0.98rem;
+    }
+
+    /* Highlights Grid */
+    .highlights {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+    }
+    .highlight-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.8rem;
+      box-shadow: var(--shadow-sm);
+      text-align: center;
+      transition: transform 0.2s;
+    }
+    .highlight-card:hover {
+      transform: translateY(-4px);
+    }
+    .highlight-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+    .highlight-card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 0.5rem;
+      color: var(--secondary);
+    }
+    .highlight-card p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    /* Rooms Grid */
+    .rooms-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+    .room-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+    }
+    .room-img {
+      height: 220px;
+      width: 100%;
+      object-fit: cover;
+    }
+    .room-info {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    .room-info h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      color: var(--secondary);
+    }
+    .room-features {
+      list-style: none;
+      margin: 1rem 0;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .room-features li {
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .room-footer {
+      margin-top: auto;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .price-tag {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .price-tag span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+    .btn-book {
+      background: var(--secondary);
+      color: #fff;
+      padding: 0.5rem 1.2rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .btn-book:hover {
+      background: var(--primary);
+    }
+
+    /* Location Section */
+    .location-box {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--secondary);
+      color: rgba(255, 255, 255, 0.8);
+      padding: 3.5rem 1.5rem 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      margin-top: 5rem;
+    }
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .footer-col h4 {
+      color: #fff;
+      font-family: 'Cinzel', serif;
+      margin-bottom: 1.2rem;
+      font-size: 1.1rem;
+    }
+    .footer-col p, .footer-col a {
+      font-size: 0.88rem;
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      line-height: 1.8;
+      display: block;
+    }
+    .footer-col a:hover {
+      color: var(--primary-light);
+    }
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* ======================================================== */
+    /* FLOATING AI CHATBOT WIDGET                               */
+    /* ======================================================== */
+    .chatbot-launcher {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 12px;
+    }
+    .chat-btn-float {
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #94713c, #1a1e24);
+      color: #fff;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .chat-btn-float:hover {
+      transform: scale(1.08);
+    }
+    .chat-badge {
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      background: var(--whatsapp);
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+    }
+
+    /* Chat Window */
+    .chat-window {
+      position: fixed;
+      bottom: 100px;
+      right: 25px;
+      width: 380px;
+      max-width: calc(100vw - 32px);
+      height: 580px;
+      max-height: calc(100vh - 120px);
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--border);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 10000;
+      animation: slideUp 0.3s ease-out forwards;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .chat-header {
+      background: linear-gradient(135deg, #1a1e24, #2d333b);
+      color: #fff;
+      padding: 1rem 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .chat-header-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+    .chat-header h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .chat-header span {
+      font-size: 0.72rem;
+      color: #34d399;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .chat-header span::before {
+      content: '';
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #34d399;
+    }
+    .btn-close-chat {
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 1.4rem;
+      cursor: pointer;
+      line-height: 1;
+      padding: 4px;
+    }
+    .btn-close-chat:hover {
+      color: #fff;
+    }
+
+    /* Sub-header WhatsApp Banner */
+    .chat-wa-banner {
+      background: #e9fbf0;
+      border-bottom: 1px solid #c9eed6;
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: #0f5132;
+    }
+    .chat-wa-banner a {
+      color: #0f5132;
+      font-weight: 700;
+      text-decoration: underline;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Messages Container */
+    .chat-messages {
+      flex: 1;
+      padding: 1rem;
+      overflow-y: auto;
+      background: #fdfdfd;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+    .msg {
+      max-width: 82%;
+      padding: 0.75rem 0.95rem;
+      border-radius: 12px;
+      font-size: 0.88rem;
+      line-height: 1.45;
+      word-break: break-word;
+    }
+    .msg-bot {
+      background: #f1ede6;
+      color: var(--secondary);
+      align-self: flex-start;
+      border-bottom-left-radius: 2px;
+    }
+    .msg-user {
+      background: var(--primary);
+      color: #ffffff;
+      align-self: flex-end;
+      border-bottom-right-radius: 2px;
+    }
+    .msg-time {
+      font-size: 0.65rem;
+      color: rgba(0, 0, 0, 0.4);
+      margin-top: 4px;
+      text-align: right;
+    }
+    .msg-user .msg-time {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* Quick Suggestions */
+    .quick-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .chip {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 5px 10px;
+      border-radius: 50px;
+      font-size: 0.76rem;
+      color: var(--secondary);
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .chip:hover {
+      background: var(--primary-light);
+      border-color: var(--primary);
+    }
+
+    /* Typing indicator */
+    .typing-dots {
+      display: none;
+      align-self: flex-start;
+      background: #f1ede6;
+      padding: 8px 14px;
+      border-radius: 12px;
+      gap: 4px;
+    }
+    .typing-dots span {
+      width: 6px;
+      height: 6px;
+      background: #888;
+      border-radius: 50%;
+      animation: blink 1.2s infinite ease-in-out;
+    }
+    .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes blink {
+      0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+      40% { opacity: 1; transform: scale(1.1); }
+    }
+
+    /* Chat Input Form */
+    .chat-input-area {
+      padding: 0.8rem 1rem;
+      background: #fff;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 8px;
+    }
+    .chat-input-area input {
+      flex: 1;
+      padding: 0.65rem 0.9rem;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 0.88rem;
+      font-family: inherit;
+      outline: none;
+    }
+    .chat-input-area input:focus {
+      border-color: var(--primary);
+    }
+    .btn-send {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-send:hover {
+      background: var(--primary-dark);
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.1rem; }
+      .nav-links { display: none; }
+      .booking-strip { grid-template-columns: 1fr; margin-top: -1rem; }
+      .chat-window {
+        right: 16px;
+        left: 16px;
+        width: auto;
+        bottom: 85px;
+        height: 70vh;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="nav-container">
+      <a href="#" class="logo">
+        <span class="logo-sub">Boutique Hotel</span>
+        <span class="logo-main">HOTEL ELIZA</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#rooms">Odalarımız</a></li>
+        <li><a href="#location">Konum</a></li>
+        <li><a href="#amenities">Hizmetler</a></li>
+        <li><a href="tel:+902125208100">+90 212 520 81 00</a></li>
+        <li>
+          <a href="https://wa.me/905419014785?text=Merhaba,%20Eliza%20Hotel%20hakkında%20bilgi%20almak%20istiyorum" target="_blank" class="btn-whatsapp-header">
+            <span>💬</span> WhatsApp Rezervasyon
+          </a>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <span class="hero-badge">Tarihi Yarımada • Fatih / İstanbul</span>
+      <h1>Tarihin Merkezinde, Butik Bir Zarafet</h1>
+      <p>Beyazıt ve Çemberlitaş Tramvay duraklarına 3 dakika yürüme mesafesinde. Kapalıçarşı, Ayasofya ve Sultanahmet'in yanı başında unutulmaz bir konaklama.</p>
+    </div>
+  </section>
+
+  <!-- Quick Booking Strip -->
+  <div class="booking-strip">
+    <div class="strip-item">
+      <label>Giriş Tarihi</label>
+      <input type="date" id="checkin">
+    </div>
+    <div class="strip-item">
+      <label>Çıkış Tarihi</label>
+      <input type="date" id="checkout">
+    </div>
+    <div class="strip-item">
+      <label>Misafir Sayısı</label>
+      <select id="guests">
+        <option value="1">1 Yetişkin</option>
+        <option value="2" selected>2 Yetişkin</option>
+        <option value="3">3 Yetişkin</option>
+      </select>
+    </div>
+    <button class="btn-search" onclick="askChatbotReservation()">Müsaitlik Sor</button>
+  </div>
+
+  <!-- Highlights -->
+  <div class="section" id="amenities">
+    <div class="section-title">
+      <h2>Ayrıcalıklı Konum & Hizmet</h2>
+      <p>İstanbul seyahatinizi konforlu ve stressiz hale getiren detaylar</p>
+    </div>
+    <div class="highlights">
+      <div class="highlight-card">
+        <div class="highlight-icon">🚋</div>
+        <h3>Mükemmel Ulaşım</h3>
+        <p>Beyazıt Tramvay İstasyonuna 250m, Çemberlitaş durağına sadece 300m mesafede.</p>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-icon">🏛️</div>
+        <h3>Tarihi Noktalar</h3>
+        <p>Kapalıçarşı, Sultanahmet Camii ve Ayasofya'ya keyifli bir yürüyüş mesafesinde.</p>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-icon">🤖</div>
+        <h3>7/24 Dijital Asistan</h3>
+        <p>WhatsApp ve web sitemiz üzerinden anında oda, konum ve seyahat danışmanlığı.</p>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-icon">☕</div>
+        <h3>Lezzet & Kafeler</h3>
+        <p>Tarihi Fatih sokaklarında zengin kahvaltı ve geleneksel Türk mutfağı seçenekleri.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rooms Section -->
+  <div class="section" id="rooms">
+    <div class="section-title">
+      <h2>Konforlu Odalarımız</h2>
+      <p>Zevkle tasarlanmış ferah ve modern konaklama alanları</p>
+    </div>
+    <div class="rooms-grid">
+      <!-- Room 1 -->
+      <div class="room-card">
+        <img class="room-img" src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?q=80&w=800&auto=format&fit=crop" alt="Standart Oda">
+        <div class="room-info">
+          <h3>Standart Oda (Twin / Double)</h3>
+          <ul class="room-features">
+            <li>✓ Klima, Isıtma & LCD TV</li>
+            <li>✓ Özel Banyo, Saç Kurutma & Terlik</li>
+            <li>✓ Ücretsiz Hızlı Wi-Fi & Minibar</li>
+            <li>✓ Çay / Kahve Seti & Su Isıtıcı</li>
+          </ul>
+          <div class="room-footer">
+            <div class="price-tag">86,40 € <span>/ Gece</span></div>
+            <a href="javascript:void(0)" onclick="openChatWithPrompt('Standart oda rezervasyonu ve fiyatlar hakkında bilgi almak istiyorum.')" class="btn-book">Soru Sor / Ayırt</a>
+          </div>
+        </div>
+      </div>
+      <!-- Room 2 -->
+      <div class="room-card">
+        <img class="room-img" src="https://images.unsplash.com/photo-1590490360182-c33d57733427?q=80&w=800&auto=format&fit=crop" alt="Deluxe Oda">
+        <div class="room-info">
+          <h3>Deluxe Şehir Manzaralı Oda</h3>
+          <ul class="room-features">
+            <li>✓ Geniş King Yatak & Dinlenme Alanı</li>
+            <li>✓ Tarihi Şehir & Sokak Manzarası</li>
+            <li>✓ Lüks Buklet Malzemeleri & Bornoz</li>
+            <li>✓ Ses Yalıtımlı Pencereler</li>
+          </ul>
+          <div class="room-footer">
+            <div class="price-tag">110,00 € <span>/ Gece</span></div>
+            <a href="javascript:void(0)" onclick="openChatWithPrompt('Deluxe oda müsaitliği hakkında bilgi verebilir misiniz?')" class="btn-book">Soru Sor / Ayırt</a>
+          </div>
+        </div>
+      </div>
+      <!-- Room 3 -->
+      <div class="room-card">
+        <img class="room-img" src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?q=80&w=800&auto=format&fit=crop" alt="Aile Odası">
+        <div class="room-info">
+          <h3>Aile Suiti (Family Suite)</h3>
+          <ul class="room-features">
+            <li>✓ 3-4 Kişilik Geniş Yaşam Alanı</li>
+            <li>✓ Ayrı Yatak Odası ve Oturma Alanı</li>
+            <li>✓ Bebek Yatağı İmkanı (İstek Üzerine)</li>
+            <li>✓ Akıllı TV & Mini Buzdolabı</li>
+          </ul>
+          <div class="room-footer">
+            <div class="price-tag">145,00 € <span>/ Gece</span></div>
+            <a href="javascript:void(0)" onclick="openChatWithPrompt('Aile suiti müsaitliği ve çocuk politikası hakkında bilgi alabilir miyim?')" class="btn-book">Soru Sor / Ayırt</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Location Section -->
+  <div class="section" id="location">
+    <div class="section-title">
+      <h2>Ulaşım & Adres</h2>
+      <p>Mimar Hayrettin Mah. Doğramacı Sk. No:19/5, Fatih / İstanbul</p>
+    </div>
+    <div class="location-box">
+      <div>
+        <h3 style="font-family: 'Cinzel', serif; margin-bottom: 0.8rem;">Nasıl Gelirsiniz?</h3>
+        <p style="font-size: 0.95rem; color: var(--text-muted); max-width: 600px;">
+          T1 Kabataş-Bağcılar Tramvay Hattı üzerindeki <strong>Beyazıt</strong> veya <strong>Çemberlitaş</strong> duraklarında inip 3 dakika yürüyerek otelimize kolayca ulaşabilirsiniz. Havalimanı transfer danışmanlığı için dijital asistanımız 7/24 hizmetinizdedir.
+        </p>
+      </div>
+      <div>
+        <a href="https://wa.me/905419014785?text=Merhaba,%20otelinizin%20tam%20konumunu%20ve%20yol%20tarifini%20alabilir%20miyim?" target="_blank" class="btn-whatsapp-header">
+          📍 WhatsApp'tan Konum İste
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-col">
+        <h4>HOTEL ELIZA</h4>
+        <p>Tarihin ve konforun buluşma noktası. İstanbul Fatih'in kalbinde sıcak ve güvenilir butik konaklama.</p>
+      </div>
+      <div class="footer-col">
+        <h4>İletişim</h4>
+        <p>📍 Mimar Hayrettin Mah. Doğramacı Sk. No:19/5, Fatih / İstanbul</p>
+        <p>📞 Tel: +90 212 520 81 00</p>
+        <p>💬 WhatsApp: +90 541 901 47 85</p>
+      </div>
+      <div class="footer-col">
+        <h4>Hızlı Bağlantılar</h4>
+        <a href="#rooms">Odalarımız</a>
+        <a href="#amenities">Hizmetlerimiz</a>
+        <a href="#location">Konum & Ulaşım</a>
+        <a href="https://www.elizahotelistanbul.com" target="_blank">Resmi Web Sitesi</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Hotel Eliza Istanbul. Tüm hakları saklıdır. Yapay zekâ destekli misafir asistanı ile güçlendirilmiştir.</p>
+    </div>
+  </footer>
+
+  <!-- ======================================================== -->
+  <!-- CHATBOT WIDGET HTML                                      -->
+  <!-- ======================================================== -->
+  <div class="chatbot-launcher">
+    <button class="chat-btn-float" onclick="toggleChatWindow()" id="chatToggleBtn" aria-label="Sohbeti Başlat">
+      <span class="chat-badge"></span>
+      💬
+    </button>
+  </div>
+
+  <div class="chat-window" id="chatWindow">
+    <!-- Header -->
+    <div class="chat-header">
+      <div class="chat-header-info">
+        <div class="avatar">E</div>
+        <div>
+          <h4>Eliza Hotel Asistanı</h4>
+          <span>Çevrimiçi (7/24 AI Destek)</span>
+        </div>
+      </div>
+      <button class="btn-close-chat" onclick="toggleChatWindow()" title="Kapat">✕</button>
+    </div>
+
+    <!-- WhatsApp Quick Switch Banner -->
+    <div class="chat-wa-banner">
+      <span>WhatsApp'tan yazmak ister misiniz?</span>
+      <a href="https://wa.me/905419014785?text=Merhaba,%20Eliza%20Hotel%20hakkında%20bilgi%20almak%20istiyorum" target="_blank">
+        WhatsApp'a Geç →
+      </a>
+    </div>
+
+    <!-- Messages Container -->
+    <div class="chat-messages" id="chatMessages">
+      <div class="msg msg-bot">
+        Merhaba! Eliza Hotel Istanbul'a hoş geldiniz. 🏨
+        <br><br>
+        Oda müsaitliği, tramvaya uzaklık, kahvaltı veya rezervasyon süreçleri hakkında size nasıl yardımcı olabilirim?
+        <div class="quick-chips">
+          <div class="chip" onclick="handleQuickChip('Kahvaltı dahil mi?')">Kahvaltı dahil mi?</div>
+          <div class="chip" onclick="handleQuickChip('Otopark var mı?')">Otopark var mı?</div>
+          <div class="chip" onclick="handleQuickChip('Tramvaya ne kadar uzak?')">Tramvay konumu?</div>
+          <div class="chip" onclick="handleQuickChip('Oda fiyatları nedir?')">Oda fiyatları</div>
+        </div>
+      </div>
+      <div class="typing-dots" id="typingIndicator">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+
+    <!-- Input Form -->
+    <form class="chat-input-area" onsubmit="handleChatSubmit(event)">
+      <input type="text" id="chatInput" placeholder="Bir soru yazın (Türkçe, English, عربي)..." autocomplete="off" required>
+      <button type="submit" class="btn-send" id="btnSend">➤</button>
+    </form>
+  </div>
+
+  <!-- Chatbot Script -->
+  <script>
+    const chatWindow = document.getElementById('chatWindow');
+    const chatMessages = document.getElementById('chatMessages');
+    const chatInput = document.getElementById('chatInput');
+    const typingIndicator = document.getElementById('typingIndicator');
+    const btnSend = document.getElementById('btnSend');
+
+    function toggleChatWindow() {
+      if (chatWindow.style.display === 'flex') {
+        chatWindow.style.display = 'none';
+      } else {
+        chatWindow.style.display = 'flex';
+        chatInput.focus();
+      }
+    }
+
+    function openChatWithPrompt(promptText) {
+      chatWindow.style.display = 'flex';
+      sendUserMessage(promptText);
+    }
+
+    function handleQuickChip(text) {
+      sendUserMessage(text);
+    }
+
+    function handleChatSubmit(e) {
+      e.preventDefault();
+      const text = chatInput.value.trim();
+      if (!text) return;
+      chatInput.value = '';
+      sendUserMessage(text);
+    }
+
+    function askChatbotReservation() {
+      const checkin = document.getElementById('checkin').value || 'belirtilmedi';
+      const checkout = document.getElementById('checkout').value || 'belirtilmedi';
+      const guests = document.getElementById('guests').value;
+      const query = `Giriş: ${checkin}, Çıkış: ${checkout}, ${guests} kişi için müsaitlik ve fiyat durumu nedir?`;
+      openChatWithPrompt(query);
+    }
+
+    async function sendUserMessage(text) {
+      appendMessage(text, 'user');
+      showTyping(true);
+
+      try {
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            message: text,
+            messages: [{ role: 'user', content: text }]
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error('API yanıt vermedi: ' + response.status);
+        }
+
+        const data = await response.json();
+        const reply = data.reply || data.response || data.message || data.text || (typeof data === 'string' ? data : null);
+
+        if (reply) {
+          appendMessage(reply, 'bot');
+        } else {
+          appendFallbackReply(text);
+        }
+      } catch (err) {
+        console.warn('Backend API erişilemedi, yerel akıllı yanıt devreye girdi:', err);
+        appendFallbackReply(text);
+      } finally {
+        showTyping(false);
+      }
+    }
+
+    function appendMessage(content, sender) {
+      const div = document.createElement('div');
+      div.className = `msg msg-${sender}`;
+      div.innerHTML = content.replace(/\n/g, '<br>');
+      
+      const time = document.createElement('div');
+      time.className = 'msg-time';
+      const now = new Date();
+      time.textContent = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+      div.appendChild(time);
+
+      chatMessages.insertBefore(div, typingIndicator);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function showTyping(show) {
+      typingIndicator.style.display = show ? 'flex' : 'none';
+      if (show) {
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+    }
+
+    function appendFallbackReply(query) {
+      const q = query.toLowerCase();
+      let reply = "Sorunuz için teşekkür ederiz. Rezervasyon detayları ve özel talepleriniz için lütfen WhatsApp hattımızdan bizimle iletişime geçin.";
+
+      if (q.includes('otopark') || q.includes('park')) {
+        reply = "Eliza Hotel bünyesinde özel otopark bulunmamaktadır. Ancak otelimizin hemen yakın çevresinde güvenli ücretli otoparklar mevcuttur.";
+      } else if (q.includes('kahvaltı') || q.includes('breakfast')) {
+        reply = "Eliza Hotel'de konaklama seçeneklerimizde zengin açık büfe kahvaltı hizmetimiz sunulmaktadır. Rezervasyon tipinize göre fiyata dahil olabilir.";
+      } else if (q.includes('tramvay') || q.includes('metro') || q.includes('konum') || q.includes('nerede')) {
+        reply = "Otelimiz Mimar Hayrettin Mah. Doğramacı Sk. No:19/5 Fatih/İstanbul adresindedir. Beyazıt Tramvay İstasyonuna 250m, Çemberlitaş'a 300m mesafededir.";
+      } else if (q.includes('fiyat') || q.includes('oda') || q.includes('rezervasyon')) {
+        reply = "Standart odalarımız 86 €'dan başlamaktadır. Müsaitlik durumunu kesinleştirmek ve en iyi fiyat teklifini almak için WhatsApp üzerinden doğrudan bize yazabilirsiniz.";
+      }
+
+      appendMessage(reply, 'bot');
+    }
+  </script>
+</body>
+</html>
