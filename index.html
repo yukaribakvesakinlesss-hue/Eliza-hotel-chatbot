@@ -4,22 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hotel Eliza Istanbul | Resmi Web Sitesi</title>
-  <meta name="description" content="Hotel Eliza Istanbul - Tarihi Yarımada'da, Beyazıt ve Çemberlitaş tramvay duraklarına 3 dakika, Kapalıçarşı ve Sultanahmet'e yürüme mesafesinde konforlu konaklama.">
+  <meta name="description" content="Hotel Eliza Istanbul - Tarihi Yarımada'da, Beyazıt ve Çemberlitaş tramvay duraklarına 3 dakika yürüme mesafesinde konforlu konaklama.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
   <style>
-    /* ======================================================== */
-    /* DESIGN TOKENS & SYSTEM VARIABLES (GÖRSEL KİMLİK)        */
-    /* ======================================================== */
     :root {
       --color-bg: #FAF8F4;
       --color-surface: #FFFFFF;
-      --color-surface-subtle: #F4EFEA;
+      --color-surface-subtle: #F5EFE8;
       --color-text: #242420;
       --color-text-muted: #646059;
-      --color-text-light: #8C877D;
       --color-gold: #A8864B;
       --color-gold-hover: #8F7038;
       --color-gold-light: #F7F3EB;
@@ -31,7 +27,6 @@
       --color-booking: #003580;
       --color-booking-hover: #00224F;
       --color-error: #B91C1C;
-      --color-error-bg: #FEF2F2;
 
       --font-serif: 'Playfair Display', Georgia, serif;
       --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
@@ -56,16 +51,8 @@
       }
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body {
       font-family: var(--font-sans);
       background-color: var(--color-bg);
@@ -75,9 +62,7 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    section[id] {
-      scroll-margin-top: 90px;
-    }
+    section[id] { scroll-margin-top: 90px; }
 
     .icon {
       display: inline-flex;
@@ -96,12 +81,10 @@
       stroke-linejoin: round;
     }
 
-    /* ======================================================== */
-    /* TOP UTILITY BAR                                          */
-    /* ======================================================== */
+    /* Top Utility Bar */
     .top-bar {
       background: var(--color-dark);
-      color: rgba(255, 255, 255, 0.82);
+      color: rgba(255, 255, 255, 0.85);
       font-size: 0.8rem;
       padding: 0.5rem 1.5rem;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -130,13 +113,9 @@
       text-decoration: none;
       transition: color var(--transition-base);
     }
-    .top-bar a:hover {
-      color: var(--color-gold);
-    }
+    .top-bar a:hover { color: var(--color-gold); }
 
-    /* ======================================================== */
-    /* HEADER & NAVIGATION (ÜST MENÜ DÜZENİ)                     */
-    /* ======================================================== */
+    /* Header */
     header {
       background: rgba(255, 255, 255, 0.98);
       backdrop-filter: blur(12px);
@@ -177,7 +156,6 @@
       font-weight: 600;
       margin-top: 2px;
     }
-
     .nav-menu {
       display: flex;
       align-items: center;
@@ -191,19 +169,14 @@
       font-size: 0.9rem;
       transition: color var(--transition-base);
       padding: 0.4rem 0;
-      position: relative;
     }
-    .nav-link:hover, .nav-link.active {
-      color: var(--color-gold);
-    }
+    .nav-link:hover { color: var(--color-gold); }
 
     .header-actions {
       display: flex;
       align-items: center;
       gap: 0.8rem;
     }
-
-    /* Language Switcher */
     .lang-switcher {
       display: inline-flex;
       align-items: center;
@@ -230,8 +203,6 @@
       box-shadow: 0 1px 4px rgba(0,0,0,0.08);
       font-weight: 700;
     }
-
-    /* Header Primary Action Button */
     .btn-header-primary {
       background: var(--color-dark);
       color: #fff !important;
@@ -245,11 +216,8 @@
       gap: 0.4rem;
       transition: all var(--transition-base);
     }
-    .btn-header-primary:hover {
-      background: var(--color-gold);
-    }
+    .btn-header-primary:hover { background: var(--color-gold); }
 
-    /* Secondary Nav Links */
     .header-secondary-icons {
       display: flex;
       align-items: center;
@@ -273,7 +241,6 @@
       background: var(--color-gold-light);
     }
 
-    /* Mobile Hamburger Button */
     .btn-hamburger {
       display: none;
       background: transparent;
@@ -299,10 +266,7 @@
       opacity: 0;
       transition: opacity var(--transition-base);
     }
-    .mobile-drawer.open {
-      display: flex;
-      opacity: 1;
-    }
+    .mobile-drawer.open { display: flex; opacity: 1; }
     .mobile-drawer-content {
       background: var(--color-surface);
       width: 300px;
@@ -316,9 +280,7 @@
       transform: translateX(100%);
       transition: transform var(--transition-base);
     }
-    .mobile-drawer.open .mobile-drawer-content {
-      transform: translateX(0);
-    }
+    .mobile-drawer.open .mobile-drawer-content { transform: translateX(0); }
     .mobile-drawer-header {
       display: flex;
       justify-content: space-between;
@@ -333,7 +295,6 @@
       font-size: 1.4rem;
       cursor: pointer;
       color: var(--color-dark);
-      padding: 4px;
     }
     .mobile-nav-links {
       list-style: none;
@@ -348,7 +309,6 @@
       font-size: 1.05rem;
       font-weight: 600;
       display: block;
-      padding: 0.4rem 0;
     }
     .mobile-drawer-actions {
       margin-top: auto;
@@ -357,21 +317,16 @@
       gap: 0.8rem;
     }
 
-    /* ======================================================== */
-    /* AÇILIŞ ALANI (HERO SECTION)                              */
-    /* ======================================================== */
+    /* Hero */
     .hero {
       position: relative;
-      background: linear-gradient(180deg, rgba(30, 30, 26, 0.48) 0%, rgba(30, 30, 26, 0.58) 100%),
+      background: linear-gradient(180deg, rgba(30, 30, 26, 0.45) 0%, rgba(30, 30, 26, 0.55) 100%),
                   url('https://cf.bstatic.com/xdata/images/hotel/max1024x768/911185635.jpg?k=7a6598d6a1c18a281df199298f4e4dc060bf32afc7f48e5e13e9662813087180&o=') center/cover no-repeat;
       color: #fff;
       padding: 6.5rem 1.5rem 5.5rem;
       text-align: center;
     }
-    .hero-content {
-      max-width: 820px;
-      margin: 0 auto;
-    }
+    .hero-content { max-width: 820px; margin: 0 auto; }
     .hero-badge {
       display: inline-flex;
       align-items: center;
@@ -394,7 +349,6 @@
       line-height: 1.22;
       margin-bottom: 1.1rem;
       font-weight: 600;
-      letter-spacing: -0.3px;
     }
     .hero p {
       font-size: 1.05rem;
@@ -404,16 +358,12 @@
       max-width: 680px;
       margin-left: auto;
       margin-right: auto;
-      line-height: 1.65;
     }
-
-    /* 3 Doğrulanmış Avantaj */
     .hero-advantages {
       display: flex;
       justify-content: center;
       gap: 1.2rem;
       flex-wrap: wrap;
-      margin-bottom: 0.5rem;
     }
     .advantage-pill {
       display: inline-flex;
@@ -427,13 +377,9 @@
       border: 1px solid rgba(255, 255, 255, 0.2);
       color: rgba(255, 255, 255, 0.95);
     }
-    .advantage-pill .icon {
-      color: var(--color-gold);
-    }
+    .advantage-pill .icon { color: var(--color-gold); }
 
-    /* ======================================================== */
-    /* REZERVASYON AKIŞI & TARİH SEÇİM ÇUBUĞU                   */
-    /* ======================================================== */
+    /* Booking Strip */
     .booking-bar-wrapper {
       max-width: 1040px;
       margin: -2.8rem auto 4.5rem;
@@ -450,4 +396,2157 @@
     }
     .booking-form {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr))
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)) 200px;
+      gap: 1.1rem;
+      align-items: flex-end;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .form-label {
+      font-size: 0.74rem;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .form-control {
+      width: 100%;
+      border: 1.5px solid var(--color-border);
+      padding: 0.7rem 0.85rem;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      color: var(--color-text);
+      background: var(--color-surface);
+      transition: border-color var(--transition-base);
+    }
+    .form-control:focus {
+      border-color: var(--color-gold);
+      outline: none;
+    }
+    .btn-submit-booking {
+      background: var(--color-dark);
+      color: #fff;
+      border: 1.5px solid var(--color-dark);
+      padding: 0.72rem 1rem;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all var(--transition-base);
+      font-family: var(--font-sans);
+      height: 44px;
+    }
+    .btn-submit-booking:hover {
+      background: var(--color-gold);
+      border-color: var(--color-gold);
+    }
+    .booking-meta-row {
+      margin-top: 0.9rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      font-size: 0.82rem;
+      padding-top: 0.8rem;
+      border-top: 1px solid var(--color-border-subtle);
+    }
+    .booking-validation-error {
+      color: var(--color-error);
+      display: none;
+      align-items: center;
+      gap: 0.4rem;
+      font-weight: 500;
+    }
+    .booking-secondary-link {
+      color: var(--color-booking);
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .booking-secondary-link:hover { text-decoration: underline; }
+
+    /* Section Headers */
+    .section {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 4.5rem 1.5rem;
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 3.2rem;
+    }
+    .section-eyebrow {
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--color-gold);
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      display: inline-block;
+    }
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: 2.2rem;
+      color: var(--color-dark);
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+    }
+    .section-subtitle {
+      color: var(--color-text-muted);
+      font-size: 0.98rem;
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    /* Rooms */
+    .rooms-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 2rem;
+    }
+    .room-card {
+      background: var(--color-surface);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      transition: transform var(--transition-base), box-shadow var(--transition-base);
+    }
+    .room-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+    .room-media {
+      position: relative;
+      height: 230px;
+      cursor: pointer;
+      overflow: hidden;
+      background: #eee;
+    }
+    .room-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .room-card:hover .room-media img { transform: scale(1.04); }
+    .room-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(30, 30, 26, 0.85);
+      backdrop-filter: blur(4px);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.3rem 0.65rem;
+      border-radius: var(--radius-sm);
+    }
+    .btn-quick-inspect {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      background: rgba(255, 255, 255, 0.92);
+      color: var(--color-dark);
+      padding: 0.35rem 0.75rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.76rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .room-content {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    .room-title {
+      font-family: var(--font-serif);
+      font-size: 1.3rem;
+      color: var(--color-dark);
+      margin-bottom: 0.4rem;
+      font-weight: 600;
+    }
+    .room-specs-strip {
+      display: flex;
+      gap: 0.9rem;
+      font-size: 0.8rem;
+      color: var(--color-gold);
+      font-weight: 600;
+      margin-bottom: 0.9rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 1px dashed var(--color-border);
+    }
+    .room-features-list {
+      list-style: none;
+      font-size: 0.84rem;
+      color: var(--color-text-muted);
+      margin-bottom: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .room-features-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .room-features-list li .icon {
+      color: var(--color-gold);
+      font-size: 0.9rem;
+    }
+    .room-bottom {
+      margin-top: auto;
+      padding-top: 1rem;
+      border-top: 1px solid var(--color-border);
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+    .room-price-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .price-value {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--color-dark);
+      font-family: var(--font-serif);
+    }
+    .price-period {
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+      font-family: var(--font-sans);
+    }
+    .room-btn-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+    }
+    .btn-room-secondary {
+      background: var(--color-surface-subtle);
+      border: 1px solid var(--color-border);
+      color: var(--color-dark);
+      padding: 0.6rem 0.5rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: all var(--transition-base);
+    }
+    .btn-room-secondary:hover {
+      background: var(--color-gold-light);
+      border-color: var(--color-gold);
+      color: var(--color-gold-hover);
+    }
+    .btn-room-primary {
+      background: var(--color-dark);
+      color: #fff;
+      padding: 0.6rem 0.5rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      transition: all var(--transition-base);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+    }
+    .btn-room-primary:hover { background: var(--color-gold); }
+
+    /* Amenities */
+    .amenities-section {
+      background: var(--color-surface);
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .amenities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.8rem;
+    }
+    .amenity-card {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 1.8rem 1.6rem;
+      text-align: center;
+      transition: transform var(--transition-base);
+    }
+    .amenity-card:hover { transform: translateY(-3px); }
+    .amenity-icon-box {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-md);
+      background: var(--color-surface);
+      color: var(--color-gold);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--color-border);
+    }
+    .amenity-card h3 {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      color: var(--color-dark);
+      margin-bottom: 0.4rem;
+      font-weight: 600;
+    }
+    .amenity-card p {
+      font-size: 0.86rem;
+      color: var(--color-text-muted);
+      line-height: 1.6;
+    }
+
+    /* Location & Map */
+    .location-section { background: var(--color-bg); }
+    .map-frame {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+    }
+    .map-top-bar {
+      padding: 1.2rem 1.8rem;
+      background: var(--color-dark);
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .map-top-info h3 {
+      font-family: var(--font-serif);
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: #fff;
+    }
+    .map-top-info p {
+      font-size: 0.84rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+    .map-actions { display: flex; gap: 0.6rem; }
+    .btn-map-action {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #fff;
+      padding: 0.45rem 0.95rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .btn-map-action:hover { background: rgba(255, 255, 255, 0.22); }
+
+    .svg-map-wrapper {
+      position: relative;
+      background: #DCEEF7;
+      min-height: 480px;
+      width: 100%;
+      overflow: hidden;
+    }
+    .svg-map {
+      width: 100%;
+      height: 100%;
+      min-height: 480px;
+      display: block;
+    }
+    .walking-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      padding: 1.5rem 1.8rem;
+      background: var(--color-surface);
+      border-top: 1px solid var(--color-border);
+    }
+    .walking-card {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.8rem 1rem;
+      background: var(--color-bg);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-sm);
+    }
+    .walking-icon-circle {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #fff;
+      color: var(--color-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--color-border);
+      flex-shrink: 0;
+      font-size: 1.1rem;
+    }
+    .walking-meta h4 {
+      font-size: 0.88rem;
+      color: var(--color-dark);
+      font-weight: 600;
+    }
+    .walking-meta span {
+      font-size: 0.78rem;
+      color: var(--color-gold);
+      font-weight: 600;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--color-dark);
+      color: rgba(255, 255, 255, 0.8);
+      padding: 4.5rem 1.5rem 2.5rem;
+    }
+    .footer-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+    .footer-col h4 {
+      color: #fff;
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 1.2rem;
+    }
+    .footer-col p, .footer-col a {
+      font-size: 0.88rem;
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      line-height: 1.85;
+      display: block;
+    }
+    .footer-col a:hover { color: var(--color-gold); }
+    .footer-legal-badge {
+      display: inline-block;
+      margin-top: 0.8rem;
+      font-size: 0.76rem;
+      color: var(--color-gold);
+      border: 1px solid rgba(168, 134, 75, 0.4);
+      padding: 0.25rem 0.6rem;
+      border-radius: var(--radius-sm);
+    }
+    .footer-bottom {
+      max-width: 1240px;
+      margin: 0 auto;
+      text-align: center;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    /* Room Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(30, 30, 26, 0.7);
+      backdrop-filter: blur(5px);
+      z-index: 99999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal-box {
+      background: var(--color-surface);
+      width: 100%;
+      max-width: 860px;
+      max-height: 90vh;
+      border-radius: var(--radius-lg);
+      overflow-y: auto;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--color-border);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .btn-close-modal {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      width: 36px;
+      height: 36px;
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid var(--color-border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      font-size: 1.1rem;
+      color: var(--color-dark);
+    }
+    .modal-gallery-view {
+      position: relative;
+      height: 340px;
+      background: #111;
+    }
+    .modal-gallery-view img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .modal-thumbs-row {
+      display: flex;
+      gap: 8px;
+      padding: 10px 16px;
+      background: var(--color-surface-subtle);
+      border-bottom: 1px solid var(--color-border);
+      overflow-x: auto;
+    }
+    .modal-thumb {
+      width: 64px;
+      height: 48px;
+      border-radius: 4px;
+      object-fit: cover;
+      cursor: pointer;
+      border: 2px solid transparent;
+      opacity: 0.65;
+    }
+    .modal-thumb.active { border-color: var(--color-gold); opacity: 1; }
+    .modal-content-area { padding: 1.8rem; }
+    .modal-header-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .modal-title {
+      font-family: var(--font-serif);
+      font-size: 1.7rem;
+      font-weight: 600;
+      color: var(--color-dark);
+    }
+    .modal-specs-badge {
+      font-size: 0.85rem;
+      color: var(--color-gold);
+      font-weight: 600;
+    }
+    .modal-price-box { text-align: right; }
+    .modal-price-val {
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--color-dark);
+    }
+    .modal-desc {
+      font-size: 0.92rem;
+      color: var(--color-text-muted);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+    .modal-amenities-section-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--color-dark);
+      margin-bottom: 0.8rem;
+    }
+    .modal-amenities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.7rem;
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      padding: 1.1rem;
+      border-radius: var(--radius-sm);
+      margin-bottom: 1.5rem;
+    }
+    .modal-amenity-cell {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.84rem;
+      color: var(--color-text);
+    }
+    .modal-amenity-cell .icon { color: var(--color-gold); }
+    .modal-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid var(--color-border);
+    }
+    .modal-policy-note {
+      font-size: 0.82rem;
+      color: var(--color-text-muted);
+    }
+    .modal-cta-group { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+    .btn-modal-booking {
+      background: var(--color-booking);
+      color: #fff;
+      padding: 0.7rem 1.3rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.86rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .btn-modal-wa {
+      background: var(--color-whatsapp);
+      color: #fff;
+      padding: 0.7rem 1.3rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.86rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* Floating Chatbot */
+    .chatbot-launcher {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9998;
+    }
+    .btn-float-chat {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: var(--color-dark);
+      color: #fff;
+      border: 2px solid var(--color-gold);
+      box-shadow: var(--shadow-lg);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      transition: transform var(--transition-base);
+    }
+    .btn-float-chat:hover { transform: scale(1.06); }
+    .chat-online-dot {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--color-whatsapp);
+      border: 2px solid #fff;
+    }
+    .chat-box {
+      position: fixed;
+      bottom: 95px;
+      right: 24px;
+      width: 380px;
+      max-width: calc(100vw - 32px);
+      height: 560px;
+      max-height: calc(100vh - 120px);
+      background: var(--color-surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--color-border);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 9999;
+    }
+    .chat-box.open { display: flex; }
+    .chat-header {
+      background: var(--color-dark);
+      color: #fff;
+      padding: 1rem 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .chat-header-details h4 { font-size: 0.92rem; font-weight: 600; }
+    .chat-header-details span {
+      font-size: 0.72rem;
+      color: #34D399;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .chat-header-details span::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #34D399;
+    }
+    .btn-chat-close {
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+    .chat-wa-alert {
+      background: var(--color-gold-light);
+      border-bottom: 1px solid var(--color-border);
+      padding: 7px 12px;
+      font-size: 0.78rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--color-dark);
+    }
+    .chat-wa-alert a {
+      color: var(--color-whatsapp-hover);
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .chat-body {
+      flex: 1;
+      padding: 1rem;
+      overflow-y: auto;
+      background: #FCFBF9;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+    .chat-msg {
+      max-width: 84%;
+      padding: 0.7rem 0.9rem;
+      border-radius: var(--radius-md);
+      font-size: 0.86rem;
+      line-height: 1.45;
+      word-break: break-word;
+    }
+    .chat-msg-bot {
+      background: #EDE8DE;
+      color: var(--color-dark);
+      align-self: flex-start;
+      border-bottom-left-radius: 2px;
+    }
+    .chat-msg-user {
+      background: var(--color-dark);
+      color: #fff;
+      align-self: flex-end;
+      border-bottom-right-radius: 2px;
+    }
+    .chat-quick-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .chat-chip {
+      background: #fff;
+      border: 1px solid var(--color-border);
+      padding: 4px 9px;
+      border-radius: var(--radius-pill);
+      font-size: 0.74rem;
+      color: var(--color-dark);
+      cursor: pointer;
+    }
+    .chat-chip:hover {
+      border-color: var(--color-gold);
+      background: var(--color-gold-light);
+    }
+    .chat-typing {
+      display: none;
+      align-self: flex-start;
+      background: #EDE8DE;
+      padding: 8px 14px;
+      border-radius: var(--radius-md);
+      gap: 4px;
+    }
+    .chat-typing span {
+      width: 5px;
+      height: 5px;
+      background: #777;
+      border-radius: 50%;
+      animation: typingPulse 1.2s infinite ease-in-out;
+    }
+    .chat-typing span:nth-child(2) { animation-delay: 0.2s; }
+    .chat-typing span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes typingPulse {
+      0%, 80%, 100% { opacity: 0.2; transform: scale(0.8); }
+      40% { opacity: 1; transform: scale(1.1); }
+    }
+    .chat-form {
+      padding: 0.75rem 1rem;
+      background: #fff;
+      border-top: 1px solid var(--color-border);
+      display: flex;
+      gap: 8px;
+    }
+    .chat-input {
+      flex: 1;
+      padding: 0.6rem 0.85rem;
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-pill);
+      font-size: 0.86rem;
+      font-family: inherit;
+      outline: none;
+    }
+    .chat-input:focus { border-color: var(--color-gold); }
+    .btn-chat-send {
+      background: var(--color-dark);
+      color: #fff;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    @media (max-width: 900px) {
+      .nav-menu, .header-secondary-icons { display: none; }
+      .btn-hamburger { display: flex; }
+      .hero h1 { font-size: 2.2rem; }
+      .booking-form { grid-template-columns: 1fr; }
+      .booking-bar-wrapper { margin-top: -1.5rem; }
+      .top-bar-left span:nth-child(2) { display: none; }
+      .chat-box { right: 16px; left: 16px; width: auto; bottom: 85px; height: 72vh; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Utility Bar -->
+  <div class="top-bar">
+    <div class="top-bar-inner">
+      <div class="top-bar-left">
+        <span class="top-bar-item">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></span>
+          <span>Mimar Hayrettin Mah. Doğramacı Sk. No:19/5, Fatih / İstanbul</span>
+        </span>
+        <span class="top-bar-item">
+          <span class="icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></span>
+          <span data-i18n="topbar_tram">Beyazıt & Çemberlitaş Tramvayına 3 Dk Yürüme</span>
+        </span>
+      </div>
+      <div class="top-bar-right">
+        <span class="top-bar-item">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></span>
+          <a href="tel:+902125208100">+90 212 520 81 00</a>
+        </span>
+        <span class="top-bar-item">
+          <span class="icon" style="color:var(--color-whatsapp)"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg></span>
+          <a href="https://wa.me/905419014785?text=Merhaba,%20rezervasyon%20hakkında%20bilgi%20almak%20istiyorum." target="_blank" data-i18n="topbar_whatsapp">WhatsApp</a>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="nav-container">
+      <a href="#" class="logo">
+        <span class="logo-main">HOTEL ELIZA</span>
+        <span class="logo-sub">ISTANBUL</span>
+      </a>
+
+      <ul class="nav-menu">
+        <li><a href="#rooms" class="nav-link" data-i18n="nav_rooms">Odalar</a></li>
+        <li><a href="#amenities" class="nav-link" data-i18n="nav_amenities">Olanaklar</a></li>
+        <li><a href="#location" class="nav-link" data-i18n="nav_location">Konum</a></li>
+        <li><a href="#contact" class="nav-link" data-i18n="nav_contact">İletişim</a></li>
+      </ul>
+
+      <div class="header-actions">
+        <div class="lang-switcher">
+          <button class="lang-btn active" id="btnLangTR" onclick="switchLanguage('tr')">TR</button>
+          <button class="lang-btn" id="btnLangEN" onclick="switchLanguage('en')">EN</button>
+        </div>
+
+        <a href="#booking-form" class="btn-header-primary" data-i18n="nav_btn_check">
+          <span class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></span>
+          <span>Müsaitliği Kontrol Et</span>
+        </a>
+
+        <div class="header-secondary-icons">
+          <a href="https://www.booking.com/hotel/tr/eliza-istanbul.html" target="_blank" class="icon-link-secondary" title="Booking.com" aria-label="Booking.com">
+            <span class="icon"><svg viewBox="0 0 24 24"><path d="M3 21h18"></path><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"></path></svg></span>
+          </a>
+          <a href="https://wa.me/905419014785?text=Merhaba,%20Eliza%20Hotel%20için%20bilgi%20almak%20istiyorum." target="_blank" class="icon-link-secondary" title="WhatsApp" aria-label="WhatsApp">
+            <span class="icon" style="color:var(--color-whatsapp)"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg></span>
+          </a>
+        </div>
+
+        <button class="btn-hamburger" onclick="toggleMobileDrawer()" aria-label="Menüyü Aç" aria-expanded="false" id="btnHamburger">
+          <span class="icon"><svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-drawer" id="mobileDrawer" onclick="handleDrawerBackdrop(event)">
+    <div class="mobile-drawer-content">
+      <div class="mobile-drawer-header">
+        <span class="logo-main" style="font-size:1.3rem;">HOTEL ELIZA</span>
+        <button class="btn-close-drawer" onclick="toggleMobileDrawer()" aria-label="Kapat">✕</button>
+      </div>
+      <ul class="mobile-nav-links">
+        <li><a href="#rooms" onclick="toggleMobileDrawer()" data-i18n="nav_rooms">Odalar</a></li>
+        <li><a href="#amenities" onclick="toggleMobileDrawer()" data-i18n="nav_amenities">Olanaklar</a></li>
+        <li><a href="#location" onclick="toggleMobileDrawer()" data-i18n="nav_location">Konum</a></li>
+        <li><a href="#contact" onclick="toggleMobileDrawer()" data-i18n="nav_contact">İletişim</a></li>
+      </ul>
+      <div class="mobile-drawer-actions">
+        <a href="#booking-form" onclick="toggleMobileDrawer()" class="btn-header-primary" style="justify-content:center;" data-i18n="nav_btn_check">
+          Müsaitliği Kontrol Et
+        </a>
+        <a href="https://www.booking.com/hotel/tr/eliza-istanbul.html" target="_blank" class="btn-room-secondary" style="justify-content:center; display:flex; align-items:center; gap:0.4rem;">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M3 21h18"></path><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"></path></svg></span>
+          <span>Booking.com'da Gör</span>
+        </a>
+        <a href="https://wa.me/905419014785?text=Merhaba,%20rezervasyon%20hakkında%20bilgi%20almak%20istiyorum." target="_blank" class="btn-room-secondary" style="justify-content:center; display:flex; align-items:center; gap:0.4rem; color:var(--color-whatsapp-hover);">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg></span>
+          <span>WhatsApp Hattı</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge" data-i18n="hero_badge">TARİHİ YARIMADA • FATİH / İSTANBUL</div>
+      <h1 data-i18n="hero_title">İstanbul’un tarihi kalbinde, konforlu bir konaklama.</h1>
+      <p data-i18n="hero_desc">Beyazıt ve Çemberlitaş tramvay duraklarına 3 dakika; Kapalıçarşı, Sultanahmet ve Ayasofya camiine yürüme mesafesinde bağımsız otel konforu.</p>
+      
+      <div class="hero-advantages">
+        <div class="advantage-pill">
+          <span class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M8 12h8"></path><path d="M12 8v8"></path></svg></span>
+          <span data-i18n="hero_adv_tram">250m Tramvay Erişimi (T1)</span>
+        </div>
+        <div class="advantage-pill">
+          <span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></span>
+          <span data-i18n="hero_adv_reception">7/24 Kesintisiz Resepsiyon</span>
+        </div>
+        <div class="advantage-pill">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg></span>
+          <span data-i18n="hero_adv_wifi">Yüksek Hızlı Ücretsiz Wi-Fi</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Booking Strip -->
+  <div class="booking-bar-wrapper" id="booking-form">
+    <div class="booking-card">
+      <form class="booking-form" onsubmit="handleBookingSubmit(event)">
+        <div class="form-group">
+          <label class="form-label" for="checkin">
+            <span class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line></svg></span>
+            <span data-i18n="form_checkin">Giriş Tarihi</span>
+          </label>
+          <input type="date" class="form-control" id="checkin" required onchange="handleDateChange()">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="checkout">
+            <span class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line></svg></span>
+            <span data-i18n="form_checkout">Çıkış Tarihi</span>
+          </label>
+          <input type="date" class="form-control" id="checkout" required onchange="handleDateChange()">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="guests">
+            <span class="icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>
+            <span data-i18n="form_guests">Misafir Sayısı</span>
+          </label>
+          <select class="form-control" id="guests">
+            <option value="1" data-i18n="opt_1guest">1 Yetişkin</option>
+            <option value="2" selected data-i18n="opt_2guests">2 Yetişkin</option>
+            <option value="3" data-i18n="opt_3guests">3 Yetişkin</option>
+            <option value="4" data-i18n="opt_4guests">4 Yetişkin / Aile</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-submit-booking">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M22 2L11 13"></path><path d="M22 2l-7 20-4-9-9-4 20-7z"></path></svg></span>
+          <span data-i18n="btn_request_avail">Müsaitlik Talebi Gönder</span>
+        </button>
+      </form>
+
+      <div class="booking-meta-row">
+        <div class="booking-validation-error" id="bookingErrorMsg">
+          <span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg></span>
+          <span id="bookingErrorText">Çıkış tarihi giriş tarihinden sonraki bir gün olmalıdır.</span>
+        </div>
+        <div style="margin-left:auto;">
+          <a href="https://www.booking.com/hotel/tr/eliza-istanbul.html" target="_blank" class="booking-secondary-link" id="linkBookingDirect" data-i18n="link_view_booking">
+            <span>Booking.com'da Gör ➔</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Odalar (Rooms Section) -->
+  <section class="section" id="rooms">
+    <div class="section-header">
+      <span class="section-eyebrow" data-i18n="rooms_eyebrow">Konaklama</span>
+      <h2 class="section-title" data-i18n="rooms_title">Özenle Tasarlanmış Odalarımız</h2>
+      <p class="section-subtitle" data-i18n="rooms_subtitle">Tüm odalarımızda klima, ses yalıtımı, özel banyo, minibar ve ücretsiz fiber Wi-Fi standart olarak sunulmaktadır.</p>
+    </div>
+
+    <!-- Static HTML Rooms Grid (Zero dependence on JavaScript to view) -->
+    <div class="rooms-grid" id="roomsGridContainer">
+      
+      <!-- Room 1: Standard Twin -->
+      <div class="room-card" id="card-twin">
+        <div class="room-media" onclick="openRoomModal('twin')">
+          <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/911185635.jpg?k=7a6598d6a1c18a281df199298f4e4dc060bf32afc7f48e5e13e9662813087180&o=" alt="Standard Twin Room" loading="lazy">
+          <span class="room-badge" data-room-badge="twin">Standart Oda</span>
+          <span class="btn-quick-inspect">
+            <span class="icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
+            <span data-i18n="btn_inspect">Detayları İncele</span>
+          </span>
+        </div>
+        <div class="room-content">
+          <h3 class="room-title" data-room-title="twin">Standard Twin Room (İki Ayrı Yatak)</h3>
+          <div class="room-specs-strip" data-room-specs="twin">20 m² • 2 Yetişkin • 2 Ayrı Yatak</div>
+          <ul class="room-features-list" data-room-features="twin">
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Klima, Isıtma & Düz Ekran LCD TV</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Özel Banyo, Duş, Saç Kurutma & Terlik</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Elektrikli Su Isıtıcısı, Çay/Kahve İkramı</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Minibar, Çalışma Masası & Kasa</li>
+          </ul>
+          <div class="room-bottom">
+            <div class="room-price-line">
+              <div>
+                <span class="price-value">86,40 €</span>
+                <span class="price-period" data-i18n="per_night">/ Gece</span>
+              </div>
+            </div>
+            <div class="room-btn-group">
+              <button class="btn-room-secondary" onclick="openRoomModal('twin')" data-i18n="btn_inspect">Detayları İncele</button>
+              <button class="btn-room-primary" onclick="initiateRoomBooking('twin')"><span data-i18n="btn_book_card">Müsaitlik Sor</span> ➔</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Room 2: Standard Double -->
+      <div class="room-card" id="card-double">
+        <div class="room-media" onclick="openRoomModal('double')">
+          <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?q=80&w=900&auto=format&fit=crop" alt="Standard Double Room" loading="lazy">
+          <span class="room-badge" data-room-badge="double">Çift Kişilik</span>
+          <span class="btn-quick-inspect">
+            <span class="icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
+            <span data-i18n="btn_inspect">Detayları İncele</span>
+          </span>
+        </div>
+        <div class="room-content">
+          <h3 class="room-title" data-room-title="double">Standard Double Room (Geniş Çift Kişilik)</h3>
+          <div class="room-specs-strip" data-room-specs="double">20 m² • 2 Yetişkin • 1 Büyük Çift Kişilik Yatak</div>
+          <ul class="room-features-list" data-room-features="double">
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Geniş Ortopedik King Yatak</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Özel Banyo & Kaliteli Buklet Ürünleri</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Şehir Manzaralı Ses Yalıtımlı Pencereler</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Ücretsiz Yüksek Hızlı Fiber Wi-Fi</li>
+          </ul>
+          <div class="room-bottom">
+            <div class="room-price-line">
+              <div>
+                <span class="price-value">86,40 €</span>
+                <span class="price-period" data-i18n="per_night">/ Gece</span>
+              </div>
+            </div>
+            <div class="room-btn-group">
+              <button class="btn-room-secondary" onclick="openRoomModal('double')" data-i18n="btn_inspect">Detayları İncele</button>
+              <button class="btn-room-primary" onclick="initiateRoomBooking('double')"><span data-i18n="btn_book_card">Müsaitlik Sor</span> ➔</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Room 3: Deluxe Room -->
+      <div class="room-card" id="card-deluxe">
+        <div class="room-media" onclick="openRoomModal('deluxe')">
+          <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=900&auto=format&fit=crop" alt="Deluxe Room" loading="lazy">
+          <span class="room-badge" data-room-badge="deluxe">Şehir Manzarası</span>
+          <span class="btn-quick-inspect">
+            <span class="icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
+            <span data-i18n="btn_inspect">Detayları İncele</span>
+          </span>
+        </div>
+        <div class="room-content">
+          <h3 class="room-title" data-room-title="deluxe">Deluxe Şehir Manzaralı Oda</h3>
+          <div class="room-specs-strip" data-room-specs="deluxe">25 m² • 2-3 Yetişkin • King Yatak + Oturma Alanı</div>
+          <ul class="room-features-list" data-room-features="deluxe">
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Tarihi İstanbul Sokakları Manzarası</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Geniş Oturma Alanı & Sehpa</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Lüks Bornoz, Terlik & Premium Buklet</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Akıllı TV, Zengin Minibar & Kasa</li>
+          </ul>
+          <div class="room-bottom">
+            <div class="room-price-line">
+              <div>
+                <span class="price-value">110,00 €</span>
+                <span class="price-period" data-i18n="per_night">/ Gece</span>
+              </div>
+            </div>
+            <div class="room-btn-group">
+              <button class="btn-room-secondary" onclick="openRoomModal('deluxe')" data-i18n="btn_inspect">Detayları İncele</button>
+              <button class="btn-room-primary" onclick="initiateRoomBooking('deluxe')"><span data-i18n="btn_book_card">Müsaitlik Sor</span> ➔</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Room 4: Family Room -->
+      <div class="room-card" id="card-family">
+        <div class="room-media" onclick="openRoomModal('family')">
+          <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?q=80&w=900&auto=format&fit=crop" alt="Family Room" loading="lazy">
+          <span class="room-badge" data-room-badge="family">Aile Boyu Konfor</span>
+          <span class="btn-quick-inspect">
+            <span class="icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
+            <span data-i18n="btn_inspect">Detayları İncele</span>
+          </span>
+        </div>
+        <div class="room-content">
+          <h3 class="room-title" data-room-title="family">Family Room (Geniş Aile Odası)</h3>
+          <div class="room-specs-strip" data-room-specs="family">35 m² • 3-4 Misafir • 1 Çift + 2 Tek Kişilik Yatak</div>
+          <ul class="room-features-list" data-room-features="family">
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> 3-4 Kişilik Geniş ve Ferah Düzen</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Talep Üzerine Ücretsiz Bebek Karyolası</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Geniş Banyo & Ekstra Havlu Setleri</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Buzdolabı, Su Isıtıcısı & Çay Seti</li>
+          </ul>
+          <div class="room-bottom">
+            <div class="room-price-line">
+              <div>
+                <span class="price-value">145,00 €</span>
+                <span class="price-period" data-i18n="per_night">/ Gece</span>
+              </div>
+            </div>
+            <div class="room-btn-group">
+              <button class="btn-room-secondary" onclick="openRoomModal('family')" data-i18n="btn_inspect">Detayları İncele</button>
+              <button class="btn-room-primary" onclick="initiateRoomBooking('family')"><span data-i18n="btn_book_card">Müsaitlik Sor</span> ➔</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Room 5: Quadruple Room -->
+      <div class="room-card" id="card-quad">
+        <div class="room-media" onclick="openRoomModal('quad')">
+          <img src="https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?q=80&w=900&auto=format&fit=crop" alt="Quadruple Room" loading="lazy">
+          <span class="room-badge" data-room-badge="quad">4 Kişilik Grup</span>
+          <span class="btn-quick-inspect">
+            <span class="icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
+            <span data-i18n="btn_inspect">Detayları İncele</span>
+          </span>
+        </div>
+        <div class="room-content">
+          <h3 class="room-title" data-room-title="quad">Quadruple Room (4 Kişilik Oda)</h3>
+          <div class="room-specs-strip" data-room-specs="quad">30 m² • 4 Yetişkin • 4 Konforlu Yatak</div>
+          <ul class="room-features-list" data-room-features="quad">
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> 4 Kişilik Rahat Yatak Düzeni</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Bağımsız Klima & Geniş Gardıroplar</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Kesintisiz 24 Saat Sıcak Su</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> LCD TV & Hızlı Fiber Wi-Fi</li>
+          </ul>
+          <div class="room-bottom">
+            <div class="room-price-line">
+              <div>
+                <span class="price-value">130,00 €</span>
+                <span class="price-period" data-i18n="per_night">/ Gece</span>
+              </div>
+            </div>
+            <div class="room-btn-group">
+              <button class="btn-room-secondary" onclick="openRoomModal('quad')" data-i18n="btn_inspect">Detayları İncele</button>
+              <button class="btn-room-primary" onclick="initiateRoomBooking('quad')"><span data-i18n="btn_book_card">Müsaitlik Sor</span> ➔</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Amenities -->
+  <section class="section amenities-section" id="amenities">
+    <div class="section-header">
+      <span class="section-eyebrow" data-i18n="amenities_eyebrow">Ayrıcalıklar</span>
+      <h2 class="section-title" data-i18n="amenities_title">Otel Olanakları ve Hizmetleri</h2>
+      <p class="section-subtitle" data-i18n="amenities_subtitle">Konforlu ve huzurlu bir İstanbul seyahati için tasarlanmış temel hizmetlerimiz.</p>
+    </div>
+
+    <div class="amenities-grid">
+      <div class="amenity-card">
+        <div class="amenity-icon-box">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg></span>
+        </div>
+        <h3 data-i18n="amenity_1_title">Açık Büfe Kahvaltı</h3>
+        <p data-i18n="amenity_1_desc">Taze yerel ürünler, Türk peynirleri ve hamur işleriyle her sabah zengin açık büfe kahvaltı.</p>
+      </div>
+
+      <div class="amenity-card">
+        <div class="amenity-icon-box">
+          <span class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg></span>
+        </div>
+        <h3 data-i18n="amenity_2_title">Asansör & 7/24 Danışma</h3>
+        <p data-i18n="amenity_2_desc">Günün her saati check-in imkanı, bagaj muhafazası ve katlara rahat asansör erişimi.</p>
+      </div>
+
+      <div class="amenity-card">
+        <div class="amenity-icon-box">
+          <span class="icon"><svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg></span>
+        </div>
+        <h3 data-i18n="amenity_3_title">Havalimanı Transferi</h3>
+        <p data-i18n="amenity_3_desc">İstanbul (IST) ve Sabiha Gökçen (SAW) havalimanlarından otele doğrudan VIP transfer danışmanlığı.</p>
+      </div>
+
+      <div class="amenity-card">
+        <div class="amenity-icon-box">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></span>
+        </div>
+        <h3 data-i18n="amenity_4_title">Dijital Asistan & WhatsApp</h3>
+        <p data-i18n="amenity_4_desc">Oda, konum ve seyahat sorularınız için 7/24 yapay zekâ asistanı ve doğrudan WhatsApp desteği.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Location Section with Illustrated Map -->
+  <section class="section location-section" id="location">
+    <div class="section-header">
+      <span class="section-eyebrow" data-i18n="map_eyebrow">Merkezi Konum</span>
+      <h2 class="section-title" data-i18n="map_title">Konum</h2>
+      <p class="section-subtitle" data-i18n="map_subtitle">Marmara Denizi, Haliç ve Boğaz'ın çevrelediği Tarihi Yarımada'da; her yere yürüyerek veya tramvayla birkaç dakikada ulaşın.</p>
+    </div>
+
+    <div class="map-frame">
+      <div class="map-top-bar">
+        <div class="map-top-info">
+          <h3 data-i18n="map_card_title">Hotel Eliza İstanbul Çevre ve Turizm Haritası</h3>
+          <p>Mimar Hayrettin Mah. Doğramacı Sk. No:19/5, 34126 Fatih / İstanbul</p>
+        </div>
+        <div class="map-actions">
+          <a href="https://maps.google.com/?q=Eliza+Hotel+Istanbul+Mimar+Hayrettin+Do%C4%9Framac%C4%B1+Sk+No:19/5+Fatih" target="_blank" class="btn-map-action">
+            <span class="icon"><svg viewBox="0 0 24 24"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg></span>
+            <span data-i18n="btn_open_google_maps">Google Haritalar'da Aç</span>
+          </a>
+          <a href="https://wa.me/905419014785?text=Merhaba,%20Hotel%20Eliza%20konumunu%20ve%20yol%20tarifini%20alabilir%20miyim?" target="_blank" class="btn-map-action" style="background:var(--color-whatsapp); border-color:var(--color-whatsapp);">
+            <span class="icon"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg></span>
+            <span data-i18n="btn_wa_location">WhatsApp Konum İste</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Illustrated Vector Canvas Map -->
+      <div class="svg-map-wrapper">
+        <svg class="svg-map" viewBox="0 0 1100 580" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="seaGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#E0F2FE" />
+              <stop offset="50%" stop-color="#BAE6FD" />
+              <stop offset="100%" stop-color="#7DD3FC" />
+            </linearGradient>
+            <linearGradient id="peninsulaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#FFFFFF" />
+              <stop offset="100%" stop-color="#FBF9F5" />
+            </linearGradient>
+            <filter id="shadowFilter" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#1E1E1A" flood-opacity="0.12"/>
+            </filter>
+          </defs>
+
+          <!-- Water Background -->
+          <rect width="1100" height="580" fill="url(#seaGradient)" />
+
+          <!-- Gentle Water Waves -->
+          <path d="M 50,540 Q 150,525 250,540 T 450,540" fill="none" stroke="#FFFFFF" stroke-width="2.5" opacity="0.6"/>
+          <path d="M 600,550 Q 700,535 800,550 T 1000,550" fill="none" stroke="#FFFFFF" stroke-width="2.5" opacity="0.6"/>
+          <path d="M 820,100 Q 870,85 920,100 T 1020,100" fill="none" stroke="#FFFFFF" stroke-width="2" opacity="0.7"/>
+
+          <!-- Landmass 1: Tarihi Yarımada -->
+          <path d="M 0,200 C 140,190 300,210 430,190 C 540,175 670,220 750,280 C 790,320 770,390 710,440 C 630,490 470,490 340,490 C 190,490 70,460 0,440 Z" fill="url(#peninsulaGrad)" stroke="#E2DCD2" stroke-width="2.5" filter="url(#shadowFilter)"/>
+
+          <!-- Landmass 2: Beyoğlu & Karaköy -->
+          <path d="M 200,0 C 330,70 480,90 600,80 C 680,75 760,35 830,0 L 200,0 Z" fill="#FFFFFF" stroke="#E2DCD2" stroke-width="2"/>
+
+          <!-- Landmass 3: Asian Side -->
+          <path d="M 940,140 C 960,240 980,340 1100,400 L 1100,100 C 1040,110 980,120 940,140 Z" fill="#FFFFFF" stroke="#E2DCD2" stroke-width="2"/>
+
+          <!-- Water Names -->
+          <text x="330" y="135" font-family="'Playfair Display', serif" font-size="14" font-weight="600" fill="#0284C7" letter-spacing="3" opacity="0.85">HALİÇ (GOLDEN HORN)</text>
+          <text x="830" y="220" font-family="'Playfair Display', serif" font-size="14" font-weight="600" fill="#0284C7" letter-spacing="3" opacity="0.85" transform="rotate(45, 830, 220)">İSTANBUL BOĞAZI</text>
+          <text x="360" y="540" font-family="'Playfair Display', serif" font-size="16" font-weight="600" fill="#0369A1" letter-spacing="4" opacity="0.9">MARMARA DENİZİ</text>
+
+          <!-- Galata Bridge -->
+          <line x1="560" y1="90" x2="600" y2="230" stroke="#94A3B8" stroke-width="7" stroke-linecap="round"/>
+          <line x1="560" y1="90" x2="600" y2="230" stroke="#475569" stroke-width="2" stroke-dasharray="3,3"/>
+          <text x="590" y="165" font-size="10" font-weight="600" fill="#475569">Galata Köprüsü</text>
+
+          <!-- T1 Tramvay Hattı -->
+          <path d="M 100,360 C 200,360 300,355 400,350 C 460,345 520,340 590,320 C 630,310 650,280 640,240 C 630,210 595,175 575,105" fill="none" stroke="#DC2626" stroke-width="3.5" stroke-dasharray="6,4" opacity="0.8"/>
+
+          <!-- Galata Kulesi -->
+          <g transform="translate(470, 20)">
+            <rect x="0" y="16" width="22" height="34" rx="3" fill="#E2E8F0" stroke="#64748B" stroke-width="1.8"/>
+            <polygon points="11,0 0,18 22,18" fill="#991B1B"/>
+            <text x="11" y="64" text-anchor="middle" font-size="11" font-weight="700" fill="#1E1E1A">Galata Kulesi</text>
+            <text x="11" y="76" text-anchor="middle" font-size="9" font-weight="600" fill="#64748B">12 dk (Tramvay)</text>
+          </g>
+
+          <!-- Kız Kulesi -->
+          <g transform="translate(850, 270)">
+            <ellipse cx="20" cy="28" rx="24" ry="10" fill="#CBD5E1"/>
+            <rect x="9" y="8" width="22" height="20" rx="2" fill="#FFFFFF" stroke="#64748B" stroke-width="1.6"/>
+            <polygon points="20,0 11,10 29,10" fill="#DC2626"/>
+            <text x="20" y="46" text-anchor="middle" font-size="11" font-weight="700" fill="#0369A1">Kız Kulesi</text>
+            <text x="20" y="58" text-anchor="middle" font-size="9" font-weight="600" fill="#0284C7">Boğaz İncisi</text>
+          </g>
+
+          <!-- Sultanahmet & Ayasofya -->
+          <g transform="translate(660, 290)">
+            <ellipse cx="26" cy="24" rx="22" ry="16" fill="#FED7AA" stroke="#EA580C" stroke-width="1.8"/>
+            <line x1="2" y1="36" x2="2" y2="8" stroke="#C2410C" stroke-width="2"/>
+            <line x1="50" y1="36" x2="50" y2="8" stroke="#C2410C" stroke-width="2"/>
+            <circle cx="26" cy="18" r="10" fill="#F97316"/>
+            <text x="26" y="52" text-anchor="middle" font-size="11" font-weight="700" fill="#1E1E1A">Sultanahmet & Ayasofya</text>
+            <text x="26" y="65" text-anchor="middle" font-size="9.5" font-weight="600" fill="#EA580C">10 dk Yürüme (850m)</text>
+          </g>
+
+          <!-- Kapalıçarşı -->
+          <g transform="translate(400, 270)">
+            <rect x="0" y="0" width="65" height="28" rx="5" fill="#FEF3C7" stroke="#D97706" stroke-width="1.8"/>
+            <text x="32" y="18" text-anchor="middle" font-size="10.5" font-weight="700" fill="#B45309">Kapalıçarşı</text>
+            <text x="32" y="40" text-anchor="middle" font-size="9" font-weight="600" fill="#D97706">5 dk (400m)</text>
+          </g>
+
+          <!-- Tramvay Durakları -->
+          <g transform="translate(300, 325)">
+            <circle cx="0" cy="0" r="6" fill="#DC2626" stroke="#fff" stroke-width="2"/>
+            <text x="0" y="-10" text-anchor="middle" font-size="10" font-weight="700" fill="#DC2626">Beyazıt Tramvay</text>
+            <text x="0" y="15" text-anchor="middle" font-size="9" font-weight="600" fill="#475569">250m (3 dk)</text>
+          </g>
+
+          <g transform="translate(490, 320)">
+            <circle cx="0" cy="0" r="6" fill="#DC2626" stroke="#fff" stroke-width="2"/>
+            <text x="0" y="-10" text-anchor="middle" font-size="10" font-weight="700" fill="#DC2626">Çemberlitaş</text>
+            <text x="0" y="15" text-anchor="middle" font-size="9" font-weight="600" fill="#475569">300m (4 dk)</text>
+          </g>
+
+          <!-- HOTEL ELIZA PIN -->
+          <g transform="translate(350, 375)">
+            <circle cx="0" cy="0" r="22" fill="#A8864B" opacity="0.3">
+              <animate attributeName="r" values="18;30;18" dur="2.2s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.35;0.05;0.35" dur="2.2s" repeatCount="indefinite"/>
+            </circle>
+
+            <path d="M 0,-36 C 15,-36 26,-24 26,-8 C 26,10 0,32 0,32 C 0,32 -26,10 -26,-8 C -26,-24 -15,-36 0,-36 Z" fill="#A8864B" stroke="#FFFFFF" stroke-width="2.5" filter="url(#shadowFilter)"/>
+            <circle cx="0" cy="-10" r="9" fill="#FFFFFF"/>
+            <text x="0" y="-6" text-anchor="middle" font-size="10" font-weight="800" fill="#A8864B">H</text>
+
+            <g transform="translate(0, 44)">
+              <rect x="-85" y="0" width="170" height="38" rx="6" fill="#1E1E1A" stroke="#A8864B" stroke-width="1.8"/>
+              <text x="0" y="16" text-anchor="middle" font-family="'Playfair Display', serif" font-size="11.5" font-weight="700" fill="#F7F3EB">HOTEL ELIZA</text>
+              <text x="0" y="29" text-anchor="middle" font-size="8.5" font-weight="600" fill="#38BDF8">★ SİZ BURADASINIZ</text>
+            </g>
+          </g>
+
+          <!-- Vapur -->
+          <g transform="translate(650, 140)">
+            <polygon points="0,8 26,8 20,15 6,15" fill="#FFFFFF" stroke="#0284C7" stroke-width="1.2"/>
+            <rect x="7" y="3" width="12" height="5" fill="#DC2626"/>
+            <text x="13" y="24" text-anchor="middle" font-size="8" fill="#0369A1" font-weight="600">Vapur</text>
+          </g>
+        </svg>
+      </div>
+
+      <!-- Walking Distance Cards -->
+      <div class="walking-strip">
+        <div class="walking-card">
+          <div class="walking-icon-circle">
+            <span class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M8 12h8"></path></svg></span>
+          </div>
+          <div class="walking-meta">
+            <h4 data-i18n="walk_1_title">Beyazıt Tramvay</h4>
+            <span data-i18n="walk_1_dist">250 Metre (3 dk)</span>
+          </div>
+        </div>
+        <div class="walking-card">
+          <div class="walking-icon-circle">
+            <span class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M8 12h8"></path></svg></span>
+          </div>
+          <div class="walking-meta">
+            <h4 data-i18n="walk_2_title">Çemberlitaş Tramvay</h4>
+            <span data-i18n="walk_2_dist">300 Metre (4 dk)</span>
+          </div>
+        </div>
+        <div class="walking-card">
+          <div class="walking-icon-circle">
+            <span class="icon"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg></span>
+          </div>
+          <div class="walking-meta">
+            <h4 data-i18n="walk_3_title">Kapalıçarşı</h4>
+            <span data-i18n="walk_3_dist">400 Metre (5 dk)</span>
+          </div>
+        </div>
+        <div class="walking-card">
+          <div class="walking-icon-circle">
+            <span class="icon"><svg viewBox="0 0 24 24"><path d="M3 21h18"></path><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"></path></svg></span>
+          </div>
+          <div class="walking-meta">
+            <h4 data-i18n="walk_4_title">Sultanahmet & Ayasofya</h4>
+            <span data-i18n="walk_4_dist">850 Metre (10 dk)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="contact">
+    <div class="footer-inner">
+      <div class="footer-col">
+        <h4>HOTEL ELIZA ISTANBUL</h4>
+        <p data-i18n="footer_about">Tarihi Yarımada'da; Beyazıt ve Çemberlitaş tramvay duraklarına 3 dakika yürüme mesafesinde, bağımsız ve güvenilir konaklama konforu.</p>
+        <div class="footer-legal-badge" data-i18n="footer_legal">Bağımsız Otel İşletmesi</div>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footer_contact_title">İletişim & Adres</h4>
+        <p>📍 Mimar Hayrettin Mah. Doğramacı Sk. No:19/5, 34126 Fatih / İstanbul</p>
+        <p>📞 Tel: <a href="tel:+902125208100">+90 212 520 81 00</a></p>
+        <p>💬 WhatsApp: <a href="https://wa.me/905419014785?text=Merhaba,%20bilgi%20almak%20istiyorum." target="_blank">+90 541 901 47 85</a></p>
+        <p>✉️ E-Posta: <a href="mailto:info@elizahotelistanbul.com">info@elizahotelistanbul.com</a></p>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footer_links_title">Rezervasyon Kanalları</h4>
+        <a href="https://www.booking.com/hotel/tr/eliza-istanbul.html" target="_blank" data-i18n="footer_booking_link">➔ Booking.com Otel Sayfası</a>
+        <a href="https://wa.me/905419014785?text=Merhaba,%20rezervasyon%20yapmak%20istiyorum." target="_blank" data-i18n="footer_wa_link">➔ Doğrudan WhatsApp Rezervasyon</a>
+        <a href="#rooms" data-i18n="footer_rooms_link">➔ Odalar & Fiyat Bilgisi</a>
+        <a href="#location" data-i18n="footer_map_link">➔ Turistik Harita & Konum</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Hotel Eliza Istanbul. <span data-i18n="footer_rights">Tüm hakları saklıdır. Doğrudan rezervasyon talepleri ve Booking.com entegrasyonu.</span></p>
+    </div>
+  </footer>
+
+  <!-- Modal -->
+  <div class="modal-backdrop" id="roomModal" onclick="handleModalBackdrop(event)" role="dialog" aria-modal="true">
+    <div class="modal-box">
+      <button class="btn-close-modal" onclick="closeRoomModal()" aria-label="Kapat">✕</button>
+
+      <div class="modal-gallery-view">
+        <img id="modalMainImage" src="" alt="Oda Fotoğrafı">
+      </div>
+      <div class="modal-thumbs-row" id="modalThumbs"></div>
+
+      <div class="modal-content-area">
+        <div class="modal-header-line">
+          <div>
+            <h2 class="modal-title" id="modalTitle"></h2>
+            <div class="modal-specs-badge" id="modalSpecs"></div>
+          </div>
+          <div class="modal-price-box">
+            <span style="font-size:0.75rem; color:var(--color-text-muted); text-transform:uppercase;" data-i18n="modal_starting_rate">Gecelik Fiyat</span>
+            <div class="modal-price-val" id="modalPrice"></div>
+          </div>
+        </div>
+
+        <p class="modal-desc" id="modalDesc"></p>
+
+        <div class="modal-amenities-section-title" data-i18n="modal_amenities_head">Oda Olanakları & Donanım</div>
+        <div class="modal-amenities-grid" id="modalAmenities"></div>
+
+        <div class="modal-footer">
+          <div class="modal-policy-note" data-i18n="modal_policies">
+            ✓ Giriş: 14:00 • Çıkış: 12:00 • Sigara İçilmez • Günlük Temizlik
+          </div>
+          <div class="modal-cta-group">
+            <a id="modalBookingLink" href="https://www.booking.com/hotel/tr/eliza-istanbul.html" target="_blank" class="btn-modal-booking">
+              <span class="icon"><svg viewBox="0 0 24 24"><path d="M3 21h18"></path><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"></path></svg></span>
+              <span data-i18n="btn_view_booking_modal">Booking.com'da Gör</span>
+            </a>
+            <a id="modalWaLink" href="#" target="_blank" class="btn-modal-wa">
+              <span class="icon"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg></span>
+              <span data-i18n="btn_request_wa_modal">Müsaitlik Talebi Gönder</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chatbot Widget -->
+  <div class="chatbot-launcher">
+    <button class="btn-float-chat" onclick="toggleChat()" id="btnChatToggle" aria-label="Sohbeti Başlat">
+      <span class="chat-online-dot"></span>
+      <span class="icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></span>
+    </button>
+  </div>
+
+  <div class="chat-box" id="chatBox">
+    <div class="chat-header">
+      <div class="chat-header-details">
+        <h4>Hotel Eliza Asistanı</h4>
+        <span data-i18n="chat_status">Çevrimiçi • 7/24 Misafir Desteği</span>
+      </div>
+      <button class="btn-chat-close" onclick="toggleChat()" aria-label="Kapat">✕</button>
+    </div>
+
+    <div class="chat-wa-alert">
+      <span data-i18n="chat_wa_notice">WhatsApp üzerinden devam etmek ister misiniz?</span>
+      <a href="https://wa.me/905419014785?text=Merhaba,%20bilgi%20almak%20istiyorum." target="_blank" data-i18n="chat_wa_switch">WhatsApp ➔</a>
+    </div>
+
+    <div class="chat-body" id="chatBody">
+      <div class="chat-msg chat-msg-bot" id="chatGreetingMsg">
+        Merhaba! Hotel Eliza Istanbul'a hoş geldiniz. 🏨
+        <br><br>
+        Oda müsaitliği, tramvaya uzaklık, kahvaltı veya rezervasyon süreçleri hakkında size nasıl yardımcı olabilirim?
+        <div class="chat-quick-chips">
+          <div class="chat-chip" onclick="handleChipClick(this.textContent)">Kahvaltı dahil mi?</div>
+          <div class="chat-chip" onclick="handleChipClick(this.textContent)">Otopark var mı?</div>
+          <div class="chat-chip" onclick="handleChipClick(this.textContent)">Tramvaya ne kadar uzak?</div>
+          <div class="chat-chip" onclick="handleChipClick(this.textContent)">Oda fiyatları</div>
+        </div>
+      </div>
+      <div class="chat-typing" id="chatTyping">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+
+    <form class="chat-form" onsubmit="handleChatSubmit(event)">
+      <input type="text" class="chat-input" id="chatInput" placeholder="Bir soru yazın..." autocomplete="off" required>
+      <button type="submit" class="btn-chat-send" aria-label="Gönder">
+        <span class="icon"><svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></span>
+      </button>
+    </form>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    let currentLang = "tr";
+
+    const ROOMS = {
+      twin: {
+        id: "twin",
+        badgeTr: "Standart Oda",
+        badgeEn: "Standard Room",
+        titleTr: "Standard Twin Room (İki Ayrı Yatak)",
+        titleEn: "Standard Twin Room (Two Single Beds)",
+        specsTr: "20 m² • 2 Yetişkin • 2 Ayrı Yatak",
+        specsEn: "20 m² • 2 Adults • 2 Twin Beds",
+        price: "86,40 €",
+        descTr: "Standard Twin odalarımız, iki adet konforlu tek kişilik yatağı, özel banyosu ve ferah yapısıyla iş ve arkadaş seyahatleri için idealdir. Ses yalıtımlı yapısı ve klima sistemiyle dinlendirici bir konaklama sunar.",
+        descEn: "Our Standard Twin rooms feature two comfortable single beds, private modern bathroom, and soundproofing, making them ideal for business or leisure trips with friends.",
+        images: [
+          "https://cf.bstatic.com/xdata/images/hotel/max1024x768/911185635.jpg?k=7a6598d6a1c18a281df199298f4e4dc060bf32afc7f48e5e13e9662813087180&o=",
+          "https://images.unsplash.com/photo-1618773928121-c32242e63f39?q=80&w=900&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1590490360182-c33d57733427?q=80&w=900&auto=format&fit=crop"
+        ],
+        featuresTr: ["Klima, Isıtma & Düz Ekran LCD TV", "Özel Banyo, Duş, Saç Kurutma & Terlik", "Elektrikli Su Isıtıcısı, Çay/Kahve İkramı", "Minibar, Çalışma Masası & Kasa"],
+        featuresEn: ["Air Conditioning & Flat Screen TV", "Private Bathroom, Shower & Hairdryer", "Electric Kettle, Tea/Coffee Set", "Minibar, Work Desk & Safe Box"]
+      },
+      double: {
+        id: "double",
+        badgeTr: "Çift Kişilik",
+        badgeEn: "Double Room",
+        titleTr: "Standard Double Room (Geniş Çift Kişilik)",
+        titleEn: "Standard Double Room (King Bed)",
+        specsTr: "20 m² • 2 Yetişkin • 1 Büyük Çift Kişilik Yatak",
+        specsEn: "20 m² • 2 Adults • 1 King Bed",
+        price: "86,40 €",
+        descTr: "Çiftler için tasarlanan Standard Double odamız, ultra konforlu geniş çift kişilik yatağı, zevkli dekorasyonu ve huzurlu ortamıyla tarihi yarımadayı keşfeden misafirlerimize ev konforu sağlar.",
+        descEn: "Designed for couples, our Standard Double Room offers an ultra-comfortable king-size bed, tasteful decor, and tranquil ambiance in the historic heart of Istanbul.",
+        images: [
+          "https://images.unsplash.com/photo-1590490360182-c33d57733427?q=80&w=900&auto=format&fit=crop",
+          "https://cf.bstatic.com/xdata/images/hotel/max1024x768/911185635.jpg?k=7a6598d6a1c18a281df199298f4e4dc060bf32afc7f48e5e13e9662813087180&o=",
+          "https://images.unsplash.com/photo-1618773928121-c32242e63f39?q=80&w=900&auto=format&fit=crop"
+        ],
+        featuresTr: ["Geniş Ortopedik King Yatak", "Özel Banyo & Kaliteli Buklet Ürünleri", "Şehir Manzaralı Ses Yalıtımlı Pencereler", "Ücretsiz Yüksek Hızlı Fiber Wi-Fi"],
+        featuresEn: ["Comfortable Orthopedic King Bed", "Private Bathroom & Quality Toiletries", "Soundproof Windows with City View", "Complimentary High-Speed Wi-Fi"]
+      },
+      deluxe: {
+        id: "deluxe",
+        badgeTr: "Şehir Manzarası",
+        badgeEn: "City View",
+        titleTr: "Deluxe Şehir Manzaralı Oda",
+        titleEn: "Deluxe Room with City View",
+        specsTr: "25 m² • 2-3 Yetişkin • King Yatak + Oturma Alanı",
+        specsEn: "25 m² • 2-3 Adults • King Bed + Seating Area",
+        price: "110,00 €",
+        descTr: "Tarihi Fatih sokaklarına bakan geniş pencereleri, dinlenme koltuğu ve lüks banyo detaylarıyla Deluxe odamız, ekstra ferahlık ve üstün konfor arayan konuklarımız için özenle dizayn edilmiştir.",
+        descEn: "Overlooking historic Istanbul streets, our Deluxe Room features a comfortable seating area, premium bathroom amenities, and generous living space for an elevated stay.",
+        images: [
+          "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=900&auto=format&fit=crop",
+          "https://cf.bstatic.com/xdata/images/hotel/max1024x768/911185635.jpg?k=7a6598d6a1c18a281df199298f4e4dc060bf32afc7f48e5e13e9662813087180&o=",
+          "https://images.unsplash.com/photo-1590490360182-c33d57733427?q=80&w=900&auto=format&fit=crop"
+        ],
+        featuresTr: ["Tarihi İstanbul Sokakları Manzarası", "Geniş Oturma Alanı & Sehpa", "Lüks Bornoz, Terlik & Premium Buklet", "Akıllı TV, Zengin Minibar & Kasa"],
+        featuresEn: ["Historic Istanbul City Views", "Spacious Seating Area & Coffee Table", "Bathrobes, Slippers & Luxury Toiletries", "Smart TV, Stocked Minibar & Safe Box"]
+      },
+      family: {
+        id: "family",
+        badgeTr: "Aile Boyu Konfor",
+        badgeEn: "Family Comfort",
+        titleTr: "Family Room (Geniş Aile Odası)",
+        titleEn: "Family Room (Spacious Suite)",
+        specsTr: "35 m² • 3-4 Misafir • 1 Çift + 2 Tek Kişilik Yatak",
+        specsEn: "35 m² • 3-4 Guests • 1 Double + 2 Single Beds",
+        price: "145,00 €",
+        descTr: "Çocuklu ailelerin ihtiyaçları gözetilerek planlanan Aile Odası; ebeveyn yatağı ve ayrı tek kişilik yataklarıyla hem geniş bir alan hem de rahat bir mahremiyet sağlar. Bebek karyolası talep üzerine ücretsiz temin edilir.",
+        descEn: "Tailored for families with children, this room offers a master double bed plus two single beds. Generous layout ensures comfort, privacy, and convenience for all family members.",
+        images: [
+          "https://images.unsplash.com/photo-1566665797739-1674de7a421a?q=80&w=900&auto=format&fit=crop",
+          "https://cf.bstatic.com/xdata/images/hotel/max1024x768/911185635.jpg?k=7a6598d6a1c18a281df199298f4e4dc060bf32afc7f48e5e13e9662813087180&o=",
+          "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?q=80&w=900&auto=format&fit=crop"
+        ],
+        featuresTr: ["3-4 Kişilik Geniş ve Ferah Düzen", "Talep Üzerine Ücretsiz Bebek Karyolası", "Geniş Banyo & Ekstra Havlu Setleri", "Buzdolabı, Su Isıtıcısı & Çay Seti"],
+        featuresEn: ["Spacious Layout for 3-4 Guests", "Free Baby Cot Available Upon Request", "Large Family Bathroom with Extra Towels", "Mini-Fridge, Kettle & Tea Amenities"]
+      },
+      quad: {
+        id: "quad",
+        badgeTr: "4 Kişilik Grup",
+        badgeEn: "Quadruple",
+        titleTr: "Quadruple Room (4 Kişilik Oda)",
+        titleEn: "Quadruple Room (4 Persons)",
+        specsTr: "30 m² • 4 Yetişkin • 4 Konforlu Yatak",
+        specsEn: "30 m² • 4 Adults • 4 Comfortable Beds",
+        price: "130,00 €",
+        descTr: "Arkadaş grupları veya kalabalık gezginler için ideal olan bu odamız, bağımsız klima sistemi, geniş gardırop alanları ve kesintisiz sıcak su imkanıyla konforlu ve ekonomik bir deneyim sunar.",
+        descEn: "Perfect for groups of friends or traveling companions, this room provides four comfortable beds, independent climate control, ample wardrobe storage, and 24/7 hot water.",
+        images: [
+          "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?q=80&w=900&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1566665797739-1674de7a421a?q=80&w=900&auto=format&fit=crop",
+          "https://cf.bstatic.com/xdata/images/hotel/max1024x768/911185635.jpg?k=7a6598d6a1c18a281df199298f4e4dc060bf32afc7f48e5e13e9662813087180&o="
+        ],
+        featuresTr: ["4 Kişilik Rahat Yatak Düzeni", "Bağımsız Klima & Geniş Gardıroplar", "Kesintisiz 24 Saat Sıcak Su", "LCD TV & Hızlı Fiber Wi-Fi"],
+        featuresEn: ["Comfortable 4-Person Bedding Setup", "Independent A/C & Spacious Wardrobe", "24/7 Constant Hot Water Supply", "LCD TV & High-Speed Wi-Fi"]
+      }
+    };
+
+    const I18N = {
+      tr: {
+        topbar_tram: "Beyazıt & Çemberlitaş Tramvayına 3 Dk Yürüme",
+        topbar_whatsapp: "WhatsApp Destek",
+        nav_rooms: "Odalar",
+        nav_amenities: "Olanaklar",
+        nav_location: "Konum",
+        nav_contact: "İletişim",
+        nav_btn_check: "Müsaitliği Kontrol Et",
+        hero_badge: "TARİHİ YARIMADA • FATİH / İSTANBUL",
+        hero_title: "İstanbul’un tarihi kalbinde, konforlu bir konaklama.",
+        hero_desc: "Beyazıt ve Çemberlitaş tramvay duraklarına 3 dakika; Kapalıçarşı, Sultanahmet ve Ayasofya camiine yürüme mesafesinde bağımsız otel konforu.",
+        hero_adv_tram: "250m Tramvay Erişimi (T1)",
+        hero_adv_reception: "7/24 Kesintisiz Resepsiyon",
+        hero_adv_wifi: "Yüksek Hızlı Ücretsiz Wi-Fi",
+        form_checkin: "Giriş Tarihi",
+        form_checkout: "Çıkış Tarihi",
+        form_guests: "Misafir Sayısı",
+        opt_1guest: "1 Yetişkin",
+        opt_2guests: "2 Yetişkin",
+        opt_3guests: "3 Yetişkin",
+        opt_4guests: "4 Yetişkin / Aile",
+        btn_request_avail: "Müsaitlik Talebi Gönder",
+        link_view_booking: "Booking.com'da Gör ➔",
+        err_date_order: "Çıkış tarihi giriş tarihinden sonraki bir gün olmalıdır.",
+        err_date_past: "Giriş tarihi bugünden önce olamaz.",
+        err_date_missing: "Lütfen hem giriş hem çıkış tarihlerini seçiniz.",
+        rooms_eyebrow: "Konaklama",
+        rooms_title: "Özenle Tasarlanmış Odalarımız",
+        rooms_subtitle: "Tüm odalarımızda klima, ses yalıtımı, özel banyo, minibar ve ücretsiz fiber Wi-Fi standart olarak sunulmaktadır.",
+        per_night: "/ Gece",
+        btn_inspect: "Detayları İncele",
+        btn_book_card: "Müsaitlik Sor",
+        amenities_eyebrow: "Ayrıcalıklar",
+        amenities_title: "Otel Olanakları ve Hizmetleri",
+        amenities_subtitle: "Konforlu ve huzurlu bir İstanbul seyahati için tasarlanmış temel hizmetlerimiz.",
+        amenity_1_title: "Açık Büfe Kahvaltı",
+        amenity_1_desc: "Taze yerel ürünler, Türk peynirleri ve hamur işleriyle her sabah zengin açık büfe kahvaltı.",
+        amenity_2_title: "Asansör & 7/24 Danışma",
+        amenity_2_desc: "Günün her saati check-in imkanı, bagaj muhafazası ve katlara rahat asansör erişimi.",
+        amenity_3_title: "Havalimanı Transferi",
+        amenity_3_desc: "İstanbul (IST) ve Sabiha Gökçen (SAW) havalimanlarından otele doğrudan VIP transfer danışmanlığı.",
+        amenity_4_title: "Dijital Asistan & WhatsApp",
+        amenity_4_desc: "Oda, konum ve seyahat sorularınız için 7/24 yapay zekâ asistanı ve doğrudan WhatsApp desteği.",
+        map_eyebrow: "Merkezi Konum",
+        map_title: "Konum",
+        map_subtitle: "Marmara Denizi, Haliç ve Boğaz'ın çevrelediği Tarihi Yarımada'da; her yere yürüyerek veya tramvayla birkaç dakikada ulaşın.",
+        map_card_title: "Hotel Eliza İstanbul Çevre ve Turizm Haritası",
+        btn_open_google_maps: "Google Haritalar'da Aç",
+        btn_wa_location: "WhatsApp Konum İste",
+        walk_1_title: "Beyazıt Tramvay",
+        walk_1_dist: "250 Metre (3 dk)",
+        walk_2_title: "Çemberlitaş Tramvay",
+        walk_2_dist: "300 Metre (4 dk)",
+        walk_3_title: "Kapalıçarşı",
+        walk_3_dist: "400 Metre (5 dk)",
+        walk_4_title: "Sultanahmet & Ayasofya",
+        walk_4_dist: "850 Metre (10 dk)",
+        footer_about: "Tarihi Yarımada'da; Beyazıt ve Çemberlitaş tramvay duraklarına 3 dakika yürüme mesafesinde, bağımsız ve güvenilir konaklama konforu.",
+        footer_legal: "Bağımsız Otel İşletmesi",
+        footer_contact_title: "İletişim & Adres",
+        footer_links_title: "Rezervasyon Kanalları",
+        footer_booking_link: "➔ Booking.com Otel Sayfası",
+        footer_wa_link: "➔ Doğrudan WhatsApp Rezervasyon",
+        footer_rooms_link: "➔ Odalar & Fiyat Bilgisi",
+        footer_map_link: "➔ Turistik Harita & Konum",
+        footer_rights: "Tüm hakları saklıdır. Doğrudan rezervasyon talepleri ve Booking.com entegrasyonu.",
+        modal_starting_rate: "Başlangıç Fiyatı",
+        modal_amenities_head: "Oda Olanakları & Donanım",
+        modal_policies: "✓ Giriş: 14:00 • Çıkış: 12:00 • Sigara İçilmez • Günlük Temizlik",
+        btn_view_booking_modal: "Booking.com'da Gör",
+        btn_request_wa_modal: "Müsaitlik Talebi Gönder",
+        chat_status: "Çevrimiçi • 7/24 Misafir Desteği",
+        chat_wa_notice: "WhatsApp üzerinden devam etmek ister misiniz?",
+        chat_wa_switch: "WhatsApp ➔",
+        chat_placeholder: "Bir soru yazın (Türkçe, English)...",
+        chat_greeting: "Merhaba! Hotel Eliza Istanbul'a hoş geldiniz. Oda müsaitliği, tramvaya uzaklık, kahvaltı veya rezervasyon hakkında size nasıl yardımcı olabilirim?",
+        chip_1: "Kahvaltı dahil mi?",
+        chip_2: "Otopark var mı?",
+        chip_3: "Tramvaya ne kadar uzak?",
+        chip_4: "Oda fiyatları"
+      },
+      en: {
+        topbar_tram: "3 Min Walk to Beyazıt & Çemberlitaş Tram",
+        topbar_whatsapp: "WhatsApp Support",
+        nav_rooms: "Rooms",
+        nav_amenities: "Amenities",
+        nav_location: "Location",
+        nav_contact: "Contact",
+        nav_btn_check: "Check Availability",
+        hero_badge: "HISTORIC PENINSULA • FATIH / ISTANBUL",
+        hero_title: "A comfortable stay in the historic heart of Istanbul.",
+        hero_desc: "Independent hotel comfort within 3 minutes' walk of Beyazıt and Çemberlitaş tram stops; walking distance to Grand Bazaar, Blue Mosque, and Hagia Sophia.",
+        hero_adv_tram: "250m to Tram Line (T1)",
+        hero_adv_reception: "24/7 Front Desk & Support",
+        hero_adv_wifi: "High-Speed Free Wi-Fi",
+        form_checkin: "Check-in Date",
+        form_checkout: "Check-out Date",
+        form_guests: "Guests",
+        opt_1guest: "1 Adult",
+        opt_2guests: "2 Adults",
+        opt_3guests: "3 Adults",
+        opt_4guests: "4 Adults / Family",
+        btn_request_avail: "Send Availability Request",
+        link_view_booking: "View on Booking.com ➔",
+        err_date_order: "Check-out date must be after check-in date.",
+        err_date_past: "Check-in date cannot be in the past.",
+        err_date_missing: "Please select both check-in and check-out dates.",
+        rooms_eyebrow: "Accommodations",
+        rooms_title: "Thoughtfully Designed Rooms",
+        rooms_subtitle: "All rooms feature air conditioning, soundproofing, private en-suite bathroom, minibar, and complimentary high-speed Wi-Fi.",
+        per_night: "/ Night",
+        btn_inspect: "View Details",
+        btn_book_card: "Inquire Availability",
+        amenities_eyebrow: "Services",
+        amenities_title: "Hotel Amenities & Facilities",
+        amenities_subtitle: "Essential services designed for a relaxing, seamless stay in Istanbul.",
+        amenity_1_title: "Buffet Breakfast",
+        amenity_1_desc: "Fresh local specialties, Turkish cheeses, pastries, and seasonal fruits served every morning.",
+        amenity_2_title: "Elevator & 24/7 Front Desk",
+        amenity_2_desc: "Round-the-clock check-in, luggage storage, and easy elevator access to all guest floors.",
+        amenity_3_title: "Airport Transfers",
+        amenity_3_desc: "Direct private VIP transfer assistance from Istanbul Airport (IST) and Sabiha Gokcen (SAW).",
+        amenity_4_title: "Digital Assistant & WhatsApp",
+        amenity_4_desc: "Instant 24/7 AI guest assistant and direct WhatsApp support for all your hotel and travel questions.",
+        map_eyebrow: "Prime Location",
+        map_title: "Location",
+        map_subtitle: "In the heart of the Historic Peninsula surrounded by the Sea of Marmara, Golden Horn, and Bosphorus; reachable within minutes by walk or tram.",
+        map_card_title: "Hotel Eliza Istanbul Tourist & Neighborhood Map",
+        btn_open_google_maps: "Open in Google Maps",
+        btn_wa_location: "Request Location on WhatsApp",
+        walk_1_title: "Beyazıt Tram Station",
+        walk_1_dist: "250 Meters (3 min)",
+        walk_2_title: "Çemberlitaş Tram Station",
+        walk_2_dist: "300 Meters (4 min)",
+        walk_3_title: "Grand Bazaar",
+        walk_3_dist: "400 Meters (5 min)",
+        walk_4_title: "Blue Mosque & Hagia Sophia",
+        walk_4_dist: "850 Meters (10 min)",
+        footer_about: "Comfortable, reliable independent hotel stay in the Historic Peninsula, just 3 minutes' walk to Beyazıt & Çemberlitaş tram stations.",
+        footer_legal: "Independent Hotel Property",
+        footer_contact_title: "Contact & Address",
+        footer_links_title: "Booking Channels",
+        footer_booking_link: "➔ Booking.com Hotel Listing",
+        footer_wa_link: "➔ Direct WhatsApp Reservation",
+        footer_rooms_link: "➔ Rooms & Rates",
+        footer_map_link: "➔ Tourist Map & Location",
+        footer_rights: "All rights reserved. Direct reservation inquiry and Booking.com integration.",
+        modal_starting_rate: "Starting Rate",
+        modal_amenities_head: "Room Amenities & Facilities",
+        modal_policies: "✓ Check-in: 14:00 • Check-out: 12:00 • Non-Smoking • Daily Housekeeping",
+        btn_view_booking_modal: "View on Booking.com",
+        btn_request_wa_modal: "Send Availability Request",
+        chat_status: "Online • 24/7 Guest Support",
+        chat_wa_notice: "Would you prefer to continue on WhatsApp?",
+        chat_wa_switch: "Go to WhatsApp ➔",
+        chat_placeholder: "Ask a question (English, Turkish)...",
+        chat_greeting: "Hello! Welcome to Hotel Eliza Istanbul. How may I assist you with room availability, tram distances, breakfast, or reservations?",
+        chip_1: "Is breakfast included?",
+        chip_2: "Is parking available?",
+        chip_3: "Distance to tram?",
+        chip_4: "Room rates"
+      }
+    };
+
+    function switchLanguage(lang) {
+      currentLang = lang;
+      document.documentElement.lang = lang;
+
+      const btnTR = document.getElementById("btnLangTR");
+      const btnEN = document.getElementById("btnLangEN");
+      if (btnTR) btnTR.classList.toggle("active", lang === "tr");
+      if (btnEN) btnEN.classList.toggle("active", lang === "en");
+
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (I18N[lang] && I18N[lang][key]) {
+          el.textContent = I18N[lang][key];
+        }
+      });
+
+      Object.values(ROOMS).forEach(r => {
+        const titleEl = document.querySelector(`[data-room-title="${r.id}"]`);
+        const badgeEl = document.querySelector(`[data-room-badge="${r.id}"]`);
+        const specsEl = document.querySelector(`[data-room-specs="${r.id}"]`);
+        const featEl = document.querySelector(`[data-room-features="${r.id}"]`);
+
+        if (titleEl) titleEl.textContent = lang === "tr" ? r.titleTr : r.titleEn;
+        if (badgeEl) badgeEl.textContent = lang === "tr" ? r.badgeTr : r.badgeEn;
+        if (specsEl) specsEl.textContent = lang === "tr" ? r.specsTr : r.specsEn;
+        if (featEl) {
+          const list = lang === "tr" ? r.featuresTr : r.featuresEn;
+          featEl.innerHTML = list.map(f => `<li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> ${f}</li>`).join("");
+        }
+      });
+
+      const chatInput = document.getElementById("chatInput");
+      if (chatInput) chatInput.placeholder = I18N[lang].chat_placeholder;
+
+      const greetingMsg = document.getElementById("chatGreetingMsg");
+      if (greetingMsg) {
+        const dict = I18N[lang];
+        greetingMsg.innerHTML = `${dict.chat_greeting}<div class="chat-quick-chips">` +
+          `<div class="chat-chip" onclick="handleChipClick(this.textContent)">${dict.chip_1}</div>` +
+          `<div class="chat-chip" onclick="handleChipClick(this.textContent)">${dict.chip_2}</div>` +
+          `<div class="chat-chip" onclick="handleChipClick(this.textContent)">${dict.chip_3}</div>` +
+          `<div class="chat-chip" onclick="handleChipClick(this.textContent)">${dict.chip_4}</div>` +
+          `</div>`;
+      }
+    }
+
+    function initDateInputs() {
+      const checkin = document.getElementById("checkin");
+      const checkout = document.getElementById("checkout");
+      if (!checkin || !checkout) return;
+
+      const today = new Date();
+      const tomorrow = new Date(today);
+      tomorrow.setDate(today.getDate() + 1);
+      const dayAfter = new Date(today);
+      dayAfter.setDate(today.getDate() + 2);
+
+      const formatDate = d => d.toISOString().split("T")[0];
+
+      checkin.min = formatDate(today);
+      checkin.value = formatDate(tomorrow);
+
+      checkout.min = formatDate(dayAfter);
+      checkout.value = formatDate(dayAfter);
+    }
+
+    function handleDateChange() {
+      const checkin = document.getElementById("checkin");
+      const checkout = document.getElementById("checkout");
+      const errorBox = document.getElementById("bookingErrorMsg");
+      const errorText = document.getElementById("bookingErrorText");
+
+      if (!checkin.value || !checkout.value) return;
+
+      const dIn = new Date(checkin.value);
+      const dOut = new Date(checkout.value);
+
+      if (dOut <= dIn) {
+        errorBox.style.display = "inline-flex";
+        errorText.textContent = I18N[currentLang].err_date_order;
+        const nextDay = new Date(dIn);
+        nextDay.setDate(dIn.getDate() + 1);
+        checkout.min = nextDay.toISOString().split("T")[0];
+      } else {
+        errorBox.style.display = "none";
+        const nextDay = new Date(dIn);
+        nextDay.setDate(dIn.getDate() + 1);
+        checkout.min = nextDay.toISOString().split("T")[0];
+      }
+    }
+
+    function handleBookingSubmit(e, specificRoomTitle) {
+      if (e) e.preventDefault();
+      const checkin = document.getElementById("checkin").value;
+      const checkout = document.getElementById("checkout").value;
+      const guests = document.getElementById("guests").value;
+      const errorBox = document.getElementById("bookingErrorMsg");
+      const errorText = document.getElementById("bookingErrorText");
+
+      if (!checkin || !checkout) {
+        errorBox.style.display = "inline-flex";
+        errorText.textContent = I18N[currentLang].err_date_missing;
+        return;
+      }
+
+      const dIn = new Date(checkin);
+      const dOut = new Date(checkout);
+      if (dOut <= dIn) {
+        errorBox.style.display = "inline-flex";
+        errorText.textContent = I18N[currentLang].err_date_order;
+        return;
+      }
+
+      errorBox.style.display = "none";
+
+      const diffTime = Math.abs(dOut - dIn);
+      const nights = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      const roomChosen = specificRoomTitle || (currentLang === "tr" ? "Oda Seçimi Yapılacak" : "Room Selection Pending");
+
+      let msg = "";
+      if (currentLang === "tr") {
+        msg = `Merhaba Hotel Eliza İstanbul,\nRezervasyon için müsaitlik ve fiyat talebi:\n- Giriş Tarihi: ${checkin}\n- Çıkış Tarihi: ${checkout} (${nights} Gece)\n- Misafir: ${guests} Kişi\n- Tercih Edilen Oda: ${roomChosen}\n\nMüsaitlik ve fiyat teklifinizi rica ederim.`;
+      } else {
+        msg = `Hello Hotel Eliza Istanbul,\nAvailability inquiry for reservation:\n- Check-in: ${checkin}\n- Check-out: ${checkout} (${nights} Nights)\n- Guests: ${guests} Person(s)\n- Preferred Room: ${roomChosen}\n\nPlease let me know your availability and rates.`;
+      }
+
+      const waUrl = "https://wa.me/905419014785?text=" + encodeURIComponent(msg);
+      window.open(waUrl, "_blank");
+    }
+
+    function initiateRoomBooking(roomId) {
+      const room = ROOMS[roomId];
+      const roomTitle = room ? (currentLang === "tr" ? room.titleTr : room.titleEn) : "";
+      handleBookingSubmit(null, roomTitle);
+    }
+
+    const roomModal = document.getElementById("roomModal");
+
+    function openRoomModal(roomId) {
+      const room = ROOMS[roomId];
+      if (!room) return;
+
+      const title = currentLang === "tr" ? room.titleTr : room.titleEn;
+      const specs = currentLang === "tr" ? room.specsTr : room.specsEn;
+      const desc = currentLang === "tr" ? room.descTr : room.descEn;
+      const features = currentLang === "tr" ? room.featuresTr : room.featuresEn;
+
+      document.getElementById("modalTitle").textContent = title;
+      document.getElementById("modalSpecs").textContent = specs;
+      document.getElementById("modalPrice").textContent = room.price;
+      document.getElementById("modalDesc").textContent = desc;
+
+      const mainImg = document.getElementById("modalMainImage");
+      mainImg.src = room.images[0];
+
+      const thumbsBox = document.getElementById("modalThumbs");
+      thumbsBox.innerHTML = "";
+      room.images.forEach((imgUrl, idx) => {
+        const thumb = document.createElement("img");
+        thumb.className = `modal-thumb ${idx === 0 ? "active" : ""}`;
+        thumb.src = imgUrl;
+        thumb.alt = title;
+        thumb.onclick = () => {
+          mainImg.src = imgUrl;
+          document.querySelectorAll(".modal-thumb").forEach(t => t.classList.remove("active"));
+          thumb.classList.add("active");
+        };
+        thumbsBox.appendChild(thumb);
+      });
+
+      const amBox = document.getElementById("modalAmenities");
+      amBox.innerHTML = "";
+      features.forEach(f => {
+        const cell = document.createElement("div");
+        cell.className = "modal-amenity-cell";
+        cell.innerHTML = `<span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> <span>${f}</span>`;
+        amBox.appendChild(cell);
+      });
+
+      const modalWaBtn = document.getElementById("modalWaLink");
+      modalWaBtn.onclick = (e) => {
+        e.preventDefault();
+        handleBookingSubmit(null, title);
+      };
+
+      roomModal.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeRoomModal() {
+      roomModal.classList.remove("open");
+      document.body.style.overflow = "auto";
+    }
+
+    function handleModalBackdrop(e) {
+      if (e.target === roomModal) closeRoomModal();
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && roomModal && roomModal.classList.contains("open")) {
+        closeRoomModal();
+      }
+    });
+
+    function toggleMobileDrawer() {
+      const drawer = document.getElementById("mobileDrawer");
+      const btn = document.getElementById("btnHamburger");
+      const isOpen = drawer.classList.toggle("open");
+      btn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      document.body.style.overflow = isOpen ? "hidden" : "auto";
+    }
+
+    function handleDrawerBackdrop(e) {
+      if (e.target === document.getElementById("mobileDrawer")) {
+        toggleMobileDrawer();
+      }
+    }
+
+    const chatBox = document.getElementById("chatBox");
+    const chatBody = document.getElementById("chatBody");
+    const chatInput = document.getElementById("chatInput");
+    const chatTyping = document.getElementById("chatTyping");
+
+    function toggleChat() {
+      const isOpen = chatBox.classList.toggle("open");
+      if (isOpen) chatInput.focus();
+    }
+
+    function handleChipClick(text) {
+      sendChatMessage(text);
+    }
+
+    function handleChatSubmit(e) {
+      e.preventDefault();
+      const text = chatInput.value.trim();
+      if (!text) return;
+      chatInput.value = "";
+      sendChatMessage(text);
+    }
+
+    async function sendChatMessage(text) {
+      appendChatMessage(text, "user");
+      showChatTyping(true);
+
+      try {
+        const response = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            message: text,
+            lang: currentLang,
+            messages: [{ role: "user", content: text }]
+          })
+        });
+
+        if (!response.ok) throw new Error("API offline");
+        const data = await response.json();
+        const reply = data.reply || data.response || data.message || data.text || null;
+        if (reply) {
+          appendChatMessage(reply, "bot");
+        } else {
+          appendChatFallback(text);
+        }
+      } catch (err) {
+        appendChatFallback(text);
+      } finally {
+        showChatTyping(false);
+      }
+    }
+
+    function appendChatMessage(content, sender) {
+      const div = document.createElement("div");
+      div.className = `chat-msg chat-msg-${sender}`;
+      div.innerHTML = content.replace(/\\n/g, "<br>");
+      chatBody.insertBefore(div, chatTyping);
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    function showChatTyping(show) {
+      chatTyping.style.display = show ? "flex" : "none";
+      if (show) chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    function appendChatFallback(query) {
+      const q = query.toLowerCase();
+      let reply = currentLang === "tr" 
+        ? "Sorunuz için teşekkür ederiz. Müsaitlik ve doğrudan rezervasyon için lütfen WhatsApp hattımızdan (+90 541 901 47 85) bizimle iletişime geçin."
+        : "Thank you for your question. For availability and direct booking, please contact us on WhatsApp (+90 541 901 47 85).";
+
+      if (q.includes("otopark") || q.includes("park")) {
+        reply = currentLang === "tr"
+          ? "Hotel Eliza bünyesinde özel otopark bulunmamaktadır. Ancak otelimizin hemen yakın çevresinde güvenli ücretli otoparklar mevcuttur."
+          : "Hotel Eliza does not have on-site private parking. However, secure paid parking facilities are located nearby.";
+      } else if (q.includes("kahvaltı") || q.includes("breakfast")) {
+        reply = currentLang === "tr"
+          ? "Hotel Eliza'da her sabah taze ürünlerle zengin açık büfe kahvaltı servisimiz mevcuttur."
+          : "A fresh continental buffet breakfast with local specialties is served every morning at Hotel Eliza.";
+      } else if (q.includes("tramvay") || q.includes("tram") || q.includes("konum") || q.includes("location")) {
+        reply = currentLang === "tr"
+          ? "Otelimiz Beyazıt Tramvay İstasyonuna 250m (3 dk), Çemberlitaş'a 300m mesafededir. Kapalıçarşı 5 dk yürüme mesafesindedir."
+          : "We are located 250m (3 min walk) from Beyazıt Tram Station and 300m from Çemberlitaş. Grand Bazaar is just 5 minutes on foot.";
+      } else if (q.includes("fiyat") || q.includes("rate") || q.includes("price")) {
+        reply = currentLang === "tr"
+          ? "Standart odalarımız 86,40 €'dan başlamaktadır. Seçtiğiniz tarihler için yukarıdaki formdan Müsaitlik Talebi gönderebilirsiniz."
+          : "Standard rooms start from 86.40 €. You can submit an availability request using the booking form above for your desired dates.";
+      }
+
+      appendChatMessage(reply, "bot");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      initDateInputs();
+    });
+  </script>
+</body>
+</html>
+``` => {
+      initDateInputs();
+    });
+  </script>
+</body>
+</html>
