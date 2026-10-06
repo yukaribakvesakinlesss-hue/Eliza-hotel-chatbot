@@ -425,7 +425,19 @@
       color: var(--color-text);
       background: var(--color-surface);
       transition: border-color var(--transition-base);
+      height: 46px;
+      line-height: 1.2;
     }
+    select.form-control {
+      -webkit-appearance: none;
+      appearance: none;
+      padding-right: 2.2rem;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23646059' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.85rem center;
+      cursor: pointer;
+    }
+    .form-control.invalid { border-color: var(--color-error); }
     .form-control:focus {
       border-color: var(--color-gold);
       outline: none;
@@ -445,7 +457,8 @@
       gap: 0.5rem;
       transition: all var(--transition-base);
       font-family: var(--font-sans);
-      height: 44px;
+      height: 46px;
+      white-space: nowrap;
     }
     .btn-submit-booking:hover {
       background: var(--color-gold);
@@ -1041,6 +1054,106 @@
       gap: 0.4rem;
     }
 
+    .btn-modal-reserve {
+      background: var(--color-dark);
+      color: #fff;
+      border: none;
+      padding: 0.7rem 1.3rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.86rem;
+      font-weight: 600;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: background var(--transition-base);
+    }
+    .btn-modal-reserve:hover { background: var(--color-gold); }
+
+    /* Reservation Modal */
+    .res-box { max-width: 640px; }
+    .res-header {
+      padding: 1.6rem 1.8rem 1.1rem;
+      border-bottom: 1px solid var(--color-border);
+      background: var(--color-surface-subtle);
+    }
+    .res-header h2 {
+      font-family: var(--font-serif);
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--color-dark);
+      padding-right: 2.5rem;
+    }
+    .res-header p { font-size: 0.86rem; color: var(--color-text-muted); margin-top: 0.25rem; }
+    .res-form { padding: 1.4rem 1.8rem 1.8rem; }
+    .res-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.9rem 1rem;
+    }
+    .res-grid .full { grid-column: 1 / -1; }
+    .res-form textarea.form-control { height: auto; min-height: 76px; resize: vertical; }
+    .res-summary {
+      margin-top: 1.2rem;
+      padding: 1rem 1.1rem;
+      background: var(--color-gold-light);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.86rem;
+      color: var(--color-text-muted);
+    }
+    .res-summary strong {
+      font-family: var(--font-serif);
+      font-size: 1.45rem;
+      color: var(--color-dark);
+      display: block;
+      text-align: right;
+    }
+    .res-error {
+      display: none;
+      margin-top: 1rem;
+      padding: 0.75rem 0.9rem;
+      border-radius: var(--radius-sm);
+      background: #FEF2F2;
+      border: 1px solid #FECACA;
+      color: var(--color-error);
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    .res-error a { color: inherit; font-weight: 700; }
+    .res-actions { margin-top: 1.2rem; display: flex; flex-direction: column; gap: 0.6rem; }
+    .res-actions .btn-submit-booking { width: 100%; height: 50px; font-size: 0.95rem; }
+    .btn-submit-booking:disabled { opacity: 0.65; cursor: wait; }
+    .res-note { font-size: 0.78rem; color: var(--color-text-muted); text-align: center; }
+    .res-success { display: none; padding: 2.4rem 1.8rem; text-align: center; }
+    .res-success .res-check {
+      width: 64px; height: 64px; margin: 0 auto 1rem;
+      border-radius: 50%;
+      background: var(--color-gold-light);
+      color: var(--color-gold);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .res-success .res-check svg { width: 32px; height: 32px; }
+    .res-success h3 { font-family: var(--font-serif); font-size: 1.6rem; color: var(--color-dark); }
+    .res-success p { color: var(--color-text-muted); font-size: 0.9rem; margin-top: 0.5rem; }
+    .res-ref {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      border: 1px dashed var(--color-gold);
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--color-dark);
+    }
+    .res-success-actions { margin-top: 1.4rem; display: flex; gap: 0.7rem; justify-content: center; flex-wrap: wrap; }
+
     /* Floating Chatbot */
     .chatbot-launcher {
       position: fixed;
@@ -1245,6 +1358,11 @@
       .top-bar-left span:nth-child(2) { display: none; }
       .chat-box { right: 16px; left: 16px; width: auto; bottom: 85px; height: 72vh; }
     }
+    @media (max-width: 560px) {
+      .modal-backdrop { padding: 0.75rem; }
+      .res-grid { grid-template-columns: 1fr; }
+      .res-header, .res-form { padding-left: 1.2rem; padding-right: 1.2rem; }
+    }
   </style>
 </head>
 <body>
@@ -1296,9 +1414,9 @@
           <button class="lang-btn" id="btnLangEN" onclick="switchLanguage('en')">EN</button>
         </div>
 
-        <a href="#booking-form" class="btn-header-primary" data-i18n="nav_btn_check">
+        <a href="#booking-form" class="btn-header-primary" onclick="openReservationModal(); return false;">
           <span class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></span>
-          <span>Müsaitliği Kontrol Et</span>
+          <span data-i18n="nav_btn_check">Rezervasyon Yap</span>
         </a>
 
         <div class="header-secondary-icons">
@@ -1331,8 +1449,8 @@
         <li><a href="#contact" onclick="toggleMobileDrawer()" data-i18n="nav_contact">İletişim</a></li>
       </ul>
       <div class="mobile-drawer-actions">
-        <a href="#booking-form" onclick="toggleMobileDrawer()" class="btn-header-primary" style="justify-content:center;" data-i18n="nav_btn_check">
-          Müsaitliği Kontrol Et
+        <a href="#booking-form" onclick="toggleMobileDrawer(); openReservationModal(); return false;" class="btn-header-primary" style="justify-content:center;">
+          <span data-i18n="nav_btn_check">Rezervasyon Yap</span>
         </a>
         <a href="https://www.booking.com/hotel/tr/eliza-istanbul.html" target="_blank" class="btn-room-secondary" style="justify-content:center; display:flex; align-items:center; gap:0.4rem;">
           <span class="icon"><svg viewBox="0 0 24 24"><path d="M3 21h18"></path><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"></path></svg></span>
@@ -1373,7 +1491,7 @@
   <!-- Booking Strip -->
   <div class="booking-bar-wrapper" id="booking-form">
     <div class="booking-card">
-      <form class="booking-form" onsubmit="handleBookingSubmit(event)">
+      <form class="booking-form" onsubmit="handleBookingSubmit(event)" novalidate>
         <div class="form-group">
           <label class="form-label" for="checkin">
             <span class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line></svg></span>
@@ -1404,8 +1522,8 @@
         </div>
 
         <button type="submit" class="btn-submit-booking">
-          <span class="icon"><svg viewBox="0 0 24 24"><path d="M22 2L11 13"></path><path d="M22 2l-7 20-4-9-9-4 20-7z"></path></svg></span>
-          <span data-i18n="btn_request_avail">Müsaitlik Talebi Gönder</span>
+          <span class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><polyline points="9 15 11 17 15 13"></polyline></svg></span>
+          <span data-i18n="btn_request_avail">Rezervasyon Yap</span>
         </button>
       </form>
 
@@ -1415,8 +1533,8 @@
           <span id="bookingErrorText">Çıkış tarihi giriş tarihinden sonraki bir gün olmalıdır.</span>
         </div>
         <div style="margin-left:auto;">
-          <a href="https://www.booking.com/hotel/tr/eliza-istanbul.html" target="_blank" class="booking-secondary-link" id="linkBookingDirect" data-i18n="link_view_booking">
-            <span>Booking.com'da Gör ➔</span>
+          <a href="https://www.booking.com/hotel/tr/eliza-istanbul.html" target="_blank" class="booking-secondary-link" id="linkBookingDirect">
+            <span data-i18n="link_view_booking">Booking.com'da Gör ➔</span>
           </a>
         </div>
       </div>
@@ -1462,7 +1580,7 @@
             </div>
             <div class="room-btn-group">
               <button class="btn-room-secondary" onclick="openRoomModal('twin')" data-i18n="btn_inspect">Detayları İncele</button>
-              <button class="btn-room-primary" onclick="initiateRoomBooking('twin')"><span data-i18n="btn_book_card">Müsaitlik Sor</span> ➔</button>
+              <button class="btn-room-primary" onclick="initiateRoomBooking('twin')"><span data-i18n="btn_book_card">Rezervasyon Yap</span> ➔</button>
             </div>
           </div>
         </div>
@@ -1496,7 +1614,7 @@
             </div>
             <div class="room-btn-group">
               <button class="btn-room-secondary" onclick="openRoomModal('double')" data-i18n="btn_inspect">Detayları İncele</button>
-              <button class="btn-room-primary" onclick="initiateRoomBooking('double')"><span data-i18n="btn_book_card">Müsaitlik Sor</span> ➔</button>
+              <button class="btn-room-primary" onclick="initiateRoomBooking('double')"><span data-i18n="btn_book_card">Rezervasyon Yap</span> ➔</button>
             </div>
           </div>
         </div>
@@ -1530,7 +1648,7 @@
             </div>
             <div class="room-btn-group">
               <button class="btn-room-secondary" onclick="openRoomModal('deluxe')" data-i18n="btn_inspect">Detayları İncele</button>
-              <button class="btn-room-primary" onclick="initiateRoomBooking('deluxe')"><span data-i18n="btn_book_card">Müsaitlik Sor</span> ➔</button>
+              <button class="btn-room-primary" onclick="initiateRoomBooking('deluxe')"><span data-i18n="btn_book_card">Rezervasyon Yap</span> ➔</button>
             </div>
           </div>
         </div>
@@ -1564,7 +1682,7 @@
             </div>
             <div class="room-btn-group">
               <button class="btn-room-secondary" onclick="openRoomModal('family')" data-i18n="btn_inspect">Detayları İncele</button>
-              <button class="btn-room-primary" onclick="initiateRoomBooking('family')"><span data-i18n="btn_book_card">Müsaitlik Sor</span> ➔</button>
+              <button class="btn-room-primary" onclick="initiateRoomBooking('family')"><span data-i18n="btn_book_card">Rezervasyon Yap</span> ➔</button>
             </div>
           </div>
         </div>
@@ -1598,7 +1716,7 @@
             </div>
             <div class="room-btn-group">
               <button class="btn-room-secondary" onclick="openRoomModal('quad')" data-i18n="btn_inspect">Detayları İncele</button>
-              <button class="btn-room-primary" onclick="initiateRoomBooking('quad')"><span data-i18n="btn_book_card">Müsaitlik Sor</span> ➔</button>
+              <button class="btn-room-primary" onclick="initiateRoomBooking('quad')"><span data-i18n="btn_book_card">Rezervasyon Yap</span> ➔</button>
             </div>
           </div>
         </div>
@@ -1904,11 +2022,98 @@
               <span class="icon"><svg viewBox="0 0 24 24"><path d="M3 21h18"></path><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"></path></svg></span>
               <span data-i18n="btn_view_booking_modal">Booking.com'da Gör</span>
             </a>
-            <a id="modalWaLink" href="#" target="_blank" class="btn-modal-wa">
-              <span class="icon"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg></span>
-              <span data-i18n="btn_request_wa_modal">Müsaitlik Talebi Gönder</span>
-            </a>
+            <button type="button" id="modalReserveBtn" class="btn-modal-reserve">
+              <span class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><polyline points="9 15 11 17 15 13"></polyline></svg></span>
+              <span data-i18n="btn_request_wa_modal">Rezervasyon Yap</span>
+            </button>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reservation Modal -->
+  <div class="modal-backdrop" id="reservationModal" onclick="handleReservationBackdrop(event)" role="dialog" aria-modal="true" aria-labelledby="resTitle">
+    <div class="modal-box res-box">
+      <button class="btn-close-modal" onclick="closeReservationModal()" aria-label="Kapat">✕</button>
+
+      <div id="resFormView">
+        <div class="res-header">
+          <h2 id="resTitle" data-i18n="res_title">Rezervasyon Yap</h2>
+          <p data-i18n="res_subtitle">Bilgilerinizi girin, rezervasyonunuzu doğrudan otelimize iletelim. Ön ödeme gerekmez.</p>
+        </div>
+
+        <form class="res-form" id="resForm" onsubmit="submitReservation(event)" novalidate>
+          <div class="res-grid">
+            <div class="form-group full">
+              <label class="form-label" for="resRoom" data-i18n="res_room">Oda Tipi</label>
+              <select class="form-control" id="resRoom" onchange="updateReservationSummary()"></select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="resCheckin" data-i18n="form_checkin">Giriş Tarihi</label>
+              <input type="date" class="form-control" id="resCheckin" required onchange="handleResDateChange()">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="resCheckout" data-i18n="form_checkout">Çıkış Tarihi</label>
+              <input type="date" class="form-control" id="resCheckout" required onchange="updateReservationSummary()">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="resGuests" data-i18n="form_guests">Misafir Sayısı</label>
+              <select class="form-control" id="resGuests">
+                <option value="1" data-i18n="opt_1guest">1 Yetişkin</option>
+                <option value="2" selected data-i18n="opt_2guests">2 Yetişkin</option>
+                <option value="3" data-i18n="opt_3guests">3 Yetişkin</option>
+                <option value="4" data-i18n="opt_4guests">4 Yetişkin / Aile</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="resName" data-i18n="res_name">Ad Soyad</label>
+              <input type="text" class="form-control" id="resName" autocomplete="name" required maxlength="80">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="resPhone" data-i18n="res_phone">Telefon / WhatsApp</label>
+              <input type="tel" class="form-control" id="resPhone" autocomplete="tel" required maxlength="25" placeholder="+90 5xx xxx xx xx">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="resEmail" data-i18n="res_email">E-posta</label>
+              <input type="email" class="form-control" id="resEmail" autocomplete="email" required maxlength="120">
+            </div>
+            <div class="form-group full">
+              <label class="form-label" for="resNote" data-i18n="res_note">Özel İstek (İsteğe Bağlı)</label>
+              <textarea class="form-control" id="resNote" maxlength="500"></textarea>
+            </div>
+          </div>
+
+          <div class="res-summary">
+            <div id="resSummaryText">—</div>
+            <div>
+              <span data-i18n="res_total">Tahmini Toplam</span>
+              <strong id="resTotal">—</strong>
+            </div>
+          </div>
+
+          <div class="res-error" id="resError"></div>
+
+          <div class="res-actions">
+            <button type="submit" class="btn-submit-booking" id="resSubmitBtn">
+              <span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+              <span id="resSubmitLabel" data-i18n="res_submit">Rezervasyonu Tamamla</span>
+            </button>
+            <div class="res-note" data-i18n="res_policy">Ödeme otelde yapılır • Giriş 14:00 • Çıkış 12:00</div>
+          </div>
+        </form>
+      </div>
+
+      <div class="res-success" id="resSuccessView">
+        <div class="res-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+        <h3 data-i18n="res_success_title">Rezervasyonunuz Alındı</h3>
+        <p data-i18n="res_success_desc">Rezervasyon talebiniz otelimize iletildi. Onay bilgileri kısa süre içinde e-posta ve WhatsApp üzerinden gönderilecektir.</p>
+        <div class="res-ref" id="resRefCode"></div>
+        <div class="res-success-actions">
+          <a class="btn-modal-wa" id="resSuccessWa" href="#" target="_blank" rel="noopener">
+            <span data-i18n="res_success_wa">WhatsApp'tan Takip Et</span>
+          </a>
+          <button type="button" class="btn-modal-reserve" onclick="closeReservationModal()" data-i18n="res_close">Kapat</button>
         </div>
       </div>
     </div>
@@ -1968,6 +2173,8 @@
     const ROOMS = {
       twin: {
         id: "twin",
+        capacity: 2,
+        priceValue: 86.40,
         badgeTr: "Standart Oda",
         badgeEn: "Standard Room",
         titleTr: "Standard Twin Room (İki Ayrı Yatak)",
@@ -1987,6 +2194,8 @@
       },
       double: {
         id: "double",
+        capacity: 2,
+        priceValue: 86.40,
         badgeTr: "Çift Kişilik",
         badgeEn: "Double Room",
         titleTr: "Standard Double Room (Geniş Çift Kişilik)",
@@ -2006,6 +2215,8 @@
       },
       deluxe: {
         id: "deluxe",
+        capacity: 3,
+        priceValue: 110,
         badgeTr: "Şehir Manzarası",
         badgeEn: "City View",
         titleTr: "Deluxe Şehir Manzaralı Oda",
@@ -2025,6 +2236,8 @@
       },
       family: {
         id: "family",
+        capacity: 4,
+        priceValue: 145,
         badgeTr: "Aile Boyu Konfor",
         badgeEn: "Family Comfort",
         titleTr: "Family Room (Geniş Aile Odası)",
@@ -2044,6 +2257,8 @@
       },
       quad: {
         id: "quad",
+        capacity: 4,
+        priceValue: 130,
         badgeTr: "4 Kişilik Grup",
         badgeEn: "Quadruple",
         titleTr: "Quadruple Room (4 Kişilik Oda)",
@@ -2071,7 +2286,7 @@
         nav_amenities: "Olanaklar",
         nav_location: "Konum",
         nav_contact: "İletişim",
-        nav_btn_check: "Müsaitliği Kontrol Et",
+        nav_btn_check: "Rezervasyon Yap",
         hero_badge: "TARİHİ YARIMADA • FATİH / İSTANBUL",
         hero_title: "İstanbul’un tarihi kalbinde, konforlu bir konaklama.",
         hero_desc: "Beyazıt ve Çemberlitaş tramvay duraklarına 3 dakika; Kapalıçarşı, Sultanahmet ve Ayasofya camiine yürüme mesafesinde bağımsız otel konforu.",
@@ -2085,7 +2300,7 @@
         opt_2guests: "2 Yetişkin",
         opt_3guests: "3 Yetişkin",
         opt_4guests: "4 Yetişkin / Aile",
-        btn_request_avail: "Müsaitlik Talebi Gönder",
+        btn_request_avail: "Rezervasyon Yap",
         link_view_booking: "Booking.com'da Gör ➔",
         err_date_order: "Çıkış tarihi giriş tarihinden sonraki bir gün olmalıdır.",
         err_date_past: "Giriş tarihi bugünden önce olamaz.",
@@ -2095,7 +2310,7 @@
         rooms_subtitle: "Tüm odalarımızda klima, ses yalıtımı, özel banyo, minibar ve ücretsiz fiber Wi-Fi standart olarak sunulmaktadır.",
         per_night: "/ Gece",
         btn_inspect: "Detayları İncele",
-        btn_book_card: "Müsaitlik Sor",
+        btn_book_card: "Rezervasyon Yap",
         amenities_eyebrow: "Ayrıcalıklar",
         amenities_title: "Otel Olanakları ve Hizmetleri",
         amenities_subtitle: "Konforlu ve huzurlu bir İstanbul seyahati için tasarlanmış temel hizmetlerimiz.",
@@ -2134,7 +2349,31 @@
         modal_amenities_head: "Oda Olanakları & Donanım",
         modal_policies: "✓ Giriş: 14:00 • Çıkış: 12:00 • Sigara İçilmez • Günlük Temizlik",
         btn_view_booking_modal: "Booking.com'da Gör",
-        btn_request_wa_modal: "Müsaitlik Talebi Gönder",
+        btn_request_wa_modal: "Rezervasyon Yap",
+        res_title: "Rezervasyon Yap",
+        res_subtitle: "Bilgilerinizi girin, rezervasyonunuzu doğrudan otelimize iletelim. Ön ödeme gerekmez.",
+        res_room: "Oda Tipi",
+        res_name: "Ad Soyad",
+        res_phone: "Telefon / WhatsApp",
+        res_email: "E-posta",
+        res_note: "Özel İstek (İsteğe Bağlı)",
+        res_total: "Tahmini Toplam",
+        res_submit: "Rezervasyonu Tamamla",
+        res_sending: "Gönderiliyor...",
+        res_policy: "Ödeme otelde yapılır • Giriş 14:00 • Çıkış 12:00",
+        res_success_title: "Rezervasyonunuz Alındı",
+        res_success_desc: "Rezervasyon talebiniz otelimize iletildi. Onay bilgileri kısa süre içinde e-posta ve WhatsApp üzerinden gönderilecektir.",
+        res_success_wa: "WhatsApp'tan Takip Et",
+        res_close: "Kapat",
+        res_ref_label: "Rezervasyon No",
+        res_nights: "gece",
+        res_guests: "misafir",
+        res_err_name: "Lütfen adınızı ve soyadınızı girin.",
+        res_err_phone: "Lütfen geçerli bir telefon numarası girin.",
+        res_err_email: "Lütfen geçerli bir e-posta adresi girin.",
+        res_err_capacity: "Seçtiğiniz oda bu misafir sayısı için uygun değil. Lütfen daha büyük bir oda seçin.",
+        res_err_send: "Rezervasyon şu anda sistemimize iletilemedi. Bilgilerinizle hazırlanmış mesajı WhatsApp üzerinden gönderebilirsiniz:",
+        res_err_send_link: "WhatsApp ile Rezervasyonu Tamamla ➔",
         chat_status: "Çevrimiçi • 7/24 Misafir Desteği",
         chat_wa_notice: "WhatsApp üzerinden devam etmek ister misiniz?",
         chat_wa_switch: "WhatsApp ➔",
@@ -2152,7 +2391,7 @@
         nav_amenities: "Amenities",
         nav_location: "Location",
         nav_contact: "Contact",
-        nav_btn_check: "Check Availability",
+        nav_btn_check: "Book Now",
         hero_badge: "HISTORIC PENINSULA • FATIH / ISTANBUL",
         hero_title: "A comfortable stay in the historic heart of Istanbul.",
         hero_desc: "Independent hotel comfort within 3 minutes' walk of Beyazıt and Çemberlitaş tram stops; walking distance to Grand Bazaar, Blue Mosque, and Hagia Sophia.",
@@ -2166,7 +2405,7 @@
         opt_2guests: "2 Adults",
         opt_3guests: "3 Adults",
         opt_4guests: "4 Adults / Family",
-        btn_request_avail: "Send Availability Request",
+        btn_request_avail: "Book Now",
         link_view_booking: "View on Booking.com ➔",
         err_date_order: "Check-out date must be after check-in date.",
         err_date_past: "Check-in date cannot be in the past.",
@@ -2176,7 +2415,7 @@
         rooms_subtitle: "All rooms feature air conditioning, soundproofing, private en-suite bathroom, minibar, and complimentary high-speed Wi-Fi.",
         per_night: "/ Night",
         btn_inspect: "View Details",
-        btn_book_card: "Inquire Availability",
+        btn_book_card: "Book Now",
         amenities_eyebrow: "Services",
         amenities_title: "Hotel Amenities & Facilities",
         amenities_subtitle: "Essential services designed for a relaxing, seamless stay in Istanbul.",
@@ -2215,7 +2454,31 @@
         modal_amenities_head: "Room Amenities & Facilities",
         modal_policies: "✓ Check-in: 14:00 • Check-out: 12:00 • Non-Smoking • Daily Housekeeping",
         btn_view_booking_modal: "View on Booking.com",
-        btn_request_wa_modal: "Send Availability Request",
+        btn_request_wa_modal: "Book Now",
+        res_title: "Book Your Stay",
+        res_subtitle: "Enter your details and we will send your reservation directly to the hotel. No prepayment required.",
+        res_room: "Room Type",
+        res_name: "Full Name",
+        res_phone: "Phone / WhatsApp",
+        res_email: "Email",
+        res_note: "Special Requests (Optional)",
+        res_total: "Estimated Total",
+        res_submit: "Complete Reservation",
+        res_sending: "Sending...",
+        res_policy: "Pay at the hotel • Check-in 14:00 • Check-out 12:00",
+        res_success_title: "Reservation Received",
+        res_success_desc: "Your reservation has been sent to the hotel. Confirmation details will follow shortly by email and WhatsApp.",
+        res_success_wa: "Follow Up on WhatsApp",
+        res_close: "Close",
+        res_ref_label: "Reservation No",
+        res_nights: "night(s)",
+        res_guests: "guest(s)",
+        res_err_name: "Please enter your full name.",
+        res_err_phone: "Please enter a valid phone number.",
+        res_err_email: "Please enter a valid email address.",
+        res_err_capacity: "The selected room does not fit this number of guests. Please choose a larger room.",
+        res_err_send: "We could not submit your reservation right now. You can send the prepared message via WhatsApp instead:",
+        res_err_send_link: "Complete Reservation on WhatsApp ➔",
         chat_status: "Online • 24/7 Guest Support",
         chat_wa_notice: "Would you prefer to continue on WhatsApp?",
         chat_wa_switch: "Go to WhatsApp ➔",
@@ -2262,6 +2525,9 @@
       const chatInput = document.getElementById("chatInput");
       if (chatInput) chatInput.placeholder = I18N[lang].chat_placeholder;
 
+      populateRoomSelect();
+      updateReservationSummary();
+
       const greetingMsg = document.getElementById("chatGreetingMsg");
       if (greetingMsg) {
         const dict = I18N[lang];
@@ -2274,56 +2540,96 @@
       }
     }
 
+    const HOTEL_WA_NUMBER = "905419014785";
+    const BOOKING_COM_URL = "https://www.booking.com/hotel/tr/eliza-istanbul.html";
+
+    // Yerel saat dilimine göre YYYY-MM-DD (toISOString UTC'ye çevirdiği için gece yarısı yanlış gün veriyordu)
+    function formatDate(d) {
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, "0");
+      const day = String(d.getDate()).padStart(2, "0");
+      return `${y}-${m}-${day}`;
+    }
+
+    function parseDate(value) {
+      if (!value) return null;
+      const [y, m, d] = value.split("-").map(Number);
+      return new Date(y, m - 1, d);
+    }
+
+    function addDays(value, days) {
+      const d = parseDate(value);
+      d.setDate(d.getDate() + days);
+      return formatDate(d);
+    }
+
+    function nightsBetween(checkin, checkout) {
+      const dIn = parseDate(checkin);
+      const dOut = parseDate(checkout);
+      if (!dIn || !dOut) return 0;
+      return Math.round((dOut - dIn) / 86400000);
+    }
+
+    function displayDate(value) {
+      const d = parseDate(value);
+      if (!d) return "";
+      return d.toLocaleDateString(currentLang === "tr" ? "tr-TR" : "en-GB", { day: "2-digit", month: "short", year: "numeric" });
+    }
+
+    function formatEuro(amount) {
+      return amount.toLocaleString(currentLang === "tr" ? "tr-TR" : "en-GB", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €";
+    }
+
+    function roomTitle(room) {
+      return currentLang === "tr" ? room.titleTr : room.titleEn;
+    }
+
+    // Kendi değerini tutan bir giriş/çıkış çiftini geçerli tutar: çıkış her zaman girişten en az 1 gün sonra
+    function syncDatePair(checkin, checkout) {
+      const today = formatDate(new Date());
+      checkin.min = today;
+      if (!checkin.value || checkin.value < today) checkin.value = today;
+      const minOut = addDays(checkin.value, 1);
+      checkout.min = minOut;
+      if (!checkout.value || checkout.value < minOut) checkout.value = minOut;
+    }
+
     function initDateInputs() {
       const checkin = document.getElementById("checkin");
       const checkout = document.getElementById("checkout");
       if (!checkin || !checkout) return;
-
-      const today = new Date();
-      const tomorrow = new Date(today);
-      tomorrow.setDate(today.getDate() + 1);
-      const dayAfter = new Date(today);
-      dayAfter.setDate(today.getDate() + 2);
-
-      const formatDate = d => d.toISOString().split("T")[0];
-
-      checkin.min = formatDate(today);
-      checkin.value = formatDate(tomorrow);
-
-      checkout.min = formatDate(dayAfter);
-      checkout.value = formatDate(dayAfter);
+      const today = formatDate(new Date());
+      checkin.value = addDays(today, 1);
+      checkout.value = addDays(today, 2);
+      syncDatePair(checkin, checkout);
+      updateBookingComLinks();
     }
 
     function handleDateChange() {
       const checkin = document.getElementById("checkin");
       const checkout = document.getElementById("checkout");
-      const errorBox = document.getElementById("bookingErrorMsg");
-      const errorText = document.getElementById("bookingErrorText");
-
-      if (!checkin.value || !checkout.value) return;
-
-      const dIn = new Date(checkin.value);
-      const dOut = new Date(checkout.value);
-
-      if (dOut <= dIn) {
-        errorBox.style.display = "inline-flex";
-        errorText.textContent = I18N[currentLang].err_date_order;
-        const nextDay = new Date(dIn);
-        nextDay.setDate(dIn.getDate() + 1);
-        checkout.min = nextDay.toISOString().split("T")[0];
-      } else {
-        errorBox.style.display = "none";
-        const nextDay = new Date(dIn);
-        nextDay.setDate(dIn.getDate() + 1);
-        checkout.min = nextDay.toISOString().split("T")[0];
-      }
+      syncDatePair(checkin, checkout);
+      document.getElementById("bookingErrorMsg").style.display = "none";
+      updateBookingComLinks();
     }
 
-    function handleBookingSubmit(e, specificRoomTitle) {
-      if (e) e.preventDefault();
+    // Booking.com bağlantılarına seçilen tarih ve kişi sayısını ekler
+    function updateBookingComLinks() {
       const checkin = document.getElementById("checkin").value;
       const checkout = document.getElementById("checkout").value;
       const guests = document.getElementById("guests").value;
+      const params = new URLSearchParams({ checkin, checkout, group_adults: guests, no_rooms: "1", group_children: "0" });
+      const url = `${BOOKING_COM_URL}?${params.toString()}`;
+      ["linkBookingDirect", "modalBookingLink"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.href = url;
+      });
+    }
+
+    function handleBookingSubmit(e) {
+      if (e) e.preventDefault();
+      const checkin = document.getElementById("checkin").value;
+      const checkout = document.getElementById("checkout").value;
       const errorBox = document.getElementById("bookingErrorMsg");
       const errorText = document.getElementById("bookingErrorText");
 
@@ -2332,36 +2638,185 @@
         errorText.textContent = I18N[currentLang].err_date_missing;
         return;
       }
-
-      const dIn = new Date(checkin);
-      const dOut = new Date(checkout);
-      if (dOut <= dIn) {
+      if (nightsBetween(checkin, checkout) < 1) {
         errorBox.style.display = "inline-flex";
         errorText.textContent = I18N[currentLang].err_date_order;
         return;
       }
-
       errorBox.style.display = "none";
-
-      const diffTime = Math.abs(dOut - dIn);
-      const nights = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-      const roomChosen = specificRoomTitle || (currentLang === "tr" ? "Oda Seçimi Yapılacak" : "Room Selection Pending");
-
-      let msg = "";
-      if (currentLang === "tr") {
-        msg = `Merhaba Hotel Eliza İstanbul,\nRezervasyon için müsaitlik ve fiyat talebi:\n- Giriş Tarihi: ${checkin}\n- Çıkış Tarihi: ${checkout} (${nights} Gece)\n- Misafir: ${guests} Kişi\n- Tercih Edilen Oda: ${roomChosen}\n\nMüsaitlik ve fiyat teklifinizi rica ederim.`;
-      } else {
-        msg = `Hello Hotel Eliza Istanbul,\nAvailability inquiry for reservation:\n- Check-in: ${checkin}\n- Check-out: ${checkout} (${nights} Nights)\n- Guests: ${guests} Person(s)\n- Preferred Room: ${roomChosen}\n\nPlease let me know your availability and rates.`;
-      }
-
-      const waUrl = "https://wa.me/905419014785?text=" + encodeURIComponent(msg);
-      window.open(waUrl, "_blank");
+      openReservationModal();
     }
 
     function initiateRoomBooking(roomId) {
-      const room = ROOMS[roomId];
-      const roomTitle = room ? (currentLang === "tr" ? room.titleTr : room.titleEn) : "";
-      handleBookingSubmit(null, roomTitle);
+      openReservationModal(roomId);
+    }
+
+    /* ---------- Rezervasyon Modalı ---------- */
+    const reservationModal = document.getElementById("reservationModal");
+    let lastReservationPayload = null;
+
+    function populateRoomSelect(selectedId) {
+      const select = document.getElementById("resRoom");
+      const current = selectedId || select.value;
+      select.innerHTML = "";
+      Object.values(ROOMS).forEach(room => {
+        const opt = document.createElement("option");
+        opt.value = room.id;
+        opt.textContent = `${roomTitle(room)} — ${room.price}`;
+        select.appendChild(opt);
+      });
+      if (current && ROOMS[current]) select.value = current;
+    }
+
+    function pickRoomForGuests(guests) {
+      const fitting = Object.values(ROOMS).filter(r => r.capacity >= guests);
+      return (fitting.sort((a, b) => a.priceValue - b.priceValue)[0] || ROOMS.family).id;
+    }
+
+    function openReservationModal(roomId) {
+      const guests = document.getElementById("guests").value;
+      const resCheckin = document.getElementById("resCheckin");
+      const resCheckout = document.getElementById("resCheckout");
+
+      resCheckin.value = document.getElementById("checkin").value;
+      resCheckout.value = document.getElementById("checkout").value;
+      syncDatePair(resCheckin, resCheckout);
+      document.getElementById("resGuests").value = guests;
+
+      populateRoomSelect(roomId || pickRoomForGuests(Number(guests)));
+      const chosen = ROOMS[document.getElementById("resRoom").value];
+      if (chosen && Number(guests) > chosen.capacity) document.getElementById("resGuests").value = String(chosen.capacity);
+
+      document.getElementById("resFormView").style.display = "block";
+      document.getElementById("resSuccessView").style.display = "none";
+      hideReservationError();
+      updateReservationSummary();
+
+      if (roomModal.classList.contains("open")) roomModal.classList.remove("open");
+      reservationModal.classList.add("open");
+      document.body.style.overflow = "hidden";
+      setTimeout(() => document.getElementById("resName").focus(), 50);
+    }
+
+    function closeReservationModal() {
+      reservationModal.classList.remove("open");
+      document.body.style.overflow = "";
+    }
+
+    function handleReservationBackdrop(e) {
+      if (e.target === reservationModal) closeReservationModal();
+    }
+
+    function handleResDateChange() {
+      syncDatePair(document.getElementById("resCheckin"), document.getElementById("resCheckout"));
+      updateReservationSummary();
+    }
+
+    function updateReservationSummary() {
+      const room = ROOMS[document.getElementById("resRoom").value];
+      const checkin = document.getElementById("resCheckin").value;
+      const checkout = document.getElementById("resCheckout").value;
+      const nights = nightsBetween(checkin, checkout);
+      const dict = I18N[currentLang];
+      const summary = document.getElementById("resSummaryText");
+      const total = document.getElementById("resTotal");
+      if (!room || nights < 1) {
+        summary.textContent = "—";
+        total.textContent = "—";
+        return;
+      }
+      summary.textContent = `${displayDate(checkin)} → ${displayDate(checkout)} • ${nights} ${dict.res_nights}`;
+      total.textContent = formatEuro(room.priceValue * nights);
+    }
+
+    function showReservationError(message, waUrl) {
+      const box = document.getElementById("resError");
+      box.textContent = message;
+      if (waUrl) {
+        box.appendChild(document.createElement("br"));
+        const a = document.createElement("a");
+        a.href = waUrl;
+        a.target = "_blank";
+        a.rel = "noopener";
+        a.textContent = I18N[currentLang].res_err_send_link;
+        box.appendChild(a);
+      }
+      box.style.display = "block";
+    }
+
+    function hideReservationError() {
+      document.getElementById("resError").style.display = "none";
+      document.querySelectorAll("#resForm .invalid").forEach(el => el.classList.remove("invalid"));
+    }
+
+    function buildWhatsAppUrl(p, ref) {
+      const room = ROOMS[p.roomId];
+      const msg = currentLang === "tr"
+        ? `Merhaba Hotel Eliza İstanbul,\nRezervasyon yapmak istiyorum:${ref ? `\n- Rezervasyon No: ${ref}` : ""}\n- Ad Soyad: ${p.name}\n- Oda: ${roomTitle(room)}\n- Giriş: ${p.checkin}\n- Çıkış: ${p.checkout} (${p.nights} Gece)\n- Misafir: ${p.guests} Kişi\n- Telefon: ${p.phone}\n- E-posta: ${p.email}${p.note ? `\n- Not: ${p.note}` : ""}\n\nTeşekkürler.`
+        : `Hello Hotel Eliza Istanbul,\nI would like to make a reservation:${ref ? `\n- Reservation No: ${ref}` : ""}\n- Name: ${p.name}\n- Room: ${roomTitle(room)}\n- Check-in: ${p.checkin}\n- Check-out: ${p.checkout} (${p.nights} Nights)\n- Guests: ${p.guests}\n- Phone: ${p.phone}\n- Email: ${p.email}${p.note ? `\n- Note: ${p.note}` : ""}\n\nThank you.`;
+      return `https://wa.me/${HOTEL_WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+    }
+
+    async function submitReservation(e) {
+      e.preventDefault();
+      hideReservationError();
+      const dict = I18N[currentLang];
+
+      const field = id => document.getElementById(id);
+      const payload = {
+        roomId: field("resRoom").value,
+        checkin: field("resCheckin").value,
+        checkout: field("resCheckout").value,
+        guests: Number(field("resGuests").value),
+        name: field("resName").value.trim(),
+        phone: field("resPhone").value.trim(),
+        email: field("resEmail").value.trim(),
+        note: field("resNote").value.trim(),
+        lang: currentLang
+      };
+      payload.nights = nightsBetween(payload.checkin, payload.checkout);
+      const room = ROOMS[payload.roomId];
+
+      if (payload.nights < 1) { field("resCheckout").classList.add("invalid"); return showReservationError(dict.err_date_order); }
+      if (payload.guests > room.capacity) { field("resRoom").classList.add("invalid"); return showReservationError(dict.res_err_capacity); }
+      if (payload.name.length < 3) { field("resName").classList.add("invalid"); field("resName").focus(); return showReservationError(dict.res_err_name); }
+      if (payload.phone.replace(/\D/g, "").length < 10) { field("resPhone").classList.add("invalid"); field("resPhone").focus(); return showReservationError(dict.res_err_phone); }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(payload.email)) { field("resEmail").classList.add("invalid"); field("resEmail").focus(); return showReservationError(dict.res_err_email); }
+
+      payload.roomTitle = roomTitle(room);
+      payload.total = Math.round(room.priceValue * payload.nights * 100) / 100;
+      lastReservationPayload = payload;
+
+      const btn = field("resSubmitBtn");
+      const label = field("resSubmitLabel");
+      btn.disabled = true;
+      label.textContent = dict.res_sending;
+
+      try {
+        const response = await fetch("/api/reservation", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok || !data.success) throw new Error(data.error || "Reservation failed");
+        showReservationSuccess(payload, data.reference);
+      } catch (err) {
+        // Sunucu ulaşılamazsa kullanıcıyı yarı yolda bırakma: hazır WhatsApp mesajı linki sun
+        // (await sonrası window.open Safari'de engellendiği için tıklanabilir link kullanılıyor)
+        showReservationError(dict.res_err_send, buildWhatsAppUrl(payload));
+      } finally {
+        btn.disabled = false;
+        label.textContent = dict.res_submit;
+      }
+    }
+
+    function showReservationSuccess(payload, reference) {
+      document.getElementById("resFormView").style.display = "none";
+      document.getElementById("resSuccessView").style.display = "block";
+      document.getElementById("resRefCode").textContent = `${I18N[currentLang].res_ref_label}: ${reference}`;
+      document.getElementById("resSuccessWa").href = buildWhatsAppUrl(payload, reference);
+      document.getElementById("resForm").reset();
     }
 
     const roomModal = document.getElementById("roomModal");
@@ -2407,11 +2862,7 @@
         amBox.appendChild(cell);
       });
 
-      const modalWaBtn = document.getElementById("modalWaLink");
-      modalWaBtn.onclick = (e) => {
-        e.preventDefault();
-        handleBookingSubmit(null, title);
-      };
+      document.getElementById("modalReserveBtn").onclick = () => openReservationModal(roomId);
 
       roomModal.classList.add("open");
       document.body.style.overflow = "hidden";
@@ -2419,7 +2870,7 @@
 
     function closeRoomModal() {
       roomModal.classList.remove("open");
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = "";
     }
 
     function handleModalBackdrop(e) {
@@ -2427,9 +2878,9 @@
     }
 
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && roomModal && roomModal.classList.contains("open")) {
-        closeRoomModal();
-      }
+      if (e.key !== "Escape") return;
+      if (reservationModal.classList.contains("open")) closeReservationModal();
+      else if (roomModal.classList.contains("open")) closeRoomModal();
     });
 
     function toggleMobileDrawer() {
@@ -2437,7 +2888,7 @@
       const btn = document.getElementById("btnHamburger");
       const isOpen = drawer.classList.toggle("open");
       btn.setAttribute("aria-expanded", isOpen ? "true" : "false");
-      document.body.style.overflow = isOpen ? "hidden" : "auto";
+      document.body.style.overflow = isOpen ? "hidden" : "";
     }
 
     function handleDrawerBackdrop(e) {
@@ -2468,6 +2919,8 @@
       sendChatMessage(text);
     }
 
+    const chatHistory = [];
+
     async function sendChatMessage(text) {
       appendChatMessage(text, "user");
       showChatTyping(true);
@@ -2479,7 +2932,7 @@
           body: JSON.stringify({
             message: text,
             lang: currentLang,
-            messages: [{ role: "user", content: text }]
+            history: chatHistory.slice(-10)
           })
         });
 
@@ -2487,6 +2940,7 @@
         const data = await response.json();
         const reply = data.reply || data.response || data.message || data.text || null;
         if (reply) {
+          chatHistory.push({ role: "user", content: text }, { role: "assistant", content: reply });
           appendChatMessage(reply, "bot");
         } else {
           appendChatFallback(text);
@@ -2498,10 +2952,14 @@
       }
     }
 
+    function escapeHtml(str) {
+      return String(str).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    }
+
     function appendChatMessage(content, sender) {
       const div = document.createElement("div");
       div.className = `chat-msg chat-msg-${sender}`;
-      div.innerHTML = content.replace(/\\n/g, "<br>");
+      div.innerHTML = escapeHtml(content).replace(/\r?\n/g, "<br>");
       chatBody.insertBefore(div, chatTyping);
       chatBody.scrollTop = chatBody.scrollHeight;
     }
@@ -2531,8 +2989,8 @@
           : "We are located 250m (3 min walk) from Beyazıt Tram Station and 300m from Çemberlitaş. Grand Bazaar is just 5 minutes on foot.";
       } else if (q.includes("fiyat") || q.includes("rate") || q.includes("price")) {
         reply = currentLang === "tr"
-          ? "Standart odalarımız 86,40 €'dan başlamaktadır. Seçtiğiniz tarihler için yukarıdaki formdan Müsaitlik Talebi gönderebilirsiniz."
-          : "Standard rooms start from 86.40 €. You can submit an availability request using the booking form above for your desired dates.";
+          ? "Standart odalarımız 86,40 €'dan başlamaktadır. Seçtiğiniz tarihler için yukarıdaki formdan \"Rezervasyon Yap\" butonuyla hemen rezervasyon yapabilirsiniz."
+          : "Standard rooms start from 86.40 €. You can book instantly for your dates using the \"Book Now\" button in the form above.";
       }
 
       appendChatMessage(reply, "bot");
@@ -2540,12 +2998,8 @@
 
     document.addEventListener("DOMContentLoaded", () => {
       initDateInputs();
-    });
-  </script>
-</body>
-</html>
-``` => {
-      initDateInputs();
+      document.getElementById("guests").addEventListener("change", updateBookingComLinks);
+      document.getElementById("resForm").addEventListener("input", e => e.target.classList.remove("invalid"));
     });
   </script>
 </body>
