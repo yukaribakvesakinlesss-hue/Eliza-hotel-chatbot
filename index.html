@@ -559,6 +559,23 @@
       transition: transform 0.5s ease;
     }
     .room-card:hover .room-media img { transform: scale(1.04); }
+    .room-photo-placeholder {
+      position: absolute;
+      inset: 0;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      background: linear-gradient(135deg, var(--color-dark) 0%, #3A3A32 100%);
+      color: var(--color-gold);
+      text-align: center;
+    }
+    .room-photo-placeholder .logo-main { font-size: 1.15rem; color: #fff; letter-spacing: 2px; }
+    .room-photo-placeholder span:last-child { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; }
+    .room-media.no-photo img { display: none; }
+    .room-media.no-photo .room-photo-placeholder { display: flex; }
+    .modal-gallery-view.no-photo { display: none; }
     .room-badge {
       position: absolute;
       top: 12px;
@@ -1514,10 +1531,11 @@
             <span data-i18n="form_guests">Misafir Sayısı</span>
           </label>
           <select class="form-control" id="guests">
-            <option value="1" data-i18n="opt_1guest">1 Yetişkin</option>
-            <option value="2" selected data-i18n="opt_2guests">2 Yetişkin</option>
-            <option value="3" data-i18n="opt_3guests">3 Yetişkin</option>
-            <option value="4" data-i18n="opt_4guests">4 Yetişkin / Aile</option>
+            <option value="1" data-i18n="opt_1guest">1 Misafir</option>
+            <option value="2" selected data-i18n="opt_2guests">2 Misafir</option>
+            <option value="3" data-i18n="opt_3guests">3 Misafir</option>
+            <option value="4" data-i18n="opt_4guests">4 Misafir</option>
+                <option value="5" data-i18n="opt_5guests">5 Misafir / Aile</option>
           </select>
         </div>
 
@@ -1546,50 +1564,54 @@
     <div class="section-header">
       <span class="section-eyebrow" data-i18n="rooms_eyebrow">Konaklama</span>
       <h2 class="section-title" data-i18n="rooms_title">Özenle Tasarlanmış Odalarımız</h2>
-      <p class="section-subtitle" data-i18n="rooms_subtitle">Tüm odalarımızda klima, ses yalıtımı, özel banyo, minibar ve ücretsiz fiber Wi-Fi standart olarak sunulmaktadır.</p>
+      <p class="section-subtitle" data-i18n="rooms_subtitle">Tüm odalarımızda klima, ses yalıtımı, özel banyo, minibar, çay-kahve makinesi ve ücretsiz Wi-Fi standart olarak sunulmaktadır.</p>
     </div>
 
     <!-- Static HTML Rooms Grid (Zero dependence on JavaScript to view) -->
     <div class="rooms-grid" id="roomsGridContainer">
-      
-      <!-- Room 1: Standard Twin -->
-      <div class="room-card" id="card-twin">
-        <div class="room-media" onclick="openRoomModal('twin')">
-          <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/911185635.jpg?k=7a6598d6a1c18a281df199298f4e4dc060bf32afc7f48e5e13e9662813087180&o=" alt="Standard Twin Room" loading="lazy">
-          <span class="room-badge" data-room-badge="twin">Standart Oda</span>
+      <div class="room-card" id="card-single">
+        <div class="room-media" onclick="openRoomModal('single')">
+          <img src="images/rooms/single-1.jpg" alt="Single Room - Eliza Hotel Istanbul" loading="lazy" onerror="handleRoomImageError(this)">
+          <div class="room-photo-placeholder" aria-hidden="true">
+            <span class="logo-main">HOTEL ELIZA</span>
+            <span data-room-badge-ph="single">Tek Kişilik</span>
+          </div>
+          <span class="room-badge" data-room-badge="single">Tek Kişilik</span>
           <span class="btn-quick-inspect">
             <span class="icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
             <span data-i18n="btn_inspect">Detayları İncele</span>
           </span>
         </div>
         <div class="room-content">
-          <h3 class="room-title" data-room-title="twin">Standard Twin Room (İki Ayrı Yatak)</h3>
-          <div class="room-specs-strip" data-room-specs="twin">20 m² • 2 Yetişkin • 2 Ayrı Yatak</div>
-          <ul class="room-features-list" data-room-features="twin">
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Klima, Isıtma & Düz Ekran LCD TV</li>
+          <h3 class="room-title" data-room-title="single">Single Room (Tek Kişilik Oda)</h3>
+          <div class="room-specs-strip" data-room-specs="single">16 m² • 1 Misafir • 1 Tek Kişilik Yatak</div>
+          <ul class="room-features-list" data-room-features="single">
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Şehir Manzarası & Ses Yalıtımı</li>
             <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Özel Banyo, Duş, Saç Kurutma & Terlik</li>
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Elektrikli Su Isıtıcısı, Çay/Kahve İkramı</li>
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Minibar, Çalışma Masası & Kasa</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Klima & Kablolu Yayın Düz Ekran TV</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Minibar, Çay & Kahve Makinesi</li>
           </ul>
           <div class="room-bottom">
             <div class="room-price-line">
-              <div>
-                <span class="price-value">86,40 €</span>
-                <span class="price-period" data-i18n="per_night">/ Gece</span>
+              <div data-room-price="single">
+                <span class="price-period" data-i18n="price_on_request">Fiyat seçtiğiniz tarihe göre değişir</span>
               </div>
             </div>
             <div class="room-btn-group">
-              <button class="btn-room-secondary" onclick="openRoomModal('twin')" data-i18n="btn_inspect">Detayları İncele</button>
-              <button class="btn-room-primary" onclick="initiateRoomBooking('twin')"><span data-i18n="btn_book_card">Rezervasyon Yap</span> ➔</button>
+              <button class="btn-room-secondary" onclick="openRoomModal('single')" data-i18n="btn_inspect">Detayları İncele</button>
+              <button class="btn-room-primary" onclick="initiateRoomBooking('single')"><span data-i18n="btn_book_card">Rezervasyon Yap</span> ➔</button>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Room 2: Standard Double -->
       <div class="room-card" id="card-double">
         <div class="room-media" onclick="openRoomModal('double')">
-          <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?q=80&w=900&auto=format&fit=crop" alt="Standard Double Room" loading="lazy">
+          <img src="images/rooms/double-1.jpg" alt="Standard Double Room - Eliza Hotel Istanbul" loading="lazy" onerror="handleRoomImageError(this)">
+          <div class="room-photo-placeholder" aria-hidden="true">
+            <span class="logo-main">HOTEL ELIZA</span>
+            <span data-room-badge-ph="double">Çift Kişilik</span>
+          </div>
           <span class="room-badge" data-room-badge="double">Çift Kişilik</span>
           <span class="btn-quick-inspect">
             <span class="icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
@@ -1597,19 +1619,18 @@
           </span>
         </div>
         <div class="room-content">
-          <h3 class="room-title" data-room-title="double">Standard Double Room (Geniş Çift Kişilik)</h3>
-          <div class="room-specs-strip" data-room-specs="double">20 m² • 2 Yetişkin • 1 Büyük Çift Kişilik Yatak</div>
+          <h3 class="room-title" data-room-title="double">Standard Double Room (Çift Kişilik Yatak)</h3>
+          <div class="room-specs-strip" data-room-specs="double">20 m² • 2 Misafir • 1 Çift Kişilik Yatak</div>
           <ul class="room-features-list" data-room-features="double">
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Geniş Ortopedik King Yatak</li>
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Özel Banyo & Kaliteli Buklet Ürünleri</li>
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Şehir Manzaralı Ses Yalıtımlı Pencereler</li>
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Ücretsiz Yüksek Hızlı Fiber Wi-Fi</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Çift Kişilik Yatak & Mısır Pamuğu Nevresim</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Özel Banyo, Duş, Saç Kurutma & Terlik</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Klima & Kablolu Yayın Düz Ekran TV</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Minibar, Çay & Kahve Makinesi</li>
           </ul>
           <div class="room-bottom">
             <div class="room-price-line">
-              <div>
-                <span class="price-value">86,40 €</span>
-                <span class="price-period" data-i18n="per_night">/ Gece</span>
+              <div data-room-price="double">
+                <span class="price-period" data-i18n="price_on_request">Fiyat seçtiğiniz tarihe göre değişir</span>
               </div>
             </div>
             <div class="room-btn-group">
@@ -1620,79 +1641,86 @@
         </div>
       </div>
 
-      <!-- Room 3: Deluxe Room -->
-      <div class="room-card" id="card-deluxe">
-        <div class="room-media" onclick="openRoomModal('deluxe')">
-          <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=900&auto=format&fit=crop" alt="Deluxe Room" loading="lazy">
-          <span class="room-badge" data-room-badge="deluxe">Şehir Manzarası</span>
+      <div class="room-card" id="card-twin">
+        <div class="room-media" onclick="openRoomModal('twin')">
+          <img src="images/rooms/twin-1.jpg" alt="Standard Twin Room - Eliza Hotel Istanbul" loading="lazy" onerror="handleRoomImageError(this)">
+          <div class="room-photo-placeholder" aria-hidden="true">
+            <span class="logo-main">HOTEL ELIZA</span>
+            <span data-room-badge-ph="twin">İki Ayrı Yatak</span>
+          </div>
+          <span class="room-badge" data-room-badge="twin">İki Ayrı Yatak</span>
           <span class="btn-quick-inspect">
             <span class="icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
             <span data-i18n="btn_inspect">Detayları İncele</span>
           </span>
         </div>
         <div class="room-content">
-          <h3 class="room-title" data-room-title="deluxe">Deluxe Şehir Manzaralı Oda</h3>
-          <div class="room-specs-strip" data-room-specs="deluxe">25 m² • 2-3 Yetişkin • King Yatak + Oturma Alanı</div>
-          <ul class="room-features-list" data-room-features="deluxe">
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Tarihi İstanbul Sokakları Manzarası</li>
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Geniş Oturma Alanı & Sehpa</li>
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Lüks Bornoz, Terlik & Premium Buklet</li>
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Akıllı TV, Zengin Minibar & Kasa</li>
+          <h3 class="room-title" data-room-title="twin">Standard Twin Room (İki Ayrı Yatak)</h3>
+          <div class="room-specs-strip" data-room-specs="twin">20 m² • 2 Misafir • 2 Tek Kişilik Yatak</div>
+          <ul class="room-features-list" data-room-features="twin">
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> 2 Tek Kişilik Yatak & Ses Yalıtımı</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Özel Banyo, Duş, Saç Kurutma & Terlik</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Klima & Kablolu Yayın Düz Ekran TV</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Minibar, Çay & Kahve Makinesi</li>
           </ul>
           <div class="room-bottom">
             <div class="room-price-line">
-              <div>
-                <span class="price-value">110,00 €</span>
-                <span class="price-period" data-i18n="per_night">/ Gece</span>
+              <div data-room-price="twin">
+                <span class="price-period" data-i18n="price_on_request">Fiyat seçtiğiniz tarihe göre değişir</span>
               </div>
             </div>
             <div class="room-btn-group">
-              <button class="btn-room-secondary" onclick="openRoomModal('deluxe')" data-i18n="btn_inspect">Detayları İncele</button>
-              <button class="btn-room-primary" onclick="initiateRoomBooking('deluxe')"><span data-i18n="btn_book_card">Rezervasyon Yap</span> ➔</button>
+              <button class="btn-room-secondary" onclick="openRoomModal('twin')" data-i18n="btn_inspect">Detayları İncele</button>
+              <button class="btn-room-primary" onclick="initiateRoomBooking('twin')"><span data-i18n="btn_book_card">Rezervasyon Yap</span> ➔</button>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Room 4: Family Room -->
-      <div class="room-card" id="card-family">
-        <div class="room-media" onclick="openRoomModal('family')">
-          <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?q=80&w=900&auto=format&fit=crop" alt="Family Room" loading="lazy">
-          <span class="room-badge" data-room-badge="family">Aile Boyu Konfor</span>
+      <div class="room-card" id="card-triple">
+        <div class="room-media" onclick="openRoomModal('triple')">
+          <img src="images/rooms/triple-1.jpg" alt="Standard Triple Room - Eliza Hotel Istanbul" loading="lazy" onerror="handleRoomImageError(this)">
+          <div class="room-photo-placeholder" aria-hidden="true">
+            <span class="logo-main">HOTEL ELIZA</span>
+            <span data-room-badge-ph="triple">3 Kişilik</span>
+          </div>
+          <span class="room-badge" data-room-badge="triple">3 Kişilik</span>
           <span class="btn-quick-inspect">
             <span class="icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
             <span data-i18n="btn_inspect">Detayları İncele</span>
           </span>
         </div>
         <div class="room-content">
-          <h3 class="room-title" data-room-title="family">Family Room (Geniş Aile Odası)</h3>
-          <div class="room-specs-strip" data-room-specs="family">35 m² • 3-4 Misafir • 1 Çift + 2 Tek Kişilik Yatak</div>
-          <ul class="room-features-list" data-room-features="family">
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> 3-4 Kişilik Geniş ve Ferah Düzen</li>
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Talep Üzerine Ücretsiz Bebek Karyolası</li>
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Geniş Banyo & Ekstra Havlu Setleri</li>
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Buzdolabı, Su Isıtıcısı & Çay Seti</li>
+          <h3 class="room-title" data-room-title="triple">Standard Triple Room (3 Kişilik Oda)</h3>
+          <div class="room-specs-strip" data-room-specs="triple">28 m² • 3 Misafir • 3 Tek Kişilik Yatak</div>
+          <ul class="room-features-list" data-room-features="triple">
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> 3 Tek Kişilik Yatak & Şehir Manzarası</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Özel Banyo, Duş, Saç Kurutma & Terlik</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Klima & Kablolu Yayın Düz Ekran TV</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Minibar, Çay & Kahve Makinesi</li>
           </ul>
           <div class="room-bottom">
             <div class="room-price-line">
-              <div>
-                <span class="price-value">145,00 €</span>
-                <span class="price-period" data-i18n="per_night">/ Gece</span>
+              <div data-room-price="triple">
+                <span class="price-period" data-i18n="price_on_request">Fiyat seçtiğiniz tarihe göre değişir</span>
               </div>
             </div>
             <div class="room-btn-group">
-              <button class="btn-room-secondary" onclick="openRoomModal('family')" data-i18n="btn_inspect">Detayları İncele</button>
-              <button class="btn-room-primary" onclick="initiateRoomBooking('family')"><span data-i18n="btn_book_card">Rezervasyon Yap</span> ➔</button>
+              <button class="btn-room-secondary" onclick="openRoomModal('triple')" data-i18n="btn_inspect">Detayları İncele</button>
+              <button class="btn-room-primary" onclick="initiateRoomBooking('triple')"><span data-i18n="btn_book_card">Rezervasyon Yap</span> ➔</button>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Room 5: Quadruple Room -->
       <div class="room-card" id="card-quad">
         <div class="room-media" onclick="openRoomModal('quad')">
-          <img src="https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?q=80&w=900&auto=format&fit=crop" alt="Quadruple Room" loading="lazy">
-          <span class="room-badge" data-room-badge="quad">4 Kişilik Grup</span>
+          <img src="images/rooms/quad-1.jpg" alt="Quadruple Room - Eliza Hotel Istanbul" loading="lazy" onerror="handleRoomImageError(this)">
+          <div class="room-photo-placeholder" aria-hidden="true">
+            <span class="logo-main">HOTEL ELIZA</span>
+            <span data-room-badge-ph="quad">4 Kişilik</span>
+          </div>
+          <span class="room-badge" data-room-badge="quad">4 Kişilik</span>
           <span class="btn-quick-inspect">
             <span class="icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
             <span data-i18n="btn_inspect">Detayları İncele</span>
@@ -1700,23 +1728,58 @@
         </div>
         <div class="room-content">
           <h3 class="room-title" data-room-title="quad">Quadruple Room (4 Kişilik Oda)</h3>
-          <div class="room-specs-strip" data-room-specs="quad">30 m² • 4 Yetişkin • 4 Konforlu Yatak</div>
+          <div class="room-specs-strip" data-room-specs="quad">30 m² • 4 Misafir • 2 Çift Kişilik veya 1 Çift + 2 Tek Kişilik Yatak</div>
           <ul class="room-features-list" data-room-features="quad">
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> 4 Kişilik Rahat Yatak Düzeni</li>
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Bağımsız Klima & Geniş Gardıroplar</li>
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Kesintisiz 24 Saat Sıcak Su</li>
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> LCD TV & Hızlı Fiber Wi-Fi</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> 2 Çift veya 1 Çift + 2 Tek Kişilik Yatak</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Özel Banyo, Duş, Saç Kurutma & Terlik</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Klima, Ses Yalıtımı & Düz Ekran TV</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Minibar, Çay & Kahve Makinesi</li>
           </ul>
           <div class="room-bottom">
             <div class="room-price-line">
-              <div>
-                <span class="price-value">130,00 €</span>
-                <span class="price-period" data-i18n="per_night">/ Gece</span>
+              <div data-room-price="quad">
+                <span class="price-period" data-i18n="price_on_request">Fiyat seçtiğiniz tarihe göre değişir</span>
               </div>
             </div>
             <div class="room-btn-group">
               <button class="btn-room-secondary" onclick="openRoomModal('quad')" data-i18n="btn_inspect">Detayları İncele</button>
               <button class="btn-room-primary" onclick="initiateRoomBooking('quad')"><span data-i18n="btn_book_card">Rezervasyon Yap</span> ➔</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="room-card" id="card-family">
+        <div class="room-media" onclick="openRoomModal('family')">
+          <img src="images/rooms/family-1.jpg" alt="Family Room - Eliza Hotel Istanbul" loading="lazy" onerror="handleRoomImageError(this)">
+          <div class="room-photo-placeholder" aria-hidden="true">
+            <span class="logo-main">HOTEL ELIZA</span>
+            <span data-room-badge-ph="family">Aile Odası</span>
+          </div>
+          <span class="room-badge" data-room-badge="family">Aile Odası</span>
+          <span class="btn-quick-inspect">
+            <span class="icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
+            <span data-i18n="btn_inspect">Detayları İncele</span>
+          </span>
+        </div>
+        <div class="room-content">
+          <h3 class="room-title" data-room-title="family">Family Room (Aile Odası)</h3>
+          <div class="room-specs-strip" data-room-specs="family">30 m² • 5 Misafire Kadar • 1 Çift + 2 Tek Kişilik Yatak + Çekyat</div>
+          <ul class="room-features-list" data-room-features="family">
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> 1 Çift + 2 Tek Kişilik Yatak + Çekyat</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Ücretsiz Bebek Karyolası</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Özel Banyo, Duş, Saç Kurutma & Terlik</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Klima, Düz Ekran TV, Minibar & Çay Seti</li>
+          </ul>
+          <div class="room-bottom">
+            <div class="room-price-line">
+              <div data-room-price="family">
+                <span class="price-period" data-i18n="price_on_request">Fiyat seçtiğiniz tarihe göre değişir</span>
+              </div>
+            </div>
+            <div class="room-btn-group">
+              <button class="btn-room-secondary" onclick="openRoomModal('family')" data-i18n="btn_inspect">Detayları İncele</button>
+              <button class="btn-room-primary" onclick="initiateRoomBooking('family')"><span data-i18n="btn_book_card">Rezervasyon Yap</span> ➔</button>
             </div>
           </div>
         </div>
@@ -2060,10 +2123,11 @@
             <div class="form-group">
               <label class="form-label" for="resGuests" data-i18n="form_guests">Misafir Sayısı</label>
               <select class="form-control" id="resGuests">
-                <option value="1" data-i18n="opt_1guest">1 Yetişkin</option>
-                <option value="2" selected data-i18n="opt_2guests">2 Yetişkin</option>
-                <option value="3" data-i18n="opt_3guests">3 Yetişkin</option>
-                <option value="4" data-i18n="opt_4guests">4 Yetişkin / Aile</option>
+                <option value="1" data-i18n="opt_1guest">1 Misafir</option>
+                <option value="2" selected data-i18n="opt_2guests">2 Misafir</option>
+                <option value="3" data-i18n="opt_3guests">3 Misafir</option>
+                <option value="4" data-i18n="opt_4guests">4 Misafir</option>
+                <option value="5" data-i18n="opt_5guests">5 Misafir / Aile</option>
               </select>
             </div>
             <div class="form-group">
@@ -2170,111 +2234,188 @@
   <script>
     let currentLang = "tr";
 
+    // Oda bilgileri: tek kaynak. price = gecelik € (otel onaylı fiyat girilene kadar null).
+    // Fotoğraflar: images/rooms/<oda-id>-1.jpg, -2.jpg, -3.jpg (bkz. images/rooms/README.md)
     const ROOMS = {
-      twin: {
-        id: "twin",
-        capacity: 2,
-        priceValue: 86.40,
-        badgeTr: "Standart Oda",
-        badgeEn: "Standard Room",
-        titleTr: "Standard Twin Room (İki Ayrı Yatak)",
-        titleEn: "Standard Twin Room (Two Single Beds)",
-        specsTr: "20 m² • 2 Yetişkin • 2 Ayrı Yatak",
-        specsEn: "20 m² • 2 Adults • 2 Twin Beds",
-        price: "86,40 €",
-        descTr: "Standard Twin odalarımız, iki adet konforlu tek kişilik yatağı, özel banyosu ve ferah yapısıyla iş ve arkadaş seyahatleri için idealdir. Ses yalıtımlı yapısı ve klima sistemiyle dinlendirici bir konaklama sunar.",
-        descEn: "Our Standard Twin rooms feature two comfortable single beds, private modern bathroom, and soundproofing, making them ideal for business or leisure trips with friends.",
-        images: [
-          "https://cf.bstatic.com/xdata/images/hotel/max1024x768/911185635.jpg?k=7a6598d6a1c18a281df199298f4e4dc060bf32afc7f48e5e13e9662813087180&o=",
-          "https://images.unsplash.com/photo-1618773928121-c32242e63f39?q=80&w=900&auto=format&fit=crop",
-          "https://images.unsplash.com/photo-1590490360182-c33d57733427?q=80&w=900&auto=format&fit=crop"
+      "single": {
+        "id": "single",
+        "capacity": 1,
+        "badgeTr": "Tek Kişilik",
+        "badgeEn": "Single",
+        "titleTr": "Single Room (Tek Kişilik Oda)",
+        "titleEn": "Single Room",
+        "specsTr": "16 m² • 1 Misafir • 1 Tek Kişilik Yatak",
+        "specsEn": "16 m² • 1 Guest • 1 Single Bed",
+        "descTr": "Yalnız seyahat edenler için tasarlanan Single odamız; şehir manzarası, ses yalıtımı ve özel banyosuyla Tarihi Yarımada'yı keşfetmek için sakin ve pratik bir üs sunar.",
+        "descEn": "Designed for solo travellers, our Single Room offers city views, soundproofing and a private bathroom — a calm, practical base for exploring the Historic Peninsula.",
+        "featuresTr": [
+          "Şehir Manzarası & Ses Yalıtımı",
+          "Özel Banyo, Duş, Saç Kurutma & Terlik",
+          "Klima & Kablolu Yayın Düz Ekran TV",
+          "Minibar, Çay & Kahve Makinesi"
         ],
-        featuresTr: ["Klima, Isıtma & Düz Ekran LCD TV", "Özel Banyo, Duş, Saç Kurutma & Terlik", "Elektrikli Su Isıtıcısı, Çay/Kahve İkramı", "Minibar, Çalışma Masası & Kasa"],
-        featuresEn: ["Air Conditioning & Flat Screen TV", "Private Bathroom, Shower & Hairdryer", "Electric Kettle, Tea/Coffee Set", "Minibar, Work Desk & Safe Box"]
+        "featuresEn": [
+          "City View & Soundproofing",
+          "Private Bathroom, Shower, Hairdryer & Slippers",
+          "Air Conditioning & Flat-Screen Cable TV",
+          "Minibar, Tea & Coffee Maker"
+        ],
+        "price": null,
+        "images": [
+          "images/rooms/single-1.jpg",
+          "images/rooms/single-2.jpg",
+          "images/rooms/single-3.jpg"
+        ]
       },
-      double: {
-        id: "double",
-        capacity: 2,
-        priceValue: 86.40,
-        badgeTr: "Çift Kişilik",
-        badgeEn: "Double Room",
-        titleTr: "Standard Double Room (Geniş Çift Kişilik)",
-        titleEn: "Standard Double Room (King Bed)",
-        specsTr: "20 m² • 2 Yetişkin • 1 Büyük Çift Kişilik Yatak",
-        specsEn: "20 m² • 2 Adults • 1 King Bed",
-        price: "86,40 €",
-        descTr: "Çiftler için tasarlanan Standard Double odamız, ultra konforlu geniş çift kişilik yatağı, zevkli dekorasyonu ve huzurlu ortamıyla tarihi yarımadayı keşfeden misafirlerimize ev konforu sağlar.",
-        descEn: "Designed for couples, our Standard Double Room offers an ultra-comfortable king-size bed, tasteful decor, and tranquil ambiance in the historic heart of Istanbul.",
-        images: [
-          "https://images.unsplash.com/photo-1590490360182-c33d57733427?q=80&w=900&auto=format&fit=crop",
-          "https://cf.bstatic.com/xdata/images/hotel/max1024x768/911185635.jpg?k=7a6598d6a1c18a281df199298f4e4dc060bf32afc7f48e5e13e9662813087180&o=",
-          "https://images.unsplash.com/photo-1618773928121-c32242e63f39?q=80&w=900&auto=format&fit=crop"
+      "double": {
+        "id": "double",
+        "capacity": 2,
+        "badgeTr": "Çift Kişilik",
+        "badgeEn": "Double",
+        "titleTr": "Standard Double Room (Çift Kişilik Yatak)",
+        "titleEn": "Standard Double Room",
+        "specsTr": "20 m² • 2 Misafir • 1 Çift Kişilik Yatak",
+        "specsEn": "20 m² • 2 Guests • 1 Double Bed",
+        "descTr": "Çiftler için ideal Standard Double odamız; konforlu çift kişilik yatağı, Mısır pamuğu nevresimleri ve ses yalıtımıyla şehrin merkezinde huzurlu bir konaklama sağlar.",
+        "descEn": "Ideal for couples, our Standard Double Room features a comfortable double bed, Egyptian cotton linens and soundproofing for a restful stay in the heart of the city.",
+        "featuresTr": [
+          "Çift Kişilik Yatak & Mısır Pamuğu Nevresim",
+          "Özel Banyo, Duş, Saç Kurutma & Terlik",
+          "Klima & Kablolu Yayın Düz Ekran TV",
+          "Minibar, Çay & Kahve Makinesi"
         ],
-        featuresTr: ["Geniş Ortopedik King Yatak", "Özel Banyo & Kaliteli Buklet Ürünleri", "Şehir Manzaralı Ses Yalıtımlı Pencereler", "Ücretsiz Yüksek Hızlı Fiber Wi-Fi"],
-        featuresEn: ["Comfortable Orthopedic King Bed", "Private Bathroom & Quality Toiletries", "Soundproof Windows with City View", "Complimentary High-Speed Wi-Fi"]
+        "featuresEn": [
+          "Double Bed & Egyptian Cotton Linens",
+          "Private Bathroom, Shower, Hairdryer & Slippers",
+          "Air Conditioning & Flat-Screen Cable TV",
+          "Minibar, Tea & Coffee Maker"
+        ],
+        "price": null,
+        "images": [
+          "images/rooms/double-1.jpg",
+          "images/rooms/double-2.jpg",
+          "images/rooms/double-3.jpg"
+        ]
       },
-      deluxe: {
-        id: "deluxe",
-        capacity: 3,
-        priceValue: 110,
-        badgeTr: "Şehir Manzarası",
-        badgeEn: "City View",
-        titleTr: "Deluxe Şehir Manzaralı Oda",
-        titleEn: "Deluxe Room with City View",
-        specsTr: "25 m² • 2-3 Yetişkin • King Yatak + Oturma Alanı",
-        specsEn: "25 m² • 2-3 Adults • King Bed + Seating Area",
-        price: "110,00 €",
-        descTr: "Tarihi Fatih sokaklarına bakan geniş pencereleri, dinlenme koltuğu ve lüks banyo detaylarıyla Deluxe odamız, ekstra ferahlık ve üstün konfor arayan konuklarımız için özenle dizayn edilmiştir.",
-        descEn: "Overlooking historic Istanbul streets, our Deluxe Room features a comfortable seating area, premium bathroom amenities, and generous living space for an elevated stay.",
-        images: [
-          "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=900&auto=format&fit=crop",
-          "https://cf.bstatic.com/xdata/images/hotel/max1024x768/911185635.jpg?k=7a6598d6a1c18a281df199298f4e4dc060bf32afc7f48e5e13e9662813087180&o=",
-          "https://images.unsplash.com/photo-1590490360182-c33d57733427?q=80&w=900&auto=format&fit=crop"
+      "twin": {
+        "id": "twin",
+        "capacity": 2,
+        "badgeTr": "İki Ayrı Yatak",
+        "badgeEn": "Twin",
+        "titleTr": "Standard Twin Room (İki Ayrı Yatak)",
+        "titleEn": "Standard Twin Room",
+        "specsTr": "20 m² • 2 Misafir • 2 Tek Kişilik Yatak",
+        "specsEn": "20 m² • 2 Guests • 2 Single Beds",
+        "descTr": "Arkadaş ve iş seyahatleri için iki ayrı tek kişilik yataklı Standard Twin odamız; ses yalıtımı, klima ve özel banyosuyla rahat bir konaklama sunar.",
+        "descEn": "With two separate single beds, our Standard Twin Room suits friends and business travellers, with soundproofing, air conditioning and a private bathroom.",
+        "featuresTr": [
+          "2 Tek Kişilik Yatak & Ses Yalıtımı",
+          "Özel Banyo, Duş, Saç Kurutma & Terlik",
+          "Klima & Kablolu Yayın Düz Ekran TV",
+          "Minibar, Çay & Kahve Makinesi"
         ],
-        featuresTr: ["Tarihi İstanbul Sokakları Manzarası", "Geniş Oturma Alanı & Sehpa", "Lüks Bornoz, Terlik & Premium Buklet", "Akıllı TV, Zengin Minibar & Kasa"],
-        featuresEn: ["Historic Istanbul City Views", "Spacious Seating Area & Coffee Table", "Bathrobes, Slippers & Luxury Toiletries", "Smart TV, Stocked Minibar & Safe Box"]
+        "featuresEn": [
+          "2 Single Beds & Soundproofing",
+          "Private Bathroom, Shower, Hairdryer & Slippers",
+          "Air Conditioning & Flat-Screen Cable TV",
+          "Minibar, Tea & Coffee Maker"
+        ],
+        "price": null,
+        "images": [
+          "images/rooms/twin-1.jpg",
+          "images/rooms/twin-2.jpg",
+          "images/rooms/twin-3.jpg"
+        ]
       },
-      family: {
-        id: "family",
-        capacity: 4,
-        priceValue: 145,
-        badgeTr: "Aile Boyu Konfor",
-        badgeEn: "Family Comfort",
-        titleTr: "Family Room (Geniş Aile Odası)",
-        titleEn: "Family Room (Spacious Suite)",
-        specsTr: "35 m² • 3-4 Misafir • 1 Çift + 2 Tek Kişilik Yatak",
-        specsEn: "35 m² • 3-4 Guests • 1 Double + 2 Single Beds",
-        price: "145,00 €",
-        descTr: "Çocuklu ailelerin ihtiyaçları gözetilerek planlanan Aile Odası; ebeveyn yatağı ve ayrı tek kişilik yataklarıyla hem geniş bir alan hem de rahat bir mahremiyet sağlar. Bebek karyolası talep üzerine ücretsiz temin edilir.",
-        descEn: "Tailored for families with children, this room offers a master double bed plus two single beds. Generous layout ensures comfort, privacy, and convenience for all family members.",
-        images: [
-          "https://images.unsplash.com/photo-1566665797739-1674de7a421a?q=80&w=900&auto=format&fit=crop",
-          "https://cf.bstatic.com/xdata/images/hotel/max1024x768/911185635.jpg?k=7a6598d6a1c18a281df199298f4e4dc060bf32afc7f48e5e13e9662813087180&o=",
-          "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?q=80&w=900&auto=format&fit=crop"
+      "triple": {
+        "id": "triple",
+        "capacity": 3,
+        "badgeTr": "3 Kişilik",
+        "badgeEn": "Triple",
+        "titleTr": "Standard Triple Room (3 Kişilik Oda)",
+        "titleEn": "Standard Triple Room",
+        "specsTr": "28 m² • 3 Misafir • 3 Tek Kişilik Yatak",
+        "specsEn": "28 m² • 3 Guests • 3 Single Beds",
+        "descTr": "Üç kişilik gruplar için geniş Standard Triple odamız; üç tek kişilik yatağı, şehir manzarası ve tüm temel donanımıyla ferah bir konaklama sunar.",
+        "descEn": "Spacious for groups of three, our Standard Triple Room offers three single beds, city views and all essential in-room amenities.",
+        "featuresTr": [
+          "3 Tek Kişilik Yatak & Şehir Manzarası",
+          "Özel Banyo, Duş, Saç Kurutma & Terlik",
+          "Klima & Kablolu Yayın Düz Ekran TV",
+          "Minibar, Çay & Kahve Makinesi"
         ],
-        featuresTr: ["3-4 Kişilik Geniş ve Ferah Düzen", "Talep Üzerine Ücretsiz Bebek Karyolası", "Geniş Banyo & Ekstra Havlu Setleri", "Buzdolabı, Su Isıtıcısı & Çay Seti"],
-        featuresEn: ["Spacious Layout for 3-4 Guests", "Free Baby Cot Available Upon Request", "Large Family Bathroom with Extra Towels", "Mini-Fridge, Kettle & Tea Amenities"]
+        "featuresEn": [
+          "3 Single Beds & City View",
+          "Private Bathroom, Shower, Hairdryer & Slippers",
+          "Air Conditioning & Flat-Screen Cable TV",
+          "Minibar, Tea & Coffee Maker"
+        ],
+        "price": null,
+        "images": [
+          "images/rooms/triple-1.jpg",
+          "images/rooms/triple-2.jpg",
+          "images/rooms/triple-3.jpg"
+        ]
       },
-      quad: {
-        id: "quad",
-        capacity: 4,
-        priceValue: 130,
-        badgeTr: "4 Kişilik Grup",
-        badgeEn: "Quadruple",
-        titleTr: "Quadruple Room (4 Kişilik Oda)",
-        titleEn: "Quadruple Room (4 Persons)",
-        specsTr: "30 m² • 4 Yetişkin • 4 Konforlu Yatak",
-        specsEn: "30 m² • 4 Adults • 4 Comfortable Beds",
-        price: "130,00 €",
-        descTr: "Arkadaş grupları veya kalabalık gezginler için ideal olan bu odamız, bağımsız klima sistemi, geniş gardırop alanları ve kesintisiz sıcak su imkanıyla konforlu ve ekonomik bir deneyim sunar.",
-        descEn: "Perfect for groups of friends or traveling companions, this room provides four comfortable beds, independent climate control, ample wardrobe storage, and 24/7 hot water.",
-        images: [
-          "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?q=80&w=900&auto=format&fit=crop",
-          "https://images.unsplash.com/photo-1566665797739-1674de7a421a?q=80&w=900&auto=format&fit=crop",
-          "https://cf.bstatic.com/xdata/images/hotel/max1024x768/911185635.jpg?k=7a6598d6a1c18a281df199298f4e4dc060bf32afc7f48e5e13e9662813087180&o="
+      "quad": {
+        "id": "quad",
+        "capacity": 4,
+        "badgeTr": "4 Kişilik",
+        "badgeEn": "Quadruple",
+        "titleTr": "Quadruple Room (4 Kişilik Oda)",
+        "titleEn": "Quadruple Room",
+        "specsTr": "30 m² • 4 Misafir • 2 Çift Kişilik veya 1 Çift + 2 Tek Kişilik Yatak",
+        "specsEn": "30 m² • 4 Guests • 2 Double or 1 Double + 2 Single Beds",
+        "descTr": "Arkadaş grupları ve kalabalık aileler için Quadruple odamız; iki çift kişilik ya da bir çift ve iki tek kişilik yatak seçeneğiyle dört misafiri rahatça ağırlar.",
+        "descEn": "For groups and larger families, our Quadruple Room comfortably sleeps four with either two double beds or one double and two single beds.",
+        "featuresTr": [
+          "2 Çift veya 1 Çift + 2 Tek Kişilik Yatak",
+          "Özel Banyo, Duş, Saç Kurutma & Terlik",
+          "Klima, Ses Yalıtımı & Düz Ekran TV",
+          "Minibar, Çay & Kahve Makinesi"
         ],
-        featuresTr: ["4 Kişilik Rahat Yatak Düzeni", "Bağımsız Klima & Geniş Gardıroplar", "Kesintisiz 24 Saat Sıcak Su", "LCD TV & Hızlı Fiber Wi-Fi"],
-        featuresEn: ["Comfortable 4-Person Bedding Setup", "Independent A/C & Spacious Wardrobe", "24/7 Constant Hot Water Supply", "LCD TV & High-Speed Wi-Fi"]
+        "featuresEn": [
+          "2 Double or 1 Double + 2 Single Beds",
+          "Private Bathroom, Shower, Hairdryer & Slippers",
+          "Air Conditioning, Soundproofing & Flat-Screen TV",
+          "Minibar, Tea & Coffee Maker"
+        ],
+        "price": null,
+        "images": [
+          "images/rooms/quad-1.jpg",
+          "images/rooms/quad-2.jpg",
+          "images/rooms/quad-3.jpg"
+        ]
+      },
+      "family": {
+        "id": "family",
+        "capacity": 5,
+        "badgeTr": "Aile Odası",
+        "badgeEn": "Family",
+        "titleTr": "Family Room (Aile Odası)",
+        "titleEn": "Family Room",
+        "specsTr": "30 m² • 5 Misafire Kadar • 1 Çift + 2 Tek Kişilik Yatak + Çekyat",
+        "specsEn": "30 m² • Up to 5 Guests • 1 Double + 2 Single Beds + Sofa Bed",
+        "descTr": "Çocuklu aileler için planlanan Aile Odamız; çift kişilik ebeveyn yatağı, iki tek kişilik yatak ve çekyatıyla beş kişiye kadar konaklama imkânı sunar. Bebek karyolası ücretsizdir.",
+        "descEn": "Planned for families with children, our Family Room sleeps up to five with a double bed, two single beds and a sofa bed. Baby cots are free of charge.",
+        "featuresTr": [
+          "1 Çift + 2 Tek Kişilik Yatak + Çekyat",
+          "Ücretsiz Bebek Karyolası",
+          "Özel Banyo, Duş, Saç Kurutma & Terlik",
+          "Klima, Düz Ekran TV, Minibar & Çay Seti"
+        ],
+        "featuresEn": [
+          "1 Double + 2 Single Beds + Sofa Bed",
+          "Free Baby Cot",
+          "Private Bathroom, Shower, Hairdryer & Slippers",
+          "A/C, Flat-Screen TV, Minibar & Tea Set"
+        ],
+        "price": null,
+        "images": [
+          "images/rooms/family-1.jpg",
+          "images/rooms/family-2.jpg",
+          "images/rooms/family-3.jpg"
+        ]
       }
     };
 
@@ -2296,10 +2437,14 @@
         form_checkin: "Giriş Tarihi",
         form_checkout: "Çıkış Tarihi",
         form_guests: "Misafir Sayısı",
-        opt_1guest: "1 Yetişkin",
-        opt_2guests: "2 Yetişkin",
-        opt_3guests: "3 Yetişkin",
-        opt_4guests: "4 Yetişkin / Aile",
+        opt_1guest: "1 Misafir",
+        opt_2guests: "2 Misafir",
+        opt_3guests: "3 Misafir",
+        opt_4guests: "4 Misafir",
+        opt_5guests: "5 Misafir / Aile",
+        price_on_request: "Fiyat seçtiğiniz tarihe göre değişir",
+        price_on_request_short: "Tarihe göre",
+        res_total_on_request: "Otel onayıyla bildirilir",
         btn_request_avail: "Rezervasyon Yap",
         link_view_booking: "Booking.com'da Gör ➔",
         err_date_order: "Çıkış tarihi giriş tarihinden sonraki bir gün olmalıdır.",
@@ -2307,7 +2452,7 @@
         err_date_missing: "Lütfen hem giriş hem çıkış tarihlerini seçiniz.",
         rooms_eyebrow: "Konaklama",
         rooms_title: "Özenle Tasarlanmış Odalarımız",
-        rooms_subtitle: "Tüm odalarımızda klima, ses yalıtımı, özel banyo, minibar ve ücretsiz fiber Wi-Fi standart olarak sunulmaktadır.",
+        rooms_subtitle: "Tüm odalarımızda klima, ses yalıtımı, özel banyo, minibar, çay-kahve makinesi ve ücretsiz Wi-Fi standart olarak sunulmaktadır.",
         per_night: "/ Gece",
         btn_inspect: "Detayları İncele",
         btn_book_card: "Rezervasyon Yap",
@@ -2401,10 +2546,14 @@
         form_checkin: "Check-in Date",
         form_checkout: "Check-out Date",
         form_guests: "Guests",
-        opt_1guest: "1 Adult",
-        opt_2guests: "2 Adults",
-        opt_3guests: "3 Adults",
-        opt_4guests: "4 Adults / Family",
+        opt_1guest: "1 Guest",
+        opt_2guests: "2 Guests",
+        opt_3guests: "3 Guests",
+        opt_4guests: "4 Guests",
+        opt_5guests: "5 Guests / Family",
+        price_on_request: "Rates vary by your selected dates",
+        price_on_request_short: "By date",
+        res_total_on_request: "Confirmed by the hotel",
         btn_request_avail: "Book Now",
         link_view_booking: "View on Booking.com ➔",
         err_date_order: "Check-out date must be after check-in date.",
@@ -2412,7 +2561,7 @@
         err_date_missing: "Please select both check-in and check-out dates.",
         rooms_eyebrow: "Accommodations",
         rooms_title: "Thoughtfully Designed Rooms",
-        rooms_subtitle: "All rooms feature air conditioning, soundproofing, private en-suite bathroom, minibar, and complimentary high-speed Wi-Fi.",
+        rooms_subtitle: "All rooms feature air conditioning, soundproofing, private en-suite bathroom, minibar, tea & coffee maker and free Wi-Fi.",
         per_night: "/ Night",
         btn_inspect: "View Details",
         btn_book_card: "Book Now",
@@ -2515,6 +2664,10 @@
 
         if (titleEl) titleEl.textContent = lang === "tr" ? r.titleTr : r.titleEn;
         if (badgeEl) badgeEl.textContent = lang === "tr" ? r.badgeTr : r.badgeEn;
+        const badgePh = document.querySelector(`[data-room-badge-ph="${r.id}"]`);
+        if (badgePh) badgePh.textContent = lang === "tr" ? r.badgeTr : r.badgeEn;
+        const priceEl = document.querySelector(`[data-room-price="${r.id}"]`);
+        if (priceEl) priceEl.innerHTML = roomPriceHtml(r);
         if (specsEl) specsEl.textContent = lang === "tr" ? r.specsTr : r.specsEn;
         if (featEl) {
           const list = lang === "tr" ? r.featuresTr : r.featuresEn;
@@ -2582,6 +2735,22 @@
 
     function roomTitle(room) {
       return currentLang === "tr" ? room.titleTr : room.titleEn;
+    }
+
+    function roomPriceText(room) {
+      return room.price ? formatEuro(room.price) : I18N[currentLang].price_on_request_short;
+    }
+
+    function roomPriceHtml(room) {
+      const dict = I18N[currentLang];
+      return room.price
+        ? `<span class="price-value">${formatEuro(room.price)}</span> <span class="price-period">${dict.per_night}</span>`
+        : `<span class="price-period">${dict.price_on_request}</span>`;
+    }
+
+    // Oda fotoğrafı yüklenemezse (henüz eklenmemişse) şık bir yer tutucu göster
+    function handleRoomImageError(img) {
+      img.closest(".room-media").classList.add("no-photo");
     }
 
     // Kendi değerini tutan bir giriş/çıkış çiftini geçerli tutar: çıkış her zaman girişten en az 1 gün sonra
@@ -2662,7 +2831,7 @@
       Object.values(ROOMS).forEach(room => {
         const opt = document.createElement("option");
         opt.value = room.id;
-        opt.textContent = `${roomTitle(room)} — ${room.price}`;
+        opt.textContent = room.price ? `${roomTitle(room)} — ${formatEuro(room.price)}` : roomTitle(room);
         select.appendChild(opt);
       });
       if (current && ROOMS[current]) select.value = current;
@@ -2670,7 +2839,7 @@
 
     function pickRoomForGuests(guests) {
       const fitting = Object.values(ROOMS).filter(r => r.capacity >= guests);
-      return (fitting.sort((a, b) => a.priceValue - b.priceValue)[0] || ROOMS.family).id;
+      return (fitting.sort((a, b) => a.capacity - b.capacity)[0] || ROOMS.family).id;
     }
 
     function openReservationModal(roomId) {
@@ -2726,7 +2895,7 @@
         return;
       }
       summary.textContent = `${displayDate(checkin)} → ${displayDate(checkout)} • ${nights} ${dict.res_nights}`;
-      total.textContent = formatEuro(room.priceValue * nights);
+      total.textContent = room.price ? formatEuro(room.price * nights) : dict.res_total_on_request;
     }
 
     function showReservationError(message, waUrl) {
@@ -2784,7 +2953,7 @@
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(payload.email)) { field("resEmail").classList.add("invalid"); field("resEmail").focus(); return showReservationError(dict.res_err_email); }
 
       payload.roomTitle = roomTitle(room);
-      payload.total = Math.round(room.priceValue * payload.nights * 100) / 100;
+      payload.total = room.price ? Math.round(room.price * payload.nights * 100) / 100 : null;
       lastReservationPayload = payload;
 
       const btn = field("resSubmitBtn");
@@ -2832,19 +3001,28 @@
 
       document.getElementById("modalTitle").textContent = title;
       document.getElementById("modalSpecs").textContent = specs;
-      document.getElementById("modalPrice").textContent = room.price;
+      document.getElementById("modalPrice").textContent = roomPriceText(room);
       document.getElementById("modalDesc").textContent = desc;
 
       const mainImg = document.getElementById("modalMainImage");
+      const gallery = mainImg.parentElement;
+      const thumbsBox = document.getElementById("modalThumbs");
+      gallery.classList.remove("no-photo");
+      thumbsBox.style.display = "";
+      thumbsBox.innerHTML = "";
+      mainImg.alt = title;
+      mainImg.onerror = () => {
+        gallery.classList.add("no-photo");
+        thumbsBox.style.display = "none";
+      };
       mainImg.src = room.images[0];
 
-      const thumbsBox = document.getElementById("modalThumbs");
-      thumbsBox.innerHTML = "";
       room.images.forEach((imgUrl, idx) => {
         const thumb = document.createElement("img");
         thumb.className = `modal-thumb ${idx === 0 ? "active" : ""}`;
         thumb.src = imgUrl;
         thumb.alt = title;
+        thumb.onerror = () => thumb.remove();
         thumb.onclick = () => {
           mainImg.src = imgUrl;
           document.querySelectorAll(".modal-thumb").forEach(t => t.classList.remove("active"));
@@ -2989,8 +3167,8 @@
           : "We are located 250m (3 min walk) from Beyazıt Tram Station and 300m from Çemberlitaş. Grand Bazaar is just 5 minutes on foot.";
       } else if (q.includes("fiyat") || q.includes("rate") || q.includes("price")) {
         reply = currentLang === "tr"
-          ? "Standart odalarımız 86,40 €'dan başlamaktadır. Seçtiğiniz tarihler için yukarıdaki formdan \"Rezervasyon Yap\" butonuyla hemen rezervasyon yapabilirsiniz."
-          : "Standard rooms start from 86.40 €. You can book instantly for your dates using the \"Book Now\" button in the form above.";
+          ? "Fiyatlarımız seçtiğiniz tarihe ve oda tipine göre değişir. Yukarıdaki formdan tarihlerinizi seçip \"Rezervasyon Yap\" butonuyla hemen rezervasyon talebi oluşturabilirsiniz."
+          : "Our rates vary by date and room type. Select your dates in the form above and use the \"Book Now\" button to place your reservation.";
       }
 
       appendChatMessage(reply, "bot");

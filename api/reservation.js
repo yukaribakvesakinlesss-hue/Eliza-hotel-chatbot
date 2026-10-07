@@ -1,10 +1,12 @@
 // api/reservation.js - Web sitesinden gelen doğrudan rezervasyonları otele iletir
+// index.html içindeki ROOMS ile aynı tutulmalı. price: gecelik € (bilinmiyorsa null)
 const ROOMS = {
-  twin: { title: 'Standard Twin Room', capacity: 2, price: 86.4 },
-  double: { title: 'Standard Double Room', capacity: 2, price: 86.4 },
-  deluxe: { title: 'Deluxe Room with City View', capacity: 3, price: 110 },
-  family: { title: 'Family Room', capacity: 4, price: 145 },
-  quad: { title: 'Quadruple Room', capacity: 4, price: 130 }
+  single: { title: 'Single Room', capacity: 1, price: null },
+  double: { title: 'Standard Double Room', capacity: 2, price: null },
+  twin: { title: 'Standard Twin Room', capacity: 2, price: null },
+  triple: { title: 'Standard Triple Room', capacity: 3, price: null },
+  quad: { title: 'Quadruple Room', capacity: 4, price: null },
+  family: { title: 'Family Room', capacity: 5, price: null }
 };
 
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
@@ -84,7 +86,7 @@ export default async function handler(req, res) {
     }
 
     const reference = makeReference();
-    const total = (room.price * nights).toFixed(2);
+    const total = room.price ? `${(room.price * nights).toFixed(2)} €` : 'Otel tarafından belirlenecek';
 
     const rows = [
       ['Rezervasyon No', reference],
@@ -96,7 +98,7 @@ export default async function handler(req, res) {
       ['Çıkış', body.checkout],
       ['Gece', nights],
       ['Misafir', guests],
-      ['Tahmini Tutar', `${total} €`],
+      ['Tahmini Tutar', total],
       ['Not', note || '-'],
       ['Dil', lang.toUpperCase()]
     ];
@@ -125,7 +127,7 @@ export default async function handler(req, res) {
              <h2 style="color:#1a2a3a;">Hotel Eliza Istanbul</h2>
              <p>Sayın ${escapeHtml(name)},</p>
              <p>Rezervasyon talebiniz alınmıştır. Rezervasyon numaranız: <strong>${reference}</strong></p>
-             <p>${escapeHtml(room.title)} • ${escapeHtml(body.checkin)} → ${escapeHtml(body.checkout)} (${nights} gece) • ${guests} misafir<br/>Tahmini tutar: ${total} € (ödeme otelde)</p>
+             <p>${escapeHtml(room.title)} • ${escapeHtml(body.checkin)} → ${escapeHtml(body.checkout)} (${nights} gece) • ${guests} misafir<br/>${room.price ? `Tahmini tutar: ${total} (ödeme otelde)` : 'Fiyat bilgisi onay e-postasıyla iletilecektir (ödeme otelde).'}</p>
              <p>Ekibimiz kısa süre içinde rezervasyonunuzu onaylayacaktır.</p>
              <p style="font-size:12px; color:#777;">Mimar Hayrettin Mah. Doğramacı Sk. No:19/5, Fatih / İstanbul • +90 212 520 81 00</p>
            </div>`
@@ -133,7 +135,7 @@ export default async function handler(req, res) {
              <h2 style="color:#1a2a3a;">Hotel Eliza Istanbul</h2>
              <p>Dear ${escapeHtml(name)},</p>
              <p>We have received your reservation. Your reservation number is <strong>${reference}</strong>.</p>
-             <p>${escapeHtml(room.title)} • ${escapeHtml(body.checkin)} → ${escapeHtml(body.checkout)} (${nights} nights) • ${guests} guest(s)<br/>Estimated total: ${total} € (pay at the hotel)</p>
+             <p>${escapeHtml(room.title)} • ${escapeHtml(body.checkin)} → ${escapeHtml(body.checkout)} (${nights} nights) • ${guests} guest(s)<br/>${room.price ? `Estimated total: ${total} (pay at the hotel)` : 'Your rate will be sent with the confirmation (pay at the hotel).'}</p>
              <p>Our team will confirm your reservation shortly.</p>
              <p style="font-size:12px; color:#777;">Mimar Hayrettin Mah. Doğramacı Sk. No:19/5, Fatih / Istanbul • +90 212 520 81 00</p>
            </div>`;
