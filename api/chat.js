@@ -39,7 +39,7 @@ ELİZA HOTEL RESMİ BİLGİLERİ:
 - Evcil Hayvan: Evcil hayvan KABUL EDİLMEMEKTEDİR.
 - Resepsiyon Dilleri: Türkçe, İngilizce, Arapça, Rusça.
 - Ödeme Yöntemleri: Nakit, VISA, MasterCard, Maestro, American Express.
-- Oda Tipleri: Standard Double Room, Standard Twin Room, Quadruple Room, Family Room. Web sitesinden tek seferde 7 odaya kadar anında rezervasyon yapılabilir.
+- Oda Tipleri: Single Room (16 m², 1 kişi), Standard Double Room (20 m², 1 çift kişilik yatak), Standard Twin Room (20 m², 2 tek kişilik yatak), Standard Triple Room (28 m², 3 tek kişilik yatak), Quadruple Room (30 m², 4 kişi), Family Room (30 m², 5 kişiye kadar, 1 çift + 2 tek kişilik yatak + çekyat). Tüm odalarda klima, düz ekran TV, ses yalıtımı, minibar, çay/kahve makinesi, özel banyo ve ücretsiz Wi-Fi vardır. Web sitesinden tek seferde 7 odaya kadar anında rezervasyon yapılabilir.
 - İnternet: Tesis genelinde ve odalarda Wi-Fi ücretsizdir.
 - Transfer: Sabiha Gökçen (38 km) ve İstanbul Havalimanı (41 km) için ücretli transfer servisi sunulmaktadır; detay için resepsiyona/WhatsApp'a yönlendir.
 - Ulaşım: Beyazıt Tramvayı 250 m, Çemberlitaş Tramvayı 300 m, Vezneciler Metro 1.1 km, Yenikapı Marmaray 1.8 km.
