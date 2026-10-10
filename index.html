@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hotel Eliza Istanbul | Resmi Web Sitesi</title>
-  <meta name="description" content="Hotel Eliza Istanbul, Fatih / İstanbul. 6 oda tipi: Single, Standard Double, Standard Twin, Standard Triple, Quadruple, Family Room. Resmi web sitesinden güvenli kartla ödeme ile doğrudan rezervasyon.">
+  <meta name="description" content="Hotel Eliza Istanbul, Fatih / İstanbul. 4 oda tipi: Standard Twin Room, Quadruple Room, Family Room, Standard Double Room. Tarihi Yarımada'da konforlu konaklama. Resmi web sitesinden güvenli rezervasyon ve uluslararası kartlarla ödeme.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -1695,49 +1695,13 @@
     <div class="section-header">
       <span class="section-eyebrow" data-i18n="rooms_eyebrow">Konaklama</span>
       <h2 class="section-title" data-i18n="rooms_title">Özenle Tasarlanmış Odalarımız</h2>
-      <p class="section-subtitle" data-i18n="rooms_subtitle">6 farklı oda tipi. Tüm odalarda balkon, klima, ses yalıtımı, duşlu özel banyo, minibar, buzdolabı, su ısıtıcısı ve kahve makinesi bulunur.</p>
+      <p class="section-subtitle" data-i18n="rooms_subtitle">4 farklı oda tipi. Tüm odalarımızda balkon, klima, ses yalıtımı, duşlu özel banyo, minibar, buzdolabı, su ısıtıcısı ve kahve makinesi bulunur.</p>
     </div>
 
     <!-- Static HTML Rooms Grid (Zero dependence on JavaScript to view) -->
     <div class="rooms-grid" id="roomsGridContainer">
-            <div class="room-card" id="card-single">
-        <div class="room-media" onclick="openRoomModal('single')">
-          <img src="https://cdn.extranetwork.com/property-photos/2132/1789553710_EH42VTA1UL_medium.jpg" alt="Single Room - Eliza Hotel Istanbul" loading="lazy" onerror="handleRoomImageError(this)">
-          <div class="room-photo-placeholder" aria-hidden="true">
-            <span class="logo-main">HOTEL ELIZA</span>
-            <span data-room-badge-ph="single">Tek Kişilik Konfor</span>
-          </div>
-          <span class="room-badge" data-room-badge="single">Tek Kişilik Konfor</span>
-          <span class="btn-quick-inspect">
-            <span class="icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
-            <span data-photo-count="single">4 fotoğraf</span>
-          </span>
-        </div>
-        <div class="room-content">
-          <h3 class="room-title" data-room-title="single">Single Room</h3>
-          <p class="room-type" data-room-type="single">Tek Kişilik Oda</p>
-          <div class="room-specs-strip" data-room-specs="single">18 m² • 1 yetişkin • 1 banyo</div>
-          <ul class="room-features-list" data-room-features="single">
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> 1 tek kişilik ortopedik yatak • Çalışma masası</li>
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Duşlu özel banyo, saç kurutma makinesi, terlik</li>
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Klima, ısıtma, ses yalıtımı</li>
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Minibar, buzdolabı, su ısıtıcısı, kahve makinesi</li>
-          </ul>
-          <div class="room-bottom">
-            <div class="room-price-line">
-              <div data-room-price="single">
-                <span class="price-from-value">69.90 EUR</span><span class="price-from-label">’dan başlayan fiyatlar</span>
-              </div>
-            </div>
-            <div class="room-btn-group">
-              <button class="btn-room-secondary" onclick="openRoomModal('single')" data-i18n="btn_inspect">Detayları İncele</button>
-              <button class="btn-room-primary" onclick="initiateRoomBooking('single')"><span data-i18n="btn_book_card">Rezervasyon Yap</span></button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-<div class="room-card" id="card-twin">
+      <!-- 1. Standard Twin Room -->
+      <div class="room-card" id="card-twin">
         <div class="room-media" onclick="openRoomModal('twin')">
           <img src="https://cdn.extranetwork.com/property-photos/2132/1789553710_SST6W4S7I6_medium.jpg" alt="Standard Twin Room - Eliza Hotel Istanbul" loading="lazy" onerror="handleRoomImageError(this)">
           <div class="room-photo-placeholder" aria-hidden="true">
@@ -1757,8 +1721,8 @@
           <ul class="room-features-list" data-room-features="twin">
             <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> İki ayrı tek kişilik yatak • Balkon</li>
             <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Duşlu özel banyo, saç kurutma makinesi, terlik</li>
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Klima, ısıtma, ses yalıtımı</li>
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Minibar, buzdolabı, su ısıtıcısı, kahve makinesi</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Klima, ısıtma, ses yalıtımlı duvarlar</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Minibar, buzdolabı, su ısıtıcısı, çay-kahve makinesi</li>
           </ul>
           <div class="room-bottom">
             <div class="room-price-line">
@@ -1774,44 +1738,8 @@
         </div>
       </div>
 
-            <div class="room-card" id="card-triple">
-        <div class="room-media" onclick="openRoomModal('triple')">
-          <img src="https://cdn.extranetwork.com/property-photos/2132/1789553757_UGRLXU4QTF_medium.jpg" alt="Standard Triple Room - Eliza Hotel Istanbul" loading="lazy" onerror="handleRoomImageError(this)">
-          <div class="room-photo-placeholder" aria-hidden="true">
-            <span class="logo-main">HOTEL ELIZA</span>
-            <span data-room-badge-ph="triple">3 Kişilik Konaklama</span>
-          </div>
-          <span class="room-badge" data-room-badge="triple">3 Kişilik Konaklama</span>
-          <span class="btn-quick-inspect">
-            <span class="icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
-            <span data-photo-count="triple">4 fotoğraf</span>
-          </span>
-        </div>
-        <div class="room-content">
-          <h3 class="room-title" data-room-title="triple">Standard Triple Room</h3>
-          <p class="room-type" data-room-type="triple">Standart Üç Kişilik Oda</p>
-          <div class="room-specs-strip" data-room-specs="triple">28 m² • 3 yetişkin • 1 banyo</div>
-          <ul class="room-features-list" data-room-features="triple">
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> 1 çift + 1 tek kişilik yatak • Balkon</li>
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Duşlu özel banyo, saç kurutma makinesi, terlik</li>
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Klima, ısıtma, ses yalıtımı</li>
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Minibar, buzdolabı, su ısıtıcısı, kahve makinesi</li>
-          </ul>
-          <div class="room-bottom">
-            <div class="room-price-line">
-              <div data-room-price="triple">
-                <span class="price-from-value">119.90 EUR</span><span class="price-from-label">’dan başlayan fiyatlar</span>
-              </div>
-            </div>
-            <div class="room-btn-group">
-              <button class="btn-room-secondary" onclick="openRoomModal('triple')" data-i18n="btn_inspect">Detayları İncele</button>
-              <button class="btn-room-primary" onclick="initiateRoomBooking('triple')"><span data-i18n="btn_book_card">Rezervasyon Yap</span></button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-<div class="room-card" id="card-quad">
+      <!-- 2. Quadruple Room -->
+      <div class="room-card" id="card-quad">
         <div class="room-media" onclick="openRoomModal('quad')">
           <img src="https://cdn.extranetwork.com/property-photos/2132/1789553758_GJEXAH6BK0_medium.jpg" alt="Quadruple Room - Eliza Hotel Istanbul" loading="lazy" onerror="handleRoomImageError(this)">
           <div class="room-photo-placeholder" aria-hidden="true">
@@ -1827,10 +1755,10 @@
         <div class="room-content">
           <h3 class="room-title" data-room-title="quad">Quadruple Room</h3>
           <p class="room-type" data-room-type="quad">Quadruple Oda</p>
-          <div class="room-specs-strip" data-room-specs="quad">30 m² • 4 + 2 çocuk • 1 banyo</div>
+          <div class="room-specs-strip" data-room-specs="quad">30 m² • 4 kişi • 1 banyo • 2 yatak odası</div>
           <ul class="room-features-list" data-room-features="quad">
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> 2 yatak odası • 1 çift + 2 tek kişilik yatak</li>
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Balkon, çalışma masası</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> 2 yatak odası • 1 Fransız çift kişilik + 2 tek kişilik yatak</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Balkon, çalışma masası, ses yalıtımı</li>
             <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Duşlu özel banyo, saç kurutma makinesi, terlik</li>
             <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Klima, minibar, buzdolabı, kahve makinesi</li>
           </ul>
@@ -1848,6 +1776,7 @@
         </div>
       </div>
 
+      <!-- 3. Family Room -->
       <div class="room-card" id="card-family">
         <div class="room-media" onclick="openRoomModal('family')">
           <img src="https://cdn.extranetwork.com/property-photos/2132/1789553811_RFYD7SA52S_medium.jpg" alt="Family Room - Eliza Hotel Istanbul" loading="lazy" onerror="handleRoomImageError(this)">
@@ -1864,9 +1793,9 @@
         <div class="room-content">
           <h3 class="room-title" data-room-title="family">Family Room</h3>
           <p class="room-type" data-room-type="family">Aile Odası</p>
-          <div class="room-specs-strip" data-room-specs="family">30 m² • 5 + 2 çocuk • 1 banyo</div>
+          <div class="room-specs-strip" data-room-specs="family">30 m² • 5 kişi • 1 banyo • Oturma Grubu</div>
           <ul class="room-features-list" data-room-features="family">
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> 1 çift + 3 tek kişilik yatak</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> 1 Fransız çift kişilik + 3 tek kişilik yatak</li>
             <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Balkon, oturma grubu, çalışma masası</li>
             <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Duşlu özel banyo, saç kurutma makinesi, terlik</li>
             <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Klima, minibar, buzdolabı, kahve makinesi</li>
@@ -1885,6 +1814,7 @@
         </div>
       </div>
 
+      <!-- 4. Standard Double Room -->
       <div class="room-card" id="card-double">
         <div class="room-media" onclick="openRoomModal('double')">
           <img src="https://cdn.extranetwork.com/property-photos/2132/1789553674_RHGQ6G4GS1_medium.jpg" alt="Standard Double Room - Eliza Hotel Istanbul" loading="lazy" onerror="handleRoomImageError(this)">
@@ -1901,10 +1831,10 @@
         <div class="room-content">
           <h3 class="room-title" data-room-title="double">Standard Double Room</h3>
           <p class="room-type" data-room-type="double">Standart Oda</p>
-          <div class="room-specs-strip" data-room-specs="double">28 m² • 2 + 1 çocuk • 1 banyo</div>
+          <div class="room-specs-strip" data-room-specs="double">28 m² • 2 + 1 çocuk • 1 banyo • Oturma Grubu</div>
           <ul class="room-features-list" data-room-features="double">
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Fransız (çift kişilik) yatak • Balkon</li>
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Oturma grubu, çalışma masası</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Fransız çift kişilik yatak • Balkon</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Oturma grubu, çalışma masası, ses yalıtımı</li>
             <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Duşlu özel banyo, saç kurutma makinesi, terlik</li>
             <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Klima, minibar, buzdolabı, kahve makinesi</li>
           </ul>
@@ -2206,13 +2136,21 @@
             <div class="res-section-title" data-i18n="res_pay_title">Ödeme Yöntemi</div>
             <div class="pay-methods">
               <label class="pay-method" id="payMethodCard">
-                <input type="radio" name="payMethod" value="card" checked onchange="handlePayMethodChange()">
-                <span>
-                  <strong data-i18n="res_pay_card">Kartla Öde (Güvenli Ödeme)</strong>
-                  <small data-i18n="res_pay_card_desc">iyzico güvencesiyle 3D Secure ödeme</small>
-                  <span class="card-brands"><span class="card-brand secure">3D Secure</span><span class="card-brand">VISA</span><span class="card-brand">Mastercard</span><span class="card-brand">AMEX</span><span class="card-brand">TROY</span></span>
+              <input type="radio" name="payMethod" value="card" checked onchange="handlePayMethodChange()">
+              <span>
+                <strong data-i18n="res_pay_card">Kredi / Banka Kartı (3D Secure Uluslararası Güvenli Ödeme)</strong>
+                <small data-i18n="res_pay_card_desc">Uluslararası tüm kartlar kabul edilir (Visa, Mastercard, AMEX, UnionPay, JCB, Troy)</small>
+                <span class="card-brands">
+                  <span class="card-brand secure">3D Secure</span>
+                  <span class="card-brand">VISA</span>
+                  <span class="card-brand">Mastercard</span>
+                  <span class="card-brand">AMEX</span>
+                  <span class="card-brand">UnionPay (银联)</span>
+                  <span class="card-brand">JCB</span>
+                  <span class="card-brand">TROY</span>
                 </span>
-              </label>
+              </span>
+            </label>
               <label class="pay-method">
                 <input type="radio" name="payMethod" value="hotel" onchange="handlePayMethodChange()">
                 <span>
@@ -2338,100 +2276,6 @@
 
     // Oda bilgileri orijinal siteyle birebir (elizahotelistanbul.com/tr/rooms). Ödeme tutarını SUNUCU hesaplar (api/_lib/rooms.js).
     const ROOMS = {
-  "single": {
-    "id": "single",
-    "capacity": 1,
-    "maxAdults": 1,
-    "maxChildren": 0,
-    "badgeTr": "Tek Kişilik Konfor",
-    "badgeEn": "Single Comfort",
-    "titleTr": "Single Room",
-    "titleEn": "Single Room",
-    "typeTr": "Tek Kişilik Oda",
-    "typeEn": "Single Room",
-    "size": 18,
-    "roomCount": 1,
-    "bathCount": 1,
-    "occTr": "1 yetişkin",
-    "occEn": "1 adult",
-    "occLongTr": "En fazla 1 yetişkin",
-    "occLongEn": "Up to 1 adult",
-    "bedsTr": "1 tek kişilik ortopedik yatak",
-    "bedsEn": "1 single bed",
-    "sitting": false,
-    "specsTr": "18 m² • 1 yetişkin • 1 banyo",
-    "specsEn": "18 m² • 1 adult • 1 bathroom",
-    "descTr": "Single Room, iş seyahatleri veya yalnız seyahat eden misafirlerimiz için tasarlanmış 18 m² büyüklüğünde sessiz ve konforlu bir odadır. Çalışma masası, klima, ısıtma ve ses yalıtımlı duvarlar standarttır. Duşlu özel banyoda saç kurutma makinesi, terlik ve lüks banyo buklet ürünleri bulunur. Minibar, buzdolabı, su ısıtıcısı, çay-kahve ikramı, düz ekran TV, uydu yayını ve yüksek hızlı ücretsiz Wi-Fi odada hazırdır.",
-    "descEn": "The Single Room is an 18 m² cozy, quiet, and well-appointed room ideal for solo travelers and business visits. Features a work desk, air conditioning, heating, and soundproofed walls. The private bathroom includes a shower, hairdryer, slippers, and premium toiletries. Minibar, refrigerator, kettle, tea/coffee maker, flat-screen satellite TV, and high-speed free Wi-Fi are provided.",
-    "featuresTr": [
-      "1 tek kişilik ortopedik yatak • Çalışma masası",
-      "Duşlu özel banyo, saç kurutma makinesi, terlik",
-      "Klima, ısıtma, ses yalıtımı",
-      "Minibar, buzdolabı, su ısıtıcısı, kahve makinesi"
-    ],
-    "featuresEn": [
-      "1 single orthopedic bed • Work desk",
-      "Private bathroom with shower, hairdryer, slippers",
-      "Air conditioning, heating, soundproofing",
-      "Minibar, fridge, kettle, coffee maker"
-    ],
-    "priceFrom": 69.9,
-    "price": null,
-    "images": [
-      "https://cdn.extranetwork.com/property-photos/2132/1789553710_EH42VTA1UL_medium.jpg",
-      "https://cdn.extranetwork.com/property-photos/2132/1787571352_13OG0RESZW_medium.jpg",
-      "https://cdn.extranetwork.com/property-photos/2132/1787571353_ZD9C6U4XLA_medium.jpg",
-      "https://cdn.extranetwork.com/property-photos/2132/1787571354_CUQOQOIQCD_medium.jpg"
-    ]
-  },
-  "double": {
-    "id": "double",
-    "capacity": 3,
-    "maxAdults": 2,
-    "maxChildren": 1,
-    "badgeTr": "Çift Kişilik Yatak",
-    "badgeEn": "Double Bed",
-    "titleTr": "Standard Double Room",
-    "titleEn": "Standard Double Room",
-    "typeTr": "Standart Oda",
-    "typeEn": "Standard Room",
-    "size": 28,
-    "roomCount": 1,
-    "bathCount": 1,
-    "occTr": "2 + 1 çocuk",
-    "occEn": "2 + 1 child",
-    "occLongTr": "En fazla 3 kişi (en fazla 2 yetişkin ve 1 çocuk)",
-    "occLongEn": "Up to 3 guests (max. 2 adults and 1 child)",
-    "bedsTr": "1 Fransız (çift kişilik) yatak",
-    "bedsEn": "1 double (French) bed",
-    "sitting": true,
-    "specsTr": "28 m² • 2 + 1 çocuk • 1 banyo",
-    "specsEn": "28 m² • 2 + 1 child • 1 bathroom",
-    "descTr": "Standard Double Room, Fransız (çift kişilik) yatağı olan 28 m²'lik bir odadır ve en fazla 2 yetişkin ile 1 çocuğu ağırlar. Balkon, oturma grubu, çalışma masası, klima, ısıtma ve ses yalıtımı odanın donanımındadır. Duşlu özel banyoda saç kurutma makinesi, havlu ve terlik bulunur. Minibar, buzdolabı, su ısıtıcısı ve kahve makinesi odada hazırdır; uydu ve kablolu kanallı televizyon, telefon ve ütü olanakları sunulur. Oda engelli odası olarak tanımlıdır.",
-    "descEn": "The Standard Double Room is a 28 m² room with a double (French) bed for up to 2 adults and 1 child. It has a balcony, seating area, desk, air conditioning, heating and soundproofing. The private bathroom with shower has a hairdryer, towels and slippers. A minibar, refrigerator, kettle and coffee maker are ready in the room, with a TV with satellite and cable channels, a telephone and ironing facilities. The room is designated as accessible.",
-    "featuresTr": [
-      "Fransız (çift kişilik) yatak • Balkon",
-      "Oturma grubu, çalışma masası",
-      "Duşlu özel banyo, saç kurutma makinesi, terlik",
-      "Klima, minibar, buzdolabı, kahve makinesi"
-    ],
-    "featuresEn": [
-      "Double (French) bed • Balcony",
-      "Seating area, desk",
-      "Private bathroom with shower, hairdryer, slippers",
-      "A/C, minibar, fridge, coffee maker"
-    ],
-    "priceFrom": 89.9,
-    "price": null,
-    "images": [
-      "https://cdn.extranetwork.com/property-photos/2132/1789553674_RHGQ6G4GS1_medium.jpg",
-      "https://cdn.extranetwork.com/property-photos/2132/1789553675_M5EIDZNEXV_medium.jpg",
-      "https://cdn.extranetwork.com/property-photos/2132/1787571351_KR7VGC8W7T_medium.jpg",
-      "https://cdn.extranetwork.com/property-photos/2132/1787571348_YR833A7K6K_medium.jpg",
-      "https://cdn.extranetwork.com/property-photos/2132/1787571350_J0BL9VE060_medium.jpg",
-      "https://cdn.extranetwork.com/property-photos/2132/1787571350_VYTDQ8UEMF_medium.jpg"
-    ]
-  },
   "twin": {
     "id": "twin",
     "capacity": 3,
@@ -2455,18 +2299,18 @@
     "sitting": false,
     "specsTr": "28 m² • 2 + 1 çocuk • 1 banyo",
     "specsEn": "28 m² • 2 + 1 child • 1 bathroom",
-    "descTr": "Standard Twin Room, iki ayrı tek kişilik yatağı olan 28 m²'lik bir odadır ve en fazla 2 yetişkin ile 1 çocuğu ağırlar. Balkon, çalışma masası, klima, ısıtma ve ses yalıtımlı duvarlar odanın donanımındadır. Duşlu özel banyoda ücretsiz banyo malzemeleri, saç kurutma makinesi ve terlik bulunur. Minibar, buzdolabı, su ısıtıcısı ve çay-kahve makinesi odada hazırdır; düz ekran televizyonda uydu ve kablolu kanallar izlenebilir, telefon ve ütü olanakları da sunulur. Oda engelli odası olarak tanımlıdır. Otelde Wi-Fi, oda servisi, uyandırma servisi ve talep üzerine kat hizmeti vardır.",
-    "descEn": "The Standard Twin Room is a 28 m² room with two single beds for up to 2 adults and 1 child. It has a balcony, desk, air conditioning, heating and soundproofed walls. The private bathroom with shower comes with free toiletries, a hairdryer and slippers. A minibar, refrigerator, kettle and tea-coffee maker are ready in the room, along with a flat-screen TV with satellite and cable channels, a telephone and ironing facilities. The room is designated as accessible. Wi-Fi, room service, wake-up service and housekeeping on request are available.",
+    "descTr": "Eliza Hotel'in Fatih'teki Standard Twin Room odasında iki ayrı tek kişilik yatak bulunur. 28 m² büyüklüğündeki oda en fazla 3 kişi, en fazla 2 yetişkin içindir. Klima ve ısıtmanın yanı sıra ses yalıtımlı duvarlar, balkon ve çalışma masası odada yer alır. Duşlu özel banyoda ücretsiz banyo malzemeleri, saç kurutma makinesi ve terlik sizi bekler. Minibar, buzdolabı, su ısıtıcısı ile çay ve kahve makinesi odanızda hazırdır. Düz ekran televizyonda kablolu ve uydu kanallarını izleyebilir, telefon ve ütü olanaklarını kullanabilirsiniz. Oda engelli odası olarak tanımlanmıştır. Otelde Wi-Fi erişimi, oda servisi, uyandırma servisi ve talep üzerine kat hizmetleri sunulur.",
+    "descEn": "The Standard Twin Room at Eliza Hotel in Fatih features two single beds in a 28 m² area accommodating up to 3 guests (max. 2 adults and 1 child). It has a balcony, work desk, air conditioning, heating, and soundproofed walls. The private bathroom with shower comes with free toiletries, hairdryer, and slippers. Minibar, refrigerator, kettle, and tea-coffee maker are ready in the room, along with a flat-screen TV with cable/satellite channels, telephone, and ironing facilities. Designated as accessible room. Free Wi-Fi, room service, wake-up service, and housekeeping on request.",
     "featuresTr": [
       "İki ayrı tek kişilik yatak • Balkon",
       "Duşlu özel banyo, saç kurutma makinesi, terlik",
-      "Klima, ısıtma, ses yalıtımı",
+      "Klima, ısıtma, ses yalıtımlı duvarlar",
       "Minibar, buzdolabı, su ısıtıcısı, kahve makinesi"
     ],
     "featuresEn": [
       "Two single beds • Balcony",
       "Private bathroom with shower, hairdryer, slippers",
-      "Air conditioning, heating, soundproofing",
+      "Air conditioning, heating, soundproofed walls",
       "Minibar, fridge, kettle, coffee maker"
     ],
     "priceFrom": 89.9,
@@ -2482,59 +2326,13 @@
       "https://cdn.extranetwork.com/property-photos/2132/1787571354_CUQOQOIQCD_medium.jpg"
     ]
   },
-  "triple": {
-    "id": "triple",
-    "capacity": 3,
-    "maxAdults": 3,
-    "maxChildren": 1,
-    "badgeTr": "3 Kişilik Konaklama",
-    "badgeEn": "Triple Room",
-    "titleTr": "Standard Triple Room",
-    "titleEn": "Standard Triple Room",
-    "typeTr": "Standart Üç Kişilik Oda",
-    "typeEn": "Standard Triple Room",
-    "size": 28,
-    "roomCount": 1,
-    "bathCount": 1,
-    "occTr": "3 yetişkin",
-    "occEn": "3 adults",
-    "occLongTr": "En fazla 3 kişi (3 yetişkin veya 2 yetişkin + 1 çocuk)",
-    "occLongEn": "Up to 3 guests (3 adults or 2 adults + 1 child)",
-    "bedsTr": "1 çift kişilik + 1 tek kişilik yatak",
-    "bedsEn": "1 double bed + 1 single bed",
-    "sitting": false,
-    "specsTr": "28 m² • 3 yetişkin • 1 banyo",
-    "specsEn": "28 m² • 3 adults • 1 bathroom",
-    "descTr": "Standard Triple Room, aileler veya üç kişilik arkadaş grupları için tasarlanmış 28 m² genişliğinde ferah bir odadır. 1 çift kişilik ve 1 tek kişilik ortopedik yatak sunar. Balkon, çalışma masası, klima, ısıtma ve ses yalıtımlı duvarlar odada mevcuttur. Duşlu özel banyoda ücretsiz banyo buklet ürünleri, saç kurutma makinesi ve terlik yer alır. Minibar, buzdolabı, su ısıtıcısı, çay-kahve ikramı ve düz ekran televizyon ile konforunuz eksiksizdir.",
-    "descEn": "The Standard Triple Room is a spacious 28 m² room designed for families or groups of 3 friends. It offers 1 double bed and 1 single bed. It includes a balcony, desk, air conditioning, heating, and soundproofed walls. The private bathroom features a shower, free toiletries, a hairdryer, and slippers. Minibar, refrigerator, kettle, tea/coffee maker, and flat-screen TV ensure a pleasant stay.",
-    "featuresTr": [
-      "1 çift + 1 tek kişilik yatak • Balkon",
-      "Duşlu özel banyo, saç kurutma makinesi, terlik",
-      "Klima, ısıtma, ses yalıtımı",
-      "Minibar, buzdolabı, su ısıtıcısı, kahve makinesi"
-    ],
-    "featuresEn": [
-      "1 double + 1 single bed • Balcony",
-      "Private bathroom with shower, hairdryer, slippers",
-      "Air conditioning, heating, soundproofing",
-      "Minibar, fridge, kettle, coffee maker"
-    ],
-    "priceFrom": 119.9,
-    "price": null,
-    "images": [
-      "https://cdn.extranetwork.com/property-photos/2132/1789553757_UGRLXU4QTF_medium.jpg",
-      "https://cdn.extranetwork.com/property-photos/2132/1789553757_UGYP8Z5KG6_medium.jpg",
-      "https://cdn.extranetwork.com/property-photos/2132/1787571358_TFXZCW3XSF_medium.jpg",
-      "https://cdn.extranetwork.com/property-photos/2132/1787571351_KR7VGC8W7T_medium.jpg"
-    ]
-  },
   "quad": {
     "id": "quad",
     "capacity": 4,
     "maxAdults": 4,
     "maxChildren": 2,
     "badgeTr": "4 Kişilik • 2 Yatak Odası",
-    "badgeEn": "Sleeps 4 • 2 Bedrooms",
+    "badgeEn": "4 Guests • 2 Bedrooms",
     "titleTr": "Quadruple Room",
     "titleEn": "Quadruple Room",
     "typeTr": "Quadruple Oda",
@@ -2542,28 +2340,28 @@
     "size": 30,
     "roomCount": 2,
     "bathCount": 1,
-    "occTr": "4 + 2 çocuk",
-    "occEn": "4 + 2 children",
-    "occLongTr": "En fazla 4 kişi",
-    "occLongEn": "Up to 4 guests",
-    "bedsTr": "1 Fransız (çift kişilik) yatak + 2 ayrı tek kişilik yatak",
-    "bedsEn": "1 double (French) bed + 2 single beds",
+    "occTr": "4 kişi",
+    "occEn": "4 guests",
+    "occLongTr": "En fazla 4 kişi (1 Fransız çift kişilik yatak + 2 tek kişilik yatak)",
+    "occLongEn": "Up to 4 guests (1 French double bed + 2 single beds)",
+    "bedsTr": "Fransız yatak (çift kişilik) ve iki ayrı tek kişilik yatak",
+    "bedsEn": "One French double bed and two single beds",
     "sitting": false,
-    "specsTr": "30 m² • 4 + 2 çocuk • 1 banyo",
-    "specsEn": "30 m² • 4 + 2 children • 1 bathroom",
-    "descTr": "İki yatak odalı Quadruple Room, 30 m² alanda en fazla 4 kişiyi ağırlar. Yatak düzeninde bir Fransız (çift kişilik) yatak ve iki ayrı tek kişilik yatak bulunur. Balkonlu odada klima, ısıtma, ses yalıtımı ve çalışma masası vardır. Duşlu özel banyoda ücretsiz banyo malzemeleri, saç kurutma makinesi ve terlik sunulur. Minibar, buzdolabı, su ısıtıcısı ve çay-kahve makinesiyle içeceklerinizi odada hazırlayabilirsiniz. Uydu ve kablolu kanallı düz ekran televizyon, telefon ve ütü olanakları mevcuttur. Oda engelli odası olarak tanımlıdır; Wi-Fi ve oda servisinden yararlanabilirsiniz.",
-    "descEn": "The Quadruple Room has two bedrooms and sleeps up to 4 guests in 30 m². Beds: one double (French) bed and two single beds. The room has a balcony, air conditioning, heating, soundproofing and a desk. The private bathroom with shower offers free toiletries, a hairdryer and slippers. A minibar, refrigerator, kettle and tea-coffee maker let you prepare drinks in the room. There is a flat-screen TV with satellite and cable channels, a telephone and ironing facilities. The room is designated as accessible; Wi-Fi and room service are available.",
+    "specsTr": "30 m² • 4 kişi • 1 banyo • 2 yatak odası",
+    "specsEn": "30 m² • 4 guests • 1 bathroom • 2 bedrooms",
+    "descTr": "İki yatak odalı Quadruple Room, Fatih'teki Eliza Hotel'de 30 m² alanda en fazla 4 kişiyi ağırlar. Yatak düzeninde Fransız yatak (çift kişilik) ile iki ayrı tek kişilik yatak bulunur. Balkonlu odada klima, ısıtma ve ses yalıtımı yer alır; çalışma masası da odanın donanımları arasındadır. Duşlu özel banyoda ücretsiz banyo malzemeleri, saç kurutma makinesi ve terlik sunulur. Minibar, buzdolabı, su ısıtıcısı ve çay-kahve makinesiyle içeceklerinizi odanızda hazırlayabilirsiniz. Kablolu ve uydu kanallı düz ekran televizyon, telefon ve ütü olanakları da odada bulunur. Engelli odası olarak tanımlanan bu odada kalırken Wi-Fi erişimi ve oda servisinden yararlanabilirsiniz.",
+    "descEn": "The two-bedroom Quadruple Room at Eliza Hotel in Fatih accommodates up to 4 guests across 30 m². The bedding includes one French double bed and two single beds. Features a balcony, air conditioning, heating, and soundproofing, plus a work desk. Private bathroom with shower, free toiletries, hairdryer, and slippers. Minibar, refrigerator, kettle, and tea-coffee maker. Flat-screen TV with cable and satellite channels, telephone, and ironing facilities. Designated as accessible with Wi-Fi and room service.",
     "featuresTr": [
-      "2 yatak odası • 1 çift + 2 tek kişilik yatak",
-      "Balkon, çalışma masası",
+      "2 yatak odası • 1 Fransız çift kişilik + 2 tek kişilik yatak",
+      "Balkon, çalışma masası, ses yalıtımı",
       "Duşlu özel banyo, saç kurutma makinesi, terlik",
       "Klima, minibar, buzdolabı, kahve makinesi"
     ],
     "featuresEn": [
-      "2 bedrooms • 1 double + 2 single beds",
-      "Balcony, desk",
+      "2 bedrooms • 1 French double + 2 single beds",
+      "Balcony, work desk, soundproofing",
       "Private bathroom with shower, hairdryer, slippers",
-      "A/C, minibar, fridge, coffee maker"
+      "Air conditioning, minibar, fridge, coffee maker"
     ],
     "priceFrom": 89.9,
     "price": null,
@@ -2582,7 +2380,7 @@
     "maxAdults": 5,
     "maxChildren": 2,
     "badgeTr": "5 Kişilik Aile Odası",
-    "badgeEn": "Sleeps 5",
+    "badgeEn": "5 Guests Family Room",
     "titleTr": "Family Room",
     "titleEn": "Family Room",
     "typeTr": "Aile Odası",
@@ -2590,28 +2388,28 @@
     "size": 30,
     "roomCount": 1,
     "bathCount": 1,
-    "occTr": "5 + 2 çocuk",
-    "occEn": "5 + 2 children",
-    "occLongTr": "En fazla 5 kişi",
-    "occLongEn": "Up to 5 guests",
-    "bedsTr": "1 Fransız (çift kişilik) yatak + 2 ayrı tek kişilik yatak + 1 tek kişilik yatak",
-    "bedsEn": "1 double (French) bed + 2 single beds + 1 extra single bed",
+    "occTr": "5 kişi",
+    "occEn": "5 guests",
+    "occLongTr": "En fazla 5 kişi (1 Fransız çift kişilik yatak + 3 tek kişilik yatak)",
+    "occLongEn": "Up to 5 guests (1 French double bed + 3 single beds)",
+    "bedsTr": "Fransız yatak (çift kişilik) ve 3 tek kişilik yatak",
+    "bedsEn": "One French double bed and three single beds",
     "sitting": true,
-    "specsTr": "30 m² • 5 + 2 çocuk • 1 banyo",
-    "specsEn": "30 m² • 5 + 2 children • 1 bathroom",
-    "descTr": "Family Room, 30 m² alanda en fazla 5 kişiye konaklama sunar. Odada bir Fransız (çift kişilik) yatak, iki ayrı tek kişilik yatak ve ayrıca bir tek kişilik yatak birlikte yer alır. Klima, ısıtma ve ses yalıtımlı duvarların yanında balkon, oturma grubu ve çalışma masası da odanın parçasıdır. Özel banyoda duş, ücretsiz banyo malzemeleri, saç kurutma makinesi ve terlik bulunur. Minibar, buzdolabı, su ısıtıcısı ve çay-kahve makinesi odada hazırdır. Uydu ve kablolu kanallı düz ekran televizyon, telefon ve ütü olanakları da sunulur. Oda engelli odası olarak tanımlıdır; otelde Wi-Fi, oda servisi ve uyandırma servisi mevcuttur.",
-    "descEn": "The Family Room sleeps up to 5 guests in 30 m². It combines one double (French) bed, two single beds and one additional single bed. Along with air conditioning, heating and soundproofed walls, the room has a balcony, a seating area and a desk. The private bathroom has a shower, free toiletries, a hairdryer and slippers. A minibar, refrigerator, kettle and tea-coffee maker are ready in the room, together with a flat-screen TV with satellite and cable channels, a telephone and ironing facilities. The room is designated as accessible; Wi-Fi, room service and wake-up service are available.",
+    "specsTr": "30 m² • 5 kişi • 1 banyo • Oturma Grubu",
+    "specsEn": "30 m² • 5 guests • 1 bathroom • Sitting Area",
+    "descTr": "Fatih'teki Eliza Hotel'in Family Room odası, 30 m² alanda en fazla 5 kişiye konaklama imkanı sunar. Odada Fransız yatak (çift kişilik), iki ayrı tek kişilik yatak ve ayrıca tek kişilik bir yatak birlikte yer alır. Klima, ısıtma ve ses yalıtımlı duvarlar konforunuzu desteklerken balkon, oturma grubu ve çalışma masası da odanın parçasıdır. Özel banyoda duş, ücretsiz banyo malzemeleri, saç kurutma makinesi ve terlik bulunur. Minibar, buzdolabı, su ısıtıcısı ile çay ve kahve makinesi odada hazırdır. Kablolu ve uydu kanallı düz ekran televizyon, telefon ve ütü olanakları da sunulur. Oda engelli odası olarak tanımlanmıştır; otelde Wi-Fi erişimi, oda servisi ve uyandırma servisi mevcuttur.",
+    "descEn": "The Family Room at Eliza Hotel in Fatih accommodates up to 5 guests across 30 m². Features one French double bed, two single beds, and an additional single bed. Complete with balcony, seating area, work desk, air conditioning, heating, and soundproofed walls. Private bathroom offers a shower, free toiletries, hairdryer, and slippers. Minibar, refrigerator, kettle, tea and coffee maker. Flat-screen TV with satellite/cable, phone, ironing facilities. Accessible room with Wi-Fi, room service, and wake-up service.",
     "featuresTr": [
-      "1 çift + 3 tek kişilik yatak",
+      "1 Fransız çift kişilik + 3 tek kişilik yatak",
       "Balkon, oturma grubu, çalışma masası",
       "Duşlu özel banyo, saç kurutma makinesi, terlik",
       "Klima, minibar, buzdolabı, kahve makinesi"
     ],
     "featuresEn": [
-      "1 double + 3 single beds",
+      "1 French double + 3 single beds",
       "Balcony, seating area, desk",
       "Private bathroom with shower, hairdryer, slippers",
-      "A/C, minibar, fridge, coffee maker"
+      "Air conditioning, minibar, fridge, coffee maker"
     ],
     "priceFrom": 89.9,
     "price": null,
@@ -2621,6 +2419,54 @@
       "https://cdn.extranetwork.com/property-photos/2132/1789553810_O58F679GFO_medium.jpg",
       "https://cdn.extranetwork.com/property-photos/2132/1787571363_3X04VUIWKK_medium.jpg",
       "https://cdn.extranetwork.com/property-photos/2132/1787571368_TQB7VDXKMN_medium.jpg"
+    ]
+  },
+  "double": {
+    "id": "double",
+    "capacity": 3,
+    "maxAdults": 2,
+    "maxChildren": 1,
+    "badgeTr": "Çift Kişilik Yatak",
+    "badgeEn": "Double Bed",
+    "titleTr": "Standard Double Room",
+    "titleEn": "Standard Double Room",
+    "typeTr": "Standart Oda",
+    "typeEn": "Standard Room",
+    "size": 28,
+    "roomCount": 1,
+    "bathCount": 1,
+    "occTr": "2 + 1 çocuk",
+    "occEn": "2 + 1 child",
+    "occLongTr": "En fazla 3 kişi (en fazla 2 yetişkin ve 1 çocuk)",
+    "occLongEn": "Up to 3 guests (max. 2 adults and 1 child)",
+    "bedsTr": "Fransız (çift kişilik) yatak",
+    "bedsEn": "One French double bed",
+    "sitting": true,
+    "specsTr": "28 m² • 2 + 1 çocuk • 1 banyo • Oturma Grubu",
+    "specsEn": "28 m² • 2 + 1 child • 1 bathroom • Sitting Area",
+    "descTr": "Eliza Hotel'in Fatih'teki Standard Double Room odasında çift kişilik Fransız yatak bulunur. 28 m² büyüklüğündeki oda en fazla 3 kişi, en fazla 2 yetişkin içindir. Klima ve ısıtmanın yanı sıra ses yalıtımlı duvarlar, oturma grubu, balkon ve çalışma masası odada yer alır. Duşlu özel banyoda ücretsiz banyo malzemeleri, saç kurutma makinesi ve terlik yer alır. Minibar, buzdolabı, su ısıtıcısı ve çay-kahve makinesi odanızda hazırdır. Düz ekran televizyonda kablolu ve uydu kanallarını izleyebilir, telefon ve ütü olanaklarını kullanabilirsiniz. Oda engelli odası olarak tanımlanmıştır. Otelde Wi-Fi erişimi, oda servisi, uyandırma servisi ve talep üzerine kat hizmetleri sunulur.",
+    "descEn": "The Standard Double Room at Eliza Hotel in Fatih features a French double bed across 28 m², accommodating up to 3 guests (max 2 adults). It features soundproofed walls, a seating area, balcony, desk, air conditioning, and heating. The private bathroom with shower has free toiletries, hairdryer, and slippers. Minibar, refrigerator, kettle, and tea/coffee maker are in the room. Flat-screen TV with satellite/cable, phone, ironing amenities. Accessible room with Wi-Fi, room service, wake-up service, and housekeeping on request.",
+    "featuresTr": [
+      "Fransız (çift kişilik) yatak • Balkon",
+      "Oturma grubu, çalışma masası, ses yalıtımı",
+      "Duşlu özel banyo, saç kurutma makinesi, terlik",
+      "Klima, minibar, buzdolabı, kahve makinesi"
+    ],
+    "featuresEn": [
+      "French double bed • Balcony",
+      "Seating area, work desk, soundproofing",
+      "Private bathroom with shower, hairdryer, slippers",
+      "Air conditioning, minibar, fridge, coffee maker"
+    ],
+    "priceFrom": 89.9,
+    "price": null,
+    "images": [
+      "https://cdn.extranetwork.com/property-photos/2132/1789553674_RHGQ6G4GS1_medium.jpg",
+      "https://cdn.extranetwork.com/property-photos/2132/1789553675_M5EIDZNEXV_medium.jpg",
+      "https://cdn.extranetwork.com/property-photos/2132/1787571351_KR7VGC8W7T_medium.jpg",
+      "https://cdn.extranetwork.com/property-photos/2132/1787571348_YR833A7K6K_medium.jpg",
+      "https://cdn.extranetwork.com/property-photos/2132/1787571350_J0BL9VE060_medium.jpg",
+      "https://cdn.extranetwork.com/property-photos/2132/1787571350_VYTDQ8UEMF_medium.jpg"
     ]
   }
 };
@@ -2650,8 +2496,8 @@
         res_children: "Çocuk",
         res_identity: "T.C. Kimlik / Pasaport No",
         res_pay_title: "Ödeme Yöntemi",
-        res_pay_card: "Kartla Öde (Güvenli Ödeme)",
-        res_pay_card_desc: "iyzico güvencesiyle 3D Secure ödeme",
+        res_pay_card: "Kartla Öde (3D Secure Uluslararası Güvenli Ödeme)",
+        res_pay_card_desc: "Tüm yerli ve uluslararası kartlar (Visa, Mastercard, AMEX, China UnionPay, JCB, Troy) kabul edilir.",
         res_pay_hotel: "Otelde Öde",
         res_pay_hotel_desc: "Talebiniz otele iletilir, ödeme girişte alınır",
         res_pay_disabled: "Online ödeme yakında aktif olacak",
@@ -2668,7 +2514,7 @@
         basket_title: "Sepet Özeti",
         taxes_included: "Vergiler Dahil",
         tax_note: "%1 Konaklama Vergisi fiyata dahildir.",
-        payment_info: "Kart bilgileriniz sitemize kaydedilmez. Ödeme, iyzico'nun 3D Secure korumalı ödeme sayfasında yapılır ve tutar onaydan hemen sonra kartınızdan tahsil edilir.",
+        payment_info: "Uluslararası tüm kartlar (Visa, Mastercard, AMEX, China UnionPay, JCB, Discover, Troy) 3D Secure güvencesiyle kabul edilir. Kart bilgileriniz sunucularımızda saklanmaz.",
         res_submit_card: "Güvenli Ödemeye Geç",
         res_submit_hotel: "Rezervasyon Talebini Gönder",
         res_redirecting: "Ödeme sayfası açılıyor...",
@@ -2822,8 +2668,8 @@
         res_children: "Children",
         res_identity: "ID / Passport No",
         res_pay_title: "Payment Method",
-        res_pay_card: "Pay by Card (Secure)",
-        res_pay_card_desc: "3D Secure payment powered by iyzico",
+        res_pay_card: "Pay by Card (3D Secure International Payment)",
+        res_pay_card_desc: "All global cards accepted: Visa, Mastercard, AMEX, China UnionPay (银联), JCB, Discover, Troy.",
         res_pay_hotel: "Pay at the Hotel",
         res_pay_hotel_desc: "Your request goes to the hotel; pay on arrival",
         res_pay_disabled: "Online payment coming soon",
@@ -2840,7 +2686,7 @@
         basket_title: "Booking Summary",
         taxes_included: "Taxes Included",
         tax_note: "1% accommodation tax is included in the price.",
-        payment_info: "Your card details are never stored on our site. Payment is made on iyzico's 3D Secure payment page and charged right after approval.",
+        payment_info: "All international cards (Visa, Mastercard, AMEX, China UnionPay, JCB, Discover, Troy) are accepted with 3D Secure. Your card information is never stored on our servers.",
         res_submit_card: "Continue to Secure Payment",
         res_submit_hotel: "Send Reservation Request",
         res_redirecting: "Opening payment page...",
@@ -3266,7 +3112,7 @@
           setPaymentsEnabled(q.paymentsEnabled);
         } catch {
           if (reqId === updateReservationSummary._id) {
-            const defRates = { single: 69.90, double: 89.90, twin: 89.90, triple: 119.90, quad: 149.90, family: 224.64 };
+            const defRates = { twin: 89.90, double: 89.90, quad: 89.90, family: 224.64 };
             const rRate = defRates[room.id] || (typeof room.priceFrom === "number" ? room.priceFrom : 89.90);
             const est = (rRate * nights).toFixed(2);
             total.textContent = `${est} EUR`;
