@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hotel Eliza Istanbul | Resmi Web Sitesi</title>
-  <meta name="description" content="Hotel Eliza Istanbul, Fatih / İstanbul. 4 oda tipi: Standard Twin Room, Quadruple Room, Family Room, Standard Double Room. Tarihi Yarımada'da konforlu konaklama. Resmi web sitesinden güvenli rezervasyon ve uluslararası kartlarla ödeme.">
+  <meta name="description" content="Eliza Hotel, Fatih / İstanbul. 4 oda tipi: Standard Twin, Standard Double, Quadruple ve Aile Odası. Resmi web sitesinden güvenli kartla ödeme ile doğrudan rezervasyon.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
-  <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js" defer></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+  <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js" defer></script>
   <style>
     :root {
       --color-bg: #FAF8F4;
@@ -1493,6 +1493,13 @@
     .invoice-fields.open { display: grid; }
     .invoice-fields .full { grid-column: 1 / -1; }
     .card-only[hidden] { display: none !important; }
+    .avail-box { margin-top: 1.2rem; border: 1.5px solid #F3B4B4; background: #FEF2F2; border-radius: var(--radius-md); padding: 1rem 1.1rem; font-size: 0.86rem; color: #7F1D1D; }
+    .avail-box strong { display: block; font-size: 0.95rem; margin-bottom: 0.3rem; }
+    .avail-box .alt-row { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 0.6rem; }
+    .avail-box button { border: 1px solid #E7B8B8; background: #fff; color: var(--color-dark); border-radius: var(--radius-pill); padding: 0.35rem 0.8rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
+    .avail-box button:hover { border-color: var(--color-gold); }
+    .avail-box a { color: #7F1D1D; font-weight: 700; }
+    .avail-ok { margin-top: 0.4rem; font-size: 0.8rem; color: #15803D; font-weight: 600; }
     .basket { margin-top: 1.2rem; border: 1px solid var(--color-border); border-radius: var(--radius-md); overflow: hidden; }
     .basket-head { padding: 0.9rem 1.1rem; background: var(--color-surface-subtle); font-size: 0.84rem; }
     .basket-head b { color: var(--color-gold-hover); font-size: 0.95rem; display: block; margin-bottom: 0.2rem; }
@@ -1511,7 +1518,317 @@
     @media (max-width: 560px) {
       .pay-methods, .invoice-fields.open { grid-template-columns: 1fr; }
     }
-  </style>
+  
+    /* ===== CVK Tarzı İki Aylık Müsaitlik ve Fiyat Takvimi Bileşeni ===== */
+    .availability-calendar-box {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .cal-header-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--color-border);
+      margin-bottom: 1.25rem;
+    }
+    .cal-nav-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .btn-cal-nav {
+      background: var(--color-surface-subtle);
+      border: 1px solid var(--color-border);
+      color: var(--color-dark);
+      padding: 0.4rem 0.75rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      min-height: 44px;
+      min-width: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+    .btn-cal-nav:hover:not(:disabled) {
+      background: var(--color-gold-light);
+      border-color: var(--color-gold);
+      color: var(--color-gold-hover);
+    }
+    .btn-cal-nav:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+    .cal-month-jumper {
+      padding: 0.45rem 0.65rem;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      background: var(--color-surface);
+      color: var(--color-text);
+      font-size: 0.85rem;
+      font-weight: 600;
+      min-height: 44px;
+      cursor: pointer;
+    }
+    .cal-status-bar {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .cal-range-text {
+      font-size: 0.9rem;
+      color: var(--color-text);
+      background: var(--color-surface-subtle);
+      padding: 0.45rem 0.85rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--color-border);
+      font-weight: 500;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+    }
+    .cal-range-text b {
+      color: var(--color-gold);
+      margin-left: 0.25rem;
+    }
+    .cal-currency-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.82rem;
+      color: var(--color-text-muted);
+    }
+    .cal-currency-select {
+      padding: 0.4rem 0.6rem;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      background: var(--color-surface);
+      color: var(--color-text);
+      font-weight: 600;
+      font-size: 0.82rem;
+      min-height: 44px;
+      cursor: pointer;
+    }
+    .cal-months-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
+    @media (max-width: 820px) {
+      .cal-months-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .cal-month-container {
+      background: var(--color-surface);
+    }
+    .cal-month-title {
+      font-family: var(--font-serif);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--color-dark);
+      text-align: center;
+      margin: 0 0 0.85rem 0;
+      letter-spacing: 0.02em;
+    }
+    .cal-weekdays-row {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.4rem;
+    }
+    .cal-days-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+    }
+    .cal-day-cell {
+      min-height: 52px;
+      min-width: 44px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm, 6px);
+      background: var(--color-surface);
+      color: var(--color-text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3px 2px;
+      position: relative;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.15s ease;
+      font-family: inherit;
+      outline: none;
+    }
+    .cal-day-cell:focus-visible {
+      outline: 2px solid var(--color-gold);
+      outline-offset: 2px;
+      z-index: 4;
+    }
+    .cal-day-cell.empty {
+      background: transparent;
+      border-color: transparent;
+      cursor: default;
+      pointer-events: none;
+    }
+    .cal-day-cell.past, .cal-day-cell.unavailable {
+      opacity: 0.42;
+      background: var(--color-surface-subtle);
+      cursor: not-allowed;
+    }
+    .cal-day-cell.unavailable .day-price {
+      color: #999;
+      font-weight: 400;
+      font-size: 0.65rem;
+    }
+    .cal-day-cell:not(.past):not(.unavailable):hover {
+      border-color: var(--color-gold);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(168, 134, 75, 0.18);
+      z-index: 2;
+    }
+    .cal-day-cell.today {
+      border: 2px solid var(--color-gold);
+    }
+    .cal-day-cell.in-range {
+      background: rgba(168, 134, 75, 0.14) !important;
+      border-color: rgba(168, 134, 75, 0.35) !important;
+      border-radius: 0;
+    }
+    .cal-day-cell.selected-checkin {
+      background: var(--color-gold) !important;
+      color: #ffffff !important;
+      border-color: var(--color-gold) !important;
+      border-top-right-radius: 0 !important;
+      border-bottom-right-radius: 0 !important;
+      z-index: 3;
+    }
+    .cal-day-cell.selected-checkout {
+      background: var(--color-gold) !important;
+      color: #ffffff !important;
+      border-color: var(--color-gold) !important;
+      border-top-left-radius: 0 !important;
+      border-bottom-left-radius: 0 !important;
+      z-index: 3;
+    }
+    .cal-day-cell.selected-checkin .day-num,
+    .cal-day-cell.selected-checkin .day-price,
+    .cal-day-cell.selected-checkout .day-num,
+    .cal-day-cell.selected-checkout .day-price {
+      color: #ffffff !important;
+    }
+    .day-num {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      font-weight: 500;
+      line-height: 1.1;
+      color: var(--color-dark);
+    }
+    .day-price {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--color-gold);
+      line-height: 1;
+      margin-top: 3px;
+      white-space: nowrap;
+    }
+    .badge-today {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      font-size: 0.55rem;
+      font-weight: 700;
+      color: var(--color-gold);
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+    .badge-minstay {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      font-size: 0.55rem;
+      font-weight: 600;
+      background: #fef3c7;
+      color: #92400e;
+      padding: 1px 3px;
+      border-radius: 3px;
+      line-height: 1;
+    }
+    .badge-tag-sel {
+      position: absolute;
+      bottom: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.58rem;
+      font-weight: 700;
+      background: var(--color-dark);
+      color: #fff;
+      padding: 1px 4px;
+      border-radius: 3px;
+      line-height: 1;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+    .cal-alert-box {
+      margin-top: 1rem;
+      padding: 0.65rem 0.95rem;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-radius: var(--radius-sm);
+      color: #991b1b;
+      font-size: 0.85rem;
+      display: none;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .cal-unconfigured-notice {
+      margin-top: 1.25rem;
+      padding: 1.2rem;
+      background: #fffbeb;
+      border: 1px solid #fef3c7;
+      border-radius: var(--radius);
+      text-align: center;
+      color: #92400e;
+    }
+    .cal-unconfigured-notice p {
+      margin: 0 0 0.85rem 0;
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+    .btn-wa-cal {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--color-whatsapp);
+      color: #ffffff;
+      padding: 0.65rem 1.25rem;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      text-decoration: none;
+      min-height: 44px;
+      transition: opacity 0.2s;
+    }
+    .btn-wa-cal:hover {
+      opacity: 0.9;
+    }
+
+</style>
 </head>
 <body>
 
@@ -1639,6 +1956,8 @@
   <!-- Booking Strip -->
   <div class="booking-bar-wrapper" id="booking-form">
     <div class="booking-card">
+      <!-- Müsaitlik ve Gecelik Fiyat Takvimi (Ana Sayfa Rezervasyon Bölümü) -->
+      <div id="homeCalendarSlot"></div>
       <form class="booking-form" onsubmit="handleBookingSubmit(event)" novalidate>
         <div class="form-group">
           <label class="form-label" for="checkin">
@@ -1695,12 +2014,11 @@
     <div class="section-header">
       <span class="section-eyebrow" data-i18n="rooms_eyebrow">Konaklama</span>
       <h2 class="section-title" data-i18n="rooms_title">Özenle Tasarlanmış Odalarımız</h2>
-      <p class="section-subtitle" data-i18n="rooms_subtitle">4 farklı oda tipi. Tüm odalarımızda balkon, klima, ses yalıtımı, duşlu özel banyo, minibar, buzdolabı, su ısıtıcısı ve kahve makinesi bulunur.</p>
+      <p class="section-subtitle" data-i18n="rooms_subtitle">4 farklı oda tipi. Tüm odalarda balkon, klima, ses yalıtımı, duşlu özel banyo, minibar, buzdolabı, su ısıtıcısı ve kahve makinesi bulunur.</p>
     </div>
 
     <!-- Static HTML Rooms Grid (Zero dependence on JavaScript to view) -->
     <div class="rooms-grid" id="roomsGridContainer">
-      <!-- 1. Standard Twin Room -->
       <div class="room-card" id="card-twin">
         <div class="room-media" onclick="openRoomModal('twin')">
           <img src="https://cdn.extranetwork.com/property-photos/2132/1789553710_SST6W4S7I6_medium.jpg" alt="Standard Twin Room - Eliza Hotel Istanbul" loading="lazy" onerror="handleRoomImageError(this)">
@@ -1721,8 +2039,8 @@
           <ul class="room-features-list" data-room-features="twin">
             <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> İki ayrı tek kişilik yatak • Balkon</li>
             <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Duşlu özel banyo, saç kurutma makinesi, terlik</li>
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Klima, ısıtma, ses yalıtımlı duvarlar</li>
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Minibar, buzdolabı, su ısıtıcısı, çay-kahve makinesi</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Klima, ısıtma, ses yalıtımı</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Minibar, buzdolabı, su ısıtıcısı, kahve makinesi</li>
           </ul>
           <div class="room-bottom">
             <div class="room-price-line">
@@ -1738,7 +2056,6 @@
         </div>
       </div>
 
-      <!-- 2. Quadruple Room -->
       <div class="room-card" id="card-quad">
         <div class="room-media" onclick="openRoomModal('quad')">
           <img src="https://cdn.extranetwork.com/property-photos/2132/1789553758_GJEXAH6BK0_medium.jpg" alt="Quadruple Room - Eliza Hotel Istanbul" loading="lazy" onerror="handleRoomImageError(this)">
@@ -1755,10 +2072,10 @@
         <div class="room-content">
           <h3 class="room-title" data-room-title="quad">Quadruple Room</h3>
           <p class="room-type" data-room-type="quad">Quadruple Oda</p>
-          <div class="room-specs-strip" data-room-specs="quad">30 m² • 4 kişi • 1 banyo • 2 yatak odası</div>
+          <div class="room-specs-strip" data-room-specs="quad">30 m² • 4 + 2 çocuk • 1 banyo</div>
           <ul class="room-features-list" data-room-features="quad">
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> 2 yatak odası • 1 Fransız çift kişilik + 2 tek kişilik yatak</li>
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Balkon, çalışma masası, ses yalıtımı</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> 2 yatak odası • 1 çift + 2 tek kişilik yatak</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Balkon, çalışma masası</li>
             <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Duşlu özel banyo, saç kurutma makinesi, terlik</li>
             <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Klima, minibar, buzdolabı, kahve makinesi</li>
           </ul>
@@ -1776,7 +2093,6 @@
         </div>
       </div>
 
-      <!-- 3. Family Room -->
       <div class="room-card" id="card-family">
         <div class="room-media" onclick="openRoomModal('family')">
           <img src="https://cdn.extranetwork.com/property-photos/2132/1789553811_RFYD7SA52S_medium.jpg" alt="Family Room - Eliza Hotel Istanbul" loading="lazy" onerror="handleRoomImageError(this)">
@@ -1793,9 +2109,9 @@
         <div class="room-content">
           <h3 class="room-title" data-room-title="family">Family Room</h3>
           <p class="room-type" data-room-type="family">Aile Odası</p>
-          <div class="room-specs-strip" data-room-specs="family">30 m² • 5 kişi • 1 banyo • Oturma Grubu</div>
+          <div class="room-specs-strip" data-room-specs="family">30 m² • 5 + 2 çocuk • 1 banyo</div>
           <ul class="room-features-list" data-room-features="family">
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> 1 Fransız çift kişilik + 3 tek kişilik yatak</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> 1 çift + 3 tek kişilik yatak</li>
             <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Balkon, oturma grubu, çalışma masası</li>
             <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Duşlu özel banyo, saç kurutma makinesi, terlik</li>
             <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Klima, minibar, buzdolabı, kahve makinesi</li>
@@ -1814,7 +2130,6 @@
         </div>
       </div>
 
-      <!-- 4. Standard Double Room -->
       <div class="room-card" id="card-double">
         <div class="room-media" onclick="openRoomModal('double')">
           <img src="https://cdn.extranetwork.com/property-photos/2132/1789553674_RHGQ6G4GS1_medium.jpg" alt="Standard Double Room - Eliza Hotel Istanbul" loading="lazy" onerror="handleRoomImageError(this)">
@@ -1831,10 +2146,10 @@
         <div class="room-content">
           <h3 class="room-title" data-room-title="double">Standard Double Room</h3>
           <p class="room-type" data-room-type="double">Standart Oda</p>
-          <div class="room-specs-strip" data-room-specs="double">28 m² • 2 + 1 çocuk • 1 banyo • Oturma Grubu</div>
+          <div class="room-specs-strip" data-room-specs="double">28 m² • 2 + 1 çocuk • 1 banyo</div>
           <ul class="room-features-list" data-room-features="double">
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Fransız çift kişilik yatak • Balkon</li>
-            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Oturma grubu, çalışma masası, ses yalıtımı</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Fransız (çift kişilik) yatak • Balkon</li>
+            <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Oturma grubu, çalışma masası</li>
             <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Duşlu özel banyo, saç kurutma makinesi, terlik</li>
             <li><span class="icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Klima, minibar, buzdolabı, kahve makinesi</li>
           </ul>
@@ -2085,6 +2400,9 @@
           <p data-i18n="res_subtitle">Resmi web sitemizden doğrudan rezervasyon: kartla güvenli ödeme veya otelde ödeme.</p>
         </div>
 
+        <!-- Müsaitlik ve Fiyat Takvimi Bileşeni (Modal İçi) -->
+        <div id="modalCalendarSlot"></div>
+
         <form class="res-form" id="resForm" onsubmit="submitReservation(event)" novalidate>
           <div class="res-grid">
             <div class="form-group full">
@@ -2113,6 +2431,18 @@
             </div>
             <input type="hidden" id="resGuests" value="2">
             <div class="form-group">
+              <label class="form-label" for="resCountry" data-i18n="res_country">Ülke</label>
+              <select class="form-control" id="resCountry" onchange="handleCountryChange()" required>
+                <option value="" data-i18n="res_country_ph">Seçiniz</option><option value="Turkey">Türkiye</option><option value="China">China / 中国</option><option value="United States">United States</option><option value="United Kingdom">United Kingdom</option><option value="Germany">Deutschland</option><option value="France">France</option><option value="Italy">Italia</option><option value="Spain">España</option><option value="Netherlands">Nederland</option><option value="Russia">Россия</option><option value="Saudi Arabia">السعودية</option><option value="United Arab Emirates">الإمارات</option><option value="Iran">ایران</option><option value="Iraq">العراق</option><option value="Azerbaijan">Azərbaycan</option><option value="Kazakhstan">Қазақстан</option><option value="South Korea">대한민국</option><option value="Japan">日本</option><option value="India">India</option><option value="Canada">Canada</option><option value="Australia">Australia</option><option value="Brazil">Brasil</option><option value="Other">Other / Diğer</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="resCurrency" data-i18n="res_currency">Para Birimi</label>
+              <select class="form-control" id="resCurrency" onchange="this.dataset.touched=1;updateReservationSummary()">
+                <option value="EUR">EUR €</option><option value="USD">USD $</option><option value="TRY">TRY ₺</option>
+              </select>
+            </div>
+            <div class="form-group">
               <label class="form-label" for="resName" data-i18n="res_name">Ad Soyad</label>
               <input type="text" class="form-control" id="resName" autocomplete="name" required maxlength="80">
             </div>
@@ -2136,21 +2466,13 @@
             <div class="res-section-title" data-i18n="res_pay_title">Ödeme Yöntemi</div>
             <div class="pay-methods">
               <label class="pay-method" id="payMethodCard">
-              <input type="radio" name="payMethod" value="card" checked onchange="handlePayMethodChange()">
-              <span>
-                <strong data-i18n="res_pay_card">Kredi / Banka Kartı (3D Secure Uluslararası Güvenli Ödeme)</strong>
-                <small data-i18n="res_pay_card_desc">Uluslararası tüm kartlar kabul edilir (Visa, Mastercard, AMEX, UnionPay, JCB, Troy)</small>
-                <span class="card-brands">
-                  <span class="card-brand secure">3D Secure</span>
-                  <span class="card-brand">VISA</span>
-                  <span class="card-brand">Mastercard</span>
-                  <span class="card-brand">AMEX</span>
-                  <span class="card-brand">UnionPay (银联)</span>
-                  <span class="card-brand">JCB</span>
-                  <span class="card-brand">TROY</span>
+                <input type="radio" name="payMethod" value="card" checked onchange="handlePayMethodChange()">
+                <span>
+                  <strong data-i18n="res_pay_card">Kartla Öde (Güvenli Ödeme)</strong>
+                  <small data-i18n="res_pay_card_desc">iyzico güvencesiyle 3D Secure ödeme</small>
+                  <span class="card-brands"><span class="card-brand secure">3D Secure</span><span class="card-brand">VISA</span><span class="card-brand">Mastercard</span><span class="card-brand">AMEX</span><span class="card-brand">TROY</span></span>
                 </span>
-              </span>
-            </label>
+              </label>
               <label class="pay-method">
                 <input type="radio" name="payMethod" value="hotel" onchange="handlePayMethodChange()">
                 <span>
@@ -2177,6 +2499,7 @@
             </label>
           </div>
 
+          <div class="avail-box" id="availBox" hidden aria-live="assertive"></div>
           <div class="basket" aria-live="polite">
             <div class="basket-head">
               <b data-i18n="basket_title">Sepet Özeti</b>
@@ -2299,18 +2622,18 @@
     "sitting": false,
     "specsTr": "28 m² • 2 + 1 çocuk • 1 banyo",
     "specsEn": "28 m² • 2 + 1 child • 1 bathroom",
-    "descTr": "Eliza Hotel'in Fatih'teki Standard Twin Room odasında iki ayrı tek kişilik yatak bulunur. 28 m² büyüklüğündeki oda en fazla 3 kişi, en fazla 2 yetişkin içindir. Klima ve ısıtmanın yanı sıra ses yalıtımlı duvarlar, balkon ve çalışma masası odada yer alır. Duşlu özel banyoda ücretsiz banyo malzemeleri, saç kurutma makinesi ve terlik sizi bekler. Minibar, buzdolabı, su ısıtıcısı ile çay ve kahve makinesi odanızda hazırdır. Düz ekran televizyonda kablolu ve uydu kanallarını izleyebilir, telefon ve ütü olanaklarını kullanabilirsiniz. Oda engelli odası olarak tanımlanmıştır. Otelde Wi-Fi erişimi, oda servisi, uyandırma servisi ve talep üzerine kat hizmetleri sunulur.",
-    "descEn": "The Standard Twin Room at Eliza Hotel in Fatih features two single beds in a 28 m² area accommodating up to 3 guests (max. 2 adults and 1 child). It has a balcony, work desk, air conditioning, heating, and soundproofed walls. The private bathroom with shower comes with free toiletries, hairdryer, and slippers. Minibar, refrigerator, kettle, and tea-coffee maker are ready in the room, along with a flat-screen TV with cable/satellite channels, telephone, and ironing facilities. Designated as accessible room. Free Wi-Fi, room service, wake-up service, and housekeeping on request.",
+    "descTr": "Standard Twin Room, iki ayrı tek kişilik yatağı olan 28 m²'lik bir odadır ve en fazla 2 yetişkin ile 1 çocuğu ağırlar. Balkon, çalışma masası, klima, ısıtma ve ses yalıtımlı duvarlar odanın donanımındadır. Duşlu özel banyoda ücretsiz banyo malzemeleri, saç kurutma makinesi ve terlik bulunur. Minibar, buzdolabı, su ısıtıcısı ve çay-kahve makinesi odada hazırdır; düz ekran televizyonda uydu ve kablolu kanallar izlenebilir, telefon ve ütü olanakları da sunulur. Oda engelli odası olarak tanımlıdır. Otelde Wi-Fi, oda servisi, uyandırma servisi ve talep üzerine kat hizmeti vardır.",
+    "descEn": "The Standard Twin Room is a 28 m² room with two single beds for up to 2 adults and 1 child. It has a balcony, desk, air conditioning, heating and soundproofed walls. The private bathroom with shower comes with free toiletries, a hairdryer and slippers. A minibar, refrigerator, kettle and tea-coffee maker are ready in the room, along with a flat-screen TV with satellite and cable channels, a telephone and ironing facilities. The room is designated as accessible. Wi-Fi, room service, wake-up service and housekeeping on request are available.",
     "featuresTr": [
       "İki ayrı tek kişilik yatak • Balkon",
       "Duşlu özel banyo, saç kurutma makinesi, terlik",
-      "Klima, ısıtma, ses yalıtımlı duvarlar",
+      "Klima, ısıtma, ses yalıtımı",
       "Minibar, buzdolabı, su ısıtıcısı, kahve makinesi"
     ],
     "featuresEn": [
       "Two single beds • Balcony",
       "Private bathroom with shower, hairdryer, slippers",
-      "Air conditioning, heating, soundproofed walls",
+      "Air conditioning, heating, soundproofing",
       "Minibar, fridge, kettle, coffee maker"
     ],
     "priceFrom": 89.9,
@@ -2332,7 +2655,7 @@
     "maxAdults": 4,
     "maxChildren": 2,
     "badgeTr": "4 Kişilik • 2 Yatak Odası",
-    "badgeEn": "4 Guests • 2 Bedrooms",
+    "badgeEn": "Sleeps 4 • 2 Bedrooms",
     "titleTr": "Quadruple Room",
     "titleEn": "Quadruple Room",
     "typeTr": "Quadruple Oda",
@@ -2340,28 +2663,28 @@
     "size": 30,
     "roomCount": 2,
     "bathCount": 1,
-    "occTr": "4 kişi",
-    "occEn": "4 guests",
-    "occLongTr": "En fazla 4 kişi (1 Fransız çift kişilik yatak + 2 tek kişilik yatak)",
-    "occLongEn": "Up to 4 guests (1 French double bed + 2 single beds)",
-    "bedsTr": "Fransız yatak (çift kişilik) ve iki ayrı tek kişilik yatak",
-    "bedsEn": "One French double bed and two single beds",
+    "occTr": "4 + 2 çocuk",
+    "occEn": "4 + 2 children",
+    "occLongTr": "En fazla 4 kişi",
+    "occLongEn": "Up to 4 guests",
+    "bedsTr": "1 Fransız (çift kişilik) yatak + 2 ayrı tek kişilik yatak",
+    "bedsEn": "1 double (French) bed + 2 single beds",
     "sitting": false,
-    "specsTr": "30 m² • 4 kişi • 1 banyo • 2 yatak odası",
-    "specsEn": "30 m² • 4 guests • 1 bathroom • 2 bedrooms",
-    "descTr": "İki yatak odalı Quadruple Room, Fatih'teki Eliza Hotel'de 30 m² alanda en fazla 4 kişiyi ağırlar. Yatak düzeninde Fransız yatak (çift kişilik) ile iki ayrı tek kişilik yatak bulunur. Balkonlu odada klima, ısıtma ve ses yalıtımı yer alır; çalışma masası da odanın donanımları arasındadır. Duşlu özel banyoda ücretsiz banyo malzemeleri, saç kurutma makinesi ve terlik sunulur. Minibar, buzdolabı, su ısıtıcısı ve çay-kahve makinesiyle içeceklerinizi odanızda hazırlayabilirsiniz. Kablolu ve uydu kanallı düz ekran televizyon, telefon ve ütü olanakları da odada bulunur. Engelli odası olarak tanımlanan bu odada kalırken Wi-Fi erişimi ve oda servisinden yararlanabilirsiniz.",
-    "descEn": "The two-bedroom Quadruple Room at Eliza Hotel in Fatih accommodates up to 4 guests across 30 m². The bedding includes one French double bed and two single beds. Features a balcony, air conditioning, heating, and soundproofing, plus a work desk. Private bathroom with shower, free toiletries, hairdryer, and slippers. Minibar, refrigerator, kettle, and tea-coffee maker. Flat-screen TV with cable and satellite channels, telephone, and ironing facilities. Designated as accessible with Wi-Fi and room service.",
+    "specsTr": "30 m² • 4 + 2 çocuk • 1 banyo",
+    "specsEn": "30 m² • 4 + 2 children • 1 bathroom",
+    "descTr": "İki yatak odalı Quadruple Room, 30 m² alanda en fazla 4 kişiyi ağırlar. Yatak düzeninde bir Fransız (çift kişilik) yatak ve iki ayrı tek kişilik yatak bulunur. Balkonlu odada klima, ısıtma, ses yalıtımı ve çalışma masası vardır. Duşlu özel banyoda ücretsiz banyo malzemeleri, saç kurutma makinesi ve terlik sunulur. Minibar, buzdolabı, su ısıtıcısı ve çay-kahve makinesiyle içeceklerinizi odada hazırlayabilirsiniz. Uydu ve kablolu kanallı düz ekran televizyon, telefon ve ütü olanakları mevcuttur. Oda engelli odası olarak tanımlıdır; Wi-Fi ve oda servisinden yararlanabilirsiniz.",
+    "descEn": "The Quadruple Room has two bedrooms and sleeps up to 4 guests in 30 m². Beds: one double (French) bed and two single beds. The room has a balcony, air conditioning, heating, soundproofing and a desk. The private bathroom with shower offers free toiletries, a hairdryer and slippers. A minibar, refrigerator, kettle and tea-coffee maker let you prepare drinks in the room. There is a flat-screen TV with satellite and cable channels, a telephone and ironing facilities. The room is designated as accessible; Wi-Fi and room service are available.",
     "featuresTr": [
-      "2 yatak odası • 1 Fransız çift kişilik + 2 tek kişilik yatak",
-      "Balkon, çalışma masası, ses yalıtımı",
+      "2 yatak odası • 1 çift + 2 tek kişilik yatak",
+      "Balkon, çalışma masası",
       "Duşlu özel banyo, saç kurutma makinesi, terlik",
       "Klima, minibar, buzdolabı, kahve makinesi"
     ],
     "featuresEn": [
-      "2 bedrooms • 1 French double + 2 single beds",
-      "Balcony, work desk, soundproofing",
+      "2 bedrooms • 1 double + 2 single beds",
+      "Balcony, desk",
       "Private bathroom with shower, hairdryer, slippers",
-      "Air conditioning, minibar, fridge, coffee maker"
+      "A/C, minibar, fridge, coffee maker"
     ],
     "priceFrom": 89.9,
     "price": null,
@@ -2380,7 +2703,7 @@
     "maxAdults": 5,
     "maxChildren": 2,
     "badgeTr": "5 Kişilik Aile Odası",
-    "badgeEn": "5 Guests Family Room",
+    "badgeEn": "Sleeps 5",
     "titleTr": "Family Room",
     "titleEn": "Family Room",
     "typeTr": "Aile Odası",
@@ -2388,28 +2711,28 @@
     "size": 30,
     "roomCount": 1,
     "bathCount": 1,
-    "occTr": "5 kişi",
-    "occEn": "5 guests",
-    "occLongTr": "En fazla 5 kişi (1 Fransız çift kişilik yatak + 3 tek kişilik yatak)",
-    "occLongEn": "Up to 5 guests (1 French double bed + 3 single beds)",
-    "bedsTr": "Fransız yatak (çift kişilik) ve 3 tek kişilik yatak",
-    "bedsEn": "One French double bed and three single beds",
+    "occTr": "5 + 2 çocuk",
+    "occEn": "5 + 2 children",
+    "occLongTr": "En fazla 5 kişi",
+    "occLongEn": "Up to 5 guests",
+    "bedsTr": "1 Fransız (çift kişilik) yatak + 2 ayrı tek kişilik yatak + 1 tek kişilik yatak",
+    "bedsEn": "1 double (French) bed + 2 single beds + 1 extra single bed",
     "sitting": true,
-    "specsTr": "30 m² • 5 kişi • 1 banyo • Oturma Grubu",
-    "specsEn": "30 m² • 5 guests • 1 bathroom • Sitting Area",
-    "descTr": "Fatih'teki Eliza Hotel'in Family Room odası, 30 m² alanda en fazla 5 kişiye konaklama imkanı sunar. Odada Fransız yatak (çift kişilik), iki ayrı tek kişilik yatak ve ayrıca tek kişilik bir yatak birlikte yer alır. Klima, ısıtma ve ses yalıtımlı duvarlar konforunuzu desteklerken balkon, oturma grubu ve çalışma masası da odanın parçasıdır. Özel banyoda duş, ücretsiz banyo malzemeleri, saç kurutma makinesi ve terlik bulunur. Minibar, buzdolabı, su ısıtıcısı ile çay ve kahve makinesi odada hazırdır. Kablolu ve uydu kanallı düz ekran televizyon, telefon ve ütü olanakları da sunulur. Oda engelli odası olarak tanımlanmıştır; otelde Wi-Fi erişimi, oda servisi ve uyandırma servisi mevcuttur.",
-    "descEn": "The Family Room at Eliza Hotel in Fatih accommodates up to 5 guests across 30 m². Features one French double bed, two single beds, and an additional single bed. Complete with balcony, seating area, work desk, air conditioning, heating, and soundproofed walls. Private bathroom offers a shower, free toiletries, hairdryer, and slippers. Minibar, refrigerator, kettle, tea and coffee maker. Flat-screen TV with satellite/cable, phone, ironing facilities. Accessible room with Wi-Fi, room service, and wake-up service.",
+    "specsTr": "30 m² • 5 + 2 çocuk • 1 banyo",
+    "specsEn": "30 m² • 5 + 2 children • 1 bathroom",
+    "descTr": "Family Room, 30 m² alanda en fazla 5 kişiye konaklama sunar. Odada bir Fransız (çift kişilik) yatak, iki ayrı tek kişilik yatak ve ayrıca bir tek kişilik yatak birlikte yer alır. Klima, ısıtma ve ses yalıtımlı duvarların yanında balkon, oturma grubu ve çalışma masası da odanın parçasıdır. Özel banyoda duş, ücretsiz banyo malzemeleri, saç kurutma makinesi ve terlik bulunur. Minibar, buzdolabı, su ısıtıcısı ve çay-kahve makinesi odada hazırdır. Uydu ve kablolu kanallı düz ekran televizyon, telefon ve ütü olanakları da sunulur. Oda engelli odası olarak tanımlıdır; otelde Wi-Fi, oda servisi ve uyandırma servisi mevcuttur.",
+    "descEn": "The Family Room sleeps up to 5 guests in 30 m². It combines one double (French) bed, two single beds and one additional single bed. Along with air conditioning, heating and soundproofed walls, the room has a balcony, a seating area and a desk. The private bathroom has a shower, free toiletries, a hairdryer and slippers. A minibar, refrigerator, kettle and tea-coffee maker are ready in the room, together with a flat-screen TV with satellite and cable channels, a telephone and ironing facilities. The room is designated as accessible; Wi-Fi, room service and wake-up service are available.",
     "featuresTr": [
-      "1 Fransız çift kişilik + 3 tek kişilik yatak",
+      "1 çift + 3 tek kişilik yatak",
       "Balkon, oturma grubu, çalışma masası",
       "Duşlu özel banyo, saç kurutma makinesi, terlik",
       "Klima, minibar, buzdolabı, kahve makinesi"
     ],
     "featuresEn": [
-      "1 French double + 3 single beds",
+      "1 double + 3 single beds",
       "Balcony, seating area, desk",
       "Private bathroom with shower, hairdryer, slippers",
-      "Air conditioning, minibar, fridge, coffee maker"
+      "A/C, minibar, fridge, coffee maker"
     ],
     "priceFrom": 89.9,
     "price": null,
@@ -2439,24 +2762,24 @@
     "occEn": "2 + 1 child",
     "occLongTr": "En fazla 3 kişi (en fazla 2 yetişkin ve 1 çocuk)",
     "occLongEn": "Up to 3 guests (max. 2 adults and 1 child)",
-    "bedsTr": "Fransız (çift kişilik) yatak",
-    "bedsEn": "One French double bed",
+    "bedsTr": "1 Fransız (çift kişilik) yatak",
+    "bedsEn": "1 double (French) bed",
     "sitting": true,
-    "specsTr": "28 m² • 2 + 1 çocuk • 1 banyo • Oturma Grubu",
-    "specsEn": "28 m² • 2 + 1 child • 1 bathroom • Sitting Area",
-    "descTr": "Eliza Hotel'in Fatih'teki Standard Double Room odasında çift kişilik Fransız yatak bulunur. 28 m² büyüklüğündeki oda en fazla 3 kişi, en fazla 2 yetişkin içindir. Klima ve ısıtmanın yanı sıra ses yalıtımlı duvarlar, oturma grubu, balkon ve çalışma masası odada yer alır. Duşlu özel banyoda ücretsiz banyo malzemeleri, saç kurutma makinesi ve terlik yer alır. Minibar, buzdolabı, su ısıtıcısı ve çay-kahve makinesi odanızda hazırdır. Düz ekran televizyonda kablolu ve uydu kanallarını izleyebilir, telefon ve ütü olanaklarını kullanabilirsiniz. Oda engelli odası olarak tanımlanmıştır. Otelde Wi-Fi erişimi, oda servisi, uyandırma servisi ve talep üzerine kat hizmetleri sunulur.",
-    "descEn": "The Standard Double Room at Eliza Hotel in Fatih features a French double bed across 28 m², accommodating up to 3 guests (max 2 adults). It features soundproofed walls, a seating area, balcony, desk, air conditioning, and heating. The private bathroom with shower has free toiletries, hairdryer, and slippers. Minibar, refrigerator, kettle, and tea/coffee maker are in the room. Flat-screen TV with satellite/cable, phone, ironing amenities. Accessible room with Wi-Fi, room service, wake-up service, and housekeeping on request.",
+    "specsTr": "28 m² • 2 + 1 çocuk • 1 banyo",
+    "specsEn": "28 m² • 2 + 1 child • 1 bathroom",
+    "descTr": "Standard Double Room, Fransız (çift kişilik) yatağı olan 28 m²'lik bir odadır ve en fazla 2 yetişkin ile 1 çocuğu ağırlar. Balkon, oturma grubu, çalışma masası, klima, ısıtma ve ses yalıtımı odanın donanımındadır. Duşlu özel banyoda saç kurutma makinesi, havlu ve terlik bulunur. Minibar, buzdolabı, su ısıtıcısı ve kahve makinesi odada hazırdır; uydu ve kablolu kanallı televizyon, telefon ve ütü olanakları sunulur. Oda engelli odası olarak tanımlıdır.",
+    "descEn": "The Standard Double Room is a 28 m² room with a double (French) bed for up to 2 adults and 1 child. It has a balcony, seating area, desk, air conditioning, heating and soundproofing. The private bathroom with shower has a hairdryer, towels and slippers. A minibar, refrigerator, kettle and coffee maker are ready in the room, with a TV with satellite and cable channels, a telephone and ironing facilities. The room is designated as accessible.",
     "featuresTr": [
       "Fransız (çift kişilik) yatak • Balkon",
-      "Oturma grubu, çalışma masası, ses yalıtımı",
+      "Oturma grubu, çalışma masası",
       "Duşlu özel banyo, saç kurutma makinesi, terlik",
       "Klima, minibar, buzdolabı, kahve makinesi"
     ],
     "featuresEn": [
-      "French double bed • Balcony",
-      "Seating area, work desk, soundproofing",
+      "Double (French) bed • Balcony",
+      "Seating area, desk",
       "Private bathroom with shower, hairdryer, slippers",
-      "Air conditioning, minibar, fridge, coffee maker"
+      "A/C, minibar, fridge, coffee maker"
     ],
     "priceFrom": 89.9,
     "price": null,
@@ -2477,6 +2800,34 @@
 
     const I18N = {
       tr: {
+        res_country: "Ülke",
+        cal_title: "Müsaitlik ve Gecelik Fiyat Takvimi",
+        cal_subtitle: "Tarih bazlı en iyi başlangıç fiyatlarını görün, giriş ve çıkış gününüzü seçin.",
+        cal_select_prompt: "Giriş ve çıkış tarihinizi takvimden seçin",
+        cal_checkin: "Giriş",
+        cal_checkout: "Çıkış",
+        cal_today: "BUGÜN",
+        cal_booked: "Dolu",
+        cal_prev_month: "Önceki",
+        cal_next_month: "Sonraki",
+        cal_nights_count: "{n} Gece",
+        cal_min_stay_err: "Seçilen giriş tarihi için minimum konaklama süresi {n} gecedir.",
+        cal_unavailable_range: "Seçilen tarih aralığında müsait olmayan geceler bulunmaktadır. Lütfen farklı tarihler seçin.",
+        cal_not_configured_msg: "Güncel müsaitlik ve en uygun fiyat teklifi için lütfen bizimle iletişime geçin.",
+        cal_wa_btn: "WhatsApp ile Müsaitlik Sor",
+        res_country_ph: "Seçiniz",
+        res_currency: "Para Birimi",
+        res_err_country: "Lütfen ülkenizi seçin.",
+        res_try_note: "Türkiye'den yapılan ödemeler Türk Lirası ile alınır.",
+        pay_no_room: "Ödeme sırasında seçtiğiniz oda başka bir misafir tarafından alındı. Ödemeniz otomatik olarak iade edildi. Lütfen farklı bir oda veya tarih seçin.",
+        avail_none_title: "Seçtiğiniz tarihlerde bu oda dolu",
+        avail_none_desc: "Aşağıdaki seçeneklerden birini seçebilir veya bize WhatsApp'tan yazabilirsiniz.",
+        avail_alt_rooms: "Aynı tarihlerde boş odalar:",
+        avail_alt_dates: "Bu oda için en yakın boş tarihler:",
+        avail_none_any: "Bu tarihlerde uygun oda bulunamadı.",
+        avail_wa: "WhatsApp'tan sorun",
+        avail_left_one: "Bu tarihler için son oda!",
+        avail_left_n: "{n} oda kaldı",
         compare_title: "Odaları karşılaştırın",
         cmp_room: "Oda",
         cmp_size: "Oda Boyutu",
@@ -2496,8 +2847,8 @@
         res_children: "Çocuk",
         res_identity: "T.C. Kimlik / Pasaport No",
         res_pay_title: "Ödeme Yöntemi",
-        res_pay_card: "Kartla Öde (3D Secure Uluslararası Güvenli Ödeme)",
-        res_pay_card_desc: "Tüm yerli ve uluslararası kartlar (Visa, Mastercard, AMEX, China UnionPay, JCB, Troy) kabul edilir.",
+        res_pay_card: "Kartla Öde (Güvenli Ödeme)",
+        res_pay_card_desc: "iyzico güvencesiyle 3D Secure ödeme",
         res_pay_hotel: "Otelde Öde",
         res_pay_hotel_desc: "Talebiniz otele iletilir, ödeme girişte alınır",
         res_pay_disabled: "Online ödeme yakında aktif olacak",
@@ -2514,7 +2865,7 @@
         basket_title: "Sepet Özeti",
         taxes_included: "Vergiler Dahil",
         tax_note: "%1 Konaklama Vergisi fiyata dahildir.",
-        payment_info: "Uluslararası tüm kartlar (Visa, Mastercard, AMEX, China UnionPay, JCB, Discover, Troy) 3D Secure güvencesiyle kabul edilir. Kart bilgileriniz sunucularımızda saklanmaz.",
+        payment_info: "Kart bilgileriniz sitemize kaydedilmez. Ödeme, iyzico'nun 3D Secure korumalı ödeme sayfasında yapılır ve tutar onaydan hemen sonra kartınızdan tahsil edilir.",
         res_submit_card: "Güvenli Ödemeye Geç",
         res_submit_hotel: "Rezervasyon Talebini Gönder",
         res_redirecting: "Ödeme sayfası açılıyor...",
@@ -2569,9 +2920,7 @@
         err_date_missing: "Lütfen hem giriş hem çıkış tarihlerini seçiniz.",
         rooms_eyebrow: "Konaklama",
         rooms_title: "Özenle Tasarlanmış Odalarımız",
-        rooms_subtitle: "6 farklı oda tipi. Tüm odalarda balkon, klima, ses yalıtımı, duşlu özel banyo, minibar, buzdolabı, su ısıtıcısı ve kahve makinesi bulunur.",
-        room_single: "Single Room",
-        room_triple: "Standard Triple Room",
+        rooms_subtitle: "4 farklı oda tipi. Tüm odalarda balkon, klima, ses yalıtımı, duşlu özel banyo, minibar, buzdolabı, su ısıtıcısı ve kahve makinesi bulunur.",
         per_night: "/ Gece",
         btn_inspect: "Detayları İncele",
         btn_book_card: "Rezervasyon Yap",
@@ -2649,6 +2998,34 @@
         chip_4: "Oda fiyatları"
       },
       en: {
+        res_country: "Country",
+        cal_title: "Availability & Nightly Rates Calendar",
+        cal_subtitle: "Browse date-based best starting rates and pick your check-in and check-out dates.",
+        cal_select_prompt: "Select check-in and check-out dates on calendar",
+        cal_checkin: "Check-in",
+        cal_checkout: "Check-out",
+        cal_today: "TODAY",
+        cal_booked: "Booked",
+        cal_prev_month: "Previous",
+        cal_next_month: "Next",
+        cal_nights_count: "{n} Nights",
+        cal_min_stay_err: "Minimum stay for this arrival date is {n} nights.",
+        cal_unavailable_range: "Selected date range contains unavailable nights. Please choose alternative dates.",
+        cal_not_configured_msg: "Please contact us for real-time availability and customized rate offers.",
+        cal_wa_btn: "Inquire on WhatsApp",
+        res_country_ph: "Select",
+        res_currency: "Currency",
+        res_err_country: "Please select your country.",
+        res_try_note: "Payments from Türkiye are charged in Turkish lira.",
+        pay_no_room: "The room was booked by another guest while you were paying. Your payment was refunded automatically. Please choose another room or dates.",
+        avail_none_title: "This room is fully booked for your dates",
+        avail_none_desc: "Choose one of the options below or message us on WhatsApp.",
+        avail_alt_rooms: "Available rooms for the same dates:",
+        avail_alt_dates: "Nearest available dates for this room:",
+        avail_none_any: "No suitable rooms are available for these dates.",
+        avail_wa: "Ask on WhatsApp",
+        avail_left_one: "Last room left for these dates!",
+        avail_left_n: "{n} rooms left",
         compare_title: "Compare rooms",
         cmp_room: "Room",
         cmp_size: "Room Size",
@@ -2668,8 +3045,8 @@
         res_children: "Children",
         res_identity: "ID / Passport No",
         res_pay_title: "Payment Method",
-        res_pay_card: "Pay by Card (3D Secure International Payment)",
-        res_pay_card_desc: "All global cards accepted: Visa, Mastercard, AMEX, China UnionPay (银联), JCB, Discover, Troy.",
+        res_pay_card: "Pay by Card (Secure)",
+        res_pay_card_desc: "3D Secure payment powered by iyzico",
         res_pay_hotel: "Pay at the Hotel",
         res_pay_hotel_desc: "Your request goes to the hotel; pay on arrival",
         res_pay_disabled: "Online payment coming soon",
@@ -2686,7 +3063,7 @@
         basket_title: "Booking Summary",
         taxes_included: "Taxes Included",
         tax_note: "1% accommodation tax is included in the price.",
-        payment_info: "All international cards (Visa, Mastercard, AMEX, China UnionPay, JCB, Discover, Troy) are accepted with 3D Secure. Your card information is never stored on our servers.",
+        payment_info: "Your card details are never stored on our site. Payment is made on iyzico's 3D Secure payment page and charged right after approval.",
         res_submit_card: "Continue to Secure Payment",
         res_submit_hotel: "Send Reservation Request",
         res_redirecting: "Opening payment page...",
@@ -2741,9 +3118,7 @@
         err_date_missing: "Please select both check-in and check-out dates.",
         rooms_eyebrow: "Accommodations",
         rooms_title: "Thoughtfully Designed Rooms",
-        rooms_subtitle: "Six room types. Every room has a balcony, air conditioning, soundproofing, a private bathroom with shower, minibar, refrigerator, kettle and coffee maker.",
-        room_single: "Single Room",
-        room_triple: "Standard Triple Room",
+        rooms_subtitle: "Four room types. Every room has a balcony, air conditioning, soundproofing, a private bathroom with shower, minibar, refrigerator, kettle and coffee maker.",
         per_night: "/ Night",
         btn_inspect: "View Details",
         btn_book_card: "Book Now",
@@ -3046,6 +3421,7 @@
       document.getElementById("resSuccessView").style.display = "none";
       hideReservationError();
       handlePayMethodChange();
+      renderAllCalendars();
       updateReservationSummary();
 
       if (roomModal.classList.contains("open")) roomModal.classList.remove("open");
@@ -3096,10 +3472,14 @@
       const reqId = (updateReservationSummary._id = (updateReservationSummary._id || 0) + 1);
       updateReservationSummary._t = setTimeout(async () => {
         try {
-          const params = new URLSearchParams({ roomId: room.id, checkin, checkout, adults, children, lang: currentLang });
+          const params = new URLSearchParams({ roomId: room.id, checkin, checkout, adults, children, lang: currentLang, currency: document.getElementById("resCurrency").value, country: document.getElementById("resCountry").value });
           const res = await fetch(`/api/quote?${params}`);
           const q = await res.json();
           if (reqId !== updateReservationSummary._id) return;
+          if (q.code === "FX_UNAVAILABLE" && document.getElementById("resCurrency").value !== "EUR" && document.getElementById("resCountry").value !== "Turkey") {
+            document.getElementById("resCurrency").value = "EUR";
+            return updateReservationSummary();
+          }
           if (!res.ok || !q.success) {
             total.textContent = "—";
             document.getElementById("basketCancel").textContent = q.error || "";
@@ -3110,14 +3490,9 @@
           document.getElementById("basketRoom").textContent = `${room.titleEn} - ${q.board}`;
           document.getElementById("basketCancel").textContent = q.cancellation;
           setPaymentsEnabled(q.paymentsEnabled);
+          renderAvailability(q, room, checkin, checkout);
         } catch {
-          if (reqId === updateReservationSummary._id) {
-            const defRates = { twin: 89.90, double: 89.90, quad: 89.90, family: 224.64 };
-            const rRate = defRates[room.id] || (typeof room.priceFrom === "number" ? room.priceFrom : 89.90);
-            const est = (rRate * nights).toFixed(2);
-            total.textContent = `${est} EUR`;
-            document.getElementById("basketCancel").textContent = currentLang === "tr" ? "İptal Edilemez (Ön Ödeme)" : "Non-refundable";
-          }
+          if (reqId === updateReservationSummary._id) total.textContent = dict.res_total_on_request;
         }
       }, 250);
     }
@@ -3167,6 +3542,8 @@
         phone: field("resPhone").value.trim(),
         email: field("resEmail").value.trim(),
         note: field("resNote").value.trim(),
+        country: field("resCountry").value,
+        currency: field("resCurrency").value,
         lang: currentLang
       };
       payload.guests = payload.adults + payload.children;
@@ -3178,6 +3555,7 @@
         field("resAdults").classList.add("invalid");
         return showReservationError(dict.res_err_adults.replace("{a}", room.maxAdults).replace("{c}", room.maxChildren).replace("{t}", room.capacity));
       }
+      if (!payload.country) { field("resCountry").classList.add("invalid"); field("resCountry").focus(); return showReservationError(dict.res_err_country); }
       if (payload.name.length < 3) { field("resName").classList.add("invalid"); field("resName").focus(); return showReservationError(dict.res_err_name); }
       if (payload.phone.replace(/\D/g, "").length < 10) { field("resPhone").classList.add("invalid"); field("resPhone").focus(); return showReservationError(dict.res_err_phone); }
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(payload.email)) { field("resEmail").classList.add("invalid"); field("resEmail").focus(); return showReservationError(dict.res_err_email); }
@@ -3210,6 +3588,10 @@
             body: JSON.stringify(body)
           });
           const data = await response.json().catch(() => ({}));
+          if (data.code === "NO_AVAILABILITY") {
+            updateReservationSummary();
+            throw new Error(dict.avail_none_title);
+          }
           if (data.code === "PAYMENTS_DISABLED") {
             setPaymentsEnabled(false);
             throw new Error(dict.res_pay_disabled);
@@ -3236,6 +3618,11 @@
           body: JSON.stringify(payload)
         });
         const data = await response.json().catch(() => ({}));
+        if (data.code === "NO_AVAILABILITY") {
+          updateReservationSummary();
+          showReservationError(dict.avail_none_title);
+          return;
+        }
         if (!response.ok || !data.success) throw new Error(data.error || "Reservation failed");
         document.getElementById("resSuccessTitle").textContent = dict.res_success_title;
         document.getElementById("resSuccessDesc").textContent = dict.res_success_desc;
@@ -3443,6 +3830,60 @@
       appendChatMessage(reply, "bot");
     }
 
+    /* ---------- Müsaitlik uyarısı ---------- */
+    function renderAvailability(q, room, checkin, checkout) {
+      const box = document.getElementById("availBox");
+      const btn = document.getElementById("resSubmitBtn");
+      const dict = I18N[currentLang];
+      document.querySelectorAll(".avail-ok").forEach(el => el.remove());
+      if (q.available !== false) {
+        box.hidden = true;
+        btn.disabled = false;
+        if (q.available === true && q.roomsLeft > 0 && q.roomsLeft <= 2) {
+          const ok = document.createElement("div");
+          ok.className = "avail-ok";
+          ok.textContent = q.roomsLeft === 1 ? dict.avail_left_one : dict.avail_left_n.replace("{n}", q.roomsLeft);
+          document.getElementById("basketGuests").after(ok);
+        }
+        return;
+      }
+      btn.disabled = true;
+      const altRooms = (q.alternatives || []).map(id =>
+        `<button type="button" onclick="switchResRoom('${id}')">${escapeHtml(ROOMS[id].titleEn)}</button>`).join("");
+      const altDates = (q.nextDates || []).map(d =>
+        `<button type="button" onclick="switchResDates('${d.checkin}','${d.checkout}')">${displayDate(d.checkin)} → ${displayDate(d.checkout)}</button>`).join("");
+      const wa = `https://wa.me/${HOTEL_WA_NUMBER}?text=${encodeURIComponent(`${room.titleEn} ${checkin} / ${checkout}`)}`;
+      box.innerHTML = `<strong>${dict.avail_none_title}</strong>${dict.avail_none_desc}` +
+        (altRooms ? `<div style="margin-top:0.6rem">${dict.avail_alt_rooms}</div><div class="alt-row">${altRooms}</div>` : "") +
+        (altDates ? `<div style="margin-top:0.6rem">${dict.avail_alt_dates}</div><div class="alt-row">${altDates}</div>` : "") +
+        (!altRooms && !altDates ? `<div style="margin-top:0.4rem">${dict.avail_none_any}</div>` : "") +
+        `<div style="margin-top:0.7rem"><a href="${wa}" target="_blank" rel="noopener">${dict.avail_wa}</a></div>`;
+      box.hidden = false;
+    }
+    function handleCountryChange() {
+      const country = document.getElementById("resCountry").value;
+      const cur = document.getElementById("resCurrency");
+      if (country === "Turkey") {
+        cur.value = "TRY";
+        cur.disabled = true;
+        cur.title = I18N[currentLang].res_try_note;
+      } else {
+        cur.disabled = false;
+        cur.title = "";
+        if (cur.value === "TRY" || !cur.dataset.touched) cur.value = country === "United States" || country === "Canada" ? "USD" : "EUR";
+      }
+      updateReservationSummary();
+    }
+    function switchResRoom(id) {
+      document.getElementById("resRoom").value = id;
+      updateReservationSummary();
+    }
+    function switchResDates(ci, co) {
+      document.getElementById("resCheckin").value = ci;
+      document.getElementById("resCheckout").value = co;
+      updateReservationSummary();
+    }
+
     /* ---------- Galeri ---------- */
     const galleryState = { images: [], idx: 0 };
     function showGalleryImage(idx) {
@@ -3504,6 +3945,7 @@
       if (!PAYMENTS_ENABLED && cardOpt.checked) {
         document.querySelector('input[name="payMethod"][value="hotel"]').checked = true;
         handlePayMethodChange();
+      renderAllCalendars();
       }
     }
 
@@ -3528,7 +3970,8 @@
         document.body.style.overflow = "hidden";
       } else {
         openReservationModal();
-        showReservationError(`${dict.pay_failed}${ref ? ` (${ref})` : ""}`);
+        const reason = params.get("reason");
+        showReservationError(`${reason === "no_availability" ? dict.pay_no_room : dict.pay_failed}${ref ? ` (${ref})` : ""}`);
       }
     }
 
@@ -3583,32 +4026,16 @@
       m.marker.togglePopup();
     }
 
-    function initHotelMap(retries = 25) {
+    function initHotelMap() {
       renderPoiPanel();
       const container = document.getElementById("hotelMap");
       const fallback = document.getElementById("mapFallback");
       if (!container) return;
       if (!window.maplibregl) {
-        if (retries > 0) {
-          setTimeout(() => initHotelMap(retries - 1), 200);
-          return;
-        }
-        if (fallback) {
-          fallback.innerHTML = `<div style="padding:2.5rem 1.5rem;text-align:center;color:var(--color-text);">
-            <div style="width:48px;height:48px;border-radius:50%;background:rgba(168,134,75,0.15);color:var(--color-primary);display:inline-flex;align-items:center;justify-content:center;margin-bottom:1rem;">
-              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            </div>
-            <h4 style="font-size:1.15rem;margin-bottom:0.4rem;color:var(--color-primary);">Hotel Eliza İstanbul</h4>
-            <p style="font-size:0.88rem;color:var(--color-text-muted);margin-bottom:1rem;">Mimar Hayrettin Mah. Doğramacı Sk. No:19/5, 34126 Fatih / İstanbul</p>
-            <p style="font-size:0.85rem;color:var(--color-text-muted);margin-bottom:1.5rem;max-width:360px;margin-left:auto;margin-right:auto;">Tarihi Yarımada'da; Beyazıt ve Çemberlitaş tramvay duraklarına 3-4 dakika yürüme mesafesinde.</p>
-            <a href="https://maps.google.com/?q=Eliza+Hotel+Istanbul+Mimar+Hayrettin+Do%C4%9Framac%C4%B1+Sk+No:19/5+Fatih" target="_blank" class="btn-map-action" style="display:inline-flex;">
-              <span>Google Haritalar'da Aç</span>
-            </a>
-          </div>`;
-        }
+        fallback.innerHTML = `<div>Harita yüklenemedi.<br><a href="https://www.google.com/maps/search/?api=1&query=41.007542,28.968025" target="_blank" rel="noopener">Google Haritalar'da aç</a></div>`;
         return;
       }
-      if (fallback) fallback.remove();
+      fallback.remove();
 
       const map = new maplibregl.Map({
         container,
@@ -3714,6 +4141,389 @@
       });
     }
 
+    
+    /* ==========================================================================
+       MÜSAİTLİK VE FİYAT TAKVİMİ BİLEŞENİ (CVK Tarzı İki Aylık Müsaitlik & Fiyat Takvimi)
+       ========================================================================== */
+    const calState = {
+      checkin: null,
+      checkout: null,
+      year: new Date().getFullYear(),
+      month: new Date().getMonth(), // 0 = Ocak, 11 = Aralık
+      data: null,
+      loading: false,
+      alertMsg: null
+    };
+
+    function formatCalPrice(val, cur) {
+      if (val === null || val === undefined) return "";
+      const num = Number(val);
+      if (!Number.isFinite(num)) return "";
+      const isTr = currentLang === "tr";
+      const c = (cur || "EUR").toUpperCase();
+      if (c === "TRY") {
+        return "₺" + Math.round(num).toLocaleString(isTr ? "tr-TR" : "en-US");
+      }
+      if (c === "USD") {
+        return "$" + Math.round(num).toLocaleString("en-US");
+      }
+      return Math.round(num).toLocaleString(isTr ? "tr-TR" : "en-US") + " €";
+    }
+
+    function getMonthName(year, monthIdx) {
+      const dt = new Date(Date.UTC(year, monthIdx, 1));
+      return dt.toLocaleDateString(currentLang === "tr" ? "tr-TR" : "en-US", { month: "long", year: "numeric" });
+    }
+
+    async function fetchCalendarData() {
+      calState.loading = true;
+      calState.alertMsg = null;
+      try {
+        const fromStr = new Date(Date.UTC(calState.year, calState.month, 1)).toISOString().slice(0, 10);
+        const adultsEl = document.getElementById("resAdults") || document.getElementById("guests");
+        const childrenEl = document.getElementById("resChildren");
+        const roomEl = document.getElementById("resRoom");
+        const countryEl = document.getElementById("resCountry");
+        const currencyEl = document.getElementById("resCurrency");
+
+        const params = new URLSearchParams({
+          from: fromStr,
+          days: "62",
+          adults: String(adultsEl ? adultsEl.value : "2"),
+          children: String(childrenEl ? childrenEl.value : "0"),
+          roomId: (roomEl && roomEl.value) ? roomEl.value : "",
+          country: (countryEl && countryEl.value) ? countryEl.value : "",
+          currency: (currencyEl && currencyEl.value) ? currencyEl.value : "EUR"
+        });
+
+        const res = await fetch("/api/availability-calendar?" + params.toString());
+        if (res.ok) {
+          const json = await res.json();
+          if (json.success) calState.data = json;
+        }
+      } catch (e) {
+        console.warn("Müsaitlik takvimi API hatası:", e.message);
+      } finally {
+        calState.loading = false;
+        renderAllCalendars();
+      }
+    }
+
+    function navCal(delta) {
+      calState.month += delta;
+      if (calState.month < 0) {
+        calState.month = 11;
+        calState.year -= 1;
+      } else if (calState.month > 11) {
+        calState.month = 0;
+        calState.year += 1;
+      }
+      fetchCalendarData();
+    }
+
+    function jumpCalMonth(val) {
+      if (!val) return;
+      const [y, m] = val.split("-").map(Number);
+      calState.year = y;
+      calState.month = m - 1;
+      fetchCalendarData();
+    }
+
+    function handleCalCurrencyChange(newCur) {
+      const curEl = document.getElementById("resCurrency");
+      if (curEl && !curEl.disabled) {
+        curEl.value = newCur;
+        curEl.dataset.touched = "1";
+      }
+      fetchCalendarData();
+      if (typeof updateReservationSummary === "function") updateReservationSummary();
+    }
+
+    function handleCalendarDayClick(dateStr) {
+      if (!dateStr) return;
+      const dayData = (calState.data?.days || []).find(d => d.date === dateStr);
+      const isPast = dateStr < new Date().toISOString().slice(0, 10);
+      if (isPast) return;
+
+      // 1. Tık: Check-in seçimi
+      if (!calState.checkin || (calState.checkin && calState.checkout)) {
+        if (dayData && dayData.available === false) return; // Müsait olmayan gün check-in olamaz
+        calState.checkin = dateStr;
+        calState.checkout = null;
+        calState.alertMsg = null;
+        renderAllCalendars();
+        return;
+      }
+
+      // 2. Tık: Check-out seçimi veya check-in değiştirme
+      if (calState.checkin && !calState.checkout) {
+        if (dateStr <= calState.checkin) {
+          // Geriye tıklandıysa yeni check-in yap
+          if (dayData && dayData.available === false) return;
+          calState.checkin = dateStr;
+          calState.checkout = null;
+          calState.alertMsg = null;
+          renderAllCalendars();
+          return;
+        }
+
+        // İleriye tıklandı -> check-out adayı
+        const [y1, m1, d1] = calState.checkin.split("-").map(Number);
+        const [y2, m2, d2] = dateStr.split("-").map(Number);
+        const nights = Math.round((Date.UTC(y2, m2 - 1, d2) - Date.UTC(y1, m1 - 1, d1)) / 86400000);
+
+        // MinStay kontrolü
+        const checkinDayData = (calState.data?.days || []).find(d => d.date === calState.checkin);
+        const minStay = (checkinDayData && checkinDayData.minStay) ? checkinDayData.minStay : 1;
+        if (nights < minStay) {
+          const dict = I18N[currentLang];
+          calState.alertMsg = dict.cal_min_stay_err.replace("{n}", minStay);
+          renderAllCalendars();
+          return;
+        }
+
+        // Aralıktaki tüm gecelerin müsaitlik kontrolü
+        let cur = Date.UTC(y1, m1 - 1, d1);
+        const end = Date.UTC(y2, m2 - 1, d2);
+        let hasUnavailable = false;
+        while (cur < end) {
+          const dt = new Date(cur).toISOString().slice(0, 10);
+          const nData = (calState.data?.days || []).find(d => d.date === dt);
+          if (nData && nData.available === false) {
+            hasUnavailable = true;
+            break;
+          }
+          cur += 86400000;
+        }
+
+        if (hasUnavailable) {
+          calState.alertMsg = I18N[currentLang].cal_unavailable_range;
+          renderAllCalendars();
+          return;
+        }
+
+        // Başarılı seçim!
+        calState.checkout = dateStr;
+        calState.alertMsg = null;
+
+        // Modal ve anasayfa inputlarını senkronize et
+        const resCi = document.getElementById("resCheckin");
+        const resCo = document.getElementById("resCheckout");
+        if (resCi) resCi.value = calState.checkin;
+        if (resCo) resCo.value = calState.checkout;
+
+        const homeCi = document.getElementById("checkin");
+        const homeCo = document.getElementById("checkout");
+        if (homeCi) homeCi.value = calState.checkin;
+        if (homeCo) homeCo.value = calState.checkout;
+
+        if (typeof updateReservationSummary === "function") updateReservationSummary();
+        renderAllCalendars();
+      }
+    }
+
+    function handleCalendarKey(e, dateStr) {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        handleCalendarDayClick(dateStr);
+      }
+    }
+
+    function renderMonthTable(year, monthIdx) {
+      const dict = I18N[currentLang];
+      const todayStr = new Date().toISOString().slice(0, 10);
+      const title = getMonthName(year, monthIdx);
+
+      const weekdaysTr = ["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"];
+      const weekdaysEn = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+      const weekdays = currentLang === "tr" ? weekdaysTr : weekdaysEn;
+
+      const firstDay = new Date(Date.UTC(year, monthIdx, 1));
+      // Pazartesi = 0 olacak şekilde ofset
+      const startOffset = (firstDay.getUTCDay() + 6) % 7;
+      const daysInMonth = new Date(Date.UTC(year, monthIdx + 1, 0)).getUTCDate();
+
+      let html = `<div class="cal-month-container">
+        <h4 class="cal-month-title">${title}</h4>
+        <div class="cal-weekdays-row">
+          ${weekdays.map(w => `<span>${w}</span>`).join("")}
+        </div>
+        <div class="cal-days-grid" role="grid" aria-label="${title}">`;
+
+      // Başlangıç boşlukları
+      for (let i = 0; i < startOffset; i++) {
+        html += `<div class="cal-day-cell empty" role="presentation" aria-hidden="true"></div>`;
+      }
+
+      // Gün hücreleri
+      for (let d = 1; d <= daysInMonth; d++) {
+        const dateStr = new Date(Date.UTC(year, monthIdx, d)).toISOString().slice(0, 10);
+        const dayData = (calState.data?.days || []).find(item => item.date === dateStr);
+        const isPast = dateStr < todayStr;
+        const isToday = dateStr === todayStr;
+
+        const isAvailable = Boolean(calState.data?.configured && !isPast && dayData?.available);
+        const fromPrice = dayData ? dayData.fromPrice : null;
+        const minStay = (dayData && dayData.minStay) ? dayData.minStay : 1;
+
+        const isCheckin = calState.checkin === dateStr;
+        const isCheckout = calState.checkout === dateStr;
+        const isInRange = Boolean(calState.checkin && calState.checkout && dateStr > calState.checkin && dateStr < calState.checkout);
+
+        let cellClasses = ["cal-day-cell"];
+        if (isToday) cellClasses.push("today");
+        if (isPast) cellClasses.push("past");
+        if (!isAvailable && !isPast) cellClasses.push("unavailable");
+        if (isInRange) cellClasses.push("in-range");
+        if (isCheckin) cellClasses.push("selected-checkin");
+        if (isCheckout) cellClasses.push("selected-checkout");
+
+        const ariaDate = new Date(dateStr + "T00:00:00").toLocaleDateString(currentLang === "tr" ? "tr-TR" : "en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
+        const priceLabel = fromPrice !== null ? formatCalPrice(fromPrice, calState.data?.currency) : (isAvailable ? "" : dict.cal_booked);
+        const ariaLabel = `${ariaDate}, ${priceLabel ? priceLabel + ", " : ""}${isAvailable ? "müsait" : "müsait değil"}`;
+
+        html += `<button type="button" role="gridcell" class="${cellClasses.join(" ")}"
+          tabindex="${isPast ? "-1" : "0"}"
+          aria-label="${ariaLabel}"
+          aria-selected="${isCheckin || isCheckout || isInRange ? "true" : "false"}"
+          ${isPast ? "disabled" : ""}
+          onclick="handleCalendarDayClick('${dateStr}')"
+          onkeydown="handleCalendarKey(event, '${dateStr}')">`;
+
+        if (isToday) html += `<span class="badge-today">${dict.cal_today}</span>`;
+        if (minStay > 1 && !isPast) html += `<span class="badge-minstay" title="Min ${minStay}">Min ${minStay}G</span>`;
+
+        html += `<span class="day-num">${d}</span>`;
+
+        if (calState.data?.configured) {
+          if (fromPrice !== null) {
+            html += `<span class="day-price">${formatCalPrice(fromPrice, calState.data?.currency)}</span>`;
+          } else if (!isPast && !isAvailable) {
+            html += `<span class="day-price">${dict.cal_booked}</span>`;
+          } else {
+            html += `<span class="day-price">—</span>`;
+          }
+        } else {
+          html += `<span class="day-price" style="display:none"></span>`;
+        }
+
+        if (isCheckin) html += `<span class="badge-tag-sel">${dict.cal_checkin}</span>`;
+        if (isCheckout) html += `<span class="badge-tag-sel">${dict.cal_checkout}</span>`;
+
+        html += `</button>`;
+      }
+
+      html += `</div></div>`;
+      return html;
+    }
+
+    function renderCalendarHtml(isModal = false) {
+      const dict = I18N[currentLang];
+      const nowYear = new Date().getFullYear();
+      const nowMonth = new Date().getMonth();
+
+      // İki ay: calState.month ve bir sonraki ay
+      const m1_year = calState.year;
+      const m1_month = calState.month;
+      let m2_year = calState.year;
+      let m2_month = calState.month + 1;
+      if (m2_month > 11) { m2_month = 0; m2_year += 1; }
+
+      // Ay seçici seçenekleri (önümüzdeki 12 ay)
+      let jumperOpts = "";
+      for (let i = 0; i < 12; i++) {
+        const j_date = new Date(Date.UTC(nowYear, nowMonth + i, 1));
+        const val = j_date.toISOString().slice(0, 7);
+        const label = j_date.toLocaleDateString(currentLang === "tr" ? "tr-TR" : "en-US", { month: "long", year: "numeric" });
+        const isSel = (j_date.getUTCFullYear() === calState.year && j_date.getUTCMonth() === calState.month);
+        jumperOpts += `<option value="${val}" ${isSel ? "selected" : ""}>${label}</option>`;
+      }
+
+      // Seçili aralık metni
+      let rangeText = dict.cal_select_prompt;
+      if (calState.checkin && !calState.checkout) {
+        rangeText = `${dict.cal_checkin}: <b>${displayDate(calState.checkin)}</b> — ${dict.cal_checkout} seçin`;
+      } else if (calState.checkin && calState.checkout) {
+        const nights = nightsBetween(calState.checkin, calState.checkout);
+        rangeText = `<b>${displayDate(calState.checkin)}</b> → <b>${displayDate(calState.checkout)}</b> (${dict.cal_nights_count.replace("{n}", nights)})`;
+      }
+
+      // Para birimi seçici
+      const activeCur = (calState.data?.currency || document.getElementById("resCurrency")?.value || "EUR").toUpperCase();
+      const isTurkey = (document.getElementById("resCountry")?.value || "").toLowerCase() === "turkey";
+
+      let html = `<div class="cal-header-bar">
+        <div class="cal-nav-group">
+          <button type="button" class="btn-cal-nav" onclick="navCal(-1)" aria-label="${dict.cal_prev_month}">← ${dict.cal_prev_month}</button>
+          <select class="cal-month-jumper" onchange="jumpCalMonth(this.value)" aria-label="Ay seçin">${jumperOpts}</select>
+          <button type="button" class="btn-cal-nav" onclick="navCal(1)" aria-label="${dict.cal_next_month}">${dict.cal_next_month} →</button>
+        </div>
+        <div class="cal-status-bar">
+          <div class="cal-range-text">${rangeText}</div>
+          <div class="cal-currency-wrap">
+            <span>${dict.res_currency}:</span>
+            <select class="cal-currency-select" onchange="handleCalCurrencyChange(this.value)" ${isTurkey ? "disabled" : ""}>
+              <option value="EUR" ${activeCur === "EUR" ? "selected" : ""}>EUR (€)</option>
+              <option value="TRY" ${activeCur === "TRY" ? "selected" : ""}>TRY (₺)</option>
+              <option value="USD" ${activeCur === "USD" ? "selected" : ""}>USD ($)</option>
+            </select>
+          </div>
+        </div>
+      </div>`;
+
+      // Hata / Uyarı şeridi
+      if (calState.alertMsg) {
+        html += `<div class="cal-alert-box" style="display:flex;">
+          <span class="icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg></span>
+          <span>${calState.alertMsg}</span>
+        </div>`;
+      }
+
+      // 2 Ay Yan Yana Grid
+      html += `<div class="cal-months-grid">
+        ${renderMonthTable(m1_year, m1_month)}
+        ${renderMonthTable(m2_year, m2_month)}
+      </div>`;
+
+      // K4 Kuralı: Oda stoku girilmemişse (configured=false) bilgilendirme ve WhatsApp butonu
+      if (calState.data && calState.data.configured === false) {
+        html += `<div class="cal-unconfigured-notice">
+          <p>${dict.cal_not_configured_msg}</p>
+          <a href="https://wa.me/905419014785?text=Merhaba,%20Eliza%20Hotel%20müsaitlik%20ve%20fiyat%20bilgisi%20almak%20istiyorum." target="_blank" rel="noopener" class="btn-wa-cal">
+            <span class="icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg></span>
+            <span>${dict.cal_wa_btn}</span>
+          </a>
+        </div>`;
+      }
+
+      return html;
+    }
+
+    function renderAllCalendars() {
+      const modalSlot = document.getElementById("modalCalendarSlot");
+      if (modalSlot) modalSlot.innerHTML = renderCalendarHtml(true);
+
+      const homeSlot = document.getElementById("homeCalendarSlot");
+      if (homeSlot) homeSlot.innerHTML = renderCalendarHtml(false);
+    }
+
+    function initAvailabilityCalendar() {
+      // Başlangıç tarihleri varsa al
+      const ci = document.getElementById("resCheckin")?.value || document.getElementById("checkin")?.value;
+      const co = document.getElementById("resCheckout")?.value || document.getElementById("checkout")?.value;
+      if (ci) calState.checkin = ci;
+      if (co) calState.checkout = co;
+
+      fetchCalendarData();
+
+      // Form değişikliklerini takvime bağla
+      ["resAdults", "resChildren", "resRoom", "resCountry", "resCurrency", "guests"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener("change", () => fetchCalendarData());
+      });
+    }
+
+
     function onLanguageChanged() {
       const dict = I18N[currentLang];
       Object.values(ROOMS).forEach(r => {
@@ -3721,12 +4531,6 @@
         if (t) t.textContent = currentLang === "tr" ? r.typeTr : r.typeEn;
         const c = document.querySelector(`[data-photo-count="${r.id}"]`);
         if (c) c.textContent = `${r.images.length} ${dict.photos}`;
-        const b = document.querySelector(`[data-room-badge="${r.id}"]`);
-        if (b) b.textContent = currentLang === "tr" ? r.badgeTr : r.badgeEn;
-        const bph = document.querySelector(`[data-room-badge-ph="${r.id}"]`);
-        if (bph) bph.textContent = currentLang === "tr" ? r.badgeTr : r.badgeEn;
-        const sp = document.querySelector(`[data-room-specs="${r.id}"]`);
-        if (sp) sp.textContent = currentLang === "tr" ? r.specsTr : r.specsEn;
       });
       renderCompareTables(roomModal.classList.contains("open") ? roomModal.dataset.room : null);
       if (roomModal.classList.contains("open") && roomModal.dataset.room) openRoomModal(roomModal.dataset.room);
@@ -3734,11 +4538,13 @@
       mapState.markers.forEach(m => { m.marker.getPopup().setHTML(poiPopupHtml(m.poi)); m.el.title = poiName(m.poi); });
       if (mapState.hotelMarker) mapState.hotelMarker.getPopup().setHTML(hotelPopupHtml());
       handlePayMethodChange();
+      renderAllCalendars();
       setPaymentsEnabled(PAYMENTS_ENABLED);
     }
 
     document.addEventListener("DOMContentLoaded", () => {
       initDateInputs();
+      initAvailabilityCalendar();
       renderCompareTables();
       initHotelMap();
       handlePaymentReturn();
