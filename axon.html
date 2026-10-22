@@ -1,0 +1,1476 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AXON Systems — Autonomous Hospitality & Neural Digital Systems</title>
+<meta name="description" content="AXON engineers revenue engines for luxury hotels: direct booking engines, 3D interactive maps, autonomous AI concierges and multi-currency payment infrastructure.">
+<meta name="theme-color" content="#070B14">
+<meta property="og:title" content="AXON Systems">
+<meta property="og:description" content="Autonomous hospitality & neural digital systems.">
+<meta property="og:image" content="images/axon-logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ===== Tokens (AXON Systems design system) ===== */
+:root {
+  --void-950: #03060C; --void-900: #070B14; --void-800: #0C1322;
+  --glass: rgba(148, 163, 184, 0.06); --glass-strong: rgba(148, 163, 184, 0.12);
+  --hairline: rgba(226, 232, 240, 0.12); --hairline-strong: rgba(226, 232, 240, 0.32);
+  --chrome-50: #F8FAFC; --chrome-200: #E2E8F0; --chrome-400: #94A3B8;
+  --synapse: #38BDF8; --pulse: #60A5FA; --synapse-glow: rgba(56, 189, 248, 0.4);
+  --champagne: #C5A880; --on-champagne: #03060C;
+  --success: #5EEAD4; --danger: #FB923C;
+  --font-display: "Jost", "Futura", "Century Gothic", system-ui, sans-serif;
+  --font-sans: "Jost", "Futura", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-6: 24px; --space-8: 32px; --space-16: 64px; --space-32: 128px;
+  --radius-sm: 6px; --radius-md: 14px; --radius-lg: 24px; --radius-pill: 999px;
+  --shadow-glass: 0 24px 60px rgba(0, 0, 0, 0.55);
+  --shadow-synapse: 0 0 32px rgba(56, 189, 248, 0.35);
+  --shadow-champagne: 0 10px 40px rgba(197, 168, 128, 0.28);
+  --blur-glass: 16px;
+  --gutter: clamp(16px, 4vw, 40px);
+  --ease: cubic-bezier(.2, .8, .2, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0; background: var(--void-900); color: var(--chrome-200);
+  font: 400 15px/1.6 var(--font-sans); overflow-x: hidden;
+  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--synapse); outline-offset: 2px; }
+::selection { background: rgba(56, 189, 248, .35); color: var(--chrome-50); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ===== 3D canvas & fallback ===== */
+#scene { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; display: block; }
+.scene-fallback {
+  position: fixed; inset: 0; z-index: 0; display: none;
+  background: radial-gradient(800px 420px at 50% 30%, rgba(56, 189, 248, .14), transparent 70%), var(--void-900);
+}
+.scene-fallback img { position: absolute; left: 50%; top: 4%; width: min(900px, 120vw); transform: translateX(-50%); opacity: .55; mask-image: radial-gradient(closest-side, #000 55%, transparent); -webkit-mask-image: radial-gradient(closest-side, #000 55%, transparent); }
+.no-webgl .scene-fallback { display: block; }
+.no-webgl #scene { display: none; }
+.vignette { position: fixed; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(ellipse at 50% 40%, transparent 40%, rgba(3, 6, 12, .75) 100%); }
+main, footer { position: relative; z-index: 2; }
+
+/* ===== Shared ===== */
+.wrap { width: 100%; max-width: 1240px; margin: 0 auto; padding: 0 var(--gutter); }
+.glass {
+  background: var(--glass); border: 1px solid var(--hairline); border-radius: var(--radius-lg);
+  -webkit-backdrop-filter: blur(var(--blur-glass)); backdrop-filter: blur(var(--blur-glass));
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .glass { background: rgba(12, 19, 34, .92); } }
+.eyebrow { font: 500 11px/1.4 var(--font-mono); letter-spacing: .24em; text-transform: uppercase; color: var(--synapse); }
+.section { padding: clamp(80px, 12vw, var(--space-32)) 0; }
+.section-head { max-width: 760px; margin-bottom: clamp(40px, 6vw, var(--space-16)); }
+.section-title { font: 300 clamp(36px, 5.4vw, 56px)/1 var(--font-display); letter-spacing: -.01em; color: var(--chrome-50); margin: var(--space-4) 0 var(--space-4); text-transform: uppercase; }
+.section-lead { font: 300 clamp(16px, 1.6vw, 19px)/1.55 var(--font-sans); color: var(--chrome-200); margin: 0; }
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+.btn {
+  --mx: 0px; --my: 0px;
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
+  padding: 16px var(--space-6); border-radius: var(--radius-pill); border: 1px solid transparent;
+  font: 500 13px/1 var(--font-sans); letter-spacing: .16em; text-transform: uppercase; text-decoration: none; cursor: pointer;
+  transform: translate(var(--mx), var(--my));
+  transition: transform .35s var(--ease), box-shadow .35s, background .35s, border-color .35s, color .35s;
+  white-space: nowrap;
+}
+.btn-primary { background: var(--champagne); color: var(--on-champagne); }
+.btn-primary:hover { box-shadow: var(--shadow-champagne); }
+.btn-ghost { background: transparent; color: var(--chrome-50); border-color: var(--hairline-strong); }
+.btn-ghost:hover { background: var(--glass-strong); border-color: var(--chrome-400); }
+.btn svg { width: 16px; height: 16px; }
+
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+.reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .btn { transition: none; } }
+
+/* ===== Header ===== */
+.nav-shell { position: fixed; top: 16px; left: 0; right: 0; z-index: 50; padding: 0 var(--gutter); pointer-events: none; }
+.nav {
+  pointer-events: auto; max-width: 1240px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between; gap: var(--space-6);
+  padding: 10px 10px 10px var(--space-6); box-shadow: var(--shadow-glass);
+  transition: background .4s, transform .5s var(--ease);
+}
+.nav.scrolled { background: rgba(7, 11, 20, .55); }
+.wordmark { font: 300 18px/1 var(--font-display); letter-spacing: .55em; margin-right: -.55em; color: var(--chrome-50); text-decoration: none; text-shadow: 0 0 18px var(--synapse-glow); white-space: nowrap; }
+.chrome-text {
+  background: linear-gradient(180deg, #FFFFFF 0%, #E2E8F0 45%, #94A3B8 70%, #F8FAFC 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.nav-links { display: flex; gap: clamp(16px, 2.2vw, 32px); list-style: none; margin: 0; padding: 0; }
+.nav-links a { color: var(--chrome-400); text-decoration: none; font-size: 13px; letter-spacing: .08em; transition: color .3s; position: relative; }
+.nav-links a::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 1px; background: var(--synapse); transform: scaleX(0); transition: transform .4s var(--ease); }
+.nav-links a:hover, .nav-links a.active { color: var(--chrome-50); }
+.nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
+.nav-right { display: flex; align-items: center; gap: var(--space-2); }
+.nav .btn { padding: 13px 20px; }
+.icon-btn { width: 42px; height: 42px; border-radius: 50%; display: inline-grid; place-items: center; background: transparent; border: 1px solid var(--hairline); color: var(--chrome-200); cursor: pointer; transition: border-color .3s, color .3s; }
+.icon-btn:hover { border-color: var(--hairline-strong); color: var(--chrome-50); }
+.icon-btn svg { width: 18px; height: 18px; }
+.icon-btn[aria-pressed="true"] { color: var(--synapse); border-color: rgba(56, 189, 248, .5); }
+.menu-toggle { display: none; }
+.mobile-menu { display: none; }
+@media (max-width: 960px) {
+  .nav-links { display: none; }
+  .menu-toggle { display: inline-grid; }
+  .nav .btn-primary { display: none; }
+  .mobile-menu { pointer-events: auto; max-width: 1240px; margin: 8px auto 0; padding: var(--space-4); display: grid; gap: var(--space-1); box-shadow: var(--shadow-glass); }
+  .mobile-menu[hidden] { display: none; }
+  .mobile-menu a:not(.btn) { padding: 12px var(--space-3); border-radius: var(--radius-md); text-decoration: none; color: var(--chrome-200); }
+  .mobile-menu a:not(.btn):hover { background: var(--glass-strong); }
+  .mobile-menu .btn { margin-top: var(--space-2); }
+}
+
+/* ===== Hero ===== */
+.hero { min-height: 100svh; display: flex; align-items: flex-end; padding: 140px 0 clamp(48px, 8vh, 96px); }
+.hero-inner { display: grid; gap: var(--space-8); }
+.hero h1 {
+  font: 300 clamp(40px, 7.4vw, 104px)/.95 var(--font-display); letter-spacing: -.02em; text-transform: uppercase;
+  color: var(--chrome-50); margin: 0; max-width: 13.5em;
+}
+.hero h1 .line { display: block; overflow: hidden; padding-bottom: .04em; }
+.hero h1 .line > span { display: inline-block; transform: translateY(105%); transition: transform 1.2s var(--ease); }
+.loaded .hero h1 .line > span { transform: none; }
+.hero h1 .line:nth-child(2) > span { transition-delay: .08s; }
+.hero h1 .line:nth-child(3) > span { transition-delay: .16s; }
+.hero h1 em { font-style: normal; color: var(--synapse); text-shadow: 0 0 30px var(--synapse-glow); }
+@media (prefers-reduced-motion: reduce) { .hero h1 .line > span { transform: none; transition: none; } }
+.hero-sub { font: 300 clamp(16px, 1.7vw, 20px)/1.55 var(--font-sans); color: var(--chrome-200); max-width: 640px; margin: 0; }
+.hero-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-6); }
+.hero-ctas { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+.pills { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.pill { display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-4); border-radius: var(--radius-pill); border: 1px solid var(--hairline); background: var(--glass); -webkit-backdrop-filter: blur(var(--blur-glass)); backdrop-filter: blur(var(--blur-glass)); font: 400 13px/1.5 var(--font-mono); color: var(--chrome-200); }
+.pill b { color: var(--chrome-50); font-weight: 500; }
+
+.badge-3d { perspective: 800px; display: inline-block; justify-self: start; }
+.badge {
+  --rx: 0deg; --ry: 0deg;
+  display: inline-flex; align-items: center; gap: var(--space-3); padding: 10px var(--space-4) 10px var(--space-3);
+  border-radius: var(--radius-pill); border: 1px solid rgba(56, 189, 248, .4); background: rgba(56, 189, 248, .08);
+  box-shadow: var(--shadow-synapse), inset 0 1px 0 rgba(255, 255, 255, .08);
+  font: 500 11px/1.4 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--chrome-50); text-decoration: none;
+  transform: rotateX(var(--rx)) rotateY(var(--ry)); transform-style: preserve-3d; transition: transform .25s ease-out;
+  -webkit-backdrop-filter: blur(var(--blur-glass)); backdrop-filter: blur(var(--blur-glass));
+  position: relative; overflow: hidden;
+}
+.badge::after { content: ""; position: absolute; inset: 0; background: linear-gradient(110deg, transparent 35%, rgba(255, 255, 255, .18) 50%, transparent 65%); transform: translateX(-120%); animation: sheen 5s ease-in-out infinite 1.5s; }
+@keyframes sheen { 0%, 70% { transform: translateX(-120%); } 100% { transform: translateX(120%); } }
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--synapse); flex: none; animation: breathe 2.6s ease-in-out infinite; }
+.dot.ok { background: var(--success); }
+@keyframes breathe { 0%, 100% { box-shadow: 0 0 0 0 var(--synapse-glow); } 50% { box-shadow: 0 0 0 7px rgba(56, 189, 248, 0); } }
+@media (prefers-reduced-motion: reduce) { .dot, .badge::after { animation: none; } }
+
+.scroll-cue { display: inline-flex; align-items: center; gap: var(--space-3); color: var(--chrome-400); font: 500 11px/1 var(--font-mono); letter-spacing: .24em; text-transform: uppercase; text-decoration: none; }
+.scroll-cue i { width: 1px; height: 40px; background: linear-gradient(var(--synapse), transparent); display: block; animation: drip 2.2s ease-in-out infinite; transform-origin: top; }
+@keyframes drip { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); } 100% { transform: scaleY(1); opacity: 0; } }
+
+/* ===== Case study ===== */
+.case-meta { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6); }
+.frame { box-shadow: var(--shadow-glass); overflow: hidden; }
+.frame-bar { display: flex; align-items: center; gap: var(--space-4); padding: 12px var(--space-4); border-bottom: 1px solid var(--hairline); background: rgba(3, 6, 12, .5); }
+.frame-dots { display: flex; gap: 6px; }
+.frame-dots i { width: 10px; height: 10px; border-radius: 50%; background: var(--hairline-strong); display: block; }
+.frame-url { flex: 1; min-width: 0; text-align: center; font: 400 12px/1 var(--font-mono); color: var(--chrome-400); padding: 8px var(--space-3); border-radius: var(--radius-pill); background: rgba(148, 163, 184, .06); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.frame-url b { color: var(--success); font-weight: 400; }
+.frame-body { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); }
+.engine-cal { padding: clamp(16px, 3vw, 32px); border-right: 1px solid var(--hairline); min-width: 0; }
+.engine-side { padding: clamp(16px, 3vw, 32px); display: grid; gap: var(--space-6); align-content: start; min-width: 0; }
+@media (max-width: 1000px) { .frame-body { grid-template-columns: 1fr; } .engine-cal { border-right: 0; border-bottom: 1px solid var(--hairline); } }
+
+.room-tabs { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-1); padding: var(--space-1); border-radius: var(--radius-md); background: rgba(3, 6, 12, .55); border: 1px solid var(--hairline); margin-bottom: var(--space-6); }
+.room-tab { background: transparent; border: 0; padding: 10px var(--space-2); border-radius: 10px; color: var(--chrome-400); font-size: 13px; cursor: pointer; transition: background .3s, color .3s; line-height: 1.25; }
+.room-tab:hover { color: var(--chrome-50); }
+.room-tab[aria-selected="true"] { background: var(--glass-strong); color: var(--chrome-50); box-shadow: inset 0 0 0 1px var(--hairline-strong); }
+@media (max-width: 560px) { .room-tabs { grid-template-columns: repeat(2, 1fr); } }
+
+.cal-head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); margin-bottom: var(--space-4); flex-wrap: wrap; }
+.cal-legend { display: flex; gap: var(--space-4); flex-wrap: wrap; font: 400 11px/1.4 var(--font-mono); color: var(--chrome-400); letter-spacing: .06em; }
+.cal-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.cal-legend i { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
+.seg { display: inline-flex; padding: 3px; border-radius: var(--radius-pill); border: 1px solid var(--hairline); background: rgba(3, 6, 12, .5); }
+.seg button { border: 0; background: transparent; padding: 6px 12px; border-radius: var(--radius-pill); font: 500 12px/1 var(--font-mono); color: var(--chrome-400); cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--chrome-50); color: var(--void-950); }
+.months { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 2.5vw, 32px); }
+@media (max-width: 640px) { .months { grid-template-columns: 1fr; } }
+.month h4 { margin: 0 0 var(--space-3); font: 400 15px/1 var(--font-display); letter-spacing: .14em; text-transform: uppercase; color: var(--chrome-50); }
+.dow, .days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+.dow span { font: 500 10px/1 var(--font-mono); color: var(--chrome-400); text-align: center; padding: 6px 0; letter-spacing: .1em; }
+.day {
+  aspect-ratio: 1 / 1.05; border: 1px solid transparent; border-radius: var(--radius-sm); background: rgba(12, 19, 34, .7);
+  display: grid; align-content: center; justify-items: center; gap: 2px; cursor: pointer; padding: 0; color: var(--chrome-200);
+  transition: background .2s, border-color .2s, transform .2s;
+}
+.day:hover:not(:disabled) { border-color: var(--hairline-strong); transform: translateY(-1px); }
+.day .n { font: 400 13px/1 var(--font-sans); }
+.day .p { font: 400 9.5px/1 var(--font-mono); color: var(--chrome-400); letter-spacing: -.02em; }
+.day.low .p { color: var(--success); }
+.day.high .p { color: var(--champagne); }
+.day:disabled { cursor: not-allowed; background: transparent; color: rgba(148, 163, 184, .35); }
+.day.sold { background: repeating-linear-gradient(135deg, rgba(251, 146, 60, .08) 0 4px, transparent 4px 8px); }
+.day.sold .p { color: var(--danger); }
+.day.in-range { background: rgba(56, 189, 248, .14); }
+.day.edge { background: var(--chrome-50); color: var(--void-950); }
+.day.edge .p { color: var(--void-800); }
+.day.empty { visibility: hidden; }
+.cal-hint { margin-top: var(--space-4); font: 400 12px/1.5 var(--font-mono); color: var(--chrome-400); }
+
+.room-card { display: grid; gap: var(--space-3); }
+.room-card h3 { margin: 0; font: 300 26px/1.1 var(--font-display); color: var(--chrome-50); }
+.room-card p { margin: 0; color: var(--chrome-400); font-size: 14px; }
+.specs { display: flex; flex-wrap: wrap; gap: 6px; }
+.spec { font: 400 11px/1 var(--font-mono); padding: 7px 10px; border: 1px solid var(--hairline); border-radius: var(--radius-pill); color: var(--chrome-200); }
+.row { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); }
+.label { font: 500 11px/1.4 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--chrome-400); }
+.stepper { display: inline-flex; align-items: center; gap: var(--space-3); }
+.stepper button { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--hairline-strong); background: transparent; cursor: pointer; color: var(--chrome-50); font-size: 16px; line-height: 1; }
+.stepper button:disabled { opacity: .3; cursor: not-allowed; }
+.stepper output { min-width: 1.5em; text-align: center; font: 400 15px/1 var(--font-mono); color: var(--chrome-50); }
+.basket { border-top: 1px solid var(--hairline); padding-top: var(--space-4); display: grid; gap: var(--space-2); font-size: 14px; }
+.basket .row span:last-child { font-family: var(--font-mono); font-variant-numeric: tabular-nums; color: var(--chrome-50); }
+.basket .total { padding-top: var(--space-3); margin-top: var(--space-2); border-top: 1px dashed var(--hairline-strong); }
+.basket .total span:first-child { font: 500 11px/1.4 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--chrome-400); }
+.basket .total span:last-child { font: 400 26px/1 var(--font-mono); color: var(--champagne); }
+.basket .muted { color: var(--chrome-400); font-size: 12px; }
+.pay-row { display: flex; align-items: center; gap: var(--space-2); font: 400 11px/1.4 var(--font-mono); color: var(--chrome-400); letter-spacing: .06em; }
+.pay-row svg { width: 14px; height: 14px; color: var(--success); }
+.engine-side .btn { width: 100%; }
+.toast { font: 400 12px/1.5 var(--font-mono); color: var(--success); min-height: 1.5em; }
+
+.case-lower { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: var(--space-6); margin-top: var(--space-6); }
+@media (max-width: 1000px) { .case-lower { grid-template-columns: 1fr; } }
+.map-card { position: relative; overflow: hidden; min-height: 380px; perspective: 1100px; }
+.map-stage { position: absolute; inset: -10% -6% -24%; transform: rotateX(48deg) rotateZ(var(--rz, -8deg)) translateY(var(--ty, 0px)); transform-origin: 50% 60%; transition: transform .6s var(--ease); }
+.map-stage svg { width: 100%; height: 100%; }
+.map-card:hover .map-stage { --rz: -2deg; }
+.map-overlay { position: absolute; left: 0; right: 0; top: 0; padding: var(--space-6); display: flex; justify-content: space-between; gap: var(--space-4); align-items: flex-start; background: linear-gradient(rgba(7, 11, 20, .9), transparent); pointer-events: none; }
+.map-overlay h3 { margin: var(--space-2) 0 0; font: 300 24px/1.15 var(--font-display); color: var(--chrome-50); }
+.map-legend { position: absolute; left: var(--space-6); right: var(--space-6); bottom: var(--space-6); display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.marker-pulse { transform-box: fill-box; transform-origin: center; animation: mpulse 2.4s ease-out infinite; }
+@keyframes mpulse { 0% { transform: scale(.6); opacity: .9; } 100% { transform: scale(2.6); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .marker-pulse { animation: none; opacity: 0; } }
+
+.inspect { padding: clamp(24px, 3vw, 40px); display: grid; gap: var(--space-6); align-content: space-between; }
+.inspect h3 { margin: var(--space-3) 0 var(--space-3); font: 300 28px/1.15 var(--font-display); color: var(--chrome-50); }
+.inspect p { margin: 0; color: var(--chrome-400); }
+.stack { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-2); }
+.stack div { padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--hairline); background: rgba(3, 6, 12, .35); }
+.stack b { display: block; font: 400 14px/1.3 var(--font-sans); color: var(--chrome-50); }
+.stack span { font: 400 11px/1.4 var(--font-mono); color: var(--chrome-400); }
+.inspect-ctas { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+
+/* ===== Systems ===== */
+.systems { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); perspective: 1400px; }
+@media (max-width: 1000px) { .systems { grid-template-columns: 1fr; } }
+.sys {
+  --rx: 0deg; --ry: 0deg; --gx: 50%; --gy: 0%;
+  position: relative; padding: clamp(24px, 3vw, 36px); overflow: hidden; min-height: 440px; display: flex; flex-direction: column;
+  transform: rotateX(var(--rx)) rotateY(var(--ry)); transform-style: preserve-3d;
+  transition: transform .5s var(--ease), background .4s, box-shadow .4s, border-color .4s;
+}
+.sys::before { content: ""; position: absolute; inset: 0; background: radial-gradient(420px circle at var(--gx) var(--gy), rgba(56, 189, 248, .16), transparent 60%); opacity: 0; transition: opacity .4s; pointer-events: none; }
+.sys:hover { background: var(--glass-strong); box-shadow: var(--shadow-synapse); border-color: rgba(56, 189, 248, .35); }
+.sys:hover::before { opacity: 1; }
+.sys-num { display: flex; justify-content: space-between; align-items: center; }
+.sys-num .big { font: 300 64px/1 var(--font-display); color: transparent; -webkit-text-stroke: 1px var(--hairline-strong); }
+.sys h3 { margin: var(--space-8) 0 var(--space-3); font: 400 24px/1.25 var(--font-display); color: var(--chrome-50); }
+.sys p { margin: 0; color: var(--chrome-400); }
+.sys ul { list-style: none; margin: auto 0 0; padding: var(--space-6) 0 0; display: grid; gap: var(--space-2); border-top: 1px solid var(--hairline); margin-top: var(--space-6); }
+.sys li { font: 400 13px/1.5 var(--font-mono); color: var(--chrome-200); display: flex; gap: var(--space-2); }
+.sys li::before { content: "—"; color: var(--synapse); }
+.sys-icon { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--hairline-strong); color: var(--synapse); }
+.sys-icon svg { width: 20px; height: 20px; }
+
+/* ===== Architecture ===== */
+.arch { padding: clamp(20px, 3vw, 40px); overflow: hidden; }
+.flow { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--space-3); position: relative; }
+@media (max-width: 900px) { .flow { grid-template-columns: 1fr; } }
+.node { position: relative; padding: var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--hairline); background: rgba(3, 6, 12, .45); display: grid; gap: var(--space-2); }
+.node b { font: 400 16px/1.25 var(--font-display); color: var(--chrome-50); }
+.node span { font: 400 12px/1.5 var(--font-mono); color: var(--chrome-400); }
+.node .eyebrow { font-size: 10px; }
+.node::after { content: ""; position: absolute; top: 50%; right: -14px; width: 14px; height: 1px; background: linear-gradient(90deg, var(--synapse), transparent); }
+.node:last-child::after { display: none; }
+@media (max-width: 900px) { .node::after { top: auto; bottom: -14px; right: auto; left: 24px; width: 1px; height: 14px; background: linear-gradient(var(--synapse), transparent); } }
+.node.active { border-color: rgba(56, 189, 248, .55); box-shadow: 0 0 0 1px rgba(56, 189, 248, .25), var(--shadow-synapse); }
+.log { margin-top: var(--space-6); padding: var(--space-4); border-radius: var(--radius-md); background: var(--void-950); border: 1px solid var(--hairline); font: 400 12px/1.7 var(--font-mono); color: var(--chrome-400); height: 168px; overflow: hidden; position: relative; }
+.log::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 40px; background: linear-gradient(transparent, var(--void-950)); }
+.log .ok { color: var(--success); }
+.log .ev { color: var(--synapse); }
+.log .amt { color: var(--champagne); }
+
+/* ===== Concierge sandbox ===== */
+.sandbox { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 440px); gap: clamp(24px, 4vw, 64px); align-items: center; }
+@media (max-width: 900px) { .sandbox { grid-template-columns: 1fr; } }
+.prompt-list { display: grid; gap: var(--space-2); margin-top: var(--space-8); }
+.prompt-btn { display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); text-align: left; padding: var(--space-4) var(--space-6); border-radius: var(--radius-md); border: 1px solid var(--hairline); background: var(--glass); cursor: pointer; transition: border-color .3s, background .3s, transform .3s var(--ease); color: var(--chrome-200); font-size: 15px; }
+.prompt-btn:hover { border-color: rgba(56, 189, 248, .5); background: var(--glass-strong); transform: translateX(4px); color: var(--chrome-50); }
+.prompt-btn svg { width: 16px; height: 16px; color: var(--synapse); flex: none; }
+
+.chat { display: flex; flex-direction: column; overflow: hidden; box-shadow: var(--shadow-glass); height: 560px; max-height: 80vh; }
+.chat-head { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-4) var(--space-4) var(--space-4) var(--space-6); border-bottom: 1px solid var(--hairline); }
+.chat-avatar { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: radial-gradient(circle at 35% 30%, #fff, #94A3B8 45%, #0C1322 80%); box-shadow: 0 0 18px var(--synapse-glow); flex: none; }
+.chat-avatar i { width: 6px; height: 6px; border-radius: 50%; background: var(--synapse); box-shadow: 0 0 8px var(--synapse); }
+.chat-title { flex: 1; min-width: 0; }
+.chat-title b { display: block; font: 400 15px/1.2 var(--font-display); color: var(--chrome-50); letter-spacing: .04em; }
+.chat-title span { font: 400 11px/1.4 var(--font-mono); color: var(--success); display: inline-flex; align-items: center; gap: 6px; }
+.chat-title span .dot { width: 6px; height: 6px; background: var(--success); }
+.chat-log { flex: 1; overflow-y: auto; padding: var(--space-6) var(--space-4); display: flex; flex-direction: column; gap: var(--space-3); scroll-behavior: smooth; overscroll-behavior: contain; }
+.chat-log::-webkit-scrollbar { width: 6px; } .chat-log::-webkit-scrollbar-thumb { background: var(--hairline); border-radius: 3px; }
+.msg { max-width: 86%; padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); font-size: 14px; line-height: 1.55; animation: msgIn .45s var(--ease); white-space: pre-line; }
+@keyframes msgIn { from { opacity: 0; transform: translateY(8px); } }
+.msg.bot { align-self: flex-start; background: var(--glass-strong); border: 1px solid var(--hairline); color: var(--chrome-200); border-bottom-left-radius: var(--radius-sm); }
+.msg.user { align-self: flex-end; background: rgba(56, 189, 248, .14); border: 1px solid rgba(56, 189, 248, .35); color: var(--chrome-50); border-bottom-right-radius: var(--radius-sm); }
+.msg b { color: var(--chrome-50); font-weight: 500; }
+.msg .price { color: var(--champagne); font-family: var(--font-mono); }
+.msg .handover { display: inline-flex; margin-top: var(--space-2); align-items: center; gap: 6px; padding: 6px 12px; border-radius: var(--radius-pill); border: 1px solid rgba(94, 234, 212, .4); color: var(--success); font: 500 11px/1.2 var(--font-mono); letter-spacing: .08em; text-decoration: none; }
+.typing { display: inline-flex; gap: 4px; padding: 14px 16px; }
+.typing i { width: 6px; height: 6px; border-radius: 50%; background: var(--chrome-400); animation: blink 1.2s infinite; }
+.typing i:nth-child(2) { animation-delay: .15s; } .typing i:nth-child(3) { animation-delay: .3s; }
+@keyframes blink { 0%, 80%, 100% { opacity: .25; transform: translateY(0); } 40% { opacity: 1; transform: translateY(-3px); } }
+.chat-chips { display: flex; gap: var(--space-2); padding: 0 var(--space-4) var(--space-3); overflow-x: auto; scrollbar-width: none; }
+.chat-chips::-webkit-scrollbar { display: none; }
+.chip { flex: none; padding: 7px 12px; border-radius: var(--radius-pill); border: 1px solid var(--hairline-strong); background: transparent; color: var(--chrome-200); font-size: 12px; cursor: pointer; transition: border-color .3s, color .3s; }
+.chip:hover { border-color: var(--synapse); color: var(--chrome-50); }
+.chat-form { display: flex; gap: var(--space-2); padding: var(--space-3) var(--space-3) var(--space-3) var(--space-4); border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .45); }
+.chat-form input { flex: 1; min-width: 0; background: transparent; border: 0; color: var(--chrome-50); font: 400 15px/1.4 var(--font-sans); padding: 10px 0; }
+.chat-form input::placeholder { color: var(--chrome-400); }
+.chat-form input:focus { outline: none; }
+.send { width: 44px; height: 44px; border-radius: 50%; border: 0; background: var(--chrome-50); color: var(--void-950); display: grid; place-items: center; cursor: pointer; flex: none; transition: transform .3s var(--ease), box-shadow .3s; }
+.send:hover { transform: scale(1.06); box-shadow: 0 0 24px var(--synapse-glow); }
+.send svg { width: 18px; height: 18px; }
+
+.fab { position: fixed; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); z-index: 60; }
+.fab-btn { display: inline-flex; align-items: center; gap: var(--space-3); padding: 8px 20px 8px 8px; border-radius: var(--radius-pill); border: 1px solid var(--hairline-strong); background: rgba(7, 11, 20, .7); -webkit-backdrop-filter: blur(var(--blur-glass)); backdrop-filter: blur(var(--blur-glass)); color: var(--chrome-50); cursor: pointer; box-shadow: var(--shadow-glass); font: 500 12px/1 var(--font-sans); letter-spacing: .14em; text-transform: uppercase; transition: border-color .3s, box-shadow .3s; }
+.fab-btn:hover { border-color: rgba(56, 189, 248, .55); box-shadow: var(--shadow-glass), var(--shadow-synapse); }
+.fab-btn .chat-avatar { width: 34px; height: 34px; }
+.fab-panel { position: absolute; right: 0; bottom: calc(100% + 12px); width: min(400px, calc(100vw - 32px)); height: min(580px, calc(100svh - 120px)); transform-origin: bottom right; transition: opacity .35s var(--ease), transform .35s var(--ease); }
+.fab-panel .chat { height: 100%; max-height: none; background: rgba(7, 11, 20, .82); }
+.fab-panel[hidden] { display: block; opacity: 0; transform: translateY(12px) scale(.96); pointer-events: none; visibility: hidden; }
+@media (max-width: 560px) { .fab-btn .lbl { display: none; } .fab-btn { padding: 8px; } }
+
+/* ===== Consultation & signature ===== */
+.consult { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-6); }
+@media (max-width: 1000px) { .consult { grid-template-columns: 1fr; } }
+.terminal { padding: clamp(24px, 3vw, 40px); }
+.terminal-head { display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); margin-bottom: var(--space-6); }
+.terminal-head .mono { font-size: 11px; color: var(--chrome-400); letter-spacing: .1em; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+.form-grid .full { grid-column: 1 / -1; }
+@media (max-width: 560px) { .form-grid { grid-template-columns: 1fr; } }
+.field { display: grid; gap: var(--space-2); }
+.field label { font: 500 11px/1.4 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--chrome-400); }
+.input { width: 100%; background: var(--void-950); border: 1px solid var(--hairline-strong); border-radius: var(--radius-md); padding: 14px var(--space-4); color: var(--chrome-50); font: 400 15px/1.4 var(--font-sans); transition: border-color .3s, box-shadow .3s; appearance: none; -webkit-appearance: none; }
+.input::placeholder { color: rgba(148, 163, 184, .8); }
+.input:focus { outline: none; border-color: var(--synapse); box-shadow: 0 0 0 3px rgba(56, 189, 248, .25); }
+textarea.input { min-height: 120px; resize: vertical; }
+select.input { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%2394A3B8' stroke-width='1.5'%3E%3Cpath d='M1 1l5 5 5-5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; padding-right: 40px; }
+.chk-group { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.chk { position: relative; font: 400 13px/1.2 var(--font-sans); letter-spacing: .02em; text-transform: none; color: var(--chrome-200); }
+.chk input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+.chk span { display: inline-flex; padding: 9px 14px; border-radius: var(--radius-pill); border: 1px solid var(--hairline-strong); font-size: 13px; color: var(--chrome-200); transition: all .25s; }
+.chk input:checked + span { border-color: var(--synapse); background: rgba(56, 189, 248, .12); color: var(--chrome-50); }
+.chk input:focus-visible + span { outline: 2px solid var(--synapse); outline-offset: 2px; }
+.form-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-4); margin-top: var(--space-6); }
+.form-status { font: 400 12px/1.5 var(--font-mono); color: var(--chrome-400); }
+.form-status.ok { color: var(--success); }
+.form-status.err { color: var(--danger); }
+
+.sig-tool { padding: clamp(24px, 3vw, 40px); display: grid; gap: var(--space-6); align-content: start; }
+.sig-fields { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }
+@media (max-width: 560px) { .sig-fields { grid-template-columns: 1fr; } }
+.sig-fields .input { padding: 11px 14px; font-size: 14px; }
+.sig-preview { border-radius: var(--radius-md); background: #FFFFFF; padding: var(--space-6); overflow-x: auto; }
+.sig-preview.dark { background: #0B1020; }
+.sig-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; }
+.sig-actions .btn { padding: 12px 18px; font-size: 12px; }
+.tabs-mini { display: inline-flex; gap: 4px; }
+
+/* ===== Footer ===== */
+footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75); padding: var(--space-16) 0 var(--space-8); }
+.foot { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: var(--space-8); }
+@media (max-width: 760px) { .foot { grid-template-columns: 1fr; } }
+.foot h4 { margin: 0 0 var(--space-4); }
+.foot ul { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-2); }
+.foot a { color: var(--chrome-400); text-decoration: none; font-size: 14px; }
+.foot a:hover { color: var(--chrome-50); }
+.foot-bottom { margin-top: var(--space-16); display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-4); font: 400 11px/1.5 var(--font-mono); color: var(--chrome-400); letter-spacing: .1em; }
+
+/* Cursor glow (desktop) */
+.cursor-glow { position: fixed; left: 0; top: 0; width: 420px; height: 420px; margin: -210px 0 0 -210px; border-radius: 50%; background: radial-gradient(circle, rgba(56, 189, 248, .07), transparent 60%); pointer-events: none; z-index: 1; transform: translate3d(-999px, -999px, 0); }
+@media (hover: none) { .cursor-glow { display: none; } }
+</style>
+</head>
+<body>
+
+<canvas id="scene" aria-hidden="true"></canvas>
+<div class="scene-fallback" aria-hidden="true"><img src="images/axon-logo.jpg" alt=""></div>
+<div class="vignette" aria-hidden="true"></div>
+<div class="cursor-glow" aria-hidden="true"></div>
+
+<!-- ===== Header ===== -->
+<header class="nav-shell">
+  <nav class="nav glass" aria-label="Primary">
+    <a href="#top" class="wordmark chrome-text" aria-label="AXON — home">Λ X O N</a>
+    <ul class="nav-links">
+      <li><a href="#systems">Systems</a></li>
+      <li><a href="#eliza">Case Study: Hotel Eliza</a></li>
+      <li><a href="#architecture">Architecture</a></li>
+      <li><a href="#consultation">Consultation</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="icon-btn" id="soundToggle" aria-pressed="false" aria-label="Toggle interface sound" title="Interface sound">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path class="wave" d="M15.5 8.5a5 5 0 0 1 0 7"/><path class="wave" d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+      </button>
+      <a href="#consultation" class="btn btn-primary" data-magnetic>Schedule Deployment</a>
+      <button class="icon-btn menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 8h16M4 16h16"/></svg>
+      </button>
+    </div>
+  </nav>
+  <div class="mobile-menu glass" id="mobileMenu" hidden>
+    <a href="#systems">Systems</a>
+    <a href="#eliza">Case Study: Hotel Eliza</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#consultation">Consultation</a>
+    <a href="#consultation" class="btn btn-primary">Schedule Deployment</a>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ===== Hero ===== -->
+<section class="hero" aria-labelledby="heroTitle">
+  <div class="wrap hero-inner">
+    <div class="eyebrow">Autonomous Hospitality &amp; Neural Digital Systems</div>
+    <div class="badge-3d"><a class="badge" id="liveBadge" href="#eliza"><span class="dot"></span>Live in production: Hotel Eliza Istanbul</a></div>
+    <h1 id="heroTitle">
+      <span class="line"><span>We engineer</span></span>
+      <span class="line"><span><em>revenue engines</em></span></span>
+      <span class="line"><span>for luxury hotels.</span></span>
+    </h1>
+    <p class="hero-sub">Custom direct booking engines, 3D interactive maps, autonomous AI concierges, and instant multi-currency payment infrastructure.</p>
+    <div class="hero-row">
+      <div class="pills" role="list">
+        <span class="pill" role="listitem"><b>0%</b> OTA Commission</span>
+        <span class="pill" role="listitem"><b>3D Secure</b> iyzico Integrated</span>
+        <span class="pill" role="listitem"><b>24/7</b> Multilingual AI</span>
+      </div>
+      <div class="hero-ctas">
+        <a href="#eliza" class="btn btn-ghost" data-magnetic>Explore Case Study</a>
+        <a href="#consultation" class="btn btn-primary" data-magnetic>Schedule Deployment</a>
+      </div>
+    </div>
+    <a href="#eliza" class="scroll-cue"><i></i>Scroll to enter</a>
+  </div>
+</section>
+
+<!-- ===== Case study ===== -->
+<section class="section" id="eliza" aria-labelledby="elizaTitle">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">01 — Flagship Showcase</div>
+      <h2 class="section-title" id="elizaTitle">Project Eliza Istanbul</h2>
+      <p class="section-lead">A commission-free revenue engine for a boutique hotel in Istanbul's Historic Peninsula. Below is an interactive replica of the engine running in production: pick a room, choose your dates, and watch the basket compute in real time.</p>
+      <div class="case-meta">
+        <span class="pill"><span class="dot ok"></span>Status: Live</span>
+        <span class="pill">Fatih · Istanbul</span>
+        <span class="pill">TRY · EUR · USD</span>
+      </div>
+    </div>
+
+    <div class="frame glass reveal" id="engine">
+      <div class="frame-bar">
+        <div class="frame-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="frame-url"><b>●</b> elizahotel · secure booking engine — powered by AXON</div>
+        <div class="seg" role="group" aria-label="Currency" id="currencySeg">
+          <button type="button" data-cur="EUR" aria-pressed="true">EUR</button>
+          <button type="button" data-cur="USD" aria-pressed="false">USD</button>
+          <button type="button" data-cur="TRY" aria-pressed="false">TRY</button>
+        </div>
+      </div>
+      <div class="frame-body">
+        <div class="engine-cal">
+          <div class="room-tabs" role="tablist" aria-label="Room type" id="roomTabs"></div>
+          <div class="cal-head">
+            <div class="label" id="calLabel">Select check-in</div>
+            <div class="cal-legend" aria-hidden="true">
+              <span><i style="background:var(--success)"></i>Best rate</span>
+              <span><i style="background:var(--champagne)"></i>Peak</span>
+              <span><i style="background:var(--danger)"></i>Sold out</span>
+            </div>
+          </div>
+          <div class="months" id="months"></div>
+          <div class="cal-hint">Nightly rates per room · demo inventory, illustrative pricing</div>
+        </div>
+        <aside class="engine-side" aria-live="polite">
+          <div class="room-card" id="roomCard"></div>
+          <div class="row">
+            <span class="label">Adults</span>
+            <div class="stepper"><button type="button" id="adMinus" aria-label="Fewer adults">−</button><output id="adults">2</output><button type="button" id="adPlus" aria-label="More adults">+</button></div>
+          </div>
+          <div class="basket" id="basket"></div>
+          <div class="pay-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>iyzico 3D Secure · instant e-invoice</div>
+          <button type="button" class="btn btn-primary" id="reserveBtn" data-magnetic>Reserve Direct</button>
+          <div class="toast" id="engineToast" role="status"></div>
+        </aside>
+      </div>
+    </div>
+
+    <div class="case-lower">
+      <div class="map-card glass reveal" id="mapCard">
+        <div class="map-stage" aria-hidden="true">
+          <svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M24 0H0v24" fill="none" stroke="rgba(148,163,184,.08)" stroke-width="1"/></pattern>
+              <radialGradient id="hotelGlow"><stop offset="0" stop-color="#38BDF8" stop-opacity=".5"/><stop offset="1" stop-color="#38BDF8" stop-opacity="0"/></radialGradient>
+              <linearGradient id="water" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0E2236"/><stop offset="1" stop-color="#0A1828"/></linearGradient>
+            </defs>
+            <rect width="800" height="600" fill="#070B14"/>
+            <rect width="800" height="600" fill="url(#grid)"/>
+            <!-- Golden Horn & Bosphorus & Marmara (stylised) -->
+            <path d="M0 40 C 160 70, 300 60, 420 100 S 640 130, 800 70 L 800 0 L 0 0 Z" fill="url(#water)"/>
+            <path d="M640 0 C 700 120, 760 220, 800 260 L 800 0 Z" fill="url(#water)"/>
+            <path d="M0 560 C 200 520, 420 540, 560 500 S 760 420, 800 380 L 800 600 L 0 600 Z" fill="url(#water)"/>
+            <!-- historic walls -->
+            <path d="M40 120 C 60 260, 50 400, 80 540" fill="none" stroke="rgba(197,168,128,.35)" stroke-width="2" stroke-dasharray="6 6"/>
+            <!-- streets -->
+            <g fill="none" stroke="rgba(148,163,184,.22)" stroke-width="1.5">
+              <path d="M60 330 C 220 320, 360 300, 520 310 S 700 330, 780 300"/>
+              <path d="M140 180 L 260 470"/><path d="M300 140 L 340 520"/><path d="M460 150 L 420 500"/>
+              <path d="M100 420 C 260 400, 420 420, 640 380"/><path d="M200 230 C 360 220, 520 240, 700 200"/>
+            </g>
+            <!-- T1 tram line -->
+            <path id="tram" d="M60 330 C 220 320, 360 300, 520 310 S 700 330, 780 300" fill="none" stroke="#38BDF8" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="2 10" opacity=".9"/>
+            <!-- building blocks -->
+            <g fill="rgba(148,163,184,.10)" stroke="rgba(148,163,184,.18)">
+              <rect x="190" y="250" width="40" height="28" rx="3"/><rect x="240" y="350" width="50" height="30" rx="3"/><rect x="360" y="240" width="38" height="40" rx="3"/><rect x="420" y="360" width="44" height="26" rx="3"/><rect x="520" y="230" width="56" height="30" rx="3"/><rect x="150" y="380" width="36" height="30" rx="3"/>
+            </g>
+            <!-- POIs -->
+            <g font-family="JetBrains Mono, monospace" font-size="13" fill="#E2E8F0">
+              <circle cx="330" cy="250" r="7" fill="#C5A880"/><text x="344" y="246">Grand Bazaar</text><text x="344" y="262" fill="#94A3B8" font-size="11">5 min walk</text>
+              <circle cx="262" cy="190" r="6" fill="#94A3B8"/><text x="276" y="186">Süleymaniye</text>
+              <circle cx="300" cy="316" r="6" fill="#38BDF8"/><text x="250" y="346" fill="#94A3B8" font-size="11">Beyazıt T1 · 3 min</text>
+              <circle cx="600" cy="300" r="7" fill="#C5A880"/><text x="614" y="296">Hagia Sophia</text>
+              <circle cx="590" cy="380" r="7" fill="#C5A880"/><text x="604" y="384">Blue Mosque</text>
+            </g>
+            <!-- hotel -->
+            <circle cx="230" cy="296" r="70" fill="url(#hotelGlow)"/>
+            <circle class="marker-pulse" cx="230" cy="296" r="12" fill="none" stroke="#38BDF8" stroke-width="2"/>
+            <circle cx="230" cy="296" r="9" fill="#F8FAFC" stroke="#38BDF8" stroke-width="3"/>
+            <text x="120" y="282" font-family="Jost, sans-serif" font-size="16" fill="#F8FAFC" letter-spacing="2">HOTEL ELIZA</text>
+            <!-- walking route -->
+            <path d="M230 296 C 260 280, 290 262, 330 250" fill="none" stroke="#F8FAFC" stroke-width="2" stroke-dasharray="4 5" opacity=".8"/>
+          </svg>
+        </div>
+        <div class="map-overlay">
+          <div>
+            <div class="eyebrow">3D Map Preview</div>
+            <h3>Historic Peninsula,<br>rendered live.</h3>
+          </div>
+          <span class="pill">MapLibre GL</span>
+        </div>
+        <div class="map-legend">
+          <span class="pill"><span class="dot"></span>T1 tram</span>
+          <span class="pill">Fatih · Hayrettin Mah.</span>
+        </div>
+      </div>
+
+      <div class="inspect glass reveal">
+        <div>
+          <div class="eyebrow">Under the hood</div>
+          <h3>Inspect the engine.</h3>
+          <p>The Eliza stack is public. Serverless booking, payment and concierge endpoints; a bilingual front end; MapLibre 3D maps; and an LLM concierge with WhatsApp handover.</p>
+        </div>
+        <div class="stack">
+          <div><b>Booking API</b><span>/api/reservation</span></div>
+          <div><b>AI Concierge</b><span>/api/chat</span></div>
+          <div><b>Dispatch</b><span>/api/email · whatsapp</span></div>
+          <div><b>Reviews</b><span>/api/review</span></div>
+        </div>
+        <div class="inspect-ctas">
+          <a class="btn btn-ghost" href="https://github.com/yukaribakvesakinlesss-hue/Eliza-hotel-chatbot" target="_blank" rel="noopener" data-magnetic>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></svg>Inspect Codebase</a>
+          <a class="btn btn-ghost" href="index.html" data-magnetic>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>Live Deployment</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Systems ===== -->
+<section class="section" id="systems" aria-labelledby="sysTitle">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">02 — Systems &amp; Capabilities</div>
+      <h2 class="section-title" id="sysTitle">Three systems. One nervous system.</h2>
+      <p class="section-lead">Each system ships standalone and interlocks with the others — bookings feed the concierge, the concierge feeds the automations, the automations close the loop.</p>
+    </div>
+    <div class="systems">
+      <article class="sys glass reveal" data-tilt>
+        <div class="sys-num"><span class="sys-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18M8 15h2M14 15h2"/></svg></span><span class="big">01</span></div>
+        <h3>Direct Booking &amp; Yield Engine</h3>
+        <p>Commission-free reservations on your own domain, with live inventory and pricing you control to the night.</p>
+        <ul>
+          <li>Real-time quota management</li>
+          <li>Multi-currency TRY / EUR / USD</li>
+          <li>Automated invoice generation</li>
+          <li>iyzico 3D Secure gateway</li>
+        </ul>
+      </article>
+      <article class="sys glass reveal" data-tilt>
+        <div class="sys-num"><span class="sys-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="12" r="2.5"/><path d="M8.5 12c2-3 5-3 7 0"/><path d="M3 4h6M15 20h6"/></svg></span><span class="big">02</span></div>
+        <h3>24/7 Neural AI Concierge</h3>
+        <p>An autonomous guest assistant trained on your property — answering, recommending and converting in the guest's own language.</p>
+        <ul>
+          <li>Hotel amenities &amp; policies</li>
+          <li>Local attractions &amp; dining</li>
+          <li>Transport &amp; airport transfers</li>
+          <li>Instant WhatsApp handover</li>
+        </ul>
+      </article>
+      <article class="sys glass reveal" data-tilt>
+        <div class="sys-num"><span class="sys-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3"/><path d="M18 3v4h-4M6 21v-4h4"/></svg></span><span class="big">03</span></div>
+        <h3>Omni-channel Automation</h3>
+        <p>Every reservation event triggers the right message, on the right channel, in seconds — no front-desk keystrokes.</p>
+        <ul>
+          <li>Instant SMS &amp; email dispatch</li>
+          <li>Webhook listeners</li>
+          <li>Automated check-in workflows</li>
+          <li>Review requests post-stay</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Architecture ===== -->
+<section class="section" id="architecture" aria-labelledby="archTitle">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">03 — Architecture</div>
+      <h2 class="section-title" id="archTitle">From click to confirmed in one pulse.</h2>
+      <p class="section-lead">A serverless event chain. Each reservation travels the same path — watch it run.</p>
+    </div>
+    <div class="arch glass reveal">
+      <div class="flow" id="flow">
+        <div class="node"><span class="eyebrow">Edge</span><b>Guest interface</b><span>Booking engine · 3D map · concierge</span></div>
+        <div class="node"><span class="eyebrow">Yield</span><b>Rate &amp; quota core</b><span>Availability · FX · pricing rules</span></div>
+        <div class="node"><span class="eyebrow">Payments</span><b>iyzico 3D Secure</b><span>Tokenised card · bank challenge</span></div>
+        <div class="node"><span class="eyebrow">Events</span><b>Webhook bus</b><span>Confirm · invoice · audit</span></div>
+        <div class="node"><span class="eyebrow">Dispatch</span><b>Omni-channel</b><span>Email · SMS · WhatsApp</span></div>
+      </div>
+      <div class="log" id="log" aria-hidden="true"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Concierge sandbox ===== -->
+<section class="section" id="concierge" aria-labelledby="concTitle">
+  <div class="wrap sandbox">
+    <div class="reveal">
+      <div class="eyebrow">04 — Live AI Concierge Demo</div>
+      <h2 class="section-title" id="concTitle">Ask the concierge.</h2>
+      <p class="section-lead">A sandbox of the Eliza concierge. Try a prompt below or type your own — rates are pulled live from the booking engine replica above.</p>
+      <div class="prompt-list">
+        <button class="prompt-btn" type="button" data-prompt="Check room rates">Check room rates<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        <button class="prompt-btn" type="button" data-prompt="Is breakfast included?">Is breakfast included?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        <button class="prompt-btn" type="button" data-prompt="How far from Grand Bazaar?">How far from Grand Bazaar?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      </div>
+    </div>
+    <div class="reveal" id="inlineChatMount"></div>
+  </div>
+</section>
+
+<!-- ===== Consultation ===== -->
+<section class="section" id="consultation" aria-labelledby="consTitle">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">05 — Executive Consultation</div>
+      <h2 class="section-title" id="consTitle">Schedule a deployment.</h2>
+      <p class="section-lead">Tell us about your property. We respond within one business day with a deployment outline and timeline.</p>
+    </div>
+    <div class="consult">
+      <form class="terminal glass reveal" id="contactForm" novalidate>
+        <div class="terminal-head"><span class="eyebrow">Contact Terminal</span><span class="mono" id="termClock">—</span></div>
+        <div class="form-grid">
+          <div class="field"><label for="cName">Full name</label><input class="input" id="cName" name="name" autocomplete="name" required placeholder="Your name"></div>
+          <div class="field"><label for="cEmail">Work email</label><input class="input" id="cEmail" name="email" type="email" autocomplete="email" required placeholder="gm@yourhotel.com"></div>
+          <div class="field"><label for="cHotel">Property</label><input class="input" id="cHotel" name="hotel" autocomplete="organization" placeholder="Hotel name, city"></div>
+          <div class="field"><label for="cRooms">Keys</label>
+            <select class="input" id="cRooms" name="rooms"><option>1 – 20</option><option>21 – 60</option><option>61 – 150</option><option>150+</option></select></div>
+          <div class="field full"><label>Systems of interest</label>
+            <div class="chk-group">
+              <label class="chk"><input type="checkbox" name="sys" value="Booking & Yield" checked><span>Booking &amp; Yield</span></label>
+              <label class="chk"><input type="checkbox" name="sys" value="AI Concierge"><span>AI Concierge</span></label>
+              <label class="chk"><input type="checkbox" name="sys" value="Automation"><span>Automation</span></label>
+              <label class="chk"><input type="checkbox" name="sys" value="3D Maps"><span>3D Maps</span></label>
+            </div>
+          </div>
+          <div class="field full"><label for="cMsg">Brief</label><textarea class="input" id="cMsg" name="message" placeholder="Current booking stack, OTA share, launch window…"></textarea></div>
+        </div>
+        <div class="form-foot">
+          <span class="form-status" id="formStatus" role="status">Encrypted in transit · no data stored on this page</span>
+          <button class="btn btn-primary" type="submit" data-magnetic>Request Consultation</button>
+        </div>
+      </form>
+
+      <div class="sig-tool glass reveal">
+        <div>
+          <div class="eyebrow">Executive Signature</div>
+          <p class="section-lead" style="margin-top:var(--space-3);font-size:15px">Generate the founder's HTML email signature. Edit the fields, then copy it straight into Gmail, Outlook or Apple Mail.</p>
+        </div>
+        <div class="sig-fields" id="sigFields">
+          <input class="input" data-k="name" aria-label="Name" value="Founder Name">
+          <input class="input" data-k="title" aria-label="Title" value="Founder &amp; Principal Engineer">
+          <input class="input" data-k="email" aria-label="Email" value="founder@example.com">
+          <input class="input" data-k="phone" aria-label="Phone" value="+90 5XX XXX XX XX">
+          <input class="input" data-k="web" aria-label="Website" value="https://github.com/yukaribakvesakinlesss-hue">
+          <input class="input" data-k="case" aria-label="Case study link" value="https://github.com/yukaribakvesakinlesss-hue/Eliza-hotel-chatbot">
+        </div>
+        <div class="sig-actions">
+          <div class="seg" role="group" aria-label="Preview background">
+            <button type="button" data-bg="light" aria-pressed="true">Light</button>
+            <button type="button" data-bg="dark" aria-pressed="false">Dark</button>
+          </div>
+        </div>
+        <div class="sig-preview" id="sigPreview"></div>
+        <div class="sig-actions">
+          <button class="btn btn-primary" type="button" id="copyRich" data-magnetic>Copy Signature</button>
+          <button class="btn btn-ghost" type="button" id="copyHtml" data-magnetic>Copy HTML</button>
+          <span class="form-status" id="sigStatus" role="status"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a href="#top" class="wordmark chrome-text" style="font-size:22px" aria-label="AXON — back to top">Λ X O N</a>
+        <p style="margin:var(--space-4) 0 0;color:var(--chrome-400);max-width:360px">Autonomous hospitality &amp; neural digital systems. Engineered in Istanbul.</p>
+      </div>
+      <div><h4 class="eyebrow">Systems</h4><ul><li><a href="#systems">Booking &amp; Yield</a></li><li><a href="#concierge">AI Concierge</a></li><li><a href="#architecture">Automation</a></li></ul></div>
+      <div><h4 class="eyebrow">Studio</h4><ul><li><a href="#eliza">Case Study: Hotel Eliza</a></li><li><a href="https://github.com/yukaribakvesakinlesss-hue/Eliza-hotel-chatbot" target="_blank" rel="noopener">Codebase</a></li><li><a href="#consultation">Consultation</a></li></ul></div>
+    </div>
+    <div class="foot-bottom"><span>© <span id="yr"></span> AXON SYSTEMS</span><span>Λ X O N · NEURAL DIGITAL SYSTEMS</span></div>
+  </div>
+</footer>
+
+<!-- Floating concierge -->
+<div class="fab" id="fab">
+  <div class="fab-panel" id="fabPanel" hidden></div>
+  <button class="fab-btn" id="fabBtn" aria-expanded="false" aria-controls="fabPanel"><span class="chat-avatar"><i></i></span><span class="lbl">AI Concierge</span></button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+<script>
+(function () {
+  'use strict';
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  /* ================= Sound (opt-in) ================= */
+  var Sound = {
+    on: false, ctx: null,
+    init: function () { if (!this.ctx) { try { this.ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { this.ctx = null; } } },
+    tone: function (freq, dur, vol, type) {
+      if (!this.on || !this.ctx) return;
+      var t = this.ctx.currentTime, o = this.ctx.createOscillator(), g = this.ctx.createGain();
+      o.type = type || 'sine'; o.frequency.setValueAtTime(freq, t);
+      o.frequency.exponentialRampToValueAtTime(freq * 1.5, t + dur);
+      g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol || .03, t + .01); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+      o.connect(g); g.connect(this.ctx.destination); o.start(t); o.stop(t + dur + .02);
+    },
+    tick: function () { this.tone(1800, .05, .012, 'sine'); },
+    chime: function () { this.tone(660, .5, .03); var s = this; setTimeout(function () { s.tone(990, .6, .022); }, 90); },
+    click: function () { this.tone(420, .08, .03, 'triangle'); }
+  };
+  $('#soundToggle').addEventListener('click', function () {
+    Sound.init(); Sound.on = !Sound.on; this.setAttribute('aria-pressed', String(Sound.on));
+    if (Sound.ctx && Sound.ctx.state === 'suspended') Sound.ctx.resume();
+    Sound.chime();
+  });
+  document.addEventListener('pointerenter', function (e) { if (e.target.closest && e.target.matches && e.target.matches('.btn, .prompt-btn, .chip, .day, .room-tab')) Sound.tick(); }, true);
+
+  /* ================= Nav ================= */
+  var nav = $('.nav');
+  var menuToggle = $('#menuToggle'), mobileMenu = $('#mobileMenu');
+  menuToggle.addEventListener('click', function () {
+    var open = mobileMenu.hasAttribute('hidden');
+    if (open) mobileMenu.removeAttribute('hidden'); else mobileMenu.setAttribute('hidden', '');
+    menuToggle.setAttribute('aria-expanded', String(open));
+  });
+  $$('#mobileMenu a').forEach(function (a) { a.addEventListener('click', function () { mobileMenu.setAttribute('hidden', ''); menuToggle.setAttribute('aria-expanded', 'false'); }); });
+  var navLinks = $$('.nav-links a');
+  var sections = navLinks.map(function (a) { return $(a.getAttribute('href')); });
+  function onScrollNav() {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+    var y = window.scrollY + window.innerHeight * .35, cur = -1, best = -1;
+    sections.forEach(function (s, i) { if (s && s.offsetTop <= y && s.offsetTop > best) { best = s.offsetTop; cur = i; } });
+    navLinks.forEach(function (a, i) { a.classList.toggle('active', i === cur); });
+  }
+  window.addEventListener('scroll', onScrollNav, { passive: true }); onScrollNav();
+
+  /* ================= Magnetic buttons ================= */
+  if (finePointer && !reduceMotion) {
+    document.addEventListener('pointermove', function (e) {
+      var b = e.target.closest && e.target.closest('[data-magnetic]');
+      if (!b) return;
+      var r = b.getBoundingClientRect(), c = function (v) { return Math.max(-8, Math.min(8, v)); };
+      b.style.setProperty('--mx', c((e.clientX - r.left - r.width / 2) * .3) + 'px');
+      b.style.setProperty('--my', c((e.clientY - r.top - r.height / 2) * .35) + 'px');
+    });
+    document.addEventListener('pointerout', function (e) {
+      var b = e.target.closest && e.target.closest('[data-magnetic]');
+      if (b && !b.contains(e.relatedTarget)) { b.style.setProperty('--mx', '0px'); b.style.setProperty('--my', '0px'); }
+    });
+  }
+
+  /* ================= Cursor glow, badge tilt, card tilt ================= */
+  var glow = $('.cursor-glow');
+  if (finePointer) {
+    window.addEventListener('pointermove', function (e) { glow.style.transform = 'translate3d(' + e.clientX + 'px,' + e.clientY + 'px,0)'; }, { passive: true });
+  }
+  var badge = $('#liveBadge');
+  if (finePointer && !reduceMotion) {
+    window.addEventListener('pointermove', function (e) {
+      var r = badge.getBoundingClientRect();
+      var dx = (e.clientX - (r.left + r.width / 2)) / window.innerWidth, dy = (e.clientY - (r.top + r.height / 2)) / window.innerHeight;
+      badge.style.setProperty('--ry', (dx * 28).toFixed(2) + 'deg');
+      badge.style.setProperty('--rx', (-dy * 28).toFixed(2) + 'deg');
+    }, { passive: true });
+    $$('[data-tilt]').forEach(function (card) {
+      card.addEventListener('pointermove', function (e) {
+        var r = card.getBoundingClientRect(), px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+        card.style.setProperty('--ry', ((px - .5) * 10).toFixed(2) + 'deg');
+        card.style.setProperty('--rx', ((.5 - py) * 10).toFixed(2) + 'deg');
+        card.style.setProperty('--gx', (px * 100).toFixed(1) + '%');
+        card.style.setProperty('--gy', (py * 100).toFixed(1) + '%');
+      });
+      card.addEventListener('pointerleave', function () { card.style.setProperty('--rx', '0deg'); card.style.setProperty('--ry', '0deg'); });
+    });
+    var mapCard = $('#mapCard'), mapStage = $('.map-stage');
+    mapCard.addEventListener('pointermove', function (e) {
+      var r = mapCard.getBoundingClientRect(), px = (e.clientX - r.left) / r.width - .5, py = (e.clientY - r.top) / r.height - .5;
+      mapStage.style.setProperty('--rz', (-8 + px * 10).toFixed(2) + 'deg');
+      mapStage.style.setProperty('--ty', (py * -16).toFixed(1) + 'px');
+    });
+    mapCard.addEventListener('pointerleave', function () { mapStage.style.removeProperty('--rz'); mapStage.style.removeProperty('--ty'); });
+  }
+
+  /* ================= Reveal ================= */
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { threshold: .12, rootMargin: '0px 0px -40px 0px' });
+    $$('.reveal').forEach(function (el, i) { el.style.transitionDelay = ((i % 3) * 80) + 'ms'; io.observe(el); });
+  } else { $$('.reveal').forEach(function (el) { el.classList.add('in'); }); }
+
+  /* ================= Booking engine replica ================= */
+  var ROOMS = [
+    { id: 'twin', name: 'Standard Twin', full: 'Standard Twin Room', size: 28, maxAdults: 2, beds: 'Two single beds', desc: 'Up to 2 adults and 1 child. City view, rain shower, smart TV.', base: 92 },
+    { id: 'double', name: 'Standard Double', full: 'Standard Double Room', size: 28, maxAdults: 2, beds: 'French double bed', desc: 'Up to 2 adults and 1 child. Quiet courtyard side, rain shower.', base: 96 },
+    { id: 'quad', name: 'Quadruple', full: 'Quadruple Room', size: 30, maxAdults: 4, beds: 'Double + two singles', desc: 'Two bedrooms for up to 4 guests — ideal for friends travelling together.', base: 158 },
+    { id: 'family', name: 'Family Room', full: 'Family Room', size: 30, maxAdults: 5, beds: 'Double + singles', desc: 'Sleeps up to 5 guests across a double and single beds. Family-ready.', base: 178 }
+  ];
+  // Indicative FX for the demo only.
+  var FX = { EUR: { rate: 1, sym: '€' }, USD: { rate: 1.09, sym: '$' }, TRY: { rate: 44.5, sym: '₺' } };
+  var state = { room: 0, cur: 'EUR', inD: null, outD: null, adults: 2 };
+  var today = new Date(); today.setHours(0, 0, 0, 0);
+
+  function hash(n) { var x = Math.sin(n * 12.9898 + 78.233) * 43758.5453; return x - Math.floor(x); }
+  function dayKey(d) { return d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate(); }
+  function nightly(d, roomIdx) {
+    var r = ROOMS[roomIdx], k = dayKey(d), dow = d.getDay();
+    var f = 1 + (hash(k) - .5) * .16;
+    if (dow === 5 || dow === 6) f *= 1.18;
+    var m = d.getMonth(); if (m >= 3 && m <= 9) f *= 1.08;
+    return Math.round(r.base * f);
+  }
+  function soldOut(d, roomIdx) { return hash(dayKey(d) * 7 + roomIdx * 131) < .07; }
+  function fmt(eur, cur) {
+    cur = cur || state.cur; var v = eur * FX[cur].rate;
+    var n = cur === 'TRY' ? Math.round(v).toLocaleString('tr-TR') : v.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+    return FX[cur].sym + ' ' + n;
+  }
+  function short(eur) {
+    var v = eur * FX[state.cur].rate;
+    if (state.cur === 'TRY') return (v >= 10000 ? (v / 1000).toFixed(1) + 'k' : Math.round(v / 10) * 10 + '');
+    return FX[state.cur].sym + Math.round(v);
+  }
+  function sameDay(a, b) { return a && b && a.getTime() === b.getTime(); }
+  function addDays(d, n) { var x = new Date(d); x.setDate(x.getDate() + n); return x; }
+  function nightsBetween(a, b) { return Math.round((b - a) / 864e5); }
+  function rangeHasSold(a, b, roomIdx) { for (var d = new Date(a); d < b; d = addDays(d, 1)) if (soldOut(d, roomIdx)) return true; return false; }
+
+  // default selection: first available 3-night window from a week out
+  function pickDefault() {
+    for (var s = 7; s < 50; s++) {
+      var a = addDays(today, s), b = addDays(a, 3);
+      if (!rangeHasSold(a, b, state.room)) { state.inD = a; state.outD = b; return; }
+    }
+  }
+
+  var tabs = $('#roomTabs');
+  ROOMS.forEach(function (r, i) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'room-tab'; b.role = 'tab'; b.setAttribute('role', 'tab');
+    b.textContent = r.name; b.setAttribute('aria-selected', String(i === state.room));
+    b.addEventListener('click', function () {
+      state.room = i; state.adults = Math.min(state.adults, r.maxAdults);
+      if (state.inD && state.outD && rangeHasSold(state.inD, state.outD, i)) { state.inD = null; state.outD = null; }
+      $$('.room-tab', tabs).forEach(function (t, j) { t.setAttribute('aria-selected', String(j === i)); });
+      Sound.click(); render();
+    });
+    tabs.appendChild(b);
+  });
+
+  $$('#currencySeg button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      state.cur = b.dataset.cur;
+      $$('#currencySeg button').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      Sound.click(); render();
+    });
+  });
+  $('#adMinus').addEventListener('click', function () { if (state.adults > 1) { state.adults--; render(); } });
+  $('#adPlus').addEventListener('click', function () { if (state.adults < ROOMS[state.room].maxAdults) { state.adults++; render(); } });
+
+  var monthsEl = $('#months');
+  monthsEl.addEventListener('click', function (e) {
+    var btn = e.target.closest('.day'); if (!btn || btn.disabled) return;
+    var d = new Date(+btn.dataset.t);
+    if (!state.inD || (state.inD && state.outD) || d <= state.inD) { state.inD = d; state.outD = null; }
+    else {
+      if (rangeHasSold(state.inD, d, state.room)) { toast('A night in that range is sold out — choose another stay.', true); state.inD = d; state.outD = null; }
+      else if (nightsBetween(state.inD, d) > 21) { toast('Maximum 21 nights online — the concierge can help with longer stays.', true); return; }
+      else state.outD = d;
+    }
+    Sound.click(); render();
+  });
+
+  function renderCalendar() {
+    var html = '', dows = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
+    for (var m = 0; m < 2; m++) {
+      var first = new Date(today.getFullYear(), today.getMonth() + m, 1);
+      var title = first.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+      html += '<div class="month"><h4>' + title + '</h4><div class="dow">' + dows.map(function (x) { return '<span>' + x + '</span>'; }).join('') + '</div><div class="days">';
+      var offset = (first.getDay() + 6) % 7;
+      for (var e = 0; e < offset; e++) html += '<span class="day empty"></span>';
+      var dim = new Date(first.getFullYear(), first.getMonth() + 1, 0).getDate();
+      var avg = ROOMS[state.room].base;
+      for (var dd = 1; dd <= dim; dd++) {
+        var d = new Date(first.getFullYear(), first.getMonth(), dd), past = d < today, so = !past && soldOut(d, state.room);
+        var p = nightly(d, state.room), cls = 'day';
+        if (so) cls += ' sold'; else if (p < avg * .98) cls += ' low'; else if (p > avg * 1.15) cls += ' high';
+        if (sameDay(d, state.inD) || sameDay(d, state.outD)) cls += ' edge';
+        else if (state.inD && state.outD && d > state.inD && d < state.outD) cls += ' in-range';
+        var label = d.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' }) + (past ? ', unavailable' : so ? ', sold out' : ', ' + fmt(p) + ' per night');
+        // a sold-out night can still be a checkout day
+        var canCheckout = so && state.inD && !state.outD && d > state.inD;
+        html += '<button type="button" class="' + cls + '" data-t="' + d.getTime() + '"' + ((past || (so && !canCheckout)) ? ' disabled' : '') + ' aria-label="' + label + '"><span class="n">' + dd + '</span><span class="p">' + (past ? '' : so ? 'SOLD' : short(p)) + '</span></button>';
+      }
+      html += '</div></div>';
+    }
+    monthsEl.innerHTML = html;
+    $('#calLabel').textContent = !state.inD ? 'Select check-in' : !state.outD ? 'Select check-out' : nightsBetween(state.inD, state.outD) + ' nights selected';
+  }
+
+  function quote() {
+    if (!state.inD || !state.outD) return null;
+    var nights = [], sub = 0;
+    for (var d = new Date(state.inD); d < state.outD; d = addDays(d, 1)) { var p = nightly(d, state.room); nights.push(p); sub += p; }
+    var extra = Math.max(0, state.adults - 2) * 18 * nights.length;
+    var gross = sub + extra;
+    return { nights: nights.length, sub: sub, extra: extra, total: gross, avg: gross / nights.length };
+  }
+
+  function renderSide() {
+    var r = ROOMS[state.room];
+    $('#roomCard').innerHTML = '<div class="eyebrow">' + r.size + ' m² · up to ' + r.maxAdults + ' guests</div><h3>' + r.full + '</h3><p>' + r.desc + '</p>' +
+      '<div class="specs"><span class="spec">' + r.beds + '</span><span class="spec">Wi-Fi</span><span class="spec">Breakfast available</span><span class="spec">Non-smoking</span></div>';
+    $('#adults').textContent = state.adults;
+    $('#adMinus').disabled = state.adults <= 1; $('#adPlus').disabled = state.adults >= r.maxAdults;
+    var q = quote(), b = $('#basket');
+    var dfmt = function (d) { return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }); };
+    if (!q) { b.innerHTML = '<div class="row"><span class="muted">Choose check-in and check-out to see your total.</span></div>'; $('#reserveBtn').disabled = true; return; }
+    $('#reserveBtn').disabled = false;
+    b.innerHTML =
+      '<div class="row"><span>' + dfmt(state.inD) + ' → ' + dfmt(state.outD) + '</span><span>' + q.nights + ' night' + (q.nights > 1 ? 's' : '') + '</span></div>' +
+      '<div class="row"><span>Room · avg ' + fmt(q.sub / q.nights) + '</span><span>' + fmt(q.sub) + '</span></div>' +
+      (q.extra ? '<div class="row"><span>Extra guest</span><span>' + fmt(q.extra) + '</span></div>' : '') +
+      '<div class="row"><span>OTA commission</span><span style="color:var(--success)">' + fmt(0) + '</span></div>' +
+      '<div class="row total"><span>Total</span><span>' + fmt(q.total) + '</span></div>' +
+      '<div class="row"><span class="muted">VAT & accommodation tax included · ' + (state.cur === 'TRY' ? 'charged in TRY' : 'settled in TRY at checkout') + '</span></div>';
+  }
+
+  var toastT;
+  function toast(msg, warn) {
+    var t = $('#engineToast'); t.textContent = msg; t.style.color = warn ? 'var(--danger)' : 'var(--success)';
+    clearTimeout(toastT); toastT = setTimeout(function () { t.textContent = ''; }, 4200);
+  }
+  $('#reserveBtn').addEventListener('click', function () {
+    var q = quote(); if (!q) return;
+    Sound.chime();
+    toast('Demo hold placed · ' + ROOMS[state.room].name + ' · ' + fmt(q.total) + ' → redirecting to 3D Secure (simulated)');
+    pulseFlow();
+  });
+
+  function render() { renderCalendar(); renderSide(); }
+  pickDefault(); render();
+
+  /* ================= Architecture event stream ================= */
+  var flowNodes = $$('#flow .node'), logEl = $('#log'), flowBusy = false;
+  var guests = ['M. Laurent', 'A. Yılmaz', 'S. Novak', 'J. Okafor', 'E. Rossi', 'K. Tanaka', 'L. Weber'];
+  function logLine(html) {
+    var div = document.createElement('div'); var t = new Date();
+    div.innerHTML = '<span>' + t.toTimeString().slice(0, 8) + '</span>  ' + html;
+    logEl.insertBefore(div, logEl.firstChild);
+    while (logEl.children.length > 12) logEl.removeChild(logEl.lastChild);
+  }
+  function pulseFlow() {
+    if (flowBusy) return; flowBusy = true;
+    var g = guests[Math.floor(Math.random() * guests.length)], room = ROOMS[Math.floor(Math.random() * 4)], amt = fmt(room.base * (2 + Math.floor(Math.random() * 4)), 'EUR');
+    var steps = [
+      '<span class="ev">booking.created</span>  ' + room.name + ' · ' + g,
+      '<span class="ev">yield.quoted</span>     quota ok · rate locked <span class="amt">' + amt + '</span>',
+      '<span class="ev">payment.3ds</span>      iyzico challenge <span class="ok">passed</span>',
+      '<span class="ev">webhook.confirmed</span> invoice issued · audit logged',
+      '<span class="ev">dispatch.sent</span>    email <span class="ok">✓</span> sms <span class="ok">✓</span> whatsapp <span class="ok">✓</span>'
+    ];
+    flowNodes.forEach(function (n) { n.classList.remove('active'); });
+    steps.forEach(function (s, i) {
+      setTimeout(function () {
+        flowNodes.forEach(function (n, j) { n.classList.toggle('active', j === i); });
+        logLine(s);
+        if (i === steps.length - 1) setTimeout(function () { flowNodes.forEach(function (n) { n.classList.remove('active'); }); flowBusy = false; }, 900);
+      }, i * (reduceMotion ? 120 : 520));
+    });
+  }
+  var archVisible = false;
+  if ('IntersectionObserver' in window) new IntersectionObserver(function (en) { archVisible = en[0].isIntersecting; if (archVisible) pulseFlow(); }, { threshold: .3 }).observe($('#architecture'));
+  setInterval(function () { if (archVisible && !document.hidden) pulseFlow(); }, 5200);
+
+  /* ================= AI concierge ================= */
+  function tonightRates() {
+    var d = addDays(today, 1);
+    return ROOMS.map(function (r, i) { return '• ' + r.name + ' — from <span class="price">' + fmt(nightly(d, i)) + '</span>'; }).join('\n');
+  }
+  var KB = [
+    { k: /(rate|price|cost|how much|fiyat|ücret|availability|available|müsait)/i, a: function () {
+      var q = quote();
+      return 'Here are tomorrow\'s direct rates (no OTA commission):\n' + tonightRates() +
+        (q ? '\n\nFor your selected stay (' + q.nights + ' nights, ' + ROOMS[state.room].name + '), the total is <span class="price">' + fmt(q.total) + '</span>, taxes included.' : '') +
+        '\n\nWould you like me to hold a room?';
+    } },
+    { k: /(breakfast|kahvalt)/i, a: 'A fresh continental buffet with local specialties is served every morning. Whether it\'s included depends on the rate plan — the booking engine shows it on each rate before you pay.' },
+    { k: /(grand bazaar|kapal[ıi]çar[şs][ıi]|bazaar)/i, a: 'The Grand Bazaar is about a <b>5-minute walk</b> from Hotel Eliza. The Beyazıt and Çemberlitaş T1 tram stops are 3 minutes away on foot.' },
+    { k: /(hagia|ayasofya|blue mosque|sultanahmet|topkap)/i, a: 'Sultanahmet — Hagia Sophia, the Blue Mosque and Topkapı — is a short T1 tram ride from Beyazıt, or a pleasant walk along Divanyolu.' },
+    { k: /(airport|transfer|havaliman|ist|saw|sabiha)/i, a: 'We arrange private transfers from Istanbul Airport (IST, ~41 km) and Sabiha Gökçen (SAW). Shall I hand you to the front desk on WhatsApp to confirm a pickup time?', handover: true },
+    { k: /(check.?in|check.?out|giriş|çıkış|arrival|departure)/i, a: 'Check-in is from <b>14:00</b> and check-out until <b>12:00</b>. Early arrival? Leave your bags with us any time.' },
+    { k: /(wifi|wi-fi|internet)/i, a: 'Complimentary high-speed Wi-Fi is available throughout the hotel.' },
+    { k: /(family|child|kid|çocuk|aile)/i, a: 'Our Family Room sleeps up to 5 across a double and single beds (30 m²). The Quadruple has two bedrooms for 4 guests.' },
+    { k: /(where|address|location|adres|konum)/i, a: 'Hotel Eliza · Hayrettin Mah. Doğramacı Sk. No:19/5, Fatih / İstanbul — in the heart of the Historic Peninsula.' },
+    { k: /(human|agent|whatsapp|call|phone|staff|reception)/i, a: 'Of course — I\'ll pass this conversation to our front desk on WhatsApp, with the context attached.', handover: true },
+    { k: /(axon|who built|who made)/i, a: 'This concierge was engineered by AXON Systems — the same neural layer can be trained on your property.' },
+    { k: /^(hi|hello|hey|merhaba|selam)\b/i, a: 'Welcome to Hotel Eliza. I can check rates, explain the neighbourhood or arrange a transfer. What would you like?' }
+  ];
+  function reply(text) {
+    for (var i = 0; i < KB.length; i++) if (KB[i].k.test(text)) {
+      var a = typeof KB[i].a === 'function' ? KB[i].a() : KB[i].a;
+      return a + (KB[i].handover ? '\n<a class="handover" href="#concierge">● WhatsApp handover ready</a>' : '');
+    }
+    return 'I\'m the Eliza sandbox concierge — I can help with rates, breakfast, location, transfers and check-in times. In production, anything outside my knowledge goes straight to the front desk on WhatsApp.';
+  }
+
+  function Chat(mount, opts) {
+    opts = opts || {};
+    var el = document.createElement('div');
+    el.className = 'chat glass';
+    el.innerHTML =
+      '<div class="chat-head"><span class="chat-avatar"><i></i></span><div class="chat-title"><b>ELIZA CONCIERGE</b><span><i class="dot"></i>Online · EN / TR</span></div>' +
+      (opts.closable ? '<button class="icon-btn" type="button" data-close aria-label="Close concierge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>' : '') +
+      '</div><div class="chat-log" role="log" aria-live="polite"></div>' +
+      '<div class="chat-chips"><button class="chip" type="button">Check room rates</button><button class="chip" type="button">Is breakfast included?</button><button class="chip" type="button">How far from Grand Bazaar?</button><button class="chip" type="button">Airport transfer</button></div>' +
+      '<form class="chat-form"><label class="sr-only" for="ci' + (opts.id || '') + '">Message</label><input id="ci' + (opts.id || '') + '" autocomplete="off" placeholder="Ask anything about your stay…"><button class="send" type="submit" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form>';
+    mount.appendChild(el);
+    var log = $('.chat-log', el), input = $('input', el), busy = false;
+    function add(role, html) { var m = document.createElement('div'); m.className = 'msg ' + role; m.innerHTML = html; log.appendChild(m); log.scrollTop = log.scrollHeight; return m; }
+    function esc(s) { return s.replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+    function send(text) {
+      text = (text || '').trim(); if (!text || busy) return;
+      busy = true; add('user', esc(text)); Sound.click();
+      var t = add('bot', '<span class="typing"><i></i><i></i><i></i></span>'); t.style.padding = '0';
+      setTimeout(function () { t.style.padding = ''; t.innerHTML = reply(text); log.scrollTop = log.scrollHeight; busy = false; Sound.chime(); }, reduceMotion ? 200 : 650 + Math.random() * 500);
+    }
+    $('form', el).addEventListener('submit', function (e) { e.preventDefault(); send(input.value); input.value = ''; });
+    $$('.chip', el).forEach(function (c) { c.addEventListener('click', function () { send(c.textContent); }); });
+    add('bot', 'Welcome to Hotel Eliza, Istanbul. I\'m your AI concierge — ask about rates, breakfast, the neighbourhood or transfers.');
+    return { el: el, send: send, focus: function () { input.focus(); } };
+  }
+  var inlineChat = Chat($('#inlineChatMount'), { id: 'a' });
+  $$('.prompt-btn').forEach(function (b) { b.addEventListener('click', function () { inlineChat.send(b.dataset.prompt); }); });
+
+  var fabPanel = $('#fabPanel'), fabBtn = $('#fabBtn');
+  var fabChat = Chat(fabPanel, { id: 'b', closable: true });
+  function setFab(open) {
+    if (open) fabPanel.removeAttribute('hidden'); else fabPanel.setAttribute('hidden', '');
+    fabBtn.setAttribute('aria-expanded', String(open));
+    if (open) setTimeout(fabChat.focus, 50);
+  }
+  fabBtn.addEventListener('click', function () { setFab(fabPanel.hasAttribute('hidden')); Sound.click(); });
+  $('[data-close]', fabPanel).addEventListener('click', function () { setFab(false); fabBtn.focus(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !fabPanel.hasAttribute('hidden')) { setFab(false); fabBtn.focus(); } });
+
+  /* ================= Contact terminal ================= */
+  // Set this to the studio inbox before going live.
+  var CONTACT_EMAIL = 'founder@example.com';
+  var clock = $('#termClock');
+  function tickClock() { clock.textContent = 'IST ' + new Date().toLocaleTimeString('en-GB', { timeZone: 'Europe/Istanbul', hour: '2-digit', minute: '2-digit', second: '2-digit' }); }
+  tickClock(); setInterval(tickClock, 1000);
+  $('#contactForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var f = e.target, st = $('#formStatus');
+    var name = f.name.value.trim(), email = f.email.value.trim();
+    if (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      st.className = 'form-status err'; st.textContent = !name ? 'Required — please add your name.' : 'Required — please add a valid work email.';
+      (!name ? f.name : f.email).focus(); return;
+    }
+    var sys = $$('input[name="sys"]:checked', f).map(function (x) { return x.value; }).join(', ');
+    var body = 'Name: ' + name + '\nEmail: ' + email + '\nProperty: ' + f.hotel.value + '\nKeys: ' + f.rooms.value + '\nSystems: ' + sys + '\n\n' + f.message.value;
+    st.className = 'form-status ok'; st.textContent = 'Transmission ready — opening your mail client…';
+    Sound.chime();
+    window.location.href = 'mailto:' + CONTACT_EMAIL + '?subject=' + encodeURIComponent('Deployment consultation — ' + (f.hotel.value || name)) + '&body=' + encodeURIComponent(body);
+  });
+
+  /* ================= Signature generator ================= */
+  var logoURL = /^https?:/.test(location.protocol) ? new URL('images/axon-logo.jpg', location.href).href : 'https://raw.githubusercontent.com/yukaribakvesakinlesss-hue/Eliza-hotel-chatbot/main/images/axon-logo.jpg';
+  function escA(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function sigHTML(v) {
+    var tel = v.phone.replace(/[^\d+]/g, '');
+    var webLabel = v.web.replace(/^https?:\/\//, '').replace(/\/$/, '');
+    return '<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;font-family:Helvetica,Arial,sans-serif;">' +
+      '<tr><td style="padding:0 18px 0 0;vertical-align:middle;border-right:1px solid #C5A880;">' +
+      '<img src="' + escA(logoURL) + '" width="120" height="80" alt="AXON" style="display:block;width:120px;height:80px;object-fit:cover;border-radius:8px;border:0;"></td>' +
+      '<td style="padding:0 0 0 18px;vertical-align:middle;">' +
+      '<div style="font-size:16px;line-height:20px;font-weight:600;color:#0C1322;letter-spacing:.3px;">' + escA(v.name) + '</div>' +
+      '<div style="font-size:12px;line-height:18px;color:#64748B;">' + escA(v.title) + ' · AXON Systems</div>' +
+      '<div style="font-size:11px;line-height:16px;color:#0284C7;letter-spacing:3px;margin:6px 0 8px;">Λ X O N</div>' +
+      '<div style="font-size:12px;line-height:18px;color:#334155;">' +
+      '<a href="mailto:' + escA(v.email) + '" style="color:#334155;text-decoration:none;">' + escA(v.email) + '</a>' +
+      (tel ? ' &nbsp;·&nbsp; <a href="tel:' + escA(tel) + '" style="color:#334155;text-decoration:none;">' + escA(v.phone) + '</a>' : '') + '</div>' +
+      '<div style="font-size:12px;line-height:18px;">' +
+      '<a href="' + escA(v.web) + '" style="color:#0284C7;text-decoration:none;">' + escA(webLabel) + '</a>' +
+      (v.case ? ' &nbsp;·&nbsp; <a href="' + escA(v.case) + '" style="color:#A8875A;text-decoration:none;">Case study: Hotel Eliza →</a>' : '') + '</div>' +
+      '<div style="font-size:9px;line-height:14px;color:#94A3B8;letter-spacing:1.5px;margin-top:8px;">AUTONOMOUS HOSPITALITY &amp; NEURAL DIGITAL SYSTEMS</div>' +
+      '</td></tr></table>';
+  }
+  function sigValues() { var v = {}; $$('#sigFields input').forEach(function (i) { v[i.dataset.k] = i.value.trim(); }); return v; }
+  function renderSig() { $('#sigPreview').innerHTML = sigHTML(sigValues()); }
+  $$('#sigFields input').forEach(function (i) { i.addEventListener('input', renderSig); });
+  $$('.sig-tool .seg button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      $$('.sig-tool .seg button').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      $('#sigPreview').classList.toggle('dark', b.dataset.bg === 'dark');
+    });
+  });
+  renderSig();
+  function sigMsg(t, ok) { var s = $('#sigStatus'); s.className = 'form-status ' + (ok ? 'ok' : 'err'); s.textContent = t; setTimeout(function () { s.textContent = ''; }, 3000); }
+  function copyText(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(text);
+    return new Promise(function (res, rej) {
+      var ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy') ? res() : rej(); } catch (e) { rej(e); } document.body.removeChild(ta);
+    });
+  }
+  $('#copyHtml').addEventListener('click', function () {
+    copyText(sigHTML(sigValues())).then(function () { sigMsg('HTML copied', true); Sound.chime(); }, function () { sigMsg('Copy failed — select the preview manually'); });
+  });
+  $('#copyRich').addEventListener('click', function () {
+    var html = sigHTML(sigValues());
+    if (window.ClipboardItem && navigator.clipboard && navigator.clipboard.write) {
+      var item = new ClipboardItem({ 'text/html': new Blob([html], { type: 'text/html' }), 'text/plain': new Blob([$('#sigPreview').innerText], { type: 'text/plain' }) });
+      navigator.clipboard.write([item]).then(function () { sigMsg('Signature copied — paste into your mail settings', true); Sound.chime(); }, fallback);
+    } else fallback();
+    function fallback() {
+      var range = document.createRange(); range.selectNodeContents($('#sigPreview'));
+      var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range);
+      try { document.execCommand('copy'); sigMsg('Signature copied', true); } catch (e) { sigMsg('Press Ctrl/⌘+C to copy the selection'); }
+    }
+  });
+
+  $('#yr').textContent = new Date().getFullYear();
+  requestAnimationFrame(function () { document.documentElement.classList.add('loaded'); });
+
+  /* ================= Three.js scene ================= */
+  window.addEventListener('load', function () { initScene(); });
+
+  function webglOK() {
+    try { var c = document.createElement('canvas'); return !!(window.WebGLRenderingContext && (c.getContext('webgl') || c.getContext('experimental-webgl'))); } catch (e) { return false; }
+  }
+
+  function initScene() {
+    if (!window.THREE || !webglOK()) { document.documentElement.classList.add('no-webgl'); return; }
+    var THREE = window.THREE;
+    var canvas = $('#scene'), renderer;
+    try { renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: false, powerPreference: 'high-performance' }); }
+    catch (e) { document.documentElement.classList.add('no-webgl'); return; }
+    var mobile = window.innerWidth < 760;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, mobile ? 1.5 : 1.75));
+    renderer.setClearColor(0x03060C, 1);
+    renderer.outputEncoding = THREE.sRGBEncoding;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.15;
+
+    var scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x03060C, 0.055);
+    var camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+    camera.position.set(0, 0, 7);
+
+    /* --- environment map painted on a canvas: navy void with soft studio lights --- */
+    var envC = document.createElement('canvas'); envC.width = 1024; envC.height = 512;
+    var g = envC.getContext('2d');
+    var bg = g.createLinearGradient(0, 0, 0, 512); bg.addColorStop(0, '#3a4a66'); bg.addColorStop(.45, '#121b2e'); bg.addColorStop(1, '#05080f');
+    g.fillStyle = bg; g.fillRect(0, 0, 1024, 512);
+    function blob(x, y, r, c) { var rg = g.createRadialGradient(x, y, 0, x, y, r); rg.addColorStop(0, c); rg.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = rg; g.fillRect(x - r, y - r, r * 2, r * 2); }
+    blob(512, 90, 220, 'rgba(255,255,255,1)');
+    blob(300, 330, 160, 'rgba(226,232,240,0.55)');
+    blob(220, 200, 140, 'rgba(56,189,248,0.85)');
+    blob(820, 230, 150, 'rgba(96,165,250,0.7)');
+    blob(640, 400, 120, 'rgba(197,168,128,0.6)');
+    blob(60, 300, 110, 'rgba(244,200,255,0.35)');
+    g.fillStyle = 'rgba(255,255,255,0.9)'; g.fillRect(380, 30, 260, 10);
+    var envTex = new THREE.CanvasTexture(envC); envTex.mapping = THREE.EquirectangularReflectionMapping; envTex.encoding = THREE.sRGBEncoding;
+    var pmrem = new THREE.PMREMGenerator(renderer);
+    var envMap = pmrem.fromEquirectangular(envTex).texture;
+    envTex.dispose(); pmrem.dispose();
+
+    /* --- liquid-metal droplets --- */
+    function dropletGeo(R, L) {
+      var pts = [], y0 = R * 0.3, r0 = Math.sqrt(R * R - y0 * y0), N = 90;
+      for (var i = 0; i <= N; i++) {
+        var y = -R + (L + R) * Math.pow(i / N, 1.25), r;
+        if (y <= y0) r = Math.sqrt(Math.max(0, R * R - y * y));
+        else { var t = (y - y0) / (L - y0); r = r0 * Math.pow(1 - t, 2.2) * (1 - 0.15 * t) + 0.004 * (1 - t); }
+        pts.push(new THREE.Vector2(Math.max(r, 0.0001), y));
+      }
+      pts[0].x = 0.0001;
+      return new THREE.LatheGeometry(pts, 96);
+    }
+    var metal = new THREE.MeshPhysicalMaterial({
+      color: 0xe6edf6, metalness: 1, roughness: 0.07, clearcoat: 1, clearcoatRoughness: 0.04,
+      envMap: envMap, envMapIntensity: 2.4, reflectivity: 1
+    });
+    // subtle iridescent fresnel tint
+    metal.onBeforeCompile = function (shader) {
+      shader.uniforms.uTime = { value: 0 }; metal.userData.shader = shader;
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', '#include <common>\nuniform float uTime;')
+        .replace('#include <dithering_fragment>', [
+          'float fres = pow(1.0 - abs(dot(normalize(vViewPosition), normal)), 2.5);',
+          'vec3 iri = 0.5 + 0.5 * cos(6.2831 * (fres * 1.2 + vec3(0.0, 0.33, 0.67) + uTime * 0.04));',
+          'gl_FragColor.rgb = mix(gl_FragColor.rgb, gl_FragColor.rgb * (0.6 + iri) + iri * 0.06, fres * 0.55);',
+          '#include <dithering_fragment>'].join('\n'));
+    };
+
+    var group = new THREE.Group(); scene.add(group);
+    function makeDrop(R, L, pos, dir) {
+      var geo = dropletGeo(R, L);
+      var mesh = new THREE.Mesh(geo, metal);
+      mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir.clone().normalize());
+      mesh.position.copy(pos);
+      var base = geo.attributes.position.array.slice(0);
+      mesh.userData = { base: base, R: R };
+      group.add(mesh); return mesh;
+    }
+    var leftPos = new THREE.Vector3(-1.05, -0.32, 0), rightPos = new THREE.Vector3(1.0, 0.36, 0.1);
+    var dropL = makeDrop(0.36, 2.9, leftPos, new THREE.Vector3(-1, -0.3, 0.05));
+    var dropR = makeDrop(0.46, 3.1, rightPos, new THREE.Vector3(1, 0.32, -0.05));
+
+    function wobble(mesh, t, phase) {
+      var a = mesh.geometry.attributes.position, b = mesh.userData.base, R = mesh.userData.R;
+      for (var i = 0; i < a.count; i++) {
+        var x = b[i * 3], y = b[i * 3 + 1], z = b[i * 3 + 2];
+        if (y > R * 0.9) { a.array[i * 3] = x; a.array[i * 3 + 1] = y; a.array[i * 3 + 2] = z; continue; }
+        var w = 1 + 0.035 * Math.sin(y * 7 + t * 1.6 + phase) * Math.cos(Math.atan2(z, x) * 3 + t * 1.1);
+        a.array[i * 3] = x * w; a.array[i * 3 + 1] = y; a.array[i * 3 + 2] = z * w;
+      }
+      a.needsUpdate = true; mesh.geometry.computeVertexNormals();
+    }
+
+    /* --- energy arc --- */
+    var arcCurve = new THREE.CubicBezierCurve3(
+      leftPos.clone().add(new THREE.Vector3(0.3, 0.05, 0)),
+      new THREE.Vector3(-0.25, -0.15, 0.1),
+      new THREE.Vector3(0.15, 0.42, 0.05),
+      rightPos.clone().add(new THREE.Vector3(-0.42, -0.05, 0))
+    );
+    var arcCore = new THREE.Mesh(new THREE.TubeGeometry(arcCurve, 80, 0.022, 10, false), new THREE.MeshBasicMaterial({ color: 0xbfeaff, transparent: true, opacity: .95, blending: THREE.AdditiveBlending, depthWrite: false }));
+    var arcGlow = new THREE.Mesh(new THREE.TubeGeometry(arcCurve, 80, 0.085, 12, false), new THREE.MeshBasicMaterial({ color: 0x38BDF8, transparent: true, opacity: .18, blending: THREE.AdditiveBlending, depthWrite: false }));
+    group.add(arcCore, arcGlow);
+
+    function glowTexture(stops) {
+      var c = document.createElement('canvas'); c.width = c.height = 128; var x = c.getContext('2d');
+      var rg = x.createRadialGradient(64, 64, 0, 64, 64, 64); stops.forEach(function (s) { rg.addColorStop(s[0], s[1]); });
+      x.fillStyle = rg; x.fillRect(0, 0, 128, 128); var t = new THREE.CanvasTexture(c); return t;
+    }
+    var flareTex = glowTexture([[0, 'rgba(255,255,255,1)'], [.15, 'rgba(190,235,255,.9)'], [.4, 'rgba(56,189,248,.35)'], [1, 'rgba(56,189,248,0)']]);
+    var flare = new THREE.Sprite(new THREE.SpriteMaterial({ map: flareTex, blending: THREE.AdditiveBlending, depthWrite: false, transparent: true }));
+    flare.scale.set(1.1, 1.1, 1); flare.position.copy(arcCurve.getPoint(.5)); group.add(flare);
+    var spark = new THREE.Sprite(new THREE.SpriteMaterial({ map: flareTex, blending: THREE.AdditiveBlending, depthWrite: false, transparent: true }));
+    spark.scale.set(.45, .45, 1); group.add(spark);
+    var halo = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTexture([[0, 'rgba(56,189,248,.22)'], [1, 'rgba(56,189,248,0)']]), blending: THREE.AdditiveBlending, depthWrite: false, transparent: true }));
+    halo.scale.set(7, 4, 1); halo.position.set(0, 0, -1); group.add(halo);
+
+    var keyL = new THREE.PointLight(0x38BDF8, 2.2, 8); keyL.position.set(-2, 1.5, 2.5); scene.add(keyL);
+    var keyR = new THREE.PointLight(0xC5A880, 1.4, 8); keyR.position.set(2.5, -1.5, 2); scene.add(keyR);
+    var arcLight = new THREE.PointLight(0x9fdcff, 2.5, 3); arcLight.position.copy(flare.position); scene.add(arcLight);
+    scene.add(new THREE.AmbientLight(0x1b2740, 0.6));
+
+    /* --- synaptic particle field --- */
+    var N = mobile ? 520 : 760, LINK_N = mobile ? 140 : 220, LINK_D = 1.45;
+    var base = new Float32Array(N * 3), pos = new Float32Array(N * 3), vel = new Float32Array(N * 3), cols = new Float32Array(N * 3), sizes = new Float32Array(N);
+    var cA = new THREE.Color(0x38BDF8), cB = new THREE.Color(0x60A5FA), cC = new THREE.Color(0xE2E8F0), cG = new THREE.Color(0xC5A880), tmp = new THREE.Color();
+    for (var i = 0; i < N; i++) {
+      var link = i < LINK_N;
+      var x = (Math.random() - .5) * (link ? 12 : 22), y = (Math.random() - .5) * (link ? 7.5 : 14), z = link ? (Math.random() * -3.5 + 0.5) : (Math.random() * -12 + 1);
+      if (Math.abs(x) < 1.8 && Math.abs(y) < 0.9 && z > -1.5) z -= 2.2; // keep the hero symbol clear
+      base[i * 3] = pos[i * 3] = x; base[i * 3 + 1] = pos[i * 3 + 1] = y; base[i * 3 + 2] = pos[i * 3 + 2] = z;
+      vel[i * 3] = Math.random() * 6.28; vel[i * 3 + 1] = .15 + Math.random() * .35; vel[i * 3 + 2] = .1 + Math.random() * .3;
+      var r = Math.random(); tmp.copy(r < .5 ? cA : r < .8 ? cB : r < .97 ? cC : cG);
+      cols[i * 3] = tmp.r; cols[i * 3 + 1] = tmp.g; cols[i * 3 + 2] = tmp.b;
+      sizes[i] = (link ? 1.6 : 1) * (0.6 + Math.random() * 1.2);
+    }
+    var pGeo = new THREE.BufferGeometry();
+    pGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    pGeo.setAttribute('color', new THREE.BufferAttribute(cols, 3));
+    pGeo.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+    var pMat = new THREE.ShaderMaterial({
+      uniforms: { uPR: { value: renderer.getPixelRatio() }, uTime: { value: 0 } },
+      vertexShader: 'attribute float size; varying vec3 vC; varying float vA; uniform float uPR; uniform float uTime;\n' +
+        'void main(){ vC = color; vec4 mv = modelViewMatrix * vec4(position,1.0); gl_Position = projectionMatrix * mv;\n' +
+        'float tw = 0.75 + 0.25 * sin(uTime * 2.0 + position.x * 3.0 + position.y * 5.0);\n' +
+        'gl_PointSize = size * tw * uPR * (26.0 / -mv.z); vA = clamp(1.4 - (-mv.z) / 16.0, 0.15, 1.0); }',
+      fragmentShader: 'varying vec3 vC; varying float vA; void main(){ float d = length(gl_PointCoord - 0.5); float a = smoothstep(0.5, 0.0, d); a = pow(a, 1.6); gl_FragColor = vec4(vC * (1.0 + a), a * vA); }',
+      vertexColors: true, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending
+    });
+    var points = new THREE.Points(pGeo, pMat); scene.add(points);
+
+    var MAX_SEG = 2600;
+    var lPos = new Float32Array(MAX_SEG * 6), lCol = new Float32Array(MAX_SEG * 6);
+    var lGeo = new THREE.BufferGeometry();
+    lGeo.setAttribute('position', new THREE.BufferAttribute(lPos, 3).setUsage(THREE.DynamicDrawUsage));
+    lGeo.setAttribute('color', new THREE.BufferAttribute(lCol, 3).setUsage(THREE.DynamicDrawUsage));
+    var lines = new THREE.LineSegments(lGeo, new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 1, blending: THREE.AdditiveBlending, depthWrite: false }));
+    scene.add(lines);
+
+    /* --- interaction --- */
+    var mouse = { x: 0, y: 0, tx: 0, ty: 0, active: false }, world = new THREE.Vector3(), ray = new THREE.Raycaster(), plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0.5);
+    window.addEventListener('pointermove', function (e) {
+      mouse.tx = (e.clientX / window.innerWidth) * 2 - 1; mouse.ty = -(e.clientY / window.innerHeight) * 2 + 1; mouse.active = true;
+    }, { passive: true });
+    document.addEventListener('pointerleave', function () { mouse.active = false; });
+    var scrollP = 0, heroP = 0;
+    function onScroll() { var h = document.documentElement.scrollHeight - window.innerHeight; scrollP = h > 0 ? window.scrollY / h : 0; heroP = Math.min(1, window.scrollY / window.innerHeight); }
+    window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+    function resize() {
+      var w = window.innerWidth, h = window.innerHeight;
+      renderer.setSize(w, h, false); camera.aspect = w / h;
+      camera.fov = w < 760 ? 60 : 45; camera.updateProjectionMatrix();
+      group.scale.setScalar(w < 760 ? .78 : 1);
+    }
+    window.addEventListener('resize', resize); resize();
+
+    var clock = new THREE.Clock(), running = true, camY = 0, camZ = 7, pull = new THREE.Vector3();
+    document.addEventListener('visibilitychange', function () { running = !document.hidden; if (running) { clock.getDelta(); loop(); } });
+
+    function updateLinks() {
+      var n = 0, d2max = LINK_D * LINK_D;
+      for (var a = 0; a < LINK_N && n < MAX_SEG; a++) {
+        var ax = pos[a * 3], ay = pos[a * 3 + 1], az = pos[a * 3 + 2];
+        for (var b = a + 1; b < LINK_N && n < MAX_SEG; b++) {
+          var dx = ax - pos[b * 3], dy = ay - pos[b * 3 + 1], dz = az - pos[b * 3 + 2], d2 = dx * dx + dy * dy + dz * dz;
+          if (d2 < d2max) {
+            var f = 1 - Math.sqrt(d2) / LINK_D; f = f * f * .55;
+            var o = n * 6;
+            lPos[o] = ax; lPos[o + 1] = ay; lPos[o + 2] = az; lPos[o + 3] = pos[b * 3]; lPos[o + 4] = pos[b * 3 + 1]; lPos[o + 5] = pos[b * 3 + 2];
+            lCol[o] = .22 * f; lCol[o + 1] = .74 * f; lCol[o + 2] = .97 * f; lCol[o + 3] = .38 * f; lCol[o + 4] = .65 * f; lCol[o + 5] = .98 * f;
+            n++;
+          }
+        }
+      }
+      lGeo.setDrawRange(0, n * 2);
+      lGeo.attributes.position.needsUpdate = true; lGeo.attributes.color.needsUpdate = true;
+    }
+
+    var tAccum = 0;
+    function loop() {
+      if (!running) return;
+      requestAnimationFrame(loop);
+      var dt = Math.min(clock.getDelta(), .05), speed = reduceMotion ? .15 : 1;
+      tAccum += dt * speed; var t = tAccum;
+
+      mouse.x += (mouse.tx - mouse.x) * .05; mouse.y += (mouse.ty - mouse.y) * .05;
+      ray.setFromCamera({ x: mouse.tx, y: mouse.ty }, camera); ray.ray.intersectPlane(plane, world);
+
+      // droplets
+      group.position.y = Math.sin(t * .6) * .08 + heroP * 2.6 + scrollP * 2.2;
+      group.position.z = -heroP * 3.5;
+      group.rotation.y = mouse.x * .35 + Math.sin(t * .25) * .12 + scrollP * 1.6;
+      group.rotation.x = -mouse.y * .18 + scrollP * .4;
+      group.rotation.z = Math.sin(t * .3) * .03;
+      if (!reduceMotion) { wobble(dropL, t, 0); wobble(dropR, t, 1.7); }
+      var pulseV = .5 + .5 * Math.sin(t * 2.2);
+      flare.scale.setScalar(.9 + pulseV * .5);
+      arcGlow.material.opacity = .12 + pulseV * .14;
+      arcLight.intensity = 1.6 + pulseV * 1.8;
+      var s = (Math.sin(t * .9) + 1) / 2; spark.position.copy(arcCurve.getPoint(s)); spark.material.opacity = .5 + .5 * Math.sin(s * Math.PI);
+      if (metal.userData.shader) metal.userData.shader.uniforms.uTime.value = t;
+
+      // particles
+      for (var i = 0; i < N; i++) {
+        var i3 = i * 3, ph = vel[i3];
+        var tx = base[i3] + Math.sin(t * vel[i3 + 1] + ph) * .35, ty = base[i3 + 1] + Math.cos(t * vel[i3 + 2] + ph) * .3, tz = base[i3 + 2];
+        if (mouse.active && i < LINK_N) {
+          var dx = world.x - tx, dy = world.y - ty, d = Math.sqrt(dx * dx + dy * dy);
+          if (d < 2.6) { var k = (1 - d / 2.6); k = k * k * .9; tx += dx * k; ty += dy * k; }
+        }
+        pos[i3] += (tx - pos[i3]) * .08; pos[i3 + 1] += (ty - pos[i3 + 1]) * .08; pos[i3 + 2] = tz;
+      }
+      pGeo.attributes.position.needsUpdate = true;
+      pMat.uniforms.uTime.value = t;
+      updateLinks();
+      points.rotation.y = lines.rotation.y = mouse.x * .06;
+
+      // camera: parallax + scroll pan
+      camY += ((-scrollP * 3.2 + mouse.y * .25) - camY) * .06;
+      camZ += ((7 + scrollP * 2.5) - camZ) * .06;
+      camera.position.set(mouse.x * .45, camY, camZ);
+      camera.lookAt(0, camY * .85, 0);
+
+      renderer.render(scene, camera);
+    }
+    loop();
+  }
+})();
+</script>
+</body>
+</html>
