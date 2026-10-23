@@ -482,6 +482,69 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
 .pa-you { white-space: normal; font: 400 11px/1.4 var(--font-mono); color: var(--violet); margin-bottom: 6px; }
 .pa-chips { padding: 0 var(--space-6) var(--space-3); }
 
+
+/* Partners: result line */
+.partner-res { margin: 6px 0 0; font: 400 13px/1.5 var(--font-sans); color: var(--chrome-200); }
+
+/* Process */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-4); counter-reset: none; }
+@media (max-width: 1000px) { .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .steps { grid-template-columns: minmax(0, 1fr); } }
+.step { padding: var(--space-6); display: grid; gap: var(--space-3); align-content: start; position: relative; }
+.step-n { font: 500 12px/1 var(--font-mono); letter-spacing: .2em; color: var(--synapse); }
+.step b { font: 500 19px/1.3 var(--font-display); color: var(--chrome-50); }
+.step span:last-child { font: 400 14px/1.6 var(--font-sans); color: var(--chrome-400); }
+.step:not(:last-child)::after { content: ""; position: absolute; top: 34px; right: -14px; width: 12px; height: 1px; background: linear-gradient(90deg, var(--synapse), transparent); }
+@media (max-width: 1000px) { .step::after { display: none; } }
+
+/* Packages */
+.pkg-pills { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: calc(var(--space-16) * -.5) 0 var(--space-8); }
+.pkgs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-4); align-items: stretch; }
+@media (max-width: 1100px) { .pkgs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .pkgs { grid-template-columns: minmax(0, 1fr); } }
+.pkg { padding: clamp(22px, 2.6vw, 32px); display: flex; flex-direction: column; gap: var(--space-3); position: relative; }
+.pkg h3 { margin: 0; font: 500 26px/1.1 var(--font-display); color: var(--chrome-50); }
+.pkg > p { margin: 0; font: 400 14px/1.5 var(--font-sans); color: var(--chrome-400); min-height: 3em; }
+.pkg-price { padding: var(--space-3) 0; border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); font: 500 15px/1.3 var(--font-sans); color: var(--chrome-50); }
+.pkg ul { list-style: none; margin: 0 0 var(--space-4); padding: 0; display: grid; gap: var(--space-2); }
+.pkg li { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: var(--space-2); font: 400 14px/1.45 var(--font-sans); color: var(--chrome-200); }
+.pkg li::before { content: "✓"; color: var(--synapse); font-weight: 600; }
+.pkg .btn { margin-top: auto; width: 100%; }
+.pkg-featured { border-color: rgba(56, 189, 248, .45); box-shadow: var(--shadow-synapse); }
+.pkg-bonus { border-color: rgba(129, 140, 248, .4); }
+.pkg-badge { align-self: flex-start; font: 500 10px/1 var(--font-mono); letter-spacing: .16em; text-transform: uppercase; padding: 7px 10px; border-radius: var(--radius-pill); border: 1px solid rgba(56, 189, 248, .5); color: var(--synapse); }
+.pkg-badge-violet { border-color: rgba(129, 140, 248, .55); color: var(--violet); }
+.pkg-note { margin: var(--space-6) 0 0; font: 400 14px/1.6 var(--font-sans); color: var(--chrome-400); max-width: 760px; }
+.faq-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-8); margin-top: var(--space-16); }
+@media (max-width: 900px) { .faq-grid { grid-template-columns: minmax(0, 1fr); } }
+.faq-col { padding: clamp(20px, 3vw, 32px); background: rgba(7, 12, 24, .82); }
+.faq-h { margin: 0 0 var(--space-4); font: 500 20px/1.3 var(--font-display); color: var(--chrome-50); }
+.terms { margin: 0; border-top: 1px solid var(--hairline); }
+.terms div { display: grid; grid-template-columns: minmax(110px, 160px) minmax(0, 1fr); gap: var(--space-4); padding: var(--space-3) 0; border-bottom: 1px solid var(--hairline); }
+.terms dt { font: 600 14px/1.5 var(--font-sans); color: var(--synapse); }
+.terms dd { margin: 0; font: 400 14px/1.55 var(--font-sans); color: var(--chrome-200); }
+.faq { border-top: 1px solid var(--hairline); }
+.faq details { border-bottom: 1px solid var(--hairline); }
+.faq summary { cursor: pointer; list-style: none; padding: var(--space-4) 0; display: flex; justify-content: space-between; gap: var(--space-4); font: 500 15px/1.45 var(--font-sans); color: var(--chrome-50); }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; color: var(--synapse); font: 400 18px/1 var(--font-mono); transition: transform .3s var(--ease); }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq details p { margin: 0 0 var(--space-4); font: 400 14px/1.6 var(--font-sans); color: var(--chrome-400); }
+
+/* About */
+.about { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: center; padding: clamp(24px, 4vw, 48px); }
+@media (max-width: 700px) { .about { grid-template-columns: minmax(0, 1fr); } }
+.about-photo { width: clamp(120px, 16vw, 200px); aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center; background: radial-gradient(circle at 35% 30%, rgba(248, 250, 252, .9), rgba(148, 163, 184, .5) 40%, var(--void-800) 75%); box-shadow: 0 0 40px var(--synapse-glow); border: 1px solid var(--hairline-strong); }
+.about-photo span { font: 500 clamp(28px, 4vw, 44px)/1 var(--font-display); letter-spacing: .1em; color: var(--void-950); }
+.about-text .section-title { margin-bottom: var(--space-3); }
+.about-meta { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-6); }
+.about-meta a { text-decoration: none; }
+
+/* Storage notice */
+.store-note { position: fixed; left: max(16px, env(safe-area-inset-left)); bottom: max(16px, env(safe-area-inset-bottom)); z-index: 59; max-width: min(420px, calc(100vw - 110px)); padding: var(--space-3) var(--space-3) var(--space-3) var(--space-4); display: flex; align-items: center; gap: var(--space-3); font: 400 13px/1.45 var(--font-sans); color: var(--chrome-200); box-shadow: var(--shadow-glass); background: rgba(7, 12, 24, .85); }
+.store-note[hidden] { display: none; }
+.store-note .btn { padding: 10px 16px; flex: none; }
+
 /* Cursor glow (desktop) */
 .cursor-glow { position: fixed; left: 0; top: 0; width: 420px; height: 420px; margin: -210px 0 0 -210px; border-radius: 50%; background: radial-gradient(circle, rgba(56, 189, 248, .07), transparent 60%); pointer-events: none; z-index: 1; transform: translate3d(-999px, -999px, 0); }
 @media (hover: none) { .cursor-glow { display: none; } }
@@ -503,7 +566,7 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
       <li><a href="#systems" data-i18n="nav_systems">Systems</a></li>
       <li><a href="#demo" data-i18n="nav_demo">Live Demo</a></li>
       <li><a href="#partners" data-i18n="nav_partners">Partners</a></li>
-      <li><a href="#architecture" data-i18n="nav_arch">Architecture</a></li>
+      <li><a href="#packages" data-i18n="nav_packages">Packages</a></li>
       <li><a href="#consultation" data-i18n="nav_consult">Consultation</a></li>
     </ul>
     <div class="nav-right">
@@ -523,7 +586,7 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
     <a href="#systems" data-i18n="nav_systems">Systems</a>
     <a href="#demo" data-i18n="nav_demo">Live Demo</a>
     <a href="#partners" data-i18n="nav_partners">Partners</a>
-    <a href="#architecture" data-i18n="nav_arch">Architecture</a>
+    <a href="#packages" data-i18n="nav_packages">Packages</a>
     <a href="#consultation" data-i18n="nav_consult">Consultation</a>
     <div class="lang lang-mobile" role="group" aria-label="Language" data-i18n-aria="lang_label">
       <button type="button" data-lang="tr">TR</button><button type="button" data-lang="en">EN</button><button type="button" data-lang="de">DE</button><button type="button" data-lang="fr">FR</button>
@@ -692,9 +755,9 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
       <h2 class="section-title" id="partTitle" data-i18n="part_title">Businesses we work with.</h2>
       <p class="section-lead" data-i18n="part_lead">Properties running AXON systems in production.</p>
     </div>
-    <!-- Partner list: add a <li class="partner glass"> per hotel (name + city only). -->
+    <!-- Partner list: add a <li class="partner glass"> per client (name, city, one result line). -->
     <ul class="partners reveal">
-      <li class="partner glass"><span class="dot ok"></span><b>Hotel Eliza</b><span>Istanbul</span></li>
+      <li class="partner glass"><span class="dot ok"></span><b>Hotel Eliza</b><span>Istanbul</span><p class="partner-res" data-i18n="ref_eliza">Direct booking engine, 24/7 multilingual AI concierge and WhatsApp automation.</p></li>
       <li class="partner partner-next"><a href="#consultation"><b data-i18n="part_next_b">Your hotel</b><span data-i18n="part_next_s">Next deployment →</span></a></li>
     </ul>
   </div>
@@ -773,11 +836,102 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
   </div>
 </section>
 
+<!-- ===== Process ===== -->
+<section class="section" id="process" aria-labelledby="procTitle">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow" data-i18n="proc_eyebrow">04 — Process</div>
+      <h2 class="section-title" id="procTitle" data-i18n="proc_title">Live in four steps.</h2>
+      <p class="section-lead" data-i18n="proc_lead">You always know what happens next.</p>
+    </div>
+    <ol class="steps reveal">
+      <li class="step glass"><span class="step-n">01</span><b data-i18n="pr1_t">Free discovery call</b><span data-i18n="pr1_p"></span></li>
+      <li class="step glass"><span class="step-n">02</span><b data-i18n="pr2_t">Proposal and plan</b><span data-i18n="pr2_p"></span></li>
+      <li class="step glass"><span class="step-n">03</span><b data-i18n="pr3_t">Setup and integration</b><span data-i18n="pr3_p"></span></li>
+      <li class="step glass"><span class="step-n">04</span><b data-i18n="pr4_t">Training and go-live</b><span data-i18n="pr4_p"></span></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ===== Packages ===== -->
+<section class="section" id="packages" aria-labelledby="pkgTitle">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow" data-i18n="pkg_eyebrow">05 — Packages</div>
+      <h2 class="section-title" id="pkgTitle" data-i18n="pkg_title">Set up once. Supported every month.</h2>
+      <p class="section-lead" data-i18n="pkg_lead">Your systems are set up once; a monthly package keeps them running, improving and monitored.</p>
+    </div>
+    <div class="pkg-pills reveal">
+      <span class="pill" data-i18n="pkg_pill1">Billed monthly</span>
+      <span class="pill" data-i18n="pkg_pill2">Secure payment with iyzico</span>
+      <span class="pill" data-i18n="pkg_pill3">Cancel anytime</span>
+    </div>
+    <div class="pkgs">
+      <article class="pkg glass reveal">
+        <h3>Start</h3>
+        <p data-i18n="pk1_for">For small businesses starting with one system.</p>
+        <div class="pkg-price" data-i18n="pkg_price">Monthly fee by quote</div>
+        <ul><li data-i18n="pk1_1"></li><li data-i18n="pk1_2"></li><li data-i18n="pk1_3"></li><li data-i18n="pk1_4"></li></ul>
+        <a class="btn btn-ghost" href="#consultation" data-magnetic data-i18n="pkg_cta">Get a quote</a>
+      </article>
+      <article class="pkg pkg-featured glass reveal">
+        <span class="pkg-badge" data-i18n="pkg_rec">Recommended</span>
+        <h3>Pro</h3>
+        <p data-i18n="pk2_for">For growing hotels, clinics and companies.</p>
+        <div class="pkg-price" data-i18n="pkg_price">Monthly fee by quote</div>
+        <ul><li data-i18n="pk2_1"></li><li data-i18n="pk2_2"></li><li data-i18n="pk2_3"></li><li data-i18n="pk2_4"></li><li data-i18n="pk2_5"></li></ul>
+        <a class="btn btn-primary" href="#consultation" data-magnetic data-i18n="pkg_cta">Get a quote</a>
+      </article>
+      <article class="pkg glass reveal">
+        <h3 data-i18n="pk3_name">Enterprise</h3>
+        <p data-i18n="pk3_for">For chains and multi-location operations.</p>
+        <div class="pkg-price" data-i18n="pkg_price">Monthly fee by quote</div>
+        <ul><li data-i18n="pk3_1"></li><li data-i18n="pk3_2"></li><li data-i18n="pk3_3"></li><li data-i18n="pk3_4"></li><li data-i18n="pk3_5"></li></ul>
+        <a class="btn btn-ghost" href="#consultation" data-magnetic data-i18n="pkg_cta">Get a quote</a>
+      </article>
+      <article class="pkg pkg-bonus glass reveal">
+        <span class="pkg-badge pkg-badge-violet" data-i18n="pkg_bonus">Bonus · Private</span>
+        <h3 data-i18n="pk4_name">Personal Assistant</h3>
+        <p data-i18n="pk4_for">For owners and executives.</p>
+        <div class="pkg-price" data-i18n="pkg_price">Monthly fee by quote</div>
+        <ul><li data-i18n="pk4_1"></li><li data-i18n="pk4_2"></li><li data-i18n="pk4_3"></li><li data-i18n="pk4_4"></li></ul>
+        <a class="btn btn-ghost" href="#personal" data-magnetic data-i18n="pkg_cta_pa">Try the demo</a>
+      </article>
+    </div>
+    <p class="pkg-note reveal" data-i18n="pkg_setup">One-time setup fee depends on the systems you choose. Every package includes setup support and team training.</p>
+
+    <div class="faq-grid">
+      <div class="faq-col glass reveal">
+        <h3 class="faq-h" data-i18n="terms_h">Subscription terms</h3>
+        <dl class="terms">
+          <div><dt data-i18n="tm1_t">Billing</dt><dd data-i18n="tm1_d"></dd></div>
+          <div><dt data-i18n="tm2_t">Payment</dt><dd data-i18n="tm2_d"></dd></div>
+          <div><dt data-i18n="tm3_t">Renewal</dt><dd data-i18n="tm3_d"></dd></div>
+          <div><dt data-i18n="tm4_t">Price changes</dt><dd data-i18n="tm4_d"></dd></div>
+          <div><dt data-i18n="tm5_t">Cancellation</dt><dd data-i18n="tm5_d"></dd></div>
+          <div><dt data-i18n="tm6_t">Refund</dt><dd data-i18n="tm6_d"></dd></div>
+          <div><dt data-i18n="tm7_t">Your data</dt><dd data-i18n="tm7_d"></dd></div>
+        </dl>
+      </div>
+      <div class="faq-col glass reveal">
+        <h3 class="faq-h" data-i18n="faq_h">Frequently asked questions</h3>
+        <div class="faq">
+          <details><summary data-i18n="fq1_q"></summary><p data-i18n="fq1_a"></p></details>
+          <details><summary data-i18n="fq2_q"></summary><p data-i18n="fq2_a"></p></details>
+          <details><summary data-i18n="fq3_q"></summary><p data-i18n="fq3_a"></p></details>
+          <details><summary data-i18n="fq4_q"></summary><p data-i18n="fq4_a"></p></details>
+          <details><summary data-i18n="fq5_q"></summary><p data-i18n="fq5_a"></p></details>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ===== Architecture ===== -->
 <section class="section" id="architecture" aria-labelledby="archTitle">
   <div class="wrap">
     <div class="section-head reveal">
-      <div class="eyebrow" data-i18n="arch_eyebrow">04 — Architecture</div>
+      <div class="eyebrow" data-i18n="arch_eyebrow">06 — Architecture</div>
       <h2 class="section-title" id="archTitle" data-i18n="arch_title">From click to confirmed in one pulse.</h2>
       <p class="section-lead" data-i18n="arch_lead">A serverless event chain.</p>
     </div>
@@ -798,7 +952,7 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
 <section class="section" id="concierge" aria-labelledby="concTitle">
   <div class="wrap sandbox">
     <div class="reveal">
-      <div class="eyebrow" data-i18n="conc_eyebrow">05 — Live AI Assistant Demo</div>
+      <div class="eyebrow" data-i18n="conc_eyebrow">07 — Live AI Assistant Demo</div>
       <h2 class="section-title" id="concTitle" data-i18n="conc_title">Ask AXON.</h2>
       <p class="section-lead" data-i18n="conc_lead">The same assistant layer we train on a hotel's own knowledge — here trained on AXON.</p>
       <div class="prompt-list">
@@ -811,11 +965,30 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
   </div>
 </section>
 
+<!-- ===== About ===== -->
+<section class="section" id="about" aria-labelledby="aboutTitle">
+  <div class="wrap">
+    <div class="about glass reveal">
+      <div class="about-photo" aria-hidden="true"><span>GG</span></div>
+      <div class="about-text">
+        <div class="eyebrow" data-i18n="ab_eyebrow">08 — About</div>
+        <h2 class="section-title" id="aboutTitle" data-i18n="ab_title">The team behind AXON.</h2>
+        <p class="section-lead" data-i18n="ab_p">AXON was founded in Istanbul by Gülcan Genç.</p>
+        <div class="about-meta">
+          <span class="pill"><b>Gülcan Genç</b>&nbsp;·&nbsp;<span data-i18n="ab_role">Founder</span></span>
+          <a class="pill wa-link" target="_blank" rel="noopener">WhatsApp</a>
+          <span class="pill">gulcanyesilbudak@icloud.com</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ===== Consultation ===== -->
 <section class="section" id="consultation" aria-labelledby="consTitle">
   <div class="wrap">
     <div class="section-head reveal">
-      <div class="eyebrow" data-i18n="cons_eyebrow">06 — Executive Consultation</div>
+      <div class="eyebrow" data-i18n="cons_eyebrow">09 — Executive Consultation</div>
       <h2 class="section-title" id="consTitle" data-i18n="cons_title">Schedule a deployment.</h2>
       <p class="section-lead" data-i18n="cons_lead">Tell us about your property.</p>
     </div>
@@ -886,11 +1059,13 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
         <p style="margin:var(--space-4) 0 0;color:var(--chrome-400);max-width:360px" data-i18n="foot_tag">AI systems for hotels, clinics and companies. Built in Istanbul.</p>
       </div>
       <div><h4 class="eyebrow" data-i18n="nav_systems">Systems</h4><ul><li><a href="#systems" data-i18n="chk1">Reservation management</a></li><li><a href="#systems" data-i18n="chk2">Website design</a></li><li><a href="#concierge" data-i18n="chk3">AI chatbot</a></li><li><a href="#personal" data-i18n="chk5">Personal assistant</a></li></ul></div>
-      <div><h4 class="eyebrow" data-i18n="foot_studio">Studio</h4><ul><li><a href="#demo" data-i18n="nav_demo">Live Demo</a></li><li><a href="#partners" data-i18n="nav_partners">Partners</a></li><li><a href="#consultation" data-i18n="nav_consult">Consultation</a></li><li><a class="wa-link" target="_blank" rel="noopener">WhatsApp</a></li></ul></div>
+      <div><h4 class="eyebrow" data-i18n="foot_studio">Studio</h4><ul><li><a href="#demo" data-i18n="nav_demo">Live Demo</a></li><li><a href="#partners" data-i18n="nav_partners">Partners</a></li><li><a href="#process" data-i18n="nav_process">Process</a></li><li><a href="#packages" data-i18n="nav_packages">Packages</a></li><li><a href="#architecture" data-i18n="nav_arch">Architecture</a></li><li><a href="#about" data-i18n="nav_about">About</a></li><li><a href="#consultation" data-i18n="nav_consult">Consultation</a></li><li><a class="wa-link" target="_blank" rel="noopener">WhatsApp</a></li></ul></div>
     </div>
     <div class="foot-bottom"><span>© <span id="yr"></span> AXON SYSTEMS</span><span>Λ X O N · AI SYSTEMS</span></div>
   </div>
 </footer>
+
+<div class="store-note glass" id="storeNote" role="status" hidden><span data-i18n="store_note">This site stores your language choice in your browser.</span><button type="button" class="btn btn-ghost" id="storeOk" data-i18n="store_ok">OK</button></div>
 
 <!-- Floating WhatsApp + assistant -->
 <a class="wa-fab wa-link" target="_blank" rel="noopener" aria-label="WhatsApp" data-i18n-aria="wa_aria"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.2.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg></a>
@@ -1047,11 +1222,11 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
       
       
       
-      arch_eyebrow: '04 — Architecture', arch_title: 'From click to confirmed in one pulse.', arch_lead: 'A serverless event chain. Each reservation travels the same path — watch it run.',
+      arch_eyebrow: '06 — Architecture', arch_title: 'From click to confirmed in one pulse.', arch_lead: 'A serverless event chain. Each reservation travels the same path — watch it run.',
       n1e: 'Edge', n1b: 'Guest interface', n1s: 'Booking engine · 3D map · concierge', n2e: 'Yield', n2b: 'Rate & quota core', n2s: 'Availability · FX · pricing rules', n3e: 'Payments', n3s: 'Tokenised card · bank challenge', n4e: 'Events', n4b: 'Webhook bus', n4s: 'Confirm · invoice · audit', n5e: 'Dispatch', n5b: 'Omni-channel',
-      conc_eyebrow: '05 — Live AI Assistant Demo', conc_title: 'Ask AXON.', conc_lead: 'The same assistant we train on each client\'s own knowledge — here trained on AXON. Try a prompt below or type your own.',
+      conc_eyebrow: '07 — Live AI Assistant Demo', conc_title: 'Ask AXON.', conc_lead: 'The same assistant we train on each client\'s own knowledge — here trained on AXON. Try a prompt below or type your own.',
       p1: 'What systems do you offer?', p2: 'How does the AI concierge work?', p3: 'Which payments do you support?', c4: 'Do you charge OTA commission?', c5: 'Book a demo',
-      cons_eyebrow: '06 — Executive Consultation', cons_title: 'Schedule a deployment.', cons_lead: 'Tell us about your business. We respond within one business day with a plan and timeline.',
+      cons_eyebrow: '09 — Executive Consultation', cons_title: 'Schedule a deployment.', cons_lead: 'Tell us about your business. We respond within one business day with a plan and timeline.',
       term: 'Contact Terminal', f_name: 'Full name', ph_name: 'Your name', f_email: 'Work email', f_hotel: 'Company', ph_hotel: 'Company, hotel or clinic · city', f_keys: 'Size', f_sys: 'Systems of interest',
       f_brief: 'Brief', ph_brief: 'Current booking stack, OTA share, launch window…',
       form_note: 'No data is stored on this page', form_btn: 'Request Consultation', wa_btn: 'WhatsApp', wa_aria: 'Message us on WhatsApp',
@@ -1105,11 +1280,11 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
       
       
       
-      arch_eyebrow: '04 — Mimari', arch_title: 'Tıklamadan onaya tek nabızda.', arch_lead: 'Sunucusuz bir olay zinciri. Her rezervasyon aynı yoldan geçer — izleyin.',
+      arch_eyebrow: '06 — Mimari', arch_title: 'Tıklamadan onaya tek nabızda.', arch_lead: 'Sunucusuz bir olay zinciri. Her rezervasyon aynı yoldan geçer — izleyin.',
       n1e: 'Ön yüz', n1b: 'Misafir arayüzü', n1s: 'Rezervasyon motoru · 3D harita · konsiyerj', n2e: 'Gelir', n2b: 'Fiyat & kontenjan çekirdeği', n2s: 'Müsaitlik · kur · fiyat kuralları', n3e: 'Ödeme', n3s: 'Tokenize kart · banka doğrulaması', n4e: 'Olaylar', n4b: 'Webhook hattı', n4s: 'Onay · fatura · kayıt', n5e: 'Bildirim', n5b: 'Çok kanallı',
-      conc_eyebrow: '05 — Canlı Yapay Zekâ Demosu', conc_title: 'AXON\'a sorun.', conc_lead: 'Her müşterimizin kendi bilgileriyle eğittiğimiz asistan — burada AXON hakkında eğitildi. Aşağıdaki sorulardan birini deneyin ya da kendi sorunuzu yazın.',
+      conc_eyebrow: '07 — Canlı Yapay Zekâ Demosu', conc_title: 'AXON\'a sorun.', conc_lead: 'Her müşterimizin kendi bilgileriyle eğittiğimiz asistan — burada AXON hakkında eğitildi. Aşağıdaki sorulardan birini deneyin ya da kendi sorunuzu yazın.',
       p1: 'Hangi sistemleri sunuyorsunuz?', p2: 'Yapay zekâ konsiyerj nasıl çalışıyor?', p3: 'Hangi ödeme yöntemlerini destekliyorsunuz?', c4: 'OTA komisyonu alıyor musunuz?', c5: 'Demo talep et',
-      cons_eyebrow: '06 — Yönetici Danışmanlığı', cons_title: 'Kurulum planlayın.', cons_lead: 'İşletmenizi anlatın. Bir iş günü içinde plan ve takvimle dönüş yapıyoruz.',
+      cons_eyebrow: '09 — Yönetici Danışmanlığı', cons_title: 'Kurulum planlayın.', cons_lead: 'İşletmenizi anlatın. Bir iş günü içinde plan ve takvimle dönüş yapıyoruz.',
       term: 'İletişim Terminali', f_name: 'Ad soyad', ph_name: 'Adınız', f_email: 'İş e-postası', f_hotel: 'Şirket', ph_hotel: 'Şirket, otel veya klinik · şehir', f_keys: 'Büyüklük', f_sys: 'İlgilendiğiniz sistemler',
       f_brief: 'Kısa bilgi', ph_brief: 'Mevcut rezervasyon altyapısı, OTA payı, hedef tarih…',
       form_note: 'Bu sayfada hiçbir veri saklanmaz', form_btn: 'Danışmanlık Talep Et', wa_btn: 'WhatsApp', wa_aria: 'WhatsApp\'tan yazın',
@@ -1163,11 +1338,11 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
       
       
       
-      arch_eyebrow: '04 — Architektur', arch_title: 'Vom Klick zur Bestätigung in einem Impuls.', arch_lead: 'Eine serverlose Ereigniskette. Jede Buchung nimmt denselben Weg — sehen Sie zu.',
+      arch_eyebrow: '06 — Architektur', arch_title: 'Vom Klick zur Bestätigung in einem Impuls.', arch_lead: 'Eine serverlose Ereigniskette. Jede Buchung nimmt denselben Weg — sehen Sie zu.',
       n1e: 'Edge', n1b: 'Gästeoberfläche', n1s: 'Buchungs-Engine · 3D-Karte · Concierge', n2e: 'Yield', n2b: 'Preis- & Kontingentkern', n2s: 'Verfügbarkeit · Wechselkurs · Preisregeln', n3e: 'Zahlungen', n3s: 'Tokenisierte Karte · Bankprüfung', n4e: 'Ereignisse', n4b: 'Webhook-Bus', n4s: 'Bestätigung · Rechnung · Protokoll', n5e: 'Versand', n5b: 'Omnichannel',
-      conc_eyebrow: '05 — Live-KI-Assistent', conc_title: 'Fragen Sie AXON.', conc_lead: 'Derselbe Assistent, den wir mit dem Wissen jedes Kunden trainieren — hier auf AXON trainiert. Probieren Sie eine Frage aus oder schreiben Sie Ihre eigene.',
+      conc_eyebrow: '07 — Live-KI-Assistent', conc_title: 'Fragen Sie AXON.', conc_lead: 'Derselbe Assistent, den wir mit dem Wissen jedes Kunden trainieren — hier auf AXON trainiert. Probieren Sie eine Frage aus oder schreiben Sie Ihre eigene.',
       p1: 'Welche Systeme bieten Sie an?', p2: 'Wie funktioniert der KI-Concierge?', p3: 'Welche Zahlungen unterstützen Sie?', c4: 'Berechnen Sie OTA-Provision?', c5: 'Demo buchen',
-      cons_eyebrow: '06 — Beratung', cons_title: 'Einführung planen.', cons_lead: 'Erzählen Sie uns von Ihrem Unternehmen. Wir melden uns innerhalb eines Werktags mit Plan und Zeitrahmen.',
+      cons_eyebrow: '09 — Beratung', cons_title: 'Einführung planen.', cons_lead: 'Erzählen Sie uns von Ihrem Unternehmen. Wir melden uns innerhalb eines Werktags mit Plan und Zeitrahmen.',
       term: 'Kontaktterminal', f_name: 'Vollständiger Name', ph_name: 'Ihr Name', f_email: 'Geschäftliche E-Mail', f_hotel: 'Unternehmen', ph_hotel: 'Unternehmen, Hotel oder Klinik · Stadt', f_keys: 'Größe', f_sys: 'Gewünschte Systeme',
       f_brief: 'Kurzbeschreibung', ph_brief: 'Aktuelles Buchungssystem, OTA-Anteil, Zeitplan…',
       form_note: 'Auf dieser Seite werden keine Daten gespeichert', form_btn: 'Beratung anfragen', wa_btn: 'WhatsApp', wa_aria: 'Schreiben Sie uns auf WhatsApp',
@@ -1221,11 +1396,11 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
       
       
       
-      arch_eyebrow: '04 — Architecture', arch_title: 'Du clic à la confirmation en une impulsion.', arch_lead: 'Une chaîne d\'événements serverless. Chaque réservation suit le même chemin — regardez-la passer.',
+      arch_eyebrow: '06 — Architecture', arch_title: 'Du clic à la confirmation en une impulsion.', arch_lead: 'Une chaîne d\'événements serverless. Chaque réservation suit le même chemin — regardez-la passer.',
       n1e: 'Edge', n1b: 'Interface client', n1s: 'Moteur de réservation · carte 3D · concierge', n2e: 'Yield', n2b: 'Cœur tarifs & quotas', n2s: 'Disponibilité · devises · règles tarifaires', n3e: 'Paiements', n3s: 'Carte tokenisée · validation bancaire', n4e: 'Événements', n4b: 'Bus webhook', n4s: 'Confirmation · facture · journal', n5e: 'Envois', n5b: 'Omnicanal',
-      conc_eyebrow: '05 — Démo de l\'assistant IA', conc_title: 'Demandez à AXON.', conc_lead: 'Le même assistant que nous entraînons sur les connaissances de chaque client — ici entraîné sur AXON. Essayez une question ou écrivez la vôtre.',
+      conc_eyebrow: '07 — Démo de l\'assistant IA', conc_title: 'Demandez à AXON.', conc_lead: 'Le même assistant que nous entraînons sur les connaissances de chaque client — ici entraîné sur AXON. Essayez une question ou écrivez la vôtre.',
       p1: 'Quels systèmes proposez-vous ?', p2: 'Comment fonctionne le concierge IA ?', p3: 'Quels paiements acceptez-vous ?', c4: 'Prenez-vous une commission OTA ?', c5: 'Réserver une démo',
-      cons_eyebrow: '06 — Consultation', cons_title: 'Planifier un déploiement.', cons_lead: 'Parlez-nous de votre entreprise. Nous répondons sous un jour ouvré avec un plan et un calendrier.',
+      cons_eyebrow: '09 — Consultation', cons_title: 'Planifier un déploiement.', cons_lead: 'Parlez-nous de votre entreprise. Nous répondons sous un jour ouvré avec un plan et un calendrier.',
       term: 'Terminal de contact', f_name: 'Nom complet', ph_name: 'Votre nom', f_email: 'E-mail professionnel', f_hotel: 'Entreprise', ph_hotel: 'Entreprise, hôtel ou clinique · ville', f_keys: 'Taille', f_sys: 'Systèmes souhaités',
       f_brief: 'Brief', ph_brief: 'Outils de réservation actuels, part OTA, calendrier…',
       form_note: 'Aucune donnée n\'est enregistrée sur cette page', form_btn: 'Demander une consultation', wa_btn: 'WhatsApp', wa_aria: 'Écrivez-nous sur WhatsApp',
@@ -1363,6 +1538,142 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
     }
   };
   Object.keys(I18N_SYS).forEach(function (l) { Object.keys(I18N_SYS[l]).forEach(function (k) { I18N[l][k] = I18N_SYS[l][k]; }); });
+  // Process, packages, terms, FAQ, about and storage-notice copy
+  var I18N_MORE = {
+    en: {
+      nav_packages: 'Packages', nav_process: 'Process', nav_about: 'About',
+      ref_eliza: 'Direct booking engine, 24/7 multilingual AI concierge and WhatsApp automation.',
+      proc_eyebrow: '04 — Process', proc_title: 'Live in four steps.', proc_lead: 'You always know what happens next — from the first call to go-live.',
+      pr1_t: 'Free discovery call', pr1_p: 'We listen to your business, your channels and your goals in 30 minutes.',
+      pr2_t: 'Proposal and plan', pr2_p: 'You get the right systems for you, a timeline and a price — in writing.',
+      pr3_t: 'Setup and integration', pr3_p: 'We set up the systems, connect them to your channels and test them with you.',
+      pr4_t: 'Training and go-live', pr4_p: 'We train your team, take the system live and start monitoring it.',
+      pkg_eyebrow: '05 — Packages', pkg_title: 'Set up once. Supported every month.', pkg_lead: 'Your systems are set up once; a monthly package keeps them running, improving and monitored. The monthly fee is quoted for your business.',
+      pkg_pill1: 'Billed monthly', pkg_pill2: 'Secure payment with iyzico', pkg_pill3: 'Cancel anytime',
+      pkg_price: 'Monthly fee by quote', pkg_cta: 'Get a quote', pkg_cta_pa: 'Try the demo', pkg_rec: 'Recommended', pkg_bonus: 'Bonus · Private',
+      pk1_for: 'For small businesses starting with one system.', pk1_1: 'One system of your choice', pk1_2: 'Hosting and security updates', pk1_3: 'Monthly performance report', pk1_4: 'Email support, reply within 2 business days',
+      pk2_for: 'For growing hotels, clinics and companies.', pk2_1: 'Reservation Management + AI Assistant', pk2_2: 'AI usage costs included', pk2_3: 'A new automation scenario every month', pk2_4: 'Weekly performance report', pk2_5: 'WhatsApp support, same-day reply',
+      pk3_name: 'Enterprise', pk3_for: 'For chains and multi-location operations.', pk3_1: 'All five systems', pk3_2: 'Multiple locations and teams', pk3_3: 'Custom development roadmap', pk3_4: 'Guaranteed response times (SLA)', pk3_5: 'Dedicated project manager and monthly review',
+      pk4_name: 'Personal Assistant', pk4_for: 'For owners and executives.', pk4_1: 'An assistant created for you alone', pk4_2: 'Calendar, email and WhatsApp connected', pk4_3: 'Daily briefing and reminders', pk4_4: 'Personal WhatsApp support line',
+      pkg_setup: 'A one-time setup fee depends on the systems you choose. Every package includes setup support and team training.',
+      terms_h: 'Subscription terms', faq_h: 'Frequently asked questions',
+      tm1_t: 'Billing', tm1_d: 'Monthly. Yearly billing is available with a discount.',
+      tm2_t: 'Payment', tm2_d: 'Charged automatically to your saved card through iyzico. Your card details are never stored by AXON.',
+      tm3_t: 'Renewal', tm3_d: 'Renews automatically at the end of each period unless cancelled.',
+      tm4_t: 'Price changes', tm4_d: 'Never without at least 30 days\' written notice.',
+      tm5_t: 'Cancellation', tm5_d: 'By email or WhatsApp. The service continues until the end of the paid period.',
+      tm6_t: 'Refund', tm6_d: 'Yearly packages are fully refunded if cancelled within the first 14 days.',
+      tm7_t: 'Your data', tm7_d: 'Your data belongs to you. On cancellation we hand over an export.',
+      fq1_q: 'How long does setup take?', fq1_a: 'It depends on the systems and channels. After the first call you get a plan with dates.',
+      fq2_q: 'Does it work with my current website?', fq2_a: 'Yes. The chatbot and assistant can be added to your existing site — or we redesign the site for you.',
+      fq3_q: 'Which channels are supported?', fq3_a: 'Your website, WhatsApp, email, SMS and Instagram.',
+      fq4_q: 'Is there a minimum contract?', fq4_a: 'Monthly packages renew every month and can be cancelled anytime.',
+      fq5_q: 'Which languages does the AI speak?', fq5_a: 'Turkish, English, German and French out of the box; more languages on request.',
+      ab_eyebrow: '08 — About', ab_title: 'The team behind AXON.', ab_role: 'Founder',
+      ab_p: 'AXON was founded in Istanbul by Gülcan Genç. We build and run AI systems for hotels, clinics and companies — from the first call to daily support.',
+      store_note: 'This site stores your language choice in your browser. No tracking cookies.', store_ok: 'OK'
+    },
+    tr: {
+      nav_packages: 'Paketler', nav_process: 'Süreç', nav_about: 'Hakkımızda',
+      ref_eliza: 'Doğrudan rezervasyon motoru, 7/24 çok dilli yapay zekâ konsiyerj ve WhatsApp otomasyonu.',
+      proc_eyebrow: '04 — Süreç', proc_title: 'Dört adımda canlıdasınız.', proc_lead: 'İlk görüşmeden canlıya almaya kadar her adımda ne olacağını bilirsiniz.',
+      pr1_t: 'Ücretsiz keşif görüşmesi', pr1_p: 'İşletmenizi, kanallarınızı ve hedeflerinizi 30 dakikada dinliyoruz.',
+      pr2_t: 'Teklif ve plan', pr2_p: 'Size uygun sistemleri, takvimi ve fiyatı yazılı olarak sunuyoruz.',
+      pr3_t: 'Kurulum ve entegrasyon', pr3_p: 'Sistemleri kuruyor, kanallarınıza bağlıyor ve sizinle birlikte test ediyoruz.',
+      pr4_t: 'Eğitim ve canlıya alma', pr4_p: 'Ekibinizi eğitiyor, sistemi canlıya alıyor ve izlemeye başlıyoruz.',
+      pkg_eyebrow: '05 — Paketler', pkg_title: 'Kurulum bir kez. Destek her ay.', pkg_lead: 'Sistemleriniz bir kez kurulur; aylık paketle çalışır, gelişir ve izlenir. Aylık bedel işletmenize göre teklifle belirlenir.',
+      pkg_pill1: 'Aylık faturalanır', pkg_pill2: 'iyzico ile güvenli ödeme', pkg_pill3: 'Dilediğiniz zaman iptal',
+      pkg_price: 'Aylık bedel teklife göre', pkg_cta: 'Teklif al', pkg_cta_pa: 'Demoyu deneyin', pkg_rec: 'Önerilen', pkg_bonus: 'Bonus · Özel',
+      pk1_for: 'Tek sistemle başlayan küçük işletmeler için.', pk1_1: 'Seçtiğiniz bir sistem', pk1_2: 'Barındırma ve güvenlik güncellemeleri', pk1_3: 'Aylık performans raporu', pk1_4: 'E-posta destek, 2 iş günü içinde yanıt',
+      pk2_for: 'Büyüyen oteller, klinikler ve şirketler için.', pk2_1: 'Rezervasyon Yönetimi + Yapay Zekâ Asistanı', pk2_2: 'Yapay zekâ kullanım bedeli dahil', pk2_3: 'Her ay yeni bir otomasyon senaryosu', pk2_4: 'Haftalık performans raporu', pk2_5: 'WhatsApp destek, aynı gün yanıt',
+      pk3_name: 'Kurumsal', pk3_for: 'Zincirler ve çok lokasyonlu işletmeler için.', pk3_1: 'Beş sistemin tamamı', pk3_2: 'Birden fazla lokasyon ve ekip', pk3_3: 'Size özel geliştirme takvimi', pk3_4: 'Garantili yanıt süresi (SLA)', pk3_5: 'Proje yöneticisi ve aylık değerlendirme',
+      pk4_name: 'Kişisel Asistan', pk4_for: 'İşletme sahipleri ve yöneticiler için.', pk4_1: 'Yalnızca size özel asistan', pk4_2: 'Takvim, e-posta ve WhatsApp bağlantısı', pk4_3: 'Günlük özet ve hatırlatmalar', pk4_4: 'Kişisel WhatsApp destek hattı',
+      pkg_setup: 'Tek seferlik kurulum bedeli seçtiğiniz sistemlere göre belirlenir. Her pakete kurulum desteği ve ekip eğitimi dahildir.',
+      terms_h: 'Abonelik koşulları', faq_h: 'Sık sorulan sorular',
+      tm1_t: 'Faturalama', tm1_d: 'Aylık. Yıllık ödemede indirimli seçenek vardır.',
+      tm2_t: 'Ödeme', tm2_d: 'iyzico üzerinden kayıtlı kartınızdan otomatik tahsil edilir. Kart bilgileriniz AXON\'da saklanmaz.',
+      tm3_t: 'Yenileme', tm3_d: 'İptal edilmedikçe her dönem sonunda kendiliğinden yenilenir.',
+      tm4_t: 'Fiyat değişikliği', tm4_d: 'En az 30 gün önceden yazılı bildirim yapılmadan değişmez.',
+      tm5_t: 'İptal', tm5_d: 'E-posta veya WhatsApp ile. Hizmet, ödenmiş dönemin sonuna kadar devam eder.',
+      tm6_t: 'İade', tm6_d: 'Yıllık paketlerde ilk 14 gün içindeki iptallerde ödemenin tamamı iade edilir.',
+      tm7_t: 'Verileriniz', tm7_d: 'Verileriniz size aittir. İptalde dışa aktarım sağlanır.',
+      fq1_q: 'Kurulum ne kadar sürer?', fq1_a: 'Sistemlere ve kanallara göre değişir. İlk görüşmeden sonra tarihli bir plan paylaşıyoruz.',
+      fq2_q: 'Mevcut web sitemle çalışır mı?', fq2_a: 'Evet. Chatbot ve asistan mevcut sitenize eklenebilir; isterseniz siteyi de biz yeniliyoruz.',
+      fq3_q: 'Hangi kanallar destekleniyor?', fq3_a: 'Web siteniz, WhatsApp, e-posta, SMS ve Instagram.',
+      fq4_q: 'Taahhüt var mı?', fq4_a: 'Aylık paketler her ay yenilenir ve dilediğiniz zaman iptal edilebilir.',
+      fq5_q: 'Yapay zekâ hangi dilleri konuşuyor?', fq5_a: 'Türkçe, İngilizce, Almanca ve Fransızca hazır; talebe göre başka diller de eklenir.',
+      ab_eyebrow: '08 — Hakkımızda', ab_title: 'AXON\'un arkasındaki ekip.', ab_role: 'Kurucu',
+      ab_p: 'AXON, Gülcan Genç tarafından İstanbul\'da kuruldu. Oteller, klinikler ve şirketler için yapay zekâ sistemlerini kuruyor ve işletiyoruz — ilk görüşmeden günlük desteğe kadar.',
+      store_note: 'Bu site dil tercihinizi tarayıcınızda saklar. Takip çerezi kullanılmaz.', store_ok: 'Tamam'
+    },
+    de: {
+      nav_packages: 'Pakete', nav_process: 'Ablauf', nav_about: 'Über uns',
+      ref_eliza: 'Direktbuchungs-Engine, mehrsprachiger KI-Concierge rund um die Uhr und WhatsApp-Automation.',
+      proc_eyebrow: '04 — Ablauf', proc_title: 'In vier Schritten live.', proc_lead: 'Vom ersten Gespräch bis zum Go-live wissen Sie immer, was als Nächstes passiert.',
+      pr1_t: 'Kostenloses Erstgespräch', pr1_p: 'Wir hören uns Ihr Unternehmen, Ihre Kanäle und Ziele in 30 Minuten an.',
+      pr2_t: 'Angebot und Plan', pr2_p: 'Sie erhalten die passenden Systeme, einen Zeitplan und einen Preis — schriftlich.',
+      pr3_t: 'Einrichtung und Integration', pr3_p: 'Wir richten die Systeme ein, verbinden sie mit Ihren Kanälen und testen sie mit Ihnen.',
+      pr4_t: 'Schulung und Go-live', pr4_p: 'Wir schulen Ihr Team, schalten das System live und überwachen es.',
+      pkg_eyebrow: '05 — Pakete', pkg_title: 'Einmal einrichten. Jeden Monat betreut.', pkg_lead: 'Ihre Systeme werden einmal eingerichtet; ein Monatspaket hält sie in Betrieb, entwickelt sie weiter und überwacht sie. Die Monatsgebühr wird für Ihr Unternehmen angeboten.',
+      pkg_pill1: 'Monatliche Abrechnung', pkg_pill2: 'Sichere Zahlung mit iyzico', pkg_pill3: 'Jederzeit kündbar',
+      pkg_price: 'Monatsgebühr nach Angebot', pkg_cta: 'Angebot anfordern', pkg_cta_pa: 'Demo testen', pkg_rec: 'Empfohlen', pkg_bonus: 'Bonus · Privat',
+      pk1_for: 'Für kleine Unternehmen, die mit einem System starten.', pk1_1: 'Ein System Ihrer Wahl', pk1_2: 'Hosting und Sicherheitsupdates', pk1_3: 'Monatlicher Leistungsbericht', pk1_4: 'E-Mail-Support, Antwort in 2 Werktagen',
+      pk2_for: 'Für wachsende Hotels, Kliniken und Unternehmen.', pk2_1: 'Reservierungsmanagement + KI-Assistent', pk2_2: 'KI-Nutzungskosten inklusive', pk2_3: 'Jeden Monat ein neues Automationsszenario', pk2_4: 'Wöchentlicher Leistungsbericht', pk2_5: 'WhatsApp-Support, Antwort am selben Tag',
+      pk3_name: 'Enterprise', pk3_for: 'Für Ketten und Betriebe mit mehreren Standorten.', pk3_1: 'Alle fünf Systeme', pk3_2: 'Mehrere Standorte und Teams', pk3_3: 'Individueller Entwicklungsplan', pk3_4: 'Garantierte Reaktionszeiten (SLA)', pk3_5: 'Projektmanager und monatliches Review',
+      pk4_name: 'Persönlicher Assistent', pk4_for: 'Für Inhaber und Führungskräfte.', pk4_1: 'Ein Assistent nur für Sie', pk4_2: 'Kalender, E-Mail und WhatsApp verbunden', pk4_3: 'Tägliches Briefing und Erinnerungen', pk4_4: 'Persönliche WhatsApp-Supportlinie',
+      pkg_setup: 'Die einmalige Einrichtungsgebühr richtet sich nach den gewählten Systemen. Jedes Paket enthält Einrichtungssupport und Teamschulung.',
+      terms_h: 'Abonnementbedingungen', faq_h: 'Häufige Fragen',
+      tm1_t: 'Abrechnung', tm1_d: 'Monatlich. Jährliche Zahlung mit Rabatt möglich.',
+      tm2_t: 'Zahlung', tm2_d: 'Automatische Abbuchung von Ihrer hinterlegten Karte über iyzico. AXON speichert keine Kartendaten.',
+      tm3_t: 'Verlängerung', tm3_d: 'Verlängert sich am Ende jedes Zeitraums automatisch, sofern nicht gekündigt.',
+      tm4_t: 'Preisänderungen', tm4_d: 'Nur mit mindestens 30 Tagen schriftlicher Ankündigung.',
+      tm5_t: 'Kündigung', tm5_d: 'Per E-Mail oder WhatsApp. Der Service läuft bis zum Ende des bezahlten Zeitraums.',
+      tm6_t: 'Erstattung', tm6_d: 'Jahrespakete werden bei Kündigung in den ersten 14 Tagen vollständig erstattet.',
+      tm7_t: 'Ihre Daten', tm7_d: 'Ihre Daten gehören Ihnen. Bei Kündigung erhalten Sie einen Export.',
+      fq1_q: 'Wie lange dauert die Einrichtung?', fq1_a: 'Das hängt von Systemen und Kanälen ab. Nach dem Erstgespräch erhalten Sie einen Plan mit Terminen.',
+      fq2_q: 'Funktioniert es mit meiner bestehenden Website?', fq2_a: 'Ja. Chatbot und Assistent lassen sich in Ihre Website einbinden — oder wir gestalten sie neu.',
+      fq3_q: 'Welche Kanäle werden unterstützt?', fq3_a: 'Ihre Website, WhatsApp, E-Mail, SMS und Instagram.',
+      fq4_q: 'Gibt es eine Mindestlaufzeit?', fq4_a: 'Monatspakete verlängern sich monatlich und sind jederzeit kündbar.',
+      fq5_q: 'Welche Sprachen spricht die KI?', fq5_a: 'Türkisch, Englisch, Deutsch und Französisch; weitere Sprachen auf Anfrage.',
+      ab_eyebrow: '08 — Über uns', ab_title: 'Das Team hinter AXON.', ab_role: 'Gründerin',
+      ab_p: 'AXON wurde von Gülcan Genç in Istanbul gegründet. Wir bauen und betreiben KI-Systeme für Hotels, Kliniken und Unternehmen — vom ersten Gespräch bis zum täglichen Support.',
+      store_note: 'Diese Website speichert Ihre Sprachwahl in Ihrem Browser. Keine Tracking-Cookies.', store_ok: 'OK'
+    },
+    fr: {
+      nav_packages: 'Offres', nav_process: 'Méthode', nav_about: 'À propos',
+      ref_eliza: 'Moteur de réservation directe, concierge IA multilingue 24/7 et automatisation WhatsApp.',
+      proc_eyebrow: '04 — Méthode', proc_title: 'En ligne en quatre étapes.', proc_lead: 'Du premier appel à la mise en ligne, vous savez toujours ce qui vient ensuite.',
+      pr1_t: 'Appel découverte gratuit', pr1_p: 'Nous écoutons votre activité, vos canaux et vos objectifs en 30 minutes.',
+      pr2_t: 'Proposition et plan', pr2_p: 'Vous recevez les systèmes adaptés, un calendrier et un prix — par écrit.',
+      pr3_t: 'Installation et intégration', pr3_p: 'Nous installons les systèmes, les connectons à vos canaux et les testons avec vous.',
+      pr4_t: 'Formation et mise en ligne', pr4_p: 'Nous formons votre équipe, mettons le système en ligne et le surveillons.',
+      pkg_eyebrow: '05 — Offres', pkg_title: 'Installé une fois. Accompagné chaque mois.', pkg_lead: 'Vos systèmes sont installés une fois ; une offre mensuelle les fait tourner, évoluer et surveiller. Le tarif mensuel est établi sur devis.',
+      pkg_pill1: 'Facturation mensuelle', pkg_pill2: 'Paiement sécurisé avec iyzico', pkg_pill3: 'Résiliable à tout moment',
+      pkg_price: 'Tarif mensuel sur devis', pkg_cta: 'Demander un devis', pkg_cta_pa: 'Essayer la démo', pkg_rec: 'Recommandé', pkg_bonus: 'Bonus · Privé',
+      pk1_for: 'Pour les petites entreprises qui démarrent avec un système.', pk1_1: 'Un système au choix', pk1_2: 'Hébergement et mises à jour de sécurité', pk1_3: 'Rapport de performance mensuel', pk1_4: 'Support e-mail, réponse sous 2 jours ouvrés',
+      pk2_for: 'Pour les hôtels, cliniques et entreprises en croissance.', pk2_1: 'Gestion des réservations + Assistant IA', pk2_2: 'Coûts d\'utilisation de l\'IA inclus', pk2_3: 'Un nouveau scénario d\'automatisation chaque mois', pk2_4: 'Rapport de performance hebdomadaire', pk2_5: 'Support WhatsApp, réponse le jour même',
+      pk3_name: 'Entreprise', pk3_for: 'Pour les chaînes et les sites multiples.', pk3_1: 'Les cinq systèmes', pk3_2: 'Plusieurs sites et équipes', pk3_3: 'Feuille de route sur mesure', pk3_4: 'Délais de réponse garantis (SLA)', pk3_5: 'Chef de projet et revue mensuelle',
+      pk4_name: 'Assistant personnel', pk4_for: 'Pour les dirigeants et propriétaires.', pk4_1: 'Un assistant créé pour vous seul', pk4_2: 'Agenda, e-mail et WhatsApp connectés', pk4_3: 'Briefing quotidien et rappels', pk4_4: 'Ligne de support WhatsApp personnelle',
+      pkg_setup: 'Les frais d\'installation uniques dépendent des systèmes choisis. Chaque offre inclut l\'accompagnement à l\'installation et la formation de l\'équipe.',
+      terms_h: 'Conditions d\'abonnement', faq_h: 'Questions fréquentes',
+      tm1_t: 'Facturation', tm1_d: 'Mensuelle. Paiement annuel possible avec remise.',
+      tm2_t: 'Paiement', tm2_d: 'Prélevé automatiquement sur votre carte enregistrée via iyzico. AXON ne conserve aucune donnée de carte.',
+      tm3_t: 'Renouvellement', tm3_d: 'Renouvelé automatiquement à la fin de chaque période, sauf résiliation.',
+      tm4_t: 'Changement de prix', tm4_d: 'Jamais sans un préavis écrit d\'au moins 30 jours.',
+      tm5_t: 'Résiliation', tm5_d: 'Par e-mail ou WhatsApp. Le service continue jusqu\'à la fin de la période payée.',
+      tm6_t: 'Remboursement', tm6_d: 'Les offres annuelles sont intégralement remboursées en cas de résiliation dans les 14 premiers jours.',
+      tm7_t: 'Vos données', tm7_d: 'Vos données vous appartiennent. En cas de résiliation, nous vous remettons un export.',
+      fq1_q: 'Combien de temps dure l\'installation ?', fq1_a: 'Cela dépend des systèmes et des canaux. Après le premier appel, vous recevez un plan daté.',
+      fq2_q: 'Est-ce compatible avec mon site actuel ?', fq2_a: 'Oui. Le chatbot et l\'assistant s\'ajoutent à votre site — ou nous le refaisons pour vous.',
+      fq3_q: 'Quels canaux sont pris en charge ?', fq3_a: 'Votre site, WhatsApp, e-mail, SMS et Instagram.',
+      fq4_q: 'Y a-t-il un engagement ?', fq4_a: 'Les offres mensuelles se renouvellent chaque mois et sont résiliables à tout moment.',
+      fq5_q: 'Quelles langues parle l\'IA ?', fq5_a: 'Turc, anglais, allemand et français ; d\'autres langues sur demande.',
+      ab_eyebrow: '08 — À propos', ab_title: 'L\'équipe derrière AXON.', ab_role: 'Fondatrice',
+      ab_p: 'AXON a été fondée à Istanbul par Gülcan Genç. Nous construisons et opérons des systèmes IA pour hôtels, cliniques et entreprises — du premier appel au support quotidien.',
+      store_note: 'Ce site enregistre votre choix de langue dans votre navigateur. Aucun cookie de suivi.', store_ok: 'OK'
+    }
+  };
+  Object.keys(I18N_MORE).forEach(function (l) { Object.keys(I18N_MORE[l]).forEach(function (k) { I18N[l][k] = I18N_MORE[l][k]; }); });
   var lang = 'en';
   try { var saved = localStorage.getItem('axonLang'); if (LANGS.indexOf(saved) > -1) lang = saved; } catch (e) {}
   if (lang === 'en') { var nl = (navigator.language || 'en').slice(0, 2).toLowerCase(); var stored = null; try { stored = localStorage.getItem('axonLang'); } catch (e) {} if (!stored && LANGS.indexOf(nl) > -1) lang = nl; }
@@ -1765,6 +2076,12 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
       try { document.execCommand('copy'); sigMsg(t('m_sig'), true); } catch (e) { sigMsg(t('m_fail')); }
     }
   });
+
+  // one-line storage notice: the page keeps only the language choice and the intro flag
+  var storeNote = $('#storeNote'), storeSeen = false;
+  try { storeSeen = localStorage.getItem('axonStoreOk') === '1'; } catch (e) {}
+  if (!storeSeen) storeNote.removeAttribute('hidden');
+  $('#storeOk').addEventListener('click', function () { storeNote.setAttribute('hidden', ''); try { localStorage.setItem('axonStoreOk', '1'); } catch (e) {} });
 
   applyLang(lang);
 
