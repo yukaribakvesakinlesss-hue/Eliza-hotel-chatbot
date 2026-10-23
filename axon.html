@@ -110,8 +110,8 @@ main, footer { position: relative; z-index: 2; }
   background: linear-gradient(180deg, #FFFFFF 0%, #E2E8F0 45%, #94A3B8 70%, #F8FAFC 100%);
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
-.nav-links { display: flex; gap: clamp(16px, 2.2vw, 32px); list-style: none; margin: 0; padding: 0; }
-.nav-links a { color: var(--chrome-400); text-decoration: none; font-size: 13px; letter-spacing: .08em; transition: color .3s; position: relative; }
+.nav-links { display: flex; gap: clamp(14px, 1.8vw, 28px); list-style: none; margin: 0; padding: 0; }
+.nav-links a { white-space: nowrap; color: var(--chrome-400); text-decoration: none; font-size: 13px; letter-spacing: .08em; transition: color .3s; position: relative; }
 .nav-links a::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 1px; background: var(--synapse); transform: scaleX(0); transition: transform .4s var(--ease); }
 .nav-links a:hover, .nav-links a.active { color: var(--chrome-50); }
 .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
@@ -123,7 +123,7 @@ main, footer { position: relative; z-index: 2; }
 .icon-btn[aria-pressed="true"] { color: var(--synapse); border-color: rgba(56, 189, 248, .5); }
 .menu-toggle { display: none; }
 .mobile-menu { display: none; }
-@media (max-width: 960px) {
+@media (max-width: 1240px) {
   .nav-links { display: none; }
   .brand .logo-mark { width: 56px; height: 17px; background-size: 155.3px 103.5px; background-position: -50px -31px; }
   .menu-toggle { display: inline-grid; }
@@ -420,6 +420,35 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
 .intro.done { opacity: 0; visibility: hidden; pointer-events: none; }
 .intro-skip { position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); background: none; border: 0; color: var(--chrome-400); font: 500 11px/1 var(--font-mono); letter-spacing: .24em; text-transform: uppercase; cursor: pointer; }
 
+
+/* Language switch */
+.lang { display: inline-flex; padding: 3px; border-radius: var(--radius-pill); border: 1px solid var(--hairline); background: rgba(2, 4, 8, .5); }
+.lang button { border: 0; background: transparent; color: var(--chrome-400); font: 500 11px/1 var(--font-mono); letter-spacing: .08em; padding: 7px 8px; border-radius: var(--radius-pill); cursor: pointer; transition: color .3s, background .3s; }
+.lang button:hover { color: var(--chrome-50); }
+.lang button[aria-pressed="true"] { background: var(--chrome-50); color: var(--void-950); }
+.lang-mobile { justify-self: start; margin-top: var(--space-2); }
+@media (max-width: 1240px) { .nav .lang:not(.lang-mobile) { display: none; } }
+
+/* Partners */
+.partners { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: var(--space-4); }
+.partner { min-height: 132px; padding: var(--space-6); display: grid; align-content: end; gap: 6px; position: relative; }
+.partner .dot { position: absolute; top: var(--space-6); right: var(--space-6); }
+.partner b { font: 500 22px/1.15 var(--font-display); color: var(--chrome-50); letter-spacing: .02em; }
+.partner span:not(.dot) { font: 400 12px/1.4 var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--chrome-400); }
+.partner-next { padding: 0; display: grid; }
+.partner-next a { min-height: 132px; padding: var(--space-6); display: grid; align-content: end; gap: 6px; border: 1px dashed var(--hairline-strong); border-radius: var(--radius-lg); text-decoration: none; transition: border-color .3s, background .3s; }
+.partner-next a:hover { border-color: var(--hairline-active); background: var(--glass); }
+.partner-next b { color: var(--chrome-200); }
+.partner-next span { color: var(--synapse) !important; }
+
+/* WhatsApp */
+.form-btns { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.wa-link svg { width: 18px; height: 18px; }
+.wa-fab { position: fixed; right: max(16px, env(safe-area-inset-right)); bottom: calc(max(16px, env(safe-area-inset-bottom)) + 66px); z-index: 60; width: 50px; height: 50px; border-radius: 50%; display: grid; place-items: center; color: var(--chrome-50); background: rgba(7, 12, 24, .72); border: 1px solid var(--hairline-strong); -webkit-backdrop-filter: blur(var(--blur-glass)); backdrop-filter: blur(var(--blur-glass)); box-shadow: var(--shadow-glass); transition: border-color .3s, box-shadow .3s, transform .3s var(--ease); }
+.wa-fab:hover { border-color: rgba(94, 234, 212, .6); box-shadow: var(--shadow-glass), 0 0 24px rgba(94, 234, 212, .3); transform: translateY(-2px); }
+.wa-fab svg { width: 22px; height: 22px; }
+.fab-panel { z-index: 61; }
+
 /* Cursor glow (desktop) */
 .cursor-glow { position: fixed; left: 0; top: 0; width: 420px; height: 420px; margin: -210px 0 0 -210px; border-radius: 50%; background: radial-gradient(circle, rgba(56, 189, 248, .07), transparent 60%); pointer-events: none; z-index: 1; transform: translate3d(-999px, -999px, 0); }
 @media (hover: none) { .cursor-glow { display: none; } }
@@ -427,7 +456,7 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
 </head>
 <body>
 
-<div class="intro" id="intro" aria-hidden="true"><img src="images/axon-logo.jpg" alt=""><button class="intro-skip" type="button" tabindex="-1">Enter</button></div>
+<div class="intro" id="intro" aria-hidden="true"><img src="images/axon-logo.jpg" alt=""><button class="intro-skip" type="button" tabindex="-1" data-i18n="intro_skip">Enter</button></div>
 <canvas id="scene" aria-hidden="true"></canvas>
 <div class="scene-fallback" aria-hidden="true"><img src="images/axon-logo.jpg" alt=""></div>
 <div class="vignette" aria-hidden="true"></div>
@@ -436,29 +465,37 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
 <!-- ===== Header ===== -->
 <header class="nav-shell">
   <nav class="nav glass" aria-label="Primary">
-    <a href="#top" class="brand" aria-label="AXON — home"><span class="logo-mark" aria-hidden="true"></span><span class="wordmark chrome-text">Λ X O N</span></a>
+    <a href="#top" class="brand" aria-label="AXON"><span class="logo-mark" aria-hidden="true"></span><span class="wordmark chrome-text">Λ X O N</span></a>
     <ul class="nav-links">
-      <li><a href="#systems">Systems</a></li>
-      <li><a href="#demo">Case Study: Hotel Eliza</a></li>
-      <li><a href="#architecture">Architecture</a></li>
-      <li><a href="#consultation">Consultation</a></li>
+      <li><a href="#systems" data-i18n="nav_systems">Systems</a></li>
+      <li><a href="#demo" data-i18n="nav_demo">Live Demo</a></li>
+      <li><a href="#partners" data-i18n="nav_partners">Partners</a></li>
+      <li><a href="#architecture" data-i18n="nav_arch">Architecture</a></li>
+      <li><a href="#consultation" data-i18n="nav_consult">Consultation</a></li>
     </ul>
     <div class="nav-right">
-      <button class="icon-btn" id="soundToggle" aria-pressed="false" aria-label="Toggle interface sound" title="Interface sound">
+      <div class="lang" role="group" aria-label="Language" data-i18n-aria="lang_label">
+        <button type="button" data-lang="tr">TR</button><button type="button" data-lang="en">EN</button><button type="button" data-lang="de">DE</button><button type="button" data-lang="fr">FR</button>
+      </div>
+      <button class="icon-btn" id="soundToggle" aria-pressed="false" aria-label="Sound" data-i18n-aria="sound">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path class="wave" d="M15.5 8.5a5 5 0 0 1 0 7"/><path class="wave" d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
       </button>
-      <a href="#consultation" class="btn btn-primary" data-magnetic>Schedule Deployment</a>
-      <button class="icon-btn menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu">
+      <a href="#consultation" class="btn btn-primary" data-magnetic data-i18n="cta_deploy">Schedule Deployment</a>
+      <button class="icon-btn menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Menu" data-i18n-aria="menu">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 8h16M4 16h16"/></svg>
       </button>
     </div>
   </nav>
   <div class="mobile-menu glass" id="mobileMenu" hidden>
-    <a href="#systems">Systems</a>
-    <a href="#demo">Case Study: Hotel Eliza</a>
-    <a href="#architecture">Architecture</a>
-    <a href="#consultation">Consultation</a>
-    <a href="#consultation" class="btn btn-primary">Schedule Deployment</a>
+    <a href="#systems" data-i18n="nav_systems">Systems</a>
+    <a href="#demo" data-i18n="nav_demo">Live Demo</a>
+    <a href="#partners" data-i18n="nav_partners">Partners</a>
+    <a href="#architecture" data-i18n="nav_arch">Architecture</a>
+    <a href="#consultation" data-i18n="nav_consult">Consultation</a>
+    <div class="lang lang-mobile" role="group" aria-label="Language" data-i18n-aria="lang_label">
+      <button type="button" data-lang="tr">TR</button><button type="button" data-lang="en">EN</button><button type="button" data-lang="de">DE</button><button type="button" data-lang="fr">FR</button>
+    </div>
+    <a href="#consultation" class="btn btn-primary" data-i18n="cta_deploy">Schedule Deployment</a>
   </div>
 </header>
 
@@ -467,26 +504,26 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
 <!-- ===== Hero ===== -->
 <section class="hero" aria-labelledby="heroTitle">
   <div class="wrap hero-inner">
-    <div class="eyebrow">Autonomous Hospitality &amp; Neural Digital Systems</div>
-    <div class="badge-3d"><a class="badge" id="liveBadge" href="#demo"><span class="dot"></span>Live in production: Hotel Eliza Istanbul</a></div>
+    <div class="eyebrow" data-i18n="tagline">Autonomous Hospitality &amp; Neural Digital Systems</div>
+    <div class="badge-3d"><a class="badge" id="liveBadge" href="#partners"><span class="dot"></span><span data-i18n="badge">Live in production at partner hotels</span></a></div>
     <h1 id="heroTitle">
-      <span class="line"><span>We engineer</span></span>
-      <span class="line"><span><em>revenue engines</em></span></span>
-      <span class="line"><span>for luxury hotels.</span></span>
+      <span class="line"><span data-i18n="hero1">We engineer</span></span>
+      <span class="line"><span><em data-i18n="hero2">revenue engines</em></span></span>
+      <span class="line"><span data-i18n="hero3">for luxury hotels.</span></span>
     </h1>
-    <p class="hero-sub">Custom direct booking engines, 3D interactive maps, autonomous AI concierges, and instant multi-currency payment infrastructure.</p>
+    <p class="hero-sub" data-i18n="hero_sub">Custom direct booking engines, 3D interactive maps, autonomous AI concierges, and instant multi-currency payment infrastructure.</p>
     <div class="hero-row">
       <div class="pills" role="list">
-        <span class="pill" role="listitem"><b>0%</b> OTA Commission</span>
-        <span class="pill" role="listitem"><b>3D Secure</b> iyzico Integrated</span>
-        <span class="pill" role="listitem"><b>24/7</b> Multilingual AI</span>
+        <span class="pill" role="listitem" data-i18n-html="pill1"><b>0%</b> OTA Commission</span>
+        <span class="pill" role="listitem" data-i18n-html="pill2"><b>3D Secure</b> iyzico Integrated</span>
+        <span class="pill" role="listitem" data-i18n-html="pill3"><b>24/7</b> Multilingual AI</span>
       </div>
       <div class="hero-ctas">
-        <a href="#demo" class="btn btn-ghost" data-magnetic>Explore Case Study</a>
-        <a href="#consultation" class="btn btn-primary" data-magnetic>Schedule Deployment</a>
+        <a href="#demo" class="btn btn-ghost" data-magnetic data-i18n="cta_demo">Explore the Demo</a>
+        <a href="#consultation" class="btn btn-primary" data-magnetic data-i18n="cta_deploy">Schedule Deployment</a>
       </div>
     </div>
-    <a href="#demo" class="scroll-cue"><i></i>Scroll to enter</a>
+    <a href="#demo" class="scroll-cue"><i></i><span data-i18n="scroll">Scroll to enter</span></a>
   </div>
 </section>
 
@@ -494,12 +531,12 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
 <section class="section" id="demo" aria-labelledby="demoTitle">
   <div class="wrap">
     <div class="section-head reveal">
-      <div class="eyebrow">01 — Case Study · Flagship Deployment</div>
-      <h2 class="section-title" id="demoTitle">Hotel Eliza Istanbul</h2>
-      <p class="section-lead">Four room types, a two-month availability and pricing calendar, iyzico 3D Secure checkout, a 24/7 AI concierge and a WhatsApp automation bridge — all on the hotel's own domain. Below is a live replica of the engine with demo rates.</p>
+      <div class="eyebrow" data-i18n="demo_eyebrow">01 — Live Product Demo</div>
+      <h2 class="section-title" id="demoTitle" data-i18n="demo_title">The Direct Booking Engine</h2>
+      <p class="section-lead" data-i18n="demo_lead">The engine we deploy for hotels, running live on this page with demo inventory.</p>
       <div class="case-meta">
-        <span class="pill"><span class="dot ok"></span>Status: Live</span>
-        <span class="pill">Engineered by AXON</span>
+        <span class="pill"><span class="dot ok"></span><span data-i18n="demo_m1">In production at partner hotels</span></span>
+        <span class="pill" data-i18n="demo_m2">White-label · your domain</span>
         <span class="pill">TRY · EUR · USD</span>
       </div>
     </div>
@@ -507,7 +544,7 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
     <div class="frame glass reveal" id="engine">
       <div class="frame-bar">
         <div class="frame-dots" aria-hidden="true"><i></i><i></i><i></i></div>
-        <div class="frame-url"><b>●</b> hotel eliza · secure booking engine — powered by AXON</div>
+        <div class="frame-url"><b>●</b> <span data-i18n="frame_url">yourhotel.com/book · secure booking engine — powered by AXON</span></div>
         <div class="seg" role="group" aria-label="Currency" id="currencySeg">
           <button type="button" data-cur="EUR" aria-pressed="true">EUR</button>
           <button type="button" data-cur="USD" aria-pressed="false">USD</button>
@@ -516,27 +553,27 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
       </div>
       <div class="frame-body">
         <div class="engine-cal">
-          <div class="room-tabs" role="tablist" aria-label="Room type" id="roomTabs"></div>
+          <div class="room-tabs" role="tablist" id="roomTabs"></div>
           <div class="cal-head">
-            <div class="label" id="calLabel">Select check-in</div>
+            <div class="label" id="calLabel"></div>
             <div class="cal-legend" aria-hidden="true">
-              <span><i style="background:var(--success)"></i>Best rate</span>
-              <span><i style="background:var(--violet)"></i>Peak</span>
-              <span><i style="background:var(--danger)"></i>Sold out</span>
+              <span><i style="background:var(--success)"></i><span data-i18n="leg_best">Best rate</span></span>
+              <span><i style="background:var(--violet)"></i><span data-i18n="leg_peak">Peak</span></span>
+              <span><i style="background:var(--danger)"></i><span data-i18n="leg_sold">Sold out</span></span>
             </div>
           </div>
           <div class="months" id="months"></div>
-          <div class="cal-hint">Nightly rates per room · demo inventory, illustrative pricing</div>
+          <div class="cal-hint" data-i18n="cal_hint">Nightly rates per room · demo inventory, illustrative pricing</div>
         </div>
         <aside class="engine-side" aria-live="polite">
           <div class="room-card" id="roomCard"></div>
           <div class="row">
-            <span class="label">Adults</span>
-            <div class="stepper"><button type="button" id="adMinus" aria-label="Fewer adults">−</button><output id="adults">2</output><button type="button" id="adPlus" aria-label="More adults">+</button></div>
+            <span class="label" data-i18n="adults">Adults</span>
+            <div class="stepper"><button type="button" id="adMinus" aria-label="−">−</button><output id="adults">2</output><button type="button" id="adPlus" aria-label="+">+</button></div>
           </div>
           <div class="basket" id="basket"></div>
-          <div class="pay-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>iyzico 3D Secure · instant e-invoice</div>
-          <button type="button" class="btn btn-primary" id="reserveBtn" data-magnetic>Reserve Direct</button>
+          <div class="pay-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span data-i18n="pay_row">iyzico 3D Secure · instant e-invoice</span></div>
+          <button type="button" class="btn btn-primary" id="reserveBtn" data-magnetic data-i18n="reserve">Reserve Direct</button>
           <div class="toast" id="engineToast" role="status"></div>
         </aside>
       </div>
@@ -551,74 +588,82 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
               <radialGradient id="hotelGlow"><stop offset="0" stop-color="#38BDF8" stop-opacity=".5"/><stop offset="1" stop-color="#38BDF8" stop-opacity="0"/></radialGradient>
               <linearGradient id="water" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0E2236"/><stop offset="1" stop-color="#0A1828"/></linearGradient>
             </defs>
-            <rect width="800" height="600" fill="#070B14"/>
+            <rect width="800" height="600" fill="#070C18"/>
             <rect width="800" height="600" fill="url(#grid)"/>
-            <!-- Golden Horn & Bosphorus & Marmara (stylised) -->
             <path d="M0 40 C 160 70, 300 60, 420 100 S 640 130, 800 70 L 800 0 L 0 0 Z" fill="url(#water)"/>
             <path d="M640 0 C 700 120, 760 220, 800 260 L 800 0 Z" fill="url(#water)"/>
             <path d="M0 560 C 200 520, 420 540, 560 500 S 760 420, 800 380 L 800 600 L 0 600 Z" fill="url(#water)"/>
-            <!-- historic walls -->
             <path d="M40 120 C 60 260, 50 400, 80 540" fill="none" stroke="rgba(129,140,248,.35)" stroke-width="2" stroke-dasharray="6 6"/>
-            <!-- streets -->
             <g fill="none" stroke="rgba(148,163,184,.22)" stroke-width="1.5">
               <path d="M60 330 C 220 320, 360 300, 520 310 S 700 330, 780 300"/>
               <path d="M140 180 L 260 470"/><path d="M300 140 L 340 520"/><path d="M460 150 L 420 500"/>
               <path d="M100 420 C 260 400, 420 420, 640 380"/><path d="M200 230 C 360 220, 520 240, 700 200"/>
             </g>
-            <!-- T1 tram line -->
-            <path id="tram" d="M60 330 C 220 320, 360 300, 520 310 S 700 330, 780 300" fill="none" stroke="#38BDF8" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="2 10" opacity=".9"/>
-            <!-- building blocks -->
+            <path d="M60 330 C 220 320, 360 300, 520 310 S 700 330, 780 300" fill="none" stroke="#38BDF8" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="2 10" opacity=".9"/>
             <g fill="rgba(148,163,184,.10)" stroke="rgba(148,163,184,.18)">
               <rect x="190" y="250" width="40" height="28" rx="3"/><rect x="240" y="350" width="50" height="30" rx="3"/><rect x="360" y="240" width="38" height="40" rx="3"/><rect x="420" y="360" width="44" height="26" rx="3"/><rect x="520" y="230" width="56" height="30" rx="3"/><rect x="150" y="380" width="36" height="30" rx="3"/>
             </g>
-            <!-- POIs -->
             <g font-family="JetBrains Mono, monospace" font-size="13" fill="#E2E8F0">
-              <circle cx="330" cy="250" r="7" fill="#818CF8"/><text x="344" y="246">Landmark</text><text x="344" y="262" fill="#94A3B8" font-size="11">walking route</text>
-              <circle cx="262" cy="190" r="6" fill="#94A3B8"/><text x="276" y="186">Museum</text>
-              <circle cx="300" cy="316" r="6" fill="#38BDF8"/><text x="250" y="346" fill="#94A3B8" font-size="11">Transit stop</text>
-              <circle cx="600" cy="300" r="7" fill="#818CF8"/><text x="614" y="296">Old Town</text>
-              <circle cx="590" cy="380" r="7" fill="#818CF8"/><text x="604" y="384">Waterfront</text>
+              <circle cx="330" cy="250" r="7" fill="#818CF8"/><text x="344" y="246" data-i18n="map_landmark">Landmark</text><text x="344" y="262" fill="#94A3B8" font-size="11" data-i18n="map_route">walking route</text>
+              <circle cx="262" cy="190" r="6" fill="#94A3B8"/><text x="276" y="186" data-i18n="map_museum">Museum</text>
+              <circle cx="300" cy="316" r="6" fill="#38BDF8"/><text x="250" y="346" fill="#94A3B8" font-size="11" data-i18n="map_transit">Transit stop</text>
+              <circle cx="600" cy="300" r="7" fill="#818CF8"/><text x="614" y="296" data-i18n="map_old">Old Town</text>
+              <circle cx="590" cy="380" r="7" fill="#818CF8"/><text x="604" y="384" data-i18n="map_water">Waterfront</text>
             </g>
-            <!-- hotel -->
             <circle cx="230" cy="296" r="70" fill="url(#hotelGlow)"/>
             <circle class="marker-pulse" cx="230" cy="296" r="12" fill="none" stroke="#38BDF8" stroke-width="2"/>
             <circle cx="230" cy="296" r="9" fill="#F8FAFC" stroke="#38BDF8" stroke-width="3"/>
-            <text x="120" y="282" font-family="Syne, sans-serif" font-size="16" fill="#F8FAFC" letter-spacing="2">YOUR HOTEL</text>
-            <!-- walking route -->
+            <text x="120" y="282" font-family="Syne, sans-serif" font-size="16" fill="#F8FAFC" letter-spacing="2" data-i18n="map_hotel">YOUR HOTEL</text>
             <path d="M230 296 C 260 280, 290 262, 330 250" fill="none" stroke="#F8FAFC" stroke-width="2" stroke-dasharray="4 5" opacity=".8"/>
           </svg>
         </div>
         <div class="map-overlay">
           <div>
-            <div class="eyebrow">3D Map Preview</div>
-            <h3>Your destination,<br>rendered in 3D.</h3>
+            <div class="eyebrow" data-i18n="map_eyebrow">3D Map Preview</div>
+            <h3 data-i18n-html="map_title">Your destination,<br>rendered in 3D.</h3>
           </div>
           <span class="pill">MapLibre GL</span>
         </div>
         <div class="map-legend">
-          <span class="pill"><span class="dot"></span>Transit lines</span>
-          <span class="pill">Landmarks · walking times</span>
+          <span class="pill"><span class="dot"></span><span data-i18n="map_l1">Transit lines</span></span>
+          <span class="pill" data-i18n="map_l2">Landmarks · walking times</span>
         </div>
       </div>
 
       <div class="inspect glass reveal">
         <div>
-          <div class="eyebrow">Under the hood</div>
-          <h3>What ships with your engine.</h3>
-          <p>Serverless booking, payment and concierge services on your own domain; a multilingual front end; MapLibre 3D maps; and an AI concierge with WhatsApp handover.</p>
+          <div class="eyebrow" data-i18n="ins_eyebrow">Under the hood</div>
+          <h3 data-i18n="ins_title">What ships with your engine.</h3>
+          <p data-i18n="ins_p">Serverless booking, payment and concierge services on your own domain.</p>
         </div>
         <div class="stack">
-          <div><b>Booking API</b><span>quota · rates · FX</span></div>
-          <div><b>AI Concierge</b><span>trained on your hotel</span></div>
-          <div><b>Dispatch</b><span>email · sms · whatsapp</span></div>
-          <div><b>Reviews</b><span>post-stay requests</span></div>
+          <div><b data-i18n="st1b">Booking API</b><span data-i18n="st1s">quota · rates · FX</span></div>
+          <div><b data-i18n="st2b">AI Concierge</b><span data-i18n="st2s">trained on your hotel</span></div>
+          <div><b data-i18n="st3b">Dispatch</b><span>email · sms · whatsapp</span></div>
+          <div><b data-i18n="st4b">Reviews</b><span data-i18n="st4s">post-stay requests</span></div>
         </div>
         <div class="inspect-ctas">
-          <a class="btn btn-primary" href="#consultation" data-magnetic>Request a Private Demo</a>
-          <a class="btn btn-ghost" href="#concierge" data-magnetic>Ask the AI Assistant</a>
+          <a class="btn btn-primary" href="#consultation" data-magnetic data-i18n="cta_private">Request a Private Demo</a>
+          <a class="btn btn-ghost" href="#concierge" data-magnetic data-i18n="cta_ask">Ask the AI Assistant</a>
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ===== Partners ===== -->
+<section class="section" id="partners" aria-labelledby="partTitle">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow" data-i18n="part_eyebrow">02 — Partners</div>
+      <h2 class="section-title" id="partTitle" data-i18n="part_title">Hotels we work with.</h2>
+      <p class="section-lead" data-i18n="part_lead">Properties running AXON systems in production.</p>
+    </div>
+    <!-- Partner list: add a <li class="partner glass"> per hotel (name + city only). -->
+    <ul class="partners reveal">
+      <li class="partner glass"><span class="dot ok"></span><b>Hotel Eliza</b><span>Istanbul</span></li>
+      <li class="partner partner-next"><a href="#consultation"><b data-i18n="part_next_b">Your hotel</b><span data-i18n="part_next_s">Next deployment →</span></a></li>
+    </ul>
   </div>
 </section>
 
@@ -626,43 +671,28 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
 <section class="section" id="systems" aria-labelledby="sysTitle">
   <div class="wrap">
     <div class="section-head reveal">
-      <div class="eyebrow">02 — Systems &amp; Capabilities</div>
-      <h2 class="section-title" id="sysTitle">Three systems. One nervous system.</h2>
-      <p class="section-lead">Each system ships standalone and interlocks with the others — bookings feed the concierge, the concierge feeds the automations, the automations close the loop.</p>
+      <div class="eyebrow" data-i18n="sys_eyebrow">03 — Systems &amp; Capabilities</div>
+      <h2 class="section-title" id="sysTitle" data-i18n="sys_title">Three systems. One nervous system.</h2>
+      <p class="section-lead" data-i18n="sys_lead">Each system ships standalone and interlocks with the others.</p>
     </div>
     <div class="systems">
       <article class="sys glass reveal" data-tilt>
         <div class="sys-num"><span class="sys-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18M8 15h2M14 15h2"/></svg></span><span class="big">01</span></div>
-        <h3>Direct Booking &amp; Yield Engine</h3>
-        <p>Commission-free reservations on your own domain, with live inventory and pricing you control to the night.</p>
-        <ul>
-          <li>Real-time quota management</li>
-          <li>Multi-currency TRY / EUR / USD</li>
-          <li>Automated invoice generation</li>
-          <li>iyzico 3D Secure gateway</li>
-        </ul>
+        <h3 data-i18n="s1_t">Direct Booking &amp; Yield Engine</h3>
+        <p data-i18n="s1_p">Commission-free reservations on your own domain.</p>
+        <ul><li data-i18n="s1_1">Real-time quota management</li><li data-i18n="s1_2">Multi-currency TRY / EUR / USD</li><li data-i18n="s1_3">Automated invoice generation</li><li data-i18n="s1_4">iyzico 3D Secure gateway</li></ul>
       </article>
       <article class="sys glass reveal" data-tilt>
         <div class="sys-num"><span class="sys-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="12" r="2.5"/><path d="M8.5 12c2-3 5-3 7 0"/><path d="M3 4h6M15 20h6"/></svg></span><span class="big">02</span></div>
-        <h3>24/7 Neural AI Concierge</h3>
-        <p>An autonomous guest assistant trained on your property — answering, recommending and converting in the guest's own language.</p>
-        <ul>
-          <li>Hotel amenities &amp; policies</li>
-          <li>Local attractions &amp; dining</li>
-          <li>Transport &amp; airport transfers</li>
-          <li>Instant WhatsApp handover</li>
-        </ul>
+        <h3 data-i18n="s2_t">24/7 Neural AI Concierge</h3>
+        <p data-i18n="s2_p">An autonomous guest assistant trained on your property.</p>
+        <ul><li data-i18n="s2_1">Hotel amenities &amp; policies</li><li data-i18n="s2_2">Local attractions &amp; dining</li><li data-i18n="s2_3">Transport &amp; airport transfers</li><li data-i18n="s2_4">Instant WhatsApp handover</li></ul>
       </article>
       <article class="sys glass reveal" data-tilt>
         <div class="sys-num"><span class="sys-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3"/><path d="M18 3v4h-4M6 21v-4h4"/></svg></span><span class="big">03</span></div>
-        <h3>Omni-channel Automation</h3>
-        <p>Every reservation event triggers the right message, on the right channel, in seconds — no front-desk keystrokes.</p>
-        <ul>
-          <li>Instant SMS &amp; email dispatch</li>
-          <li>Webhook listeners</li>
-          <li>Automated check-in workflows</li>
-          <li>Review requests post-stay</li>
-        </ul>
+        <h3 data-i18n="s3_t">Omni-channel Automation</h3>
+        <p data-i18n="s3_p">Every reservation event triggers the right message.</p>
+        <ul><li data-i18n="s3_1">Instant SMS &amp; email dispatch</li><li data-i18n="s3_2">Webhook listeners</li><li data-i18n="s3_3">Automated check-in workflows</li><li data-i18n="s3_4">Review requests post-stay</li></ul>
       </article>
     </div>
   </div>
@@ -672,34 +702,34 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
 <section class="section" id="architecture" aria-labelledby="archTitle">
   <div class="wrap">
     <div class="section-head reveal">
-      <div class="eyebrow">03 — Architecture</div>
-      <h2 class="section-title" id="archTitle">From click to confirmed in one pulse.</h2>
-      <p class="section-lead">A serverless event chain. Each reservation travels the same path — watch it run.</p>
+      <div class="eyebrow" data-i18n="arch_eyebrow">04 — Architecture</div>
+      <h2 class="section-title" id="archTitle" data-i18n="arch_title">From click to confirmed in one pulse.</h2>
+      <p class="section-lead" data-i18n="arch_lead">A serverless event chain.</p>
     </div>
     <div class="arch glass reveal">
       <div class="flow" id="flow">
-        <div class="node"><span class="eyebrow">Edge</span><b>Guest interface</b><span>Booking engine · 3D map · concierge</span></div>
-        <div class="node"><span class="eyebrow">Yield</span><b>Rate &amp; quota core</b><span>Availability · FX · pricing rules</span></div>
-        <div class="node"><span class="eyebrow">Payments</span><b>iyzico 3D Secure</b><span>Tokenised card · bank challenge</span></div>
-        <div class="node"><span class="eyebrow">Events</span><b>Webhook bus</b><span>Confirm · invoice · audit</span></div>
-        <div class="node"><span class="eyebrow">Dispatch</span><b>Omni-channel</b><span>Email · SMS · WhatsApp</span></div>
+        <div class="node"><span class="eyebrow" data-i18n="n1e">Edge</span><b data-i18n="n1b">Guest interface</b><span data-i18n="n1s">Booking engine · 3D map · concierge</span></div>
+        <div class="node"><span class="eyebrow" data-i18n="n2e">Yield</span><b data-i18n="n2b">Rate &amp; quota core</b><span data-i18n="n2s">Availability · FX · pricing rules</span></div>
+        <div class="node"><span class="eyebrow" data-i18n="n3e">Payments</span><b>iyzico 3D Secure</b><span data-i18n="n3s">Tokenised card · bank challenge</span></div>
+        <div class="node"><span class="eyebrow" data-i18n="n4e">Events</span><b data-i18n="n4b">Webhook bus</b><span data-i18n="n4s">Confirm · invoice · audit</span></div>
+        <div class="node"><span class="eyebrow" data-i18n="n5e">Dispatch</span><b data-i18n="n5b">Omni-channel</b><span>Email · SMS · WhatsApp</span></div>
       </div>
       <div class="log" id="log" aria-hidden="true"></div>
     </div>
   </div>
 </section>
 
-<!-- ===== Concierge sandbox ===== -->
+<!-- ===== Assistant sandbox ===== -->
 <section class="section" id="concierge" aria-labelledby="concTitle">
   <div class="wrap sandbox">
     <div class="reveal">
-      <div class="eyebrow">04 — Live AI Assistant Demo</div>
-      <h2 class="section-title" id="concTitle">Ask AXON.</h2>
-      <p class="section-lead">The same assistant layer we train on a hotel's own knowledge — here trained on AXON. Try a prompt below or type your own.</p>
+      <div class="eyebrow" data-i18n="conc_eyebrow">05 — Live AI Assistant Demo</div>
+      <h2 class="section-title" id="concTitle" data-i18n="conc_title">Ask AXON.</h2>
+      <p class="section-lead" data-i18n="conc_lead">The same assistant layer we train on a hotel's own knowledge — here trained on AXON.</p>
       <div class="prompt-list">
-        <button class="prompt-btn" type="button" data-prompt="What systems do you offer?">What systems do you offer?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-        <button class="prompt-btn" type="button" data-prompt="How does the AI concierge work?">How does the AI concierge work?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-        <button class="prompt-btn" type="button" data-prompt="Which payments do you support?">Which payments do you support?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        <button class="prompt-btn" type="button" data-pk="p1"><span data-i18n="p1">What systems do you offer?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        <button class="prompt-btn" type="button" data-pk="p2"><span data-i18n="p2">How does the AI concierge work?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        <button class="prompt-btn" type="button" data-pk="p3"><span data-i18n="p3">Which payments do you support?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
       </div>
     </div>
     <div class="reveal" id="inlineChatMount"></div>
@@ -710,39 +740,42 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
 <section class="section" id="consultation" aria-labelledby="consTitle">
   <div class="wrap">
     <div class="section-head reveal">
-      <div class="eyebrow">05 — Executive Consultation</div>
-      <h2 class="section-title" id="consTitle">Schedule a deployment.</h2>
-      <p class="section-lead">Tell us about your property. We respond within one business day with a deployment outline and timeline.</p>
+      <div class="eyebrow" data-i18n="cons_eyebrow">06 — Executive Consultation</div>
+      <h2 class="section-title" id="consTitle" data-i18n="cons_title">Schedule a deployment.</h2>
+      <p class="section-lead" data-i18n="cons_lead">Tell us about your property.</p>
     </div>
     <div class="consult">
       <form class="terminal glass reveal" id="contactForm" novalidate>
-        <div class="terminal-head"><span class="eyebrow">Contact Terminal</span><span class="mono" id="termClock">—</span></div>
+        <div class="terminal-head"><span class="eyebrow" data-i18n="term">Contact Terminal</span><span class="mono" id="termClock">—</span></div>
         <div class="form-grid">
-          <div class="field"><label for="cName">Full name</label><input class="input" id="cName" name="name" autocomplete="name" required placeholder="Your name"></div>
-          <div class="field"><label for="cEmail">Work email</label><input class="input" id="cEmail" name="email" type="email" autocomplete="email" required placeholder="gm@yourhotel.com"></div>
-          <div class="field"><label for="cHotel">Property</label><input class="input" id="cHotel" name="hotel" autocomplete="organization" placeholder="Hotel name, city"></div>
-          <div class="field"><label for="cRooms">Keys</label>
+          <div class="field"><label for="cName" data-i18n="f_name">Full name</label><input class="input" id="cName" name="name" autocomplete="name" required data-i18n-ph="ph_name"></div>
+          <div class="field"><label for="cEmail" data-i18n="f_email">Work email</label><input class="input" id="cEmail" name="email" type="email" autocomplete="email" required placeholder="gm@yourhotel.com"></div>
+          <div class="field"><label for="cHotel" data-i18n="f_hotel">Property</label><input class="input" id="cHotel" name="hotel" autocomplete="organization" data-i18n-ph="ph_hotel"></div>
+          <div class="field"><label for="cRooms" data-i18n="f_keys">Rooms</label>
             <select class="input" id="cRooms" name="rooms"><option>1 – 20</option><option>21 – 60</option><option>61 – 150</option><option>150+</option></select></div>
-          <div class="field full"><label>Systems of interest</label>
+          <div class="field full"><label data-i18n="f_sys">Systems of interest</label>
             <div class="chk-group">
-              <label class="chk"><input type="checkbox" name="sys" value="Booking & Yield" checked><span>Booking &amp; Yield</span></label>
-              <label class="chk"><input type="checkbox" name="sys" value="AI Concierge"><span>AI Concierge</span></label>
-              <label class="chk"><input type="checkbox" name="sys" value="Automation"><span>Automation</span></label>
-              <label class="chk"><input type="checkbox" name="sys" value="3D Maps"><span>3D Maps</span></label>
+              <label class="chk"><input type="checkbox" name="sys" value="Booking & Yield" checked><span data-i18n="chk1">Booking &amp; Yield</span></label>
+              <label class="chk"><input type="checkbox" name="sys" value="AI Concierge"><span data-i18n="chk2">AI Concierge</span></label>
+              <label class="chk"><input type="checkbox" name="sys" value="Automation"><span data-i18n="chk3">Automation</span></label>
+              <label class="chk"><input type="checkbox" name="sys" value="3D Maps"><span data-i18n="chk4">3D Maps</span></label>
             </div>
           </div>
-          <div class="field full"><label for="cMsg">Brief</label><textarea class="input" id="cMsg" name="message" placeholder="Current booking stack, OTA share, launch window…"></textarea></div>
+          <div class="field full"><label for="cMsg" data-i18n="f_brief">Brief</label><textarea class="input" id="cMsg" name="message" data-i18n-ph="ph_brief"></textarea></div>
         </div>
         <div class="form-foot">
-          <span class="form-status" id="formStatus" role="status">Encrypted in transit · no data stored on this page</span>
-          <button class="btn btn-primary" type="submit" data-magnetic>Request Consultation</button>
+          <span class="form-status" id="formStatus" role="status" data-i18n="form_note">No data is stored on this page</span>
+          <div class="form-btns">
+            <a class="btn btn-ghost wa-link" target="_blank" rel="noopener" data-magnetic><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.2.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg><span data-i18n="wa_btn">WhatsApp</span></a>
+            <button class="btn btn-primary" type="submit" data-magnetic data-i18n="form_btn">Request Consultation</button>
+          </div>
         </div>
       </form>
 
       <div class="sig-tool glass reveal">
         <div>
-          <div class="eyebrow">Executive Signature</div>
-          <p class="section-lead" style="margin-top:var(--space-3);font-size:15px">Generate the founder's HTML email signature. Edit the fields, then copy it straight into Gmail, Outlook or Apple Mail.</p>
+          <div class="eyebrow" data-i18n="sig_eyebrow">Executive Signature</div>
+          <p class="section-lead" style="margin-top:var(--space-3);font-size:15px" data-i18n="sig_lead">Generate the founder's HTML email signature.</p>
         </div>
         <div class="sig-fields" id="sigFields">
           <input class="input" data-k="name" aria-label="Name" value="Gülcan Genç">
@@ -753,14 +786,14 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
         </div>
         <div class="sig-actions">
           <div class="seg" role="group" aria-label="Preview background">
-            <button type="button" data-bg="light" aria-pressed="true">Light</button>
-            <button type="button" data-bg="dark" aria-pressed="false">Dark</button>
+            <button type="button" data-bg="light" aria-pressed="true" data-i18n="light">Light</button>
+            <button type="button" data-bg="dark" aria-pressed="false" data-i18n="dark">Dark</button>
           </div>
         </div>
         <div class="sig-preview" id="sigPreview"></div>
         <div class="sig-actions">
-          <button class="btn btn-primary" type="button" id="copyRich" data-magnetic>Copy Signature</button>
-          <button class="btn btn-ghost" type="button" id="copyHtml" data-magnetic>Copy HTML</button>
+          <button class="btn btn-primary" type="button" id="copyRich" data-magnetic data-i18n="copy_sig">Copy Signature</button>
+          <button class="btn btn-ghost" type="button" id="copyHtml" data-magnetic data-i18n="copy_html">Copy HTML</button>
           <span class="form-status" id="sigStatus" role="status"></span>
         </div>
       </div>
@@ -773,20 +806,21 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
   <div class="wrap">
     <div class="foot">
       <div>
-        <a href="#top" aria-label="AXON — back to top" style="display:block"><div class="foot-logo" role="img" aria-label="AXON logo"></div></a>
-        <p style="margin:var(--space-4) 0 0;color:var(--chrome-400);max-width:360px">Autonomous hospitality &amp; neural digital systems. Engineered in Istanbul.</p>
+        <a href="#top" aria-label="AXON" style="display:block"><div class="foot-logo" role="img" aria-label="AXON logo"></div></a>
+        <p style="margin:var(--space-4) 0 0;color:var(--chrome-400);max-width:360px" data-i18n="foot_tag">Autonomous hospitality &amp; neural digital systems. Engineered in Istanbul.</p>
       </div>
-      <div><h4 class="eyebrow">Systems</h4><ul><li><a href="#systems">Booking &amp; Yield</a></li><li><a href="#concierge">AI Concierge</a></li><li><a href="#architecture">Automation</a></li></ul></div>
-      <div><h4 class="eyebrow">Studio</h4><ul><li><a href="#demo">Case Study: Hotel Eliza</a></li><li><a href="#concierge">AI Assistant</a></li><li><a href="#consultation">Consultation</a></li></ul></div>
+      <div><h4 class="eyebrow" data-i18n="nav_systems">Systems</h4><ul><li><a href="#systems" data-i18n="chk1">Booking &amp; Yield</a></li><li><a href="#concierge" data-i18n="chk2">AI Concierge</a></li><li><a href="#architecture" data-i18n="chk3">Automation</a></li></ul></div>
+      <div><h4 class="eyebrow" data-i18n="foot_studio">Studio</h4><ul><li><a href="#demo" data-i18n="nav_demo">Live Demo</a></li><li><a href="#partners" data-i18n="nav_partners">Partners</a></li><li><a href="#consultation" data-i18n="nav_consult">Consultation</a></li><li><a class="wa-link" target="_blank" rel="noopener">WhatsApp</a></li></ul></div>
     </div>
     <div class="foot-bottom"><span>© <span id="yr"></span> AXON SYSTEMS</span><span>Λ X O N · NEURAL DIGITAL SYSTEMS</span></div>
   </div>
 </footer>
 
-<!-- Floating concierge -->
+<!-- Floating WhatsApp + assistant -->
+<a class="wa-fab wa-link" target="_blank" rel="noopener" aria-label="WhatsApp" data-i18n-aria="wa_aria"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.2.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg></a>
 <div class="fab" id="fab">
   <div class="fab-panel" id="fabPanel" hidden></div>
-  <button class="fab-btn" id="fabBtn" aria-expanded="false" aria-controls="fabPanel"><span class="chat-avatar"><i></i></span><span class="lbl">Ask AXON</span></button>
+  <button class="fab-btn" id="fabBtn" aria-expanded="false" aria-controls="fabPanel"><span class="chat-avatar"><i></i></span><span class="lbl" data-i18n="fab">Ask AXON</span></button>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
@@ -903,13 +937,274 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
     $$('.reveal').forEach(function (el, i) { el.style.transitionDelay = ((i % 3) * 80) + 'ms'; io.observe(el); });
   } else { $$('.reveal').forEach(function (el) { el.classList.add('in'); }); }
 
+  /* ================= Languages ================= */
+  var LANGS = ['tr', 'en', 'de', 'fr'];
+  var LOCALE = { tr: 'tr-TR', en: 'en-GB', de: 'de-DE', fr: 'fr-FR' };
+  var WHATSAPP = '905540248698';
+  var I18N = {
+    en: {
+      intro_skip: 'Enter', lang_label: 'Language', sound: 'Interface sound', menu: 'Menu',
+      nav_systems: 'Systems', nav_demo: 'Live Demo', nav_partners: 'Partners', nav_arch: 'Architecture', nav_consult: 'Consultation',
+      cta_deploy: 'Schedule Deployment', cta_demo: 'Explore the Demo', scroll: 'Scroll to enter',
+      tagline: 'Autonomous Hospitality & Neural Digital Systems', badge: 'Live in production at partner hotels',
+      hero1: 'We engineer', hero2: 'revenue engines', hero3: 'for luxury hotels.',
+      hero_sub: 'Custom direct booking engines, 3D interactive maps, autonomous AI concierges, and instant multi-currency payment infrastructure.',
+      pill1: '<b>0%</b> OTA Commission', pill2: '<b>3D Secure</b> iyzico Integrated', pill3: '<b>24/7</b> Multilingual AI',
+      demo_eyebrow: '01 — Live Product Demo', demo_title: 'The Direct Booking Engine',
+      demo_lead: 'The engine we deploy for hotels, running live on this page with demo inventory. Pick a room, choose your dates, switch currency — and watch the basket compute in real time, with zero OTA commission.',
+      demo_m1: 'In production at partner hotels', demo_m2: 'White-label · your domain',
+      frame_url: 'yourhotel.com/book · secure booking engine — powered by AXON',
+      leg_best: 'Best rate', leg_peak: 'Peak', leg_sold: 'Sold out', cal_hint: 'Nightly rates per room · demo inventory, illustrative pricing',
+      cal_in: 'Select check-in', cal_out: 'Select check-out', cal_n: '{n} nights selected', sold: 'SOLD', dows: 'Mo,Tu,We,Th,Fr,Sa,Su',
+      adults: 'Adults', pay_row: 'iyzico 3D Secure · instant e-invoice', reserve: 'Reserve Direct',
+      up_to: 'up to {n} guests', spec1: 'Live quota', spec2: 'Rate plans', spec3: 'Instant confirm',
+      b_empty: 'Choose check-in and check-out to see your total.', night: 'night', nights: 'nights', b_room: 'Room · avg {p}', b_extra: 'Extra guest', b_ota: 'OTA commission', b_total: 'Total', b_tax: 'VAT & accommodation tax included',
+      t_sold: 'A night in that range is sold out — choose another stay.', t_max: 'Maximum 21 nights in this demo.', t_hold: 'Demo hold placed · {room} · {total} → 3D Secure (simulated)',
+      rooms: [['Deluxe King', 'King bed', 'Your rooms, photos and rules are configured at deployment.'], ['Superior Twin', 'Two single beds', 'Rates and quotas sync with your inventory in real time.'], ['Junior Suite', 'King + sofa bed', 'Occupancy-based pricing per extra guest.'], ['Family Suite', 'King + two singles', 'Family rules and child policies built in.']],
+      map_landmark: 'Landmark', map_route: 'walking route', map_museum: 'Museum', map_transit: 'Transit stop', map_old: 'Old Town', map_water: 'Waterfront', map_hotel: 'YOUR HOTEL',
+      map_eyebrow: '3D Map Preview', map_title: 'Your destination,<br>rendered in 3D.', map_l1: 'Transit lines', map_l2: 'Landmarks · walking times',
+      ins_eyebrow: 'Under the hood', ins_title: 'What ships with your engine.', ins_p: 'Serverless booking, payment and concierge services on your own domain; a multilingual front end; MapLibre 3D maps; and an AI concierge with WhatsApp handover.',
+      st1b: 'Booking API', st1s: 'quota · rates · FX', st2b: 'AI Concierge', st2s: 'trained on your hotel', st3b: 'Dispatch', st4b: 'Reviews', st4s: 'post-stay requests',
+      cta_private: 'Request a Private Demo', cta_ask: 'Ask the AI Assistant',
+      part_eyebrow: '02 — Partners', part_title: 'Hotels we work with.', part_lead: 'Properties running AXON systems in production.', part_next_b: 'Your hotel', part_next_s: 'Next deployment →',
+      sys_eyebrow: '03 — Systems & Capabilities', sys_title: 'Three systems. One nervous system.', sys_lead: 'Each system ships standalone and interlocks with the others — bookings feed the concierge, the concierge feeds the automations, the automations close the loop.',
+      s1_t: 'Direct Booking & Yield Engine', s1_p: 'Commission-free reservations on your own domain, with live inventory and pricing you control to the night.', s1_1: 'Real-time quota management', s1_2: 'Multi-currency TRY / EUR / USD', s1_3: 'Automated invoice generation', s1_4: 'iyzico 3D Secure gateway',
+      s2_t: '24/7 Neural AI Concierge', s2_p: 'An autonomous guest assistant trained on your property — answering, recommending and converting in the guest\'s own language.', s2_1: 'Hotel amenities & policies', s2_2: 'Local attractions & dining', s2_3: 'Transport & airport transfers', s2_4: 'Instant WhatsApp handover',
+      s3_t: 'Omni-channel Automation', s3_p: 'Every reservation event triggers the right message, on the right channel, in seconds — no front-desk keystrokes.', s3_1: 'Instant SMS & email dispatch', s3_2: 'Webhook listeners', s3_3: 'Automated check-in workflows', s3_4: 'Review requests post-stay',
+      arch_eyebrow: '04 — Architecture', arch_title: 'From click to confirmed in one pulse.', arch_lead: 'A serverless event chain. Each reservation travels the same path — watch it run.',
+      n1e: 'Edge', n1b: 'Guest interface', n1s: 'Booking engine · 3D map · concierge', n2e: 'Yield', n2b: 'Rate & quota core', n2s: 'Availability · FX · pricing rules', n3e: 'Payments', n3s: 'Tokenised card · bank challenge', n4e: 'Events', n4b: 'Webhook bus', n4s: 'Confirm · invoice · audit', n5e: 'Dispatch', n5b: 'Omni-channel',
+      conc_eyebrow: '05 — Live AI Assistant Demo', conc_title: 'Ask AXON.', conc_lead: 'The same assistant layer we train on a hotel\'s own knowledge — here trained on AXON. Try a prompt below or type your own.',
+      p1: 'What systems do you offer?', p2: 'How does the AI concierge work?', p3: 'Which payments do you support?', c4: 'Do you charge OTA commission?', c5: 'Book a demo',
+      cons_eyebrow: '06 — Executive Consultation', cons_title: 'Schedule a deployment.', cons_lead: 'Tell us about your property. We respond within one business day with a deployment outline and timeline.',
+      term: 'Contact Terminal', f_name: 'Full name', ph_name: 'Your name', f_email: 'Work email', f_hotel: 'Property', ph_hotel: 'Hotel name, city', f_keys: 'Rooms', f_sys: 'Systems of interest',
+      chk1: 'Booking & Yield', chk2: 'AI Concierge', chk3: 'Automation', chk4: '3D Maps', f_brief: 'Brief', ph_brief: 'Current booking stack, OTA share, launch window…',
+      form_note: 'No data is stored on this page', form_btn: 'Request Consultation', wa_btn: 'WhatsApp', wa_aria: 'Message us on WhatsApp',
+      err_name: 'Required — please add your name.', err_email: 'Required — please add a valid work email.', form_ok: 'Ready — opening your mail client…',
+      wa_text: 'Hello AXON, I would like to learn about your systems for my hotel.',
+      sig_eyebrow: 'Executive Signature', sig_lead: 'Generate the founder\'s HTML email signature. Edit the fields, then copy it straight into Gmail, Outlook or Apple Mail.',
+      light: 'Light', dark: 'Dark', copy_sig: 'Copy Signature', copy_html: 'Copy HTML', m_html: 'HTML copied', m_sig: 'Signature copied — paste into your mail settings', m_fail: 'Copy failed — select the preview manually',
+      foot_tag: 'Autonomous hospitality & neural digital systems. Engineered in Istanbul.', foot_studio: 'Studio', fab: 'Ask AXON',
+      chat_status: 'Online · TR / EN / DE / FR', chat_ph: 'Ask about AXON systems…', chat_hi: 'Welcome to AXON. I\'m a demo of the AI assistant we build for hotels — ask me about our systems.',
+      kb_sys: 'AXON deploys three interlocking systems for hotels:\n• <b>Direct Booking & Yield Engine</b> — commission-free bookings on your own domain\n• <b>24/7 Neural AI Concierge</b> — a multilingual guest assistant trained on your property\n• <b>Omni-channel Automation</b> — instant email, SMS and WhatsApp dispatch\n\nThey ship standalone or together.',
+      kb_ai: 'We train the concierge on your hotel: rooms, amenities, policies, local attractions and transport. It answers guests 24/7 in their own language, quotes live rates from your booking engine, and hands the conversation to your front desk on WhatsApp whenever a human is needed.',
+      kb_pay: 'Payments run through <b>iyzico 3D Secure</b>. Guests can see prices in <b>TRY, EUR or USD</b>, and invoices are generated automatically after confirmation.',
+      kb_ota: 'Direct bookings through your AXON engine carry <b>0% OTA commission</b> — the margin stays with your hotel.',
+      kb_price: 'Every deployment is scoped to the property, so pricing is tailored. Send a brief through the consultation form and we\'ll come back with an outline and a quote.',
+      kb_time: 'Timelines depend on scope — number of rooms, languages and integrations. We share a deployment plan with dates after the first consultation.',
+      kb_map: 'We build interactive 3D maps with MapLibre GL: your property, nearby landmarks, transit lines and walking times — embedded right in your booking flow.',
+      kb_lang: 'Sites and the AI concierge are multilingual — Turkish, English, German and French, with more languages on request.',
+      kb_auto: 'Every reservation event triggers the right message: confirmation emails and SMS, WhatsApp updates, check-in instructions and post-stay review requests — no manual work for your team.',
+      kb_ref: 'Our systems run in production at partner hotels — see the Partners section. Ask for a private walkthrough in the consultation form.',
+      kb_contact: 'You can reach the founder, Gülcan Genç, through the consultation form or directly on WhatsApp.',
+      kb_hi: 'Welcome to AXON. Ask me about our booking engine, AI concierge, payments or automations.',
+      kb_fallback: 'I\'m the AXON demo assistant — I can explain our booking engine, AI concierge, payments, 3D maps and automations. For anything specific to your hotel, leave a brief in the consultation form.',
+      kb_wa: 'Message us on WhatsApp'
+    },
+    tr: {
+      intro_skip: 'Giriş', lang_label: 'Dil', sound: 'Arayüz sesi', menu: 'Menü',
+      nav_systems: 'Sistemler', nav_demo: 'Canlı Demo', nav_partners: 'Partnerler', nav_arch: 'Mimari', nav_consult: 'Danışmanlık',
+      cta_deploy: 'Kurulum Planla', cta_demo: 'Demoyu Keşfet', scroll: 'Keşfetmek için kaydırın',
+      tagline: 'Otonom Konaklama & Nöral Dijital Sistemler', badge: 'Partner otellerde canlı kullanımda',
+      hero1: 'Lüks oteller için', hero2: 'gelir motorları', hero3: 'tasarlıyoruz.',
+      hero_sub: 'Özel doğrudan rezervasyon motorları, 3D interaktif haritalar, otonom yapay zekâ konsiyerjler ve anlık çok para birimli ödeme altyapısı.',
+      pill1: '<b>%0</b> OTA Komisyonu', pill2: '<b>3D Secure</b> iyzico Entegre', pill3: '<b>7/24</b> Çok Dilli Yapay Zekâ',
+      demo_eyebrow: '01 — Canlı Ürün Demosu', demo_title: 'Doğrudan Rezervasyon Motoru',
+      demo_lead: 'Otellere kurduğumuz motor, bu sayfada demo envanterle canlı çalışıyor. Bir oda seçin, tarihlerinizi belirleyin, para birimini değiştirin — sepetin OTA komisyonu olmadan anında hesaplandığını görün.',
+      demo_m1: 'Partner otellerde canlı', demo_m2: 'Beyaz etiket · kendi alan adınız',
+      frame_url: 'otelinizin-sitesi.com/rezervasyon · güvenli rezervasyon motoru — AXON altyapısı',
+      leg_best: 'En iyi fiyat', leg_peak: 'Yoğun', leg_sold: 'Dolu', cal_hint: 'Oda başı gecelik fiyatlar · demo envanter, örnek fiyatlar',
+      cal_in: 'Giriş tarihi seçin', cal_out: 'Çıkış tarihi seçin', cal_n: '{n} gece seçildi', sold: 'DOLU', dows: 'Pt,Sa,Ça,Pe,Cu,Ct,Pz',
+      adults: 'Yetişkin', pay_row: 'iyzico 3D Secure · anında e-fatura', reserve: 'Doğrudan Rezervasyon',
+      up_to: 'en fazla {n} kişi', spec1: 'Canlı kontenjan', spec2: 'Fiyat planları', spec3: 'Anında onay',
+      b_empty: 'Toplamı görmek için giriş ve çıkış tarihlerini seçin.', night: 'gece', nights: 'gece', b_room: 'Oda · ort. {p}', b_extra: 'Ek kişi', b_ota: 'OTA komisyonu', b_total: 'Toplam', b_tax: 'KDV ve konaklama vergisi dahil',
+      t_sold: 'Bu aralıkta dolu bir gece var — başka tarih seçin.', t_max: 'Bu demoda en fazla 21 gece.', t_hold: 'Demo rezervasyon · {room} · {total} → 3D Secure (simülasyon)',
+      rooms: [['Deluxe King', 'King yatak', 'Odalarınız, fotoğraflarınız ve kurallarınız kurulumda tanımlanır.'], ['Superior Twin', 'İki tek kişilik yatak', 'Fiyat ve kontenjanlar envanterinizle anlık senkronize olur.'], ['Junior Suite', 'King + çekyat', 'Ek kişi başına doluluk bazlı fiyatlama.'], ['Aile Suiti', 'King + iki tek yatak', 'Aile kuralları ve çocuk politikaları hazır.']],
+      map_landmark: 'Simge yapı', map_route: 'yürüyüş rotası', map_museum: 'Müze', map_transit: 'Durak', map_old: 'Tarihi merkez', map_water: 'Sahil', map_hotel: 'OTELİNİZ',
+      map_eyebrow: '3D Harita Önizleme', map_title: 'Destinasyonunuz,<br>3D olarak.', map_l1: 'Ulaşım hatları', map_l2: 'Simge yapılar · yürüme süreleri',
+      ins_eyebrow: 'Altyapı', ins_title: 'Motorunuzla birlikte gelenler.', ins_p: 'Kendi alan adınızda sunucusuz rezervasyon, ödeme ve konsiyerj servisleri; çok dilli arayüz; MapLibre 3D haritalar ve WhatsApp aktarımlı yapay zekâ konsiyerj.',
+      st1b: 'Rezervasyon API', st1s: 'kontenjan · fiyat · kur', st2b: 'Yapay Zekâ Konsiyerj', st2s: 'otelinize özel eğitilir', st3b: 'Bildirimler', st4b: 'Yorumlar', st4s: 'konaklama sonrası talepler',
+      cta_private: 'Özel Demo Talep Et', cta_ask: 'Yapay Zekâya Sor',
+      part_eyebrow: '02 — Partnerler', part_title: 'Çalıştığımız oteller.', part_lead: 'AXON sistemlerini canlı kullanan tesisler.', part_next_b: 'Sizin oteliniz', part_next_s: 'Sıradaki kurulum →',
+      sys_eyebrow: '03 — Sistemler & Yetenekler', sys_title: 'Üç sistem. Tek sinir ağı.', sys_lead: 'Her sistem tek başına çalışır ve diğerleriyle birleşir — rezervasyonlar konsiyerji, konsiyerj otomasyonları besler, otomasyonlar döngüyü tamamlar.',
+      s1_t: 'Doğrudan Rezervasyon & Gelir Motoru', s1_p: 'Kendi alan adınızda komisyonsuz rezervasyon; canlı envanter ve gece bazında sizin kontrolünüzde fiyatlar.', s1_1: 'Anlık kontenjan yönetimi', s1_2: 'Çoklu para birimi TRY / EUR / USD', s1_3: 'Otomatik fatura oluşturma', s1_4: 'iyzico 3D Secure ödeme',
+      s2_t: '7/24 Nöral Yapay Zekâ Konsiyerj', s2_p: 'Tesisinize özel eğitilmiş otonom misafir asistanı — misafirin kendi dilinde yanıtlar, önerir ve satışa dönüştürür.', s2_1: 'Otel olanakları & kurallar', s2_2: 'Çevredeki yerler & restoranlar', s2_3: 'Ulaşım & havalimanı transferi', s2_4: 'Anında WhatsApp aktarımı',
+      s3_t: 'Çok Kanallı Otomasyon', s3_p: 'Her rezervasyon olayı doğru mesajı, doğru kanaldan, saniyeler içinde gönderir — resepsiyona iş kalmaz.', s3_1: 'Anında SMS & e-posta', s3_2: 'Webhook dinleyicileri', s3_3: 'Otomatik check-in akışları', s3_4: 'Konaklama sonrası yorum talebi',
+      arch_eyebrow: '04 — Mimari', arch_title: 'Tıklamadan onaya tek nabızda.', arch_lead: 'Sunucusuz bir olay zinciri. Her rezervasyon aynı yoldan geçer — izleyin.',
+      n1e: 'Ön yüz', n1b: 'Misafir arayüzü', n1s: 'Rezervasyon motoru · 3D harita · konsiyerj', n2e: 'Gelir', n2b: 'Fiyat & kontenjan çekirdeği', n2s: 'Müsaitlik · kur · fiyat kuralları', n3e: 'Ödeme', n3s: 'Tokenize kart · banka doğrulaması', n4e: 'Olaylar', n4b: 'Webhook hattı', n4s: 'Onay · fatura · kayıt', n5e: 'Bildirim', n5b: 'Çok kanallı',
+      conc_eyebrow: '05 — Canlı Yapay Zekâ Demosu', conc_title: 'AXON\'a sorun.', conc_lead: 'Otellerin kendi bilgileriyle eğittiğimiz asistan katmanı — burada AXON hakkında eğitildi. Aşağıdaki sorulardan birini deneyin ya da kendi sorunuzu yazın.',
+      p1: 'Hangi sistemleri sunuyorsunuz?', p2: 'Yapay zekâ konsiyerj nasıl çalışıyor?', p3: 'Hangi ödeme yöntemlerini destekliyorsunuz?', c4: 'OTA komisyonu alıyor musunuz?', c5: 'Demo talep et',
+      cons_eyebrow: '06 — Yönetici Danışmanlığı', cons_title: 'Kurulum planlayın.', cons_lead: 'Tesisinizi anlatın. Bir iş günü içinde kurulum taslağı ve takvimle dönüş yapıyoruz.',
+      term: 'İletişim Terminali', f_name: 'Ad soyad', ph_name: 'Adınız', f_email: 'İş e-postası', f_hotel: 'Tesis', ph_hotel: 'Otel adı, şehir', f_keys: 'Oda sayısı', f_sys: 'İlgilendiğiniz sistemler',
+      chk1: 'Rezervasyon & Gelir', chk2: 'Yapay Zekâ Konsiyerj', chk3: 'Otomasyon', chk4: '3D Haritalar', f_brief: 'Kısa bilgi', ph_brief: 'Mevcut rezervasyon altyapısı, OTA payı, hedef tarih…',
+      form_note: 'Bu sayfada hiçbir veri saklanmaz', form_btn: 'Danışmanlık Talep Et', wa_btn: 'WhatsApp', wa_aria: 'WhatsApp\'tan yazın',
+      err_name: 'Zorunlu — lütfen adınızı yazın.', err_email: 'Zorunlu — lütfen geçerli bir e-posta yazın.', form_ok: 'Hazır — e-posta uygulamanız açılıyor…',
+      wa_text: 'Merhaba AXON, otelim için sistemleriniz hakkında bilgi almak istiyorum.',
+      sig_eyebrow: 'Yönetici İmzası', sig_lead: 'Kurucunun HTML e-posta imzasını oluşturun. Alanları düzenleyin, sonra Gmail, Outlook veya Apple Mail\'e yapıştırın.',
+      light: 'Açık', dark: 'Koyu', copy_sig: 'İmzayı Kopyala', copy_html: 'HTML Kopyala', m_html: 'HTML kopyalandı', m_sig: 'İmza kopyalandı — e-posta ayarlarınıza yapıştırın', m_fail: 'Kopyalanamadı — önizlemeyi elle seçin',
+      foot_tag: 'Otonom konaklama & nöral dijital sistemler. İstanbul\'da tasarlandı.', foot_studio: 'Stüdyo', fab: 'AXON\'a Sor',
+      chat_status: 'Çevrimiçi · TR / EN / DE / FR', chat_ph: 'AXON sistemleri hakkında sorun…', chat_hi: 'AXON\'a hoş geldiniz. Otellere kurduğumuz yapay zekâ asistanının demosuyum — sistemlerimizi sorun.',
+      kb_sys: 'AXON otellere birbirine bağlı üç sistem kurar:\n• <b>Doğrudan Rezervasyon & Gelir Motoru</b> — kendi alan adınızda komisyonsuz rezervasyon\n• <b>7/24 Nöral Yapay Zekâ Konsiyerj</b> — tesisinize özel eğitilmiş çok dilli misafir asistanı\n• <b>Çok Kanallı Otomasyon</b> — anında e-posta, SMS ve WhatsApp\n\nAyrı ayrı ya da birlikte kurulabilir.',
+      kb_ai: 'Konsiyerji otelinize göre eğitiyoruz: odalar, olanaklar, kurallar, çevredeki yerler ve ulaşım. Misafirlere 7/24 kendi dillerinde yanıt verir, rezervasyon motorunuzdan canlı fiyat söyler ve gerektiğinde konuşmayı WhatsApp üzerinden resepsiyona aktarır.',
+      kb_pay: 'Ödemeler <b>iyzico 3D Secure</b> ile alınır. Misafirler fiyatları <b>TRY, EUR veya USD</b> görebilir; onaydan sonra fatura otomatik oluşur.',
+      kb_ota: 'AXON motorunuz üzerinden gelen doğrudan rezervasyonlarda <b>%0 OTA komisyonu</b> vardır — kazanç otelinizde kalır.',
+      kb_price: 'Her kurulum tesise göre planlandığı için fiyat size özeldir. Danışmanlık formundan kısa bilgi gönderin, taslak ve teklifle dönelim.',
+      kb_time: 'Süre kapsama bağlıdır — oda sayısı, diller ve entegrasyonlar. İlk görüşmeden sonra tarihli bir kurulum planı paylaşıyoruz.',
+      kb_map: 'MapLibre GL ile interaktif 3D haritalar yapıyoruz: tesisiniz, yakın simge yapılar, ulaşım hatları ve yürüme süreleri — rezervasyon akışınızın içinde.',
+      kb_lang: 'Siteler ve yapay zekâ konsiyerj çok dillidir — Türkçe, İngilizce, Almanca ve Fransızca; talebe göre başka diller de eklenir.',
+      kb_auto: 'Her rezervasyon olayı doğru mesajı tetikler: onay e-postası ve SMS, WhatsApp bildirimleri, check-in bilgileri ve konaklama sonrası yorum talepleri — ekibinize manuel iş kalmaz.',
+      kb_ref: 'Sistemlerimiz partner otellerde canlı çalışıyor — Partnerler bölümüne bakın. Özel bir tanıtım için danışmanlık formunu kullanın.',
+      kb_contact: 'Kurucumuz Gülcan Genç\'e danışmanlık formundan ya da doğrudan WhatsApp\'tan ulaşabilirsiniz.',
+      kb_hi: 'AXON\'a hoş geldiniz. Rezervasyon motoru, yapay zekâ konsiyerj, ödemeler veya otomasyonlar hakkında sorun.',
+      kb_fallback: 'Ben AXON demo asistanıyım — rezervasyon motoru, yapay zekâ konsiyerj, ödemeler, 3D haritalar ve otomasyonları anlatabilirim. Otelinize özel konular için danışmanlık formuna kısa bilgi bırakın.',
+      kb_wa: 'WhatsApp\'tan yazın'
+    },
+    de: {
+      intro_skip: 'Eintreten', lang_label: 'Sprache', sound: 'Interface-Sound', menu: 'Menü',
+      nav_systems: 'Systeme', nav_demo: 'Live-Demo', nav_partners: 'Partner', nav_arch: 'Architektur', nav_consult: 'Beratung',
+      cta_deploy: 'Einführung planen', cta_demo: 'Demo entdecken', scroll: 'Zum Eintreten scrollen',
+      tagline: 'Autonome Hotellerie & neuronale digitale Systeme', badge: 'Live im Einsatz bei Partnerhotels',
+      hero1: 'Wir entwickeln', hero2: 'Umsatzmaschinen', hero3: 'für Luxushotels.',
+      hero_sub: 'Individuelle Direktbuchungssysteme, interaktive 3D-Karten, autonome KI-Concierges und sofortige Zahlungsinfrastruktur in mehreren Währungen.',
+      pill1: '<b>0 %</b> OTA-Provision', pill2: '<b>3D Secure</b> iyzico integriert', pill3: '<b>24/7</b> Mehrsprachige KI',
+      demo_eyebrow: '01 — Live-Produktdemo', demo_title: 'Die Direktbuchungs-Engine',
+      demo_lead: 'Die Engine, die wir für Hotels einsetzen — live auf dieser Seite mit Demo-Inventar. Zimmer wählen, Daten festlegen, Währung wechseln — und zusehen, wie der Warenkorb in Echtzeit rechnet, ohne OTA-Provision.',
+      demo_m1: 'Live bei Partnerhotels', demo_m2: 'White-Label · Ihre Domain',
+      frame_url: 'ihrhotel.de/buchen · sichere Buchungs-Engine — powered by AXON',
+      leg_best: 'Bester Preis', leg_peak: 'Hochsaison', leg_sold: 'Ausgebucht', cal_hint: 'Preise pro Zimmer und Nacht · Demo-Inventar, Beispielpreise',
+      cal_in: 'Anreise wählen', cal_out: 'Abreise wählen', cal_n: '{n} Nächte gewählt', sold: 'BELEGT', dows: 'Mo,Di,Mi,Do,Fr,Sa,So',
+      adults: 'Erwachsene', pay_row: 'iyzico 3D Secure · sofortige E-Rechnung', reserve: 'Direkt buchen',
+      up_to: 'bis zu {n} Gäste', spec1: 'Live-Kontingent', spec2: 'Ratenpläne', spec3: 'Sofortbestätigung',
+      b_empty: 'Wählen Sie An- und Abreise, um den Gesamtpreis zu sehen.', night: 'Nacht', nights: 'Nächte', b_room: 'Zimmer · Ø {p}', b_extra: 'Zusätzlicher Gast', b_ota: 'OTA-Provision', b_total: 'Gesamt', b_tax: 'MwSt. und Beherbergungssteuer inklusive',
+      t_sold: 'Eine Nacht in diesem Zeitraum ist ausgebucht — bitte andere Daten wählen.', t_max: 'Maximal 21 Nächte in dieser Demo.', t_hold: 'Demo-Reservierung · {room} · {total} → 3D Secure (simuliert)',
+      rooms: [['Deluxe King', 'Kingsize-Bett', 'Ihre Zimmer, Fotos und Regeln werden bei der Einführung konfiguriert.'], ['Superior Twin', 'Zwei Einzelbetten', 'Preise und Kontingente synchronisieren sich in Echtzeit.'], ['Junior Suite', 'Kingsize + Schlafsofa', 'Belegungsabhängige Preise pro Zusatzgast.'], ['Familiensuite', 'Kingsize + zwei Einzelbetten', 'Familienregeln und Kinderrichtlinien integriert.']],
+      map_landmark: 'Wahrzeichen', map_route: 'Fußweg', map_museum: 'Museum', map_transit: 'Haltestelle', map_old: 'Altstadt', map_water: 'Uferpromenade', map_hotel: 'IHR HOTEL',
+      map_eyebrow: '3D-Kartenvorschau', map_title: 'Ihr Reiseziel,<br>in 3D.', map_l1: 'ÖPNV-Linien', map_l2: 'Wahrzeichen · Gehzeiten',
+      ins_eyebrow: 'Unter der Haube', ins_title: 'Was Ihre Engine mitbringt.', ins_p: 'Serverlose Buchungs-, Zahlungs- und Concierge-Dienste auf Ihrer eigenen Domain; ein mehrsprachiges Frontend; MapLibre-3D-Karten; und ein KI-Concierge mit WhatsApp-Übergabe.',
+      st1b: 'Buchungs-API', st1s: 'Kontingent · Preise · Wechselkurs', st2b: 'KI-Concierge', st2s: 'auf Ihr Hotel trainiert', st3b: 'Versand', st4b: 'Bewertungen', st4s: 'Anfragen nach dem Aufenthalt',
+      cta_private: 'Private Demo anfragen', cta_ask: 'KI-Assistent fragen',
+      part_eyebrow: '02 — Partner', part_title: 'Hotels, mit denen wir arbeiten.', part_lead: 'Häuser, die AXON-Systeme im Live-Betrieb nutzen.', part_next_b: 'Ihr Hotel', part_next_s: 'Nächste Einführung →',
+      sys_eyebrow: '03 — Systeme & Fähigkeiten', sys_title: 'Drei Systeme. Ein Nervensystem.', sys_lead: 'Jedes System funktioniert eigenständig und greift in die anderen — Buchungen speisen den Concierge, der Concierge die Automationen, die Automationen schließen den Kreis.',
+      s1_t: 'Direktbuchungs- & Yield-Engine', s1_p: 'Provisionsfreie Reservierungen auf Ihrer eigenen Domain, mit Live-Inventar und Preisen, die Sie pro Nacht steuern.', s1_1: 'Kontingentverwaltung in Echtzeit', s1_2: 'Mehrere Währungen TRY / EUR / USD', s1_3: 'Automatische Rechnungserstellung', s1_4: 'iyzico 3D Secure Gateway',
+      s2_t: '24/7 Neuronaler KI-Concierge', s2_p: 'Ein autonomer Gästeassistent, trainiert auf Ihr Haus — er antwortet, empfiehlt und konvertiert in der Sprache des Gastes.', s2_1: 'Ausstattung & Hausregeln', s2_2: 'Sehenswürdigkeiten & Restaurants', s2_3: 'Transport & Flughafentransfers', s2_4: 'Sofortige WhatsApp-Übergabe',
+      s3_t: 'Omnichannel-Automation', s3_p: 'Jedes Buchungsereignis löst in Sekunden die richtige Nachricht auf dem richtigen Kanal aus — ohne Arbeit an der Rezeption.', s3_1: 'Sofortige SMS & E-Mails', s3_2: 'Webhook-Listener', s3_3: 'Automatisierte Check-in-Abläufe', s3_4: 'Bewertungsanfragen nach dem Aufenthalt',
+      arch_eyebrow: '04 — Architektur', arch_title: 'Vom Klick zur Bestätigung in einem Impuls.', arch_lead: 'Eine serverlose Ereigniskette. Jede Buchung nimmt denselben Weg — sehen Sie zu.',
+      n1e: 'Edge', n1b: 'Gästeoberfläche', n1s: 'Buchungs-Engine · 3D-Karte · Concierge', n2e: 'Yield', n2b: 'Preis- & Kontingentkern', n2s: 'Verfügbarkeit · Wechselkurs · Preisregeln', n3e: 'Zahlungen', n3s: 'Tokenisierte Karte · Bankprüfung', n4e: 'Ereignisse', n4b: 'Webhook-Bus', n4s: 'Bestätigung · Rechnung · Protokoll', n5e: 'Versand', n5b: 'Omnichannel',
+      conc_eyebrow: '05 — Live-KI-Assistent', conc_title: 'Fragen Sie AXON.', conc_lead: 'Dieselbe Assistentenschicht, die wir mit dem Wissen eines Hotels trainieren — hier auf AXON trainiert. Probieren Sie eine Frage aus oder schreiben Sie Ihre eigene.',
+      p1: 'Welche Systeme bieten Sie an?', p2: 'Wie funktioniert der KI-Concierge?', p3: 'Welche Zahlungen unterstützen Sie?', c4: 'Berechnen Sie OTA-Provision?', c5: 'Demo buchen',
+      cons_eyebrow: '06 — Beratung', cons_title: 'Einführung planen.', cons_lead: 'Erzählen Sie uns von Ihrem Haus. Wir melden uns innerhalb eines Werktags mit einem Einführungsplan und Zeitrahmen.',
+      term: 'Kontaktterminal', f_name: 'Vollständiger Name', ph_name: 'Ihr Name', f_email: 'Geschäftliche E-Mail', f_hotel: 'Haus', ph_hotel: 'Hotelname, Stadt', f_keys: 'Zimmer', f_sys: 'Gewünschte Systeme',
+      chk1: 'Buchung & Yield', chk2: 'KI-Concierge', chk3: 'Automation', chk4: '3D-Karten', f_brief: 'Kurzbeschreibung', ph_brief: 'Aktuelles Buchungssystem, OTA-Anteil, Zeitplan…',
+      form_note: 'Auf dieser Seite werden keine Daten gespeichert', form_btn: 'Beratung anfragen', wa_btn: 'WhatsApp', wa_aria: 'Schreiben Sie uns auf WhatsApp',
+      err_name: 'Pflichtfeld — bitte Namen angeben.', err_email: 'Pflichtfeld — bitte gültige E-Mail angeben.', form_ok: 'Bereit — Ihr E-Mail-Programm wird geöffnet…',
+      wa_text: 'Hallo AXON, ich möchte mehr über Ihre Systeme für mein Hotel erfahren.',
+      sig_eyebrow: 'E-Mail-Signatur', sig_lead: 'Erstellen Sie die HTML-Signatur der Gründerin. Felder anpassen und direkt in Gmail, Outlook oder Apple Mail einfügen.',
+      light: 'Hell', dark: 'Dunkel', copy_sig: 'Signatur kopieren', copy_html: 'HTML kopieren', m_html: 'HTML kopiert', m_sig: 'Signatur kopiert — in den Mail-Einstellungen einfügen', m_fail: 'Kopieren fehlgeschlagen — Vorschau manuell markieren',
+      foot_tag: 'Autonome Hotellerie & neuronale digitale Systeme. Entwickelt in Istanbul.', foot_studio: 'Studio', fab: 'AXON fragen',
+      chat_status: 'Online · TR / EN / DE / FR', chat_ph: 'Fragen zu AXON-Systemen…', chat_hi: 'Willkommen bei AXON. Ich bin eine Demo des KI-Assistenten, den wir für Hotels bauen — fragen Sie mich zu unseren Systemen.',
+      kb_sys: 'AXON führt drei verzahnte Systeme für Hotels ein:\n• <b>Direktbuchungs- & Yield-Engine</b> — provisionsfreie Buchungen auf Ihrer Domain\n• <b>24/7 Neuronaler KI-Concierge</b> — ein mehrsprachiger Gästeassistent, trainiert auf Ihr Haus\n• <b>Omnichannel-Automation</b> — sofortige E-Mails, SMS und WhatsApp\n\nEinzeln oder gemeinsam einsetzbar.',
+      kb_ai: 'Wir trainieren den Concierge auf Ihr Hotel: Zimmer, Ausstattung, Regeln, Sehenswürdigkeiten und Anreise. Er antwortet Gästen rund um die Uhr in ihrer Sprache, nennt Live-Preise aus Ihrer Buchungs-Engine und übergibt bei Bedarf per WhatsApp an Ihre Rezeption.',
+      kb_pay: 'Zahlungen laufen über <b>iyzico 3D Secure</b>. Gäste sehen Preise in <b>TRY, EUR oder USD</b>; Rechnungen entstehen nach der Bestätigung automatisch.',
+      kb_ota: 'Direktbuchungen über Ihre AXON-Engine kosten <b>0 % OTA-Provision</b> — die Marge bleibt bei Ihrem Hotel.',
+      kb_price: 'Jede Einführung wird auf das Haus zugeschnitten, daher ist der Preis individuell. Senden Sie uns über das Beratungsformular eine Kurzbeschreibung, und wir melden uns mit Plan und Angebot.',
+      kb_time: 'Die Dauer hängt vom Umfang ab — Zimmerzahl, Sprachen und Integrationen. Nach dem ersten Gespräch erhalten Sie einen Einführungsplan mit Terminen.',
+      kb_map: 'Wir bauen interaktive 3D-Karten mit MapLibre GL: Ihr Haus, Sehenswürdigkeiten, ÖPNV-Linien und Gehzeiten — direkt im Buchungsablauf.',
+      kb_lang: 'Websites und KI-Concierge sind mehrsprachig — Türkisch, Englisch, Deutsch und Französisch, weitere Sprachen auf Anfrage.',
+      kb_auto: 'Jedes Buchungsereignis löst die richtige Nachricht aus: Bestätigungs-E-Mails und SMS, WhatsApp-Updates, Check-in-Infos und Bewertungsanfragen — ohne Handarbeit für Ihr Team.',
+      kb_ref: 'Unsere Systeme laufen live bei Partnerhotels — siehe Abschnitt Partner. Für eine private Vorführung nutzen Sie das Beratungsformular.',
+      kb_contact: 'Sie erreichen die Gründerin Gülcan Genç über das Beratungsformular oder direkt per WhatsApp.',
+      kb_hi: 'Willkommen bei AXON. Fragen Sie mich zu Buchungs-Engine, KI-Concierge, Zahlungen oder Automationen.',
+      kb_fallback: 'Ich bin der AXON-Demo-Assistent — ich erkläre Buchungs-Engine, KI-Concierge, Zahlungen, 3D-Karten und Automationen. Für Hotel-spezifische Fragen hinterlassen Sie eine Kurzbeschreibung im Beratungsformular.',
+      kb_wa: 'Auf WhatsApp schreiben'
+    },
+    fr: {
+      intro_skip: 'Entrer', lang_label: 'Langue', sound: 'Son de l\'interface', menu: 'Menu',
+      nav_systems: 'Systèmes', nav_demo: 'Démo live', nav_partners: 'Partenaires', nav_arch: 'Architecture', nav_consult: 'Consultation',
+      cta_deploy: 'Planifier un déploiement', cta_demo: 'Découvrir la démo', scroll: 'Faites défiler pour entrer',
+      tagline: 'Hôtellerie autonome & systèmes numériques neuronaux', badge: 'En production chez nos hôtels partenaires',
+      hero1: 'Nous concevons', hero2: 'des moteurs de revenus', hero3: 'pour l\'hôtellerie de luxe.',
+      hero_sub: 'Moteurs de réservation directe sur mesure, cartes 3D interactives, concierges IA autonomes et infrastructure de paiement multidevise instantanée.',
+      pill1: '<b>0 %</b> de commission OTA', pill2: '<b>3D Secure</b> iyzico intégré', pill3: '<b>24/7</b> IA multilingue',
+      demo_eyebrow: '01 — Démo produit en direct', demo_title: 'Le moteur de réservation directe',
+      demo_lead: 'Le moteur que nous déployons pour les hôtels, en direct sur cette page avec un inventaire de démonstration. Choisissez une chambre, vos dates, changez de devise — et voyez le panier se calculer en temps réel, sans commission OTA.',
+      demo_m1: 'En production chez nos partenaires', demo_m2: 'Marque blanche · votre domaine',
+      frame_url: 'votrehotel.fr/reserver · moteur de réservation sécurisé — propulsé par AXON',
+      leg_best: 'Meilleur tarif', leg_peak: 'Haute saison', leg_sold: 'Complet', cal_hint: 'Tarifs par chambre et par nuit · inventaire de démo, prix indicatifs',
+      cal_in: 'Choisir l\'arrivée', cal_out: 'Choisir le départ', cal_n: '{n} nuits sélectionnées', sold: 'COMPLET', dows: 'Lu,Ma,Me,Je,Ve,Sa,Di',
+      adults: 'Adultes', pay_row: 'iyzico 3D Secure · facture électronique instantanée', reserve: 'Réserver en direct',
+      up_to: 'jusqu\'à {n} personnes', spec1: 'Quota en direct', spec2: 'Plans tarifaires', spec3: 'Confirmation instantanée',
+      b_empty: 'Choisissez l\'arrivée et le départ pour voir le total.', night: 'nuit', nights: 'nuits', b_room: 'Chambre · moy. {p}', b_extra: 'Personne supplémentaire', b_ota: 'Commission OTA', b_total: 'Total', b_tax: 'TVA et taxe de séjour incluses',
+      t_sold: 'Une nuit de cette période est complète — choisissez d\'autres dates.', t_max: '21 nuits maximum dans cette démo.', t_hold: 'Réservation de démo · {room} · {total} → 3D Secure (simulé)',
+      rooms: [['Deluxe King', 'Lit king size', 'Vos chambres, photos et règles sont configurées au déploiement.'], ['Supérieure Twin', 'Deux lits simples', 'Tarifs et quotas synchronisés en temps réel avec votre inventaire.'], ['Junior Suite', 'King size + canapé-lit', 'Tarification selon l\'occupation par personne supplémentaire.'], ['Suite Familiale', 'King size + deux lits simples', 'Règles familiales et politiques enfants intégrées.']],
+      map_landmark: 'Monument', map_route: 'itinéraire à pied', map_museum: 'Musée', map_transit: 'Arrêt', map_old: 'Vieille ville', map_water: 'Front de mer', map_hotel: 'VOTRE HÔTEL',
+      map_eyebrow: 'Aperçu de carte 3D', map_title: 'Votre destination,<br>en 3D.', map_l1: 'Lignes de transport', map_l2: 'Monuments · temps de marche',
+      ins_eyebrow: 'Sous le capot', ins_title: 'Ce qui accompagne votre moteur.', ins_p: 'Services serverless de réservation, de paiement et de conciergerie sur votre propre domaine ; une interface multilingue ; des cartes 3D MapLibre ; et un concierge IA avec relais WhatsApp.',
+      st1b: 'API de réservation', st1s: 'quota · tarifs · devises', st2b: 'Concierge IA', st2s: 'entraîné sur votre hôtel', st3b: 'Envois', st4b: 'Avis', st4s: 'demandes après séjour',
+      cta_private: 'Demander une démo privée', cta_ask: 'Interroger l\'assistant IA',
+      part_eyebrow: '02 — Partenaires', part_title: 'Les hôtels avec qui nous travaillons.', part_lead: 'Établissements utilisant les systèmes AXON en production.', part_next_b: 'Votre hôtel', part_next_s: 'Prochain déploiement →',
+      sys_eyebrow: '03 — Systèmes & capacités', sys_title: 'Trois systèmes. Un seul système nerveux.', sys_lead: 'Chaque système fonctionne seul et s\'imbrique avec les autres — les réservations nourrissent le concierge, le concierge les automatisations, les automatisations bouclent la boucle.',
+      s1_t: 'Moteur de réservation directe & yield', s1_p: 'Des réservations sans commission sur votre propre domaine, avec un inventaire en direct et des prix maîtrisés à la nuit.', s1_1: 'Gestion des quotas en temps réel', s1_2: 'Multidevise TRY / EUR / USD', s1_3: 'Facturation automatique', s1_4: 'Passerelle iyzico 3D Secure',
+      s2_t: 'Concierge IA neuronal 24/7', s2_p: 'Un assistant client autonome entraîné sur votre établissement — il répond, recommande et convertit dans la langue du client.', s2_1: 'Services & règles de l\'hôtel', s2_2: 'Sorties & restaurants', s2_3: 'Transports & transferts aéroport', s2_4: 'Relais WhatsApp instantané',
+      s3_t: 'Automatisation omnicanale', s3_p: 'Chaque événement de réservation déclenche le bon message, sur le bon canal, en quelques secondes — sans saisie à la réception.', s3_1: 'SMS & e-mails instantanés', s3_2: 'Écouteurs webhook', s3_3: 'Check-in automatisé', s3_4: 'Demandes d\'avis après séjour',
+      arch_eyebrow: '04 — Architecture', arch_title: 'Du clic à la confirmation en une impulsion.', arch_lead: 'Une chaîne d\'événements serverless. Chaque réservation suit le même chemin — regardez-la passer.',
+      n1e: 'Edge', n1b: 'Interface client', n1s: 'Moteur de réservation · carte 3D · concierge', n2e: 'Yield', n2b: 'Cœur tarifs & quotas', n2s: 'Disponibilité · devises · règles tarifaires', n3e: 'Paiements', n3s: 'Carte tokenisée · validation bancaire', n4e: 'Événements', n4b: 'Bus webhook', n4s: 'Confirmation · facture · journal', n5e: 'Envois', n5b: 'Omnicanal',
+      conc_eyebrow: '05 — Démo de l\'assistant IA', conc_title: 'Demandez à AXON.', conc_lead: 'La même couche d\'assistant que nous entraînons sur les connaissances d\'un hôtel — ici entraînée sur AXON. Essayez une question ou écrivez la vôtre.',
+      p1: 'Quels systèmes proposez-vous ?', p2: 'Comment fonctionne le concierge IA ?', p3: 'Quels paiements acceptez-vous ?', c4: 'Prenez-vous une commission OTA ?', c5: 'Réserver une démo',
+      cons_eyebrow: '06 — Consultation', cons_title: 'Planifier un déploiement.', cons_lead: 'Parlez-nous de votre établissement. Nous répondons sous un jour ouvré avec un plan de déploiement et un calendrier.',
+      term: 'Terminal de contact', f_name: 'Nom complet', ph_name: 'Votre nom', f_email: 'E-mail professionnel', f_hotel: 'Établissement', ph_hotel: 'Nom de l\'hôtel, ville', f_keys: 'Chambres', f_sys: 'Systèmes souhaités',
+      chk1: 'Réservation & yield', chk2: 'Concierge IA', chk3: 'Automatisation', chk4: 'Cartes 3D', f_brief: 'Brief', ph_brief: 'Outils de réservation actuels, part OTA, calendrier…',
+      form_note: 'Aucune donnée n\'est enregistrée sur cette page', form_btn: 'Demander une consultation', wa_btn: 'WhatsApp', wa_aria: 'Écrivez-nous sur WhatsApp',
+      err_name: 'Obligatoire — indiquez votre nom.', err_email: 'Obligatoire — indiquez un e-mail valide.', form_ok: 'Prêt — ouverture de votre messagerie…',
+      wa_text: 'Bonjour AXON, je souhaite en savoir plus sur vos systèmes pour mon hôtel.',
+      sig_eyebrow: 'Signature e-mail', sig_lead: 'Générez la signature HTML de la fondatrice. Modifiez les champs puis collez-la dans Gmail, Outlook ou Apple Mail.',
+      light: 'Clair', dark: 'Sombre', copy_sig: 'Copier la signature', copy_html: 'Copier le HTML', m_html: 'HTML copié', m_sig: 'Signature copiée — collez-la dans vos réglages e-mail', m_fail: 'Échec de la copie — sélectionnez l\'aperçu manuellement',
+      foot_tag: 'Hôtellerie autonome & systèmes numériques neuronaux. Conçu à Istanbul.', foot_studio: 'Studio', fab: 'Demander à AXON',
+      chat_status: 'En ligne · TR / EN / DE / FR', chat_ph: 'Une question sur les systèmes AXON…', chat_hi: 'Bienvenue chez AXON. Je suis une démo de l\'assistant IA que nous créons pour les hôtels — posez-moi vos questions.',
+      kb_sys: 'AXON déploie trois systèmes imbriqués pour les hôtels :\n• <b>Moteur de réservation directe & yield</b> — réservations sans commission sur votre domaine\n• <b>Concierge IA neuronal 24/7</b> — un assistant multilingue entraîné sur votre établissement\n• <b>Automatisation omnicanale</b> — e-mails, SMS et WhatsApp instantanés\n\nSéparément ou ensemble.',
+      kb_ai: 'Nous entraînons le concierge sur votre hôtel : chambres, services, règles, lieux à visiter et transports. Il répond aux clients 24/7 dans leur langue, donne les tarifs en direct de votre moteur et transfère la conversation à votre réception sur WhatsApp si besoin.',
+      kb_pay: 'Les paiements passent par <b>iyzico 3D Secure</b>. Les clients voient les prix en <b>TRY, EUR ou USD</b> ; les factures sont générées automatiquement après confirmation.',
+      kb_ota: 'Les réservations directes via votre moteur AXON ont <b>0 % de commission OTA</b> — la marge reste à votre hôtel.',
+      kb_price: 'Chaque déploiement est adapté à l\'établissement : le prix est donc sur mesure. Envoyez un brief via le formulaire et nous revenons avec un plan et un devis.',
+      kb_time: 'La durée dépend du périmètre — nombre de chambres, langues et intégrations. Nous partageons un plan daté après le premier échange.',
+      kb_map: 'Nous créons des cartes 3D interactives avec MapLibre GL : votre établissement, les monuments proches, les lignes de transport et les temps de marche — intégrés au parcours de réservation.',
+      kb_lang: 'Les sites et le concierge IA sont multilingues — turc, anglais, allemand et français, d\'autres langues sur demande.',
+      kb_auto: 'Chaque événement de réservation déclenche le bon message : e-mails et SMS de confirmation, mises à jour WhatsApp, infos de check-in et demandes d\'avis — sans travail manuel pour votre équipe.',
+      kb_ref: 'Nos systèmes tournent en production chez nos hôtels partenaires — voir la section Partenaires. Demandez une présentation privée via le formulaire.',
+      kb_contact: 'Vous pouvez joindre la fondatrice, Gülcan Genç, via le formulaire de consultation ou directement sur WhatsApp.',
+      kb_hi: 'Bienvenue chez AXON. Posez-moi vos questions sur le moteur de réservation, le concierge IA, les paiements ou les automatisations.',
+      kb_fallback: 'Je suis l\'assistant de démo AXON — je peux présenter le moteur de réservation, le concierge IA, les paiements, les cartes 3D et les automatisations. Pour votre hôtel, laissez un brief dans le formulaire.',
+      kb_wa: 'Écrire sur WhatsApp'
+    }
+  };
+  var lang = 'en';
+  try { var saved = localStorage.getItem('axonLang'); if (LANGS.indexOf(saved) > -1) lang = saved; } catch (e) {}
+  if (lang === 'en') { var nl = (navigator.language || 'en').slice(0, 2).toLowerCase(); var stored = null; try { stored = localStorage.getItem('axonLang'); } catch (e) {} if (!stored && LANGS.indexOf(nl) > -1) lang = nl; }
+  function t(k, vars) {
+    var s = (I18N[lang] && I18N[lang][k] != null) ? I18N[lang][k] : I18N.en[k];
+    if (vars && typeof s === 'string') Object.keys(vars).forEach(function (v) { s = s.replace('{' + v + '}', vars[v]); });
+    return s;
+  }
+  var langListeners = [];
+  function applyLang(l) {
+    lang = l; document.documentElement.lang = l;
+    try { localStorage.setItem('axonLang', l); } catch (e) {}
+    $$('[data-i18n]').forEach(function (el) { el.textContent = t(el.getAttribute('data-i18n')); });
+    $$('[data-i18n-html]').forEach(function (el) { el.innerHTML = t(el.getAttribute('data-i18n-html')); });
+    $$('[data-i18n-ph]').forEach(function (el) { el.setAttribute('placeholder', t(el.getAttribute('data-i18n-ph'))); });
+    $$('[data-i18n-aria]').forEach(function (el) { el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria'))); });
+    $$('.lang button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.lang === l)); });
+    $$('.wa-link').forEach(function (a) { a.href = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(t('wa_text')); });
+    langListeners.forEach(function (fn) { fn(); });
+  }
+  $$('.lang button').forEach(function (b) { b.addEventListener('click', function () { applyLang(b.dataset.lang); Sound.click(); }); });
+
   /* ================= Booking engine replica ================= */
   var ROOMS = [
-    { id: 'twin', name: 'Standard Twin', full: 'Standard Twin Room', size: 28, maxAdults: 2, beds: 'Two single beds', desc: 'Live quota and nightly pricing, synced in real time.', base: 92 },
-    { id: 'double', name: 'Standard Double', full: 'Standard Double Room', size: 28, maxAdults: 2, beds: 'Double bed', desc: 'Rate plans and stay rules managed from one console.', base: 96 },
-    { id: 'quad', name: 'Quadruple', full: 'Quadruple Room', size: 30, maxAdults: 4, beds: 'Two bedrooms', desc: 'Occupancy-based pricing per extra guest.', base: 158 },
-    { id: 'family', name: 'Family Room', full: 'Family Room', size: 30, maxAdults: 5, beds: 'Up to 5 guests', desc: 'Family rules and child policies built in.', base: 178 }
+    { size: 32, maxAdults: 2, base: 92 },
+    { size: 30, maxAdults: 2, base: 96 },
+    { size: 42, maxAdults: 3, base: 158 },
+    { size: 48, maxAdults: 5, base: 178 }
   ];
+  function roomT(i) { var r = t('rooms')[i]; return { name: r[0], beds: r[1], desc: r[2] }; }
   // Indicative FX for the demo only.
   var FX = { EUR: { rate: 1, sym: '€' }, USD: { rate: 1.09, sym: '$' }, TRY: { rate: 44.5, sym: '₺' } };
   var state = { room: 0, cur: 'EUR', inD: null, outD: null, adults: 2 };
@@ -927,8 +1222,7 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
   function soldOut(d, roomIdx) { return hash(dayKey(d) * 7 + roomIdx * 131) < .07; }
   function fmt(eur, cur) {
     cur = cur || state.cur; var v = eur * FX[cur].rate;
-    var n = cur === 'TRY' ? Math.round(v).toLocaleString('tr-TR') : v.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
-    return FX[cur].sym + ' ' + n;
+    return FX[cur].sym + ' ' + Math.round(v).toLocaleString(LOCALE[lang]);
   }
   function short(eur) {
     var v = eur * FX[state.cur].rate;
@@ -951,16 +1245,17 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
   var tabs = $('#roomTabs');
   ROOMS.forEach(function (r, i) {
     var b = document.createElement('button');
-    b.type = 'button'; b.className = 'room-tab'; b.role = 'tab'; b.setAttribute('role', 'tab');
-    b.textContent = r.name; b.setAttribute('aria-selected', String(i === state.room));
+    b.type = 'button'; b.className = 'room-tab'; b.setAttribute('role', 'tab');
+    b.setAttribute('aria-selected', String(i === state.room));
     b.addEventListener('click', function () {
       state.room = i; state.adults = Math.min(state.adults, r.maxAdults);
       if (state.inD && state.outD && rangeHasSold(state.inD, state.outD, i)) { state.inD = null; state.outD = null; }
-      $$('.room-tab', tabs).forEach(function (t, j) { t.setAttribute('aria-selected', String(j === i)); });
+      $$('.room-tab', tabs).forEach(function (tb, j) { tb.setAttribute('aria-selected', String(j === i)); });
       Sound.click(); render();
     });
     tabs.appendChild(b);
   });
+  function renderTabs() { $$('.room-tab', tabs).forEach(function (b, i) { b.textContent = roomT(i).name; }); }
 
   $$('#currencySeg button').forEach(function (b) {
     b.addEventListener('click', function () {
@@ -978,18 +1273,18 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
     var d = new Date(+btn.dataset.t);
     if (!state.inD || (state.inD && state.outD) || d <= state.inD) { state.inD = d; state.outD = null; }
     else {
-      if (rangeHasSold(state.inD, d, state.room)) { toast('A night in that range is sold out — choose another stay.', true); state.inD = d; state.outD = null; }
-      else if (nightsBetween(state.inD, d) > 21) { toast('Maximum 21 nights online — the concierge can help with longer stays.', true); return; }
+      if (rangeHasSold(state.inD, d, state.room)) { toast(t('t_sold'), true); state.inD = d; state.outD = null; }
+      else if (nightsBetween(state.inD, d) > 21) { toast(t('t_max'), true); return; }
       else state.outD = d;
     }
     Sound.click(); render();
   });
 
   function renderCalendar() {
-    var html = '', dows = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
+    var html = '', dows = t('dows').split(','), loc = LOCALE[lang];
     for (var m = 0; m < 2; m++) {
       var first = new Date(today.getFullYear(), today.getMonth() + m, 1);
-      var title = first.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+      var title = first.toLocaleDateString(loc, { month: 'long', year: 'numeric' });
       html += '<div class="month"><h4>' + title + '</h4><div class="dow">' + dows.map(function (x) { return '<span>' + x + '</span>'; }).join('') + '</div><div class="days">';
       var offset = (first.getDay() + 6) % 7;
       for (var e = 0; e < offset; e++) html += '<span class="day empty"></span>';
@@ -1001,15 +1296,15 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
         if (so) cls += ' sold'; else if (p < avg * .98) cls += ' low'; else if (p > avg * 1.15) cls += ' high';
         if (sameDay(d, state.inD) || sameDay(d, state.outD)) cls += ' edge';
         else if (state.inD && state.outD && d > state.inD && d < state.outD) cls += ' in-range';
-        var label = d.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' }) + (past ? ', unavailable' : so ? ', sold out' : ', ' + fmt(p) + ' per night');
+        var label = d.toLocaleDateString(loc, { weekday: 'long', day: 'numeric', month: 'long' }) + (past ? '' : so ? ' · ' + t('leg_sold') : ' · ' + fmt(p));
         // a sold-out night can still be a checkout day
         var canCheckout = so && state.inD && !state.outD && d > state.inD;
-        html += '<button type="button" class="' + cls + '" data-t="' + d.getTime() + '"' + ((past || (so && !canCheckout)) ? ' disabled' : '') + ' aria-label="' + label + '"><span class="n">' + dd + '</span><span class="p">' + (past ? '' : so ? 'SOLD' : short(p)) + '</span></button>';
+        html += '<button type="button" class="' + cls + '" data-t="' + d.getTime() + '"' + ((past || (so && !canCheckout)) ? ' disabled' : '') + ' aria-label="' + label + '"><span class="n">' + dd + '</span><span class="p">' + (past ? '' : so ? t('sold') : short(p)) + '</span></button>';
       }
       html += '</div></div>';
     }
     monthsEl.innerHTML = html;
-    $('#calLabel').textContent = !state.inD ? 'Select check-in' : !state.outD ? 'Select check-out' : nightsBetween(state.inD, state.outD) + ' nights selected';
+    $('#calLabel').textContent = !state.inD ? t('cal_in') : !state.outD ? t('cal_out') : t('cal_n', { n: nightsBetween(state.inD, state.outD) });
   }
 
   function quote() {
@@ -1022,53 +1317,54 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
   }
 
   function renderSide() {
-    var r = ROOMS[state.room];
-    $('#roomCard').innerHTML = '<div class="eyebrow">' + r.size + ' m² · up to ' + r.maxAdults + ' guests</div><h3>' + r.full + '</h3><p>' + r.desc + '</p>' +
-      '<div class="specs"><span class="spec">' + r.beds + '</span><span class="spec">Live quota</span><span class="spec">Rate plans</span><span class="spec">Instant confirm</span></div>';
+    var r = ROOMS[state.room], rt = roomT(state.room);
+    $('#roomCard').innerHTML = '<div class="eyebrow">' + r.size + ' m² · ' + t('up_to', { n: r.maxAdults }) + '</div><h3>' + rt.name + '</h3><p>' + rt.desc + '</p>' +
+      '<div class="specs"><span class="spec">' + rt.beds + '</span><span class="spec">' + t('spec1') + '</span><span class="spec">' + t('spec2') + '</span><span class="spec">' + t('spec3') + '</span></div>';
     $('#adults').textContent = state.adults;
     $('#adMinus').disabled = state.adults <= 1; $('#adPlus').disabled = state.adults >= r.maxAdults;
     var q = quote(), b = $('#basket');
-    var dfmt = function (d) { return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }); };
-    if (!q) { b.innerHTML = '<div class="row"><span class="muted">Choose check-in and check-out to see your total.</span></div>'; $('#reserveBtn').disabled = true; return; }
+    var dfmt = function (d) { return d.toLocaleDateString(LOCALE[lang], { day: 'numeric', month: 'short' }); };
+    if (!q) { b.innerHTML = '<div class="row"><span class="muted">' + t('b_empty') + '</span></div>'; $('#reserveBtn').disabled = true; return; }
     $('#reserveBtn').disabled = false;
     b.innerHTML =
-      '<div class="row"><span>' + dfmt(state.inD) + ' → ' + dfmt(state.outD) + '</span><span>' + q.nights + ' night' + (q.nights > 1 ? 's' : '') + '</span></div>' +
-      '<div class="row"><span>Room · avg ' + fmt(q.sub / q.nights) + '</span><span>' + fmt(q.sub) + '</span></div>' +
-      (q.extra ? '<div class="row"><span>Extra guest</span><span>' + fmt(q.extra) + '</span></div>' : '') +
-      '<div class="row"><span>OTA commission</span><span style="color:var(--success)">' + fmt(0) + '</span></div>' +
-      '<div class="row total"><span>Total</span><span>' + fmt(q.total) + '</span></div>' +
-      '<div class="row"><span class="muted">VAT & accommodation tax included · ' + (state.cur === 'TRY' ? 'charged in TRY' : 'settled in TRY at checkout') + '</span></div>';
+      '<div class="row"><span>' + dfmt(state.inD) + ' → ' + dfmt(state.outD) + '</span><span>' + q.nights + ' ' + (q.nights > 1 ? t('nights') : t('night')) + '</span></div>' +
+      '<div class="row"><span>' + t('b_room', { p: fmt(q.sub / q.nights) }) + '</span><span>' + fmt(q.sub) + '</span></div>' +
+      (q.extra ? '<div class="row"><span>' + t('b_extra') + '</span><span>' + fmt(q.extra) + '</span></div>' : '') +
+      '<div class="row"><span>' + t('b_ota') + '</span><span style="color:var(--success)">' + fmt(0) + '</span></div>' +
+      '<div class="row total"><span>' + t('b_total') + '</span><span>' + fmt(q.total) + '</span></div>' +
+      '<div class="row"><span class="muted">' + t('b_tax') + '</span></div>';
   }
 
   var toastT;
   function toast(msg, warn) {
-    var t = $('#engineToast'); t.textContent = msg; t.style.color = warn ? 'var(--danger)' : 'var(--success)';
-    clearTimeout(toastT); toastT = setTimeout(function () { t.textContent = ''; }, 4200);
+    var el = $('#engineToast'); el.textContent = msg; el.style.color = warn ? 'var(--danger)' : 'var(--success)';
+    clearTimeout(toastT); toastT = setTimeout(function () { el.textContent = ''; }, 4200);
   }
   $('#reserveBtn').addEventListener('click', function () {
     var q = quote(); if (!q) return;
     Sound.chime();
-    toast('Demo hold placed · ' + ROOMS[state.room].name + ' · ' + fmt(q.total) + ' → redirecting to 3D Secure (simulated)');
+    toast(t('t_hold', { room: roomT(state.room).name, total: fmt(q.total) }));
     pulseFlow();
   });
 
-  function render() { renderCalendar(); renderSide(); }
-  pickDefault(); render();
+  function render() { renderTabs(); renderCalendar(); renderSide(); }
+  pickDefault();
+  langListeners.push(render);
 
   /* ================= Architecture event stream ================= */
   var flowNodes = $$('#flow .node'), logEl = $('#log'), flowBusy = false;
   var guests = ['M. Laurent', 'A. Yılmaz', 'S. Novak', 'J. Okafor', 'E. Rossi', 'K. Tanaka', 'L. Weber'];
   function logLine(html) {
-    var div = document.createElement('div'); var t = new Date();
-    div.innerHTML = '<span>' + t.toTimeString().slice(0, 8) + '</span>  ' + html;
+    var div = document.createElement('div'); var now = new Date();
+    div.innerHTML = '<span>' + now.toTimeString().slice(0, 8) + '</span>  ' + html;
     logEl.insertBefore(div, logEl.firstChild);
     while (logEl.children.length > 12) logEl.removeChild(logEl.lastChild);
   }
   function pulseFlow() {
     if (flowBusy) return; flowBusy = true;
-    var g = guests[Math.floor(Math.random() * guests.length)], room = ROOMS[Math.floor(Math.random() * 4)], amt = fmt(room.base * (2 + Math.floor(Math.random() * 4)), 'EUR');
+    var g = guests[Math.floor(Math.random() * guests.length)], ri = Math.floor(Math.random() * 4), amt = fmt(ROOMS[ri].base * (2 + Math.floor(Math.random() * 4)), 'EUR');
     var steps = [
-      '<span class="ev">booking.created</span>  ' + room.name + ' · ' + g,
+      '<span class="ev">booking.created</span>  ' + I18N.en.rooms[ri][0] + ' · ' + g,
       '<span class="ev">yield.quoted</span>     quota ok · rate locked <span class="amt">' + amt + '</span>',
       '<span class="ev">payment.3ds</span>      iyzico challenge <span class="ok">passed</span>',
       '<span class="ev">webhook.confirmed</span> invoice issued · audit logged',
@@ -1088,23 +1384,25 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
   setInterval(function () { if (archVisible && !document.hidden) pulseFlow(); }, 5200);
 
   /* ================= AXON assistant ================= */
+  // keyword triggers cover all four languages; answers come from the active language
   var KB = [
-    { k: /(system|offer|service|product|what do you|ne yap|hizmet|sistem)/i, a: 'AXON deploys three interlocking systems for hotels:\n• <b>Direct Booking & Yield Engine</b> — commission-free bookings on your own domain\n• <b>24/7 Neural AI Concierge</b> — a multilingual guest assistant trained on your property\n• <b>Omni-channel Automation</b> — instant email, SMS and WhatsApp dispatch\n\nThey ship standalone or together.' },
-    { k: /(concierge|assistant|chatbot|yapay|asistan|\bai\b)/i, a: 'We train the concierge on your hotel: rooms, amenities, policies, local attractions and transport. It answers guests 24/7 in their own language, quotes live rates from your booking engine, and hands the conversation to your front desk on WhatsApp whenever a human is needed.' },
-    { k: /(payment|pay\b|iyzico|card|3d secure|currenc|ödeme|kart|döviz)/i, a: 'Payments run through <b>iyzico 3D Secure</b>. Guests can see prices in <b>TRY, EUR or USD</b>, and invoices are generated automatically after confirmation.' },
-    { k: /(commission|ota|booking\.com|expedia|komisyon)/i, a: 'Direct bookings through your AXON engine carry <b>0% OTA commission</b> — the margin stays with your hotel.' },
-    { k: /(price|cost|how much|fee|fiyat|ücret|maliyet|paket)/i, a: 'Every deployment is scoped to the property, so pricing is tailored. Send a brief through the consultation form and we\'ll come back with an outline and a quote.' },
-    { k: /(how long|timeline|when|launch|süre|ne zaman|kaç gün)/i, a: 'Timelines depend on scope — number of rooms, languages and integrations. We share a deployment plan with dates after the first consultation.' },
-    { k: /(map|3d|harita)/i, a: 'We build interactive 3D maps with MapLibre GL: your property, nearby landmarks, transit lines and walking times — embedded right in your booking flow.' },
-    { k: /(language|multilingual|dil|english|türkçe)/i, a: 'Sites and the AI concierge are multilingual — English and Turkish out of the box, with more languages on request.' },
-    { k: /(automation|email|sms|whatsapp|webhook|otomasyon)/i, a: 'Every reservation event triggers the right message: confirmation emails and SMS, WhatsApp updates, check-in instructions and post-stay review requests — no manual work for your team.' },
-    { k: /(reference|client|customer|eliza|example|referans|müşteri)/i, a: 'Our systems are live in production at partner hotels, including Hotel Eliza in Istanbul. Ask for a private walkthrough in the consultation form.' },
-    { k: /(contact|call|phone|email|meet|demo|iletişim|telefon|görüş)/i, a: 'You can reach the founder, Gülcan Genç, through the consultation form below — or book a private demo there.' },
-    { k: /^(hi|hello|hey|merhaba|selam)\b/i, a: 'Welcome to AXON. Ask me about our booking engine, AI concierge, payments or automations.' }
+    { k: /(system|offer|service|product|what do you|ne yap|hizmet|sistem|angebot|bieten|produkt|propos|offre|systèm)/i, a: 'kb_sys' },
+    { k: /(concierge|assistant|chatbot|yapay|asistan|konsiyerj|\bai\b|\bki\b|\bia\b|assistent)/i, a: 'kb_ai' },
+    { k: /(payment|pay\b|iyzico|card|3d secure|currenc|ödeme|kart|döviz|zahlung|währung|paiement|carte|devise)/i, a: 'kb_pay' },
+    { k: /(commission|\bota\b|booking\.com|expedia|komisyon|provision)/i, a: 'kb_ota' },
+    { k: /(price|cost|how much|fee|fiyat|ücret|maliyet|paket|preis|kosten|prix|tarif|coût)/i, a: 'kb_price' },
+    { k: /(how long|timeline|when|launch|süre|ne zaman|kaç gün|wie lange|dauer|wann|combien de temps|délai|quand)/i, a: 'kb_time' },
+    { k: /(map|3d|harita|karte|carte 3d)/i, a: 'kb_map' },
+    { k: /(language|multilingual|\bdil\b|english|türkçe|sprache|langue)/i, a: 'kb_lang' },
+    { k: /(automation|email|e-mail|sms|whatsapp|webhook|otomasyon|automati)/i, a: 'kb_auto' },
+    { k: /(reference|client|customer|partner|example|referans|müşteri|kunde|référence)/i, a: 'kb_ref' },
+    { k: /(contact|call|phone|meet|demo|iletişim|telefon|görüş|kontakt|anruf|rendez|appel)/i, a: 'kb_contact', wa: true },
+    { k: /^(hi|hello|hey|merhaba|selam|hallo|guten|bonjour|salut)\b/i, a: 'kb_hi' }
   ];
+  function waTag() { return '\n<a class="handover wa-link" target="_blank" rel="noopener" href="https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(t('wa_text')) + '">● ' + t('kb_wa') + '</a>'; }
   function reply(text) {
-    for (var i = 0; i < KB.length; i++) if (KB[i].k.test(text)) return KB[i].a;
-    return 'I\'m the AXON demo assistant — I can explain our booking engine, AI concierge, payments, 3D maps and automations. For anything specific to your hotel, leave a brief in the consultation form.';
+    for (var i = 0; i < KB.length; i++) if (KB[i].k.test(text)) return t(KB[i].a) + (KB[i].wa ? waTag() : '');
+    return t('kb_fallback');
   }
 
   function Chat(mount, opts) {
@@ -1112,28 +1410,35 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
     var el = document.createElement('div');
     el.className = 'chat glass';
     el.innerHTML =
-      '<div class="chat-head"><span class="chat-avatar"><i></i></span><div class="chat-title"><b>AXON ASSISTANT</b><span><i class="dot"></i>Online · EN / TR</span></div>' +
-      (opts.closable ? '<button class="icon-btn" type="button" data-close aria-label="Close assistant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>' : '') +
+      '<div class="chat-head"><span class="chat-avatar"><i></i></span><div class="chat-title"><b>AXON ASSISTANT</b><span><i class="dot"></i><span data-chat="status"></span></span></div>' +
+      (opts.closable ? '<button class="icon-btn" type="button" data-close aria-label="×"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>' : '') +
       '</div><div class="chat-log" role="log" aria-live="polite"></div>' +
-      '<div class="chat-chips"><button class="chip" type="button">What systems do you offer?</button><button class="chip" type="button">Do you charge OTA commission?</button><button class="chip" type="button">Which payments do you support?</button><button class="chip" type="button">Book a demo</button></div>' +
-      '<form class="chat-form"><label class="sr-only" for="ci' + (opts.id || '') + '">Message</label><input id="ci' + (opts.id || '') + '" autocomplete="off" placeholder="Ask about AXON systems…"><button class="send" type="submit" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form>';
+      '<div class="chat-chips"><button class="chip" type="button" data-ck="p1"></button><button class="chip" type="button" data-ck="c4"></button><button class="chip" type="button" data-ck="p3"></button><button class="chip" type="button" data-ck="c5"></button></div>' +
+      '<form class="chat-form"><label class="sr-only" for="ci' + (opts.id || '') + '">Message</label><input id="ci' + (opts.id || '') + '" autocomplete="off"><button class="send" type="submit" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form>';
     mount.appendChild(el);
-    var log = $('.chat-log', el), input = $('input', el), busy = false;
+    var log = $('.chat-log', el), input = $('input', el), busy = false, welcome = null;
     function add(role, html) { var m = document.createElement('div'); m.className = 'msg ' + role; m.innerHTML = html; log.appendChild(m); log.scrollTop = log.scrollHeight; return m; }
     function esc(s) { return s.replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
     function send(text) {
       text = (text || '').trim(); if (!text || busy) return;
       busy = true; add('user', esc(text)); Sound.click();
-      var t = add('bot', '<span class="typing"><i></i><i></i><i></i></span>'); t.style.padding = '0';
-      setTimeout(function () { t.style.padding = ''; t.innerHTML = reply(text); log.scrollTop = log.scrollHeight; busy = false; Sound.chime(); }, reduceMotion ? 200 : 650 + Math.random() * 500);
+      var tw = add('bot', '<span class="typing"><i></i><i></i><i></i></span>'); tw.style.padding = '0';
+      setTimeout(function () { tw.style.padding = ''; tw.innerHTML = reply(text); log.scrollTop = log.scrollHeight; busy = false; Sound.chime(); }, reduceMotion ? 200 : 650 + Math.random() * 500);
+    }
+    function localize() {
+      $('[data-chat="status"]', el).textContent = t('chat_status');
+      input.setAttribute('placeholder', t('chat_ph'));
+      $$('.chip', el).forEach(function (c) { c.textContent = t(c.dataset.ck); });
+      if (welcome && log.children.length === 1) welcome.innerHTML = t('chat_hi');
     }
     $('form', el).addEventListener('submit', function (e) { e.preventDefault(); send(input.value); input.value = ''; });
     $$('.chip', el).forEach(function (c) { c.addEventListener('click', function () { send(c.textContent); }); });
-    add('bot', 'Welcome to AXON. I\'m a demo of the AI assistant we build for hotels — ask me about our systems.');
+    welcome = add('bot', t('chat_hi'));
+    langListeners.push(localize);
     return { el: el, send: send, focus: function () { input.focus(); } };
   }
   var inlineChat = Chat($('#inlineChatMount'), { id: 'a' });
-  $$('.prompt-btn').forEach(function (b) { b.addEventListener('click', function () { inlineChat.send(b.dataset.prompt); }); });
+  $$('.prompt-btn').forEach(function (b) { b.addEventListener('click', function () { inlineChat.send(t(b.dataset.pk)); }); });
 
   var fabPanel = $('#fabPanel'), fabBtn = $('#fabBtn');
   var fabChat = Chat(fabPanel, { id: 'b', closable: true });
@@ -1147,7 +1452,6 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !fabPanel.hasAttribute('hidden')) { setFab(false); fabBtn.focus(); } });
 
   /* ================= Contact terminal ================= */
-  // Set this to the studio inbox before going live.
   var CONTACT_EMAIL = 'gulcanyesilbudak@icloud.com';
   var clock = $('#termClock');
   function tickClock() { clock.textContent = 'IST ' + new Date().toLocaleTimeString('en-GB', { timeZone: 'Europe/Istanbul', hour: '2-digit', minute: '2-digit', second: '2-digit' }); }
@@ -1157,14 +1461,14 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
     var f = e.target, st = $('#formStatus');
     var name = f.name.value.trim(), email = f.email.value.trim();
     if (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      st.className = 'form-status err'; st.textContent = !name ? 'Required — please add your name.' : 'Required — please add a valid work email.';
+      st.className = 'form-status err'; st.textContent = !name ? t('err_name') : t('err_email');
       (!name ? f.name : f.email).focus(); return;
     }
     var sys = $$('input[name="sys"]:checked', f).map(function (x) { return x.value; }).join(', ');
-    var body = 'Name: ' + name + '\nEmail: ' + email + '\nProperty: ' + f.hotel.value + '\nKeys: ' + f.rooms.value + '\nSystems: ' + sys + '\n\n' + f.message.value;
-    st.className = 'form-status ok'; st.textContent = 'Transmission ready — opening your mail client…';
+    var body = 'Name: ' + name + '\nEmail: ' + email + '\nProperty: ' + f.hotel.value + '\nRooms: ' + f.rooms.value + '\nSystems: ' + sys + '\nLanguage: ' + lang.toUpperCase() + '\n\n' + f.message.value;
+    st.className = 'form-status ok'; st.textContent = t('form_ok');
     Sound.chime();
-    window.location.href = 'mailto:' + CONTACT_EMAIL + '?subject=' + encodeURIComponent('Deployment consultation — ' + (f.hotel.value || name)) + '&body=' + encodeURIComponent(body);
+    window.location.href = 'mailto:' + CONTACT_EMAIL + '?subject=' + encodeURIComponent('AXON consultation — ' + (f.hotel.value || name)) + '&body=' + encodeURIComponent(body);
   });
 
   /* ================= Signature generator ================= */
@@ -1182,10 +1486,11 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
       '<div style="font-size:11px;line-height:16px;color:#0284C7;letter-spacing:3px;margin:6px 0 8px;">Λ X O N</div>' +
       '<div style="font-size:12px;line-height:18px;color:#334155;">' +
       '<a href="mailto:' + escA(v.email) + '" style="color:#334155;text-decoration:none;">' + escA(v.email) + '</a>' +
-      (tel ? ' &nbsp;·&nbsp; <a href="tel:' + escA(tel) + '" style="color:#334155;text-decoration:none;">' + escA(v.phone) + '</a>' : '') + '</div>' +
+      (tel ? ' &nbsp;·&nbsp; <a href="tel:' + escA(tel) + '" style="color:#334155;text-decoration:none;">' + escA(v.phone) + '</a>' +
+        ' &nbsp;·&nbsp; <a href="https://wa.me/' + escA(tel.replace('+', '')) + '" style="color:#334155;text-decoration:none;">WhatsApp</a>' : '') + '</div>' +
       '<div style="font-size:12px;line-height:18px;">' +
       '<a href="' + escA(v.web) + '" style="color:#0284C7;text-decoration:none;">' + escA(webLabel) + '</a>' +
-       '</div>' +
+      '</div>' +
       '<div style="font-size:9px;line-height:14px;color:#94A3B8;letter-spacing:1.5px;margin-top:8px;">AUTONOMOUS HOSPITALITY &amp; NEURAL DIGITAL SYSTEMS</div>' +
       '</td></tr></table>';
   }
@@ -1199,7 +1504,7 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
     });
   });
   renderSig();
-  function sigMsg(t, ok) { var s = $('#sigStatus'); s.className = 'form-status ' + (ok ? 'ok' : 'err'); s.textContent = t; setTimeout(function () { s.textContent = ''; }, 3000); }
+  function sigMsg(m, ok) { var s = $('#sigStatus'); s.className = 'form-status ' + (ok ? 'ok' : 'err'); s.textContent = m; setTimeout(function () { s.textContent = ''; }, 3000); }
   function copyText(text) {
     if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(text);
     return new Promise(function (res, rej) {
@@ -1208,20 +1513,22 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
     });
   }
   $('#copyHtml').addEventListener('click', function () {
-    copyText(sigHTML(sigValues())).then(function () { sigMsg('HTML copied', true); Sound.chime(); }, function () { sigMsg('Copy failed — select the preview manually'); });
+    copyText(sigHTML(sigValues())).then(function () { sigMsg(t('m_html'), true); Sound.chime(); }, function () { sigMsg(t('m_fail')); });
   });
   $('#copyRich').addEventListener('click', function () {
     var html = sigHTML(sigValues());
     if (window.ClipboardItem && navigator.clipboard && navigator.clipboard.write) {
       var item = new ClipboardItem({ 'text/html': new Blob([html], { type: 'text/html' }), 'text/plain': new Blob([$('#sigPreview').innerText], { type: 'text/plain' }) });
-      navigator.clipboard.write([item]).then(function () { sigMsg('Signature copied — paste into your mail settings', true); Sound.chime(); }, fallback);
+      navigator.clipboard.write([item]).then(function () { sigMsg(t('m_sig'), true); Sound.chime(); }, fallback);
     } else fallback();
     function fallback() {
       var range = document.createRange(); range.selectNodeContents($('#sigPreview'));
       var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range);
-      try { document.execCommand('copy'); sigMsg('Signature copied', true); } catch (e) { sigMsg('Press Ctrl/⌘+C to copy the selection'); }
+      try { document.execCommand('copy'); sigMsg(t('m_sig'), true); } catch (e) { sigMsg(t('m_fail')); }
     }
   });
+
+  applyLang(lang);
 
   $('#yr').textContent = new Date().getFullYear();
 
@@ -1417,7 +1724,7 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
       x.clearRect(0, 0, 1024, 640);
       x.fillStyle = 'rgba(248,250,252,.9)'; x.font = '300 30px Syne, sans-serif'; x.fillText('Λ  X  O  N', 48, 70);
       x.fillStyle = 'rgba(56,189,248,.9)'; x.font = '500 18px "JetBrains Mono", monospace'; x.fillText('● LIVE · DIRECT BOOKING ENGINE', 560, 66);
-      var tabs = ['STD TWIN', 'STD DOUBLE', 'QUADRUPLE', 'FAMILY'];
+      var tabs = ['DELUXE', 'TWIN', 'SUITE', 'FAMILY'];
       tabs.forEach(function (t, i) { x.fillStyle = i === 0 ? 'rgba(248,250,252,.14)' : 'rgba(248,250,252,.04)'; x.fillRect(48 + i * 160, 104, 150, 44); x.fillStyle = 'rgba(203,213,225,.9)'; x.font = '500 15px "JetBrains Mono", monospace'; x.fillText(t, 62 + i * 160, 132); });
       for (var r = 0; r < 5; r++) for (var c = 0; c < 7; c++) {
         var cx = 48 + c * 86, cy = 176 + r * 82, k = (r * 7 + c) % 11;
@@ -1545,7 +1852,7 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
         { p: pDemo, x: -3.2, y: 2.6, z: 6.8, lx: 2.3, ly: 0.15, lz: 0.2, panel: 1, ring: 0, roll: -0.06 },
         { p: (pDemo + pSys) / 2 + .02, x: 0, y: 0.15, z: 1.6, lx: 0, ly: 0, lz: -6, panel: 0, ring: 0, roll: 0.04 },
         { p: pSys, x: 0, y: -0.1, z: -7, lx: 0.2, ly: -0.2, lz: -22, panel: 0, ring: 0, roll: 0.1 },
-        { p: pArch, x: 3.8, y: 2.2, z: -2.4, lx: 0, ly: 0, lz: 0, panel: 0, ring: .25, roll: 0 },
+        { p: pArch, x: 5.6, y: 3.0, z: -4.2, lx: 0, ly: 0, lz: 0, panel: 0, ring: 0, roll: 0 },
         { p: pCons, x: 0, y: 4.0, z: 5.2, lx: 0, ly: -0.1, lz: 0, panel: 0, ring: 1, roll: 0 },
         { p: 1, x: 0, y: 4.6, z: 6.0, lx: 0, ly: -0.2, lz: 0, panel: 0, ring: 1, roll: 0 }
       ];
@@ -1636,7 +1943,8 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
 
       // synapse core: weightless float + breathing
       var R = view.ring;
-      core.position.y = Math.sin(t * .6) * .08 * (1 - R);
+      core.position.y = Math.sin(t * .6) * .08 * (1 - R) - view.panel * .4;
+      core.position.x = -view.panel * 1.3; core.position.z = -view.panel * 2.2;
       core.rotation.y = (mouse.x * .3 + Math.sin(t * .25) * .12) * (1 - R);
       core.rotation.x = -mouse.y * .15 * (1 - R);
       var breathe = 1 + .025 * Math.sin(t * 1.3);
@@ -1653,7 +1961,7 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
         ringQ.setFromUnitVectors(UP, tangent.multiplyScalar(-1));
         qTmp.copy(n.userData.homeQ).slerp(ringQ, R); n.quaternion.copy(qTmp);
       });
-      ringMat.uniforms.uAlpha.value = R; ringHaloMat.uniforms.uAlpha.value = R * .25;
+      ringMat.uniforms.uAlpha.value = R * .75; ringHaloMat.uniforms.uAlpha.value = R * .18;
       ring.rotation.z = ringHalo.rotation.z = -t * .45;
       var beamA = Math.max(0, 1 - R * 1.6);
       [beamMat, haloMat, ringMat, ringHaloMat].forEach(function (m) { m.uniforms.uTime.value = t; });
