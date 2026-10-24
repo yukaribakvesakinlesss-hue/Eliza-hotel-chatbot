@@ -71,6 +71,10 @@ main, footer { position: relative; z-index: 2; }
 .eyebrow { font: 500 11px/1.4 var(--font-mono); letter-spacing: .24em; text-transform: uppercase; color: var(--synapse); }
 .section { padding: clamp(80px, 12vw, var(--space-32)) 0; }
 .section-head { max-width: 760px; margin-bottom: clamp(40px, 6vw, var(--space-16)); }
+/* soft dark halo behind headings so the 3D scene never sits on the letters */
+.section { overflow-x: clip; }
+.section-head { position: relative; }
+.section-head::before { content: ""; position: absolute; inset: -48px -80px; z-index: -1; pointer-events: none; background: radial-gradient(ellipse at 35% 50%, rgba(2, 4, 8, .9) 0%, rgba(2, 4, 8, .72) 45%, rgba(2, 4, 8, 0) 75%); }
 .section-title { font: 500 clamp(30px, 4.6vw, 54px)/1.02 var(--font-display); letter-spacing: 0; color: var(--chrome-50); margin: var(--space-4) 0 var(--space-4); text-transform: uppercase; }
 .section-lead { font: 300 clamp(16px, 1.6vw, 19px)/1.55 var(--font-sans); color: var(--chrome-200); margin: 0; }
 .mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
@@ -136,10 +140,23 @@ main, footer { position: relative; z-index: 2; }
 }
 
 /* ===== Hero ===== */
-.hero { min-height: 100svh; display: flex; align-items: flex-end; padding: 140px 0 clamp(48px, 8vh, 96px); }
-.hero-inner { display: grid; gap: var(--space-8); }
+.hero { position: relative; min-height: 100svh; display: flex; align-items: center; padding: 120px 0 clamp(40px, 6vh, 72px); }
+/* a dark veil behind the copy keeps particles and glow off the letters; the symbol stays bright on the right */
+.hero::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(90deg, rgba(2, 4, 8, .94) 0%, rgba(2, 4, 8, .86) 34%, rgba(2, 4, 8, .35) 58%, rgba(2, 4, 8, 0) 72%); }
+@media (max-width: 899px) {
+  .hero { align-items: flex-end; padding-top: 46svh; }
+  .hero::before { background: linear-gradient(180deg, rgba(2, 4, 8, 0) 0%, rgba(2, 4, 8, .2) 30%, rgba(2, 4, 8, .9) 52%, rgba(2, 4, 8, .96) 100%); }
+}
+.hero-copy { max-width: 640px; display: grid; gap: var(--space-6); }
+.hero-kicker { margin: 0; font: 500 clamp(14px, 1.2vw, 16px)/1.4 var(--font-sans); color: var(--synapse); letter-spacing: .02em; }
+.proof { position: relative; z-index: 2; border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); background: rgba(2, 4, 8, .82); -webkit-backdrop-filter: blur(var(--blur-glass)); backdrop-filter: blur(var(--blur-glass)); }
+.proof-inner { display: flex; flex-wrap: wrap; gap: var(--space-2); justify-content: center; padding-block: var(--space-4); }
+.proof .pill { background: transparent; }
+.proof-live { text-decoration: none; color: var(--chrome-200); }
+.proof-live:hover { border-color: var(--hairline-active); }
+.hero-inner { display: grid; }
 .hero h1 {
-  font: 500 clamp(30px, 6.4vw, 92px)/.98 var(--font-display); letter-spacing: -.01em; text-transform: uppercase;
+  font: 500 clamp(34px, 4.6vw, 66px)/1.04 var(--font-display); letter-spacing: -.015em; text-transform: none;
   color: var(--chrome-50); margin: 0; max-width: 13.5em;
 }
 .hero h1 .line { display: block; overflow: hidden; padding-bottom: .04em; }
@@ -147,9 +164,9 @@ main, footer { position: relative; z-index: 2; }
 .loaded .hero h1 .line > span { transform: none; }
 .hero h1 .line:nth-child(2) > span { transition-delay: .08s; }
 .hero h1 .line:nth-child(3) > span { transition-delay: .16s; }
-.hero h1 em { font-style: normal; background: linear-gradient(90deg, var(--synapse), var(--violet)); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 0 24px var(--synapse-glow)); }
+.hero h1 em { font-style: normal; background: linear-gradient(90deg, var(--synapse), var(--violet)); -webkit-background-clip: text; background-clip: text; color: transparent; }
 @media (prefers-reduced-motion: reduce) { .hero h1 .line > span { transform: none; transition: none; } }
-.hero-sub { font: 300 clamp(16px, 1.7vw, 20px)/1.55 var(--font-sans); color: var(--chrome-200); max-width: 640px; margin: 0; }
+.hero-sub { font: 400 clamp(17px, 1.5vw, 20px)/1.55 var(--font-sans); color: var(--chrome-200); max-width: 520px; margin: 0; }
 .hero-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-6); }
 .hero-ctas { display: flex; flex-wrap: wrap; gap: var(--space-3); }
 .pills { display: flex; flex-wrap: wrap; gap: var(--space-2); }
@@ -545,6 +562,10 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
 .store-note[hidden] { display: none; }
 .store-note .btn { padding: 10px 16px; flex: none; }
 
+/* Floating buttons and the storage notice appear once the visitor scrolls past the hero */
+.fab, .wa-fab, .store-note { transition: opacity .4s var(--ease), transform .4s var(--ease); }
+html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .store-note { opacity: 0; transform: translateY(12px); pointer-events: none; }
+
 /* Cursor glow (desktop) */
 .cursor-glow { position: fixed; left: 0; top: 0; width: 420px; height: 420px; margin: -210px 0 0 -210px; border-radius: 50%; background: radial-gradient(circle, rgba(56, 189, 248, .07), transparent 60%); pointer-events: none; z-index: 1; transform: translate3d(-999px, -999px, 0); }
 @media (hover: none) { .cursor-glow { display: none; } }
@@ -600,28 +621,31 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
 <!-- ===== Hero ===== -->
 <section class="hero" aria-labelledby="heroTitle">
   <div class="wrap hero-inner">
-    <div class="eyebrow" data-i18n="tagline">AI Systems for Hotels, Clinics &amp; Companies</div>
-    <div class="badge-3d"><a class="badge" id="liveBadge" href="#partners"><span class="dot"></span><span data-i18n="badge">Live in production with our clients</span></a></div>
-    <h1 id="heroTitle">
-      <span class="line"><span data-i18n="hero1">We engineer</span></span>
-      <span class="line"><span><em data-i18n="hero2">AI systems</em></span></span>
-      <span class="line"><span data-i18n="hero3">for growing businesses.</span></span>
-    </h1>
-    <p class="hero-sub" data-i18n="hero_sub">Customers book and make appointments directly on your website, your AI assistant answers their questions 24/7, and confirmations and reminders go out automatically by WhatsApp, email and SMS. Payments are secure, with no middleman commission.</p>
-    <div class="hero-row">
-      <div class="pills" role="list">
-        <span class="pill" role="listitem" data-i18n-html="pill1"><b>0%</b> OTA Commission</span>
-        <span class="pill" role="listitem" data-i18n-html="pill2"><b>3D Secure</b> iyzico Integrated</span>
-        <span class="pill" role="listitem" data-i18n-html="pill3"><b>24/7</b> Multilingual AI</span>
-      </div>
+    <div class="hero-copy">
+      <p class="hero-kicker" data-i18n="tagline">AI Systems for Hotels, Clinics &amp; Companies</p>
+      <h1 id="heroTitle">
+        <span class="line"><span data-i18n="hero1">We engineer</span></span>
+        <span class="line"><span><em data-i18n="hero2">AI systems</em></span></span>
+        <span class="line"><span data-i18n="hero3">for growing businesses.</span></span>
+      </h1>
+      <p class="hero-sub" data-i18n="hero_sub">Bookings, appointments, customer questions and notifications — all automated, 24/7.</p>
       <div class="hero-ctas">
-        <a href="#demo" class="btn btn-ghost" data-magnetic data-i18n="cta_demo">Explore the Demo</a>
         <a href="#consultation" class="btn btn-primary" data-magnetic data-i18n="cta_deploy">Schedule Deployment</a>
+        <a href="#demo" class="btn btn-ghost" data-magnetic data-i18n="cta_demo">Explore the Demo</a>
       </div>
     </div>
-    <a href="#demo" class="scroll-cue"><i></i><span data-i18n="scroll">Scroll to enter</span></a>
   </div>
 </section>
+
+<!-- Proof strip -->
+<div class="proof">
+  <div class="wrap proof-inner" role="list">
+    <span class="pill" role="listitem" data-i18n-html="pill1"><b>24/7</b> AI Assistant</span>
+    <span class="pill" role="listitem" data-i18n-html="pill2"><b>3D Secure</b> iyzico Payments</span>
+    <span class="pill" role="listitem" data-i18n-html="pill3"><b>WhatsApp</b> · Email · SMS</span>
+    <a class="pill proof-live" href="#partners"><span class="dot ok"></span><span data-i18n="badge">Live in production with our clients</span></a>
+  </div>
+</div>
 
 <!-- ===== Product demo ===== -->
 <section class="section" id="demo" aria-labelledby="demoTitle">
@@ -1127,6 +1151,7 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
   var sections = navLinks.map(function (a) { return $(a.getAttribute('href')); });
   function onScrollNav() {
     nav.classList.toggle('scrolled', window.scrollY > 40);
+    document.documentElement.classList.toggle('past-hero', window.scrollY > window.innerHeight * .55);
     var y = window.scrollY + window.innerHeight * .35, cur = -1, best = -1;
     sections.forEach(function (s, i) { if (s && s.offsetTop <= y && s.offsetTop > best) { best = s.offsetTop; cur = i; } });
     navLinks.forEach(function (a, i) { a.classList.toggle('active', i === cur); });
@@ -1153,14 +1178,7 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
   if (finePointer) {
     window.addEventListener('pointermove', function (e) { glow.style.transform = 'translate3d(' + e.clientX + 'px,' + e.clientY + 'px,0)'; }, { passive: true });
   }
-  var badge = $('#liveBadge');
   if (finePointer && !reduceMotion) {
-    window.addEventListener('pointermove', function (e) {
-      var r = badge.getBoundingClientRect();
-      var dx = (e.clientX - (r.left + r.width / 2)) / window.innerWidth, dy = (e.clientY - (r.top + r.height / 2)) / window.innerHeight;
-      badge.style.setProperty('--ry', (dx * 28).toFixed(2) + 'deg');
-      badge.style.setProperty('--rx', (-dy * 28).toFixed(2) + 'deg');
-    }, { passive: true });
     $$('[data-tilt]').forEach(function (card) {
       card.addEventListener('pointermove', function (e) {
         var r = card.getBoundingClientRect(), px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
@@ -1199,7 +1217,7 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
       cta_deploy: 'Schedule Deployment', cta_demo: 'Explore the Demo', scroll: 'Scroll to enter',
       tagline: 'AI Systems for Hotels, Clinics & Companies', badge: 'Live in production with our clients',
       hero1: 'We engineer', hero2: 'AI systems', hero3: 'for growing businesses.',
-      hero_sub: 'Customers book and make appointments directly on your website, your AI assistant answers their questions 24/7, and confirmations and reminders go out automatically by WhatsApp, email and SMS. Payments are secure, with no middleman commission.',
+      hero_sub: 'Bookings, appointments, customer questions and notifications — all automated, 24/7.',
       pill1: '<b>24/7</b> AI Assistant', pill2: '<b>3D Secure</b> iyzico Payments', pill3: '<b>WhatsApp</b> · Email · SMS',
       demo_eyebrow: '01 — Live Product Demo', demo_title: 'The Direct Booking Engine',
       demo_lead: 'One of the engines we build, running live on this page with demo data — here as a hotel booking engine; the same core powers appointment booking for clinics. Pick a room, choose your dates, switch currency and watch the total compute in real time.',
@@ -1257,7 +1275,7 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
       cta_deploy: 'Kurulum Planla', cta_demo: 'Demoyu Keşfet', scroll: 'Keşfetmek için kaydırın',
       tagline: 'Oteller, Klinikler ve Şirketler için Yapay Zekâ Sistemleri', badge: 'Müşterilerimizde canlı kullanımda',
       hero1: 'İşletmeniz için', hero2: 'yapay zekâ sistemleri', hero3: 'tasarlıyoruz.',
-      hero_sub: 'Müşterileriniz sitenizden doğrudan rezervasyon ve randevu alır, yapay zekâ asistanınız sorularını 7/24 yanıtlar, onay ve hatırlatmalar WhatsApp, e-posta ve SMS ile kendiliğinden gider. Ödemeler aracı komisyonu olmadan, güvenle alınır.',
+      hero_sub: 'Rezervasyon, randevu, müşteri soruları ve bildirimler — hepsi otomatik, 7/24.',
       pill1: '<b>7/24</b> Yapay Zekâ Asistanı', pill2: '<b>3D Secure</b> iyzico Ödeme', pill3: '<b>WhatsApp</b> · E-posta · SMS',
       demo_eyebrow: '01 — Canlı Ürün Demosu', demo_title: 'Doğrudan Rezervasyon Motoru',
       demo_lead: 'Kurduğumuz motorlardan biri, bu sayfada demo verilerle canlı çalışıyor — burada otel rezervasyon motoru olarak; aynı altyapı klinikler için randevu sistemine dönüşüyor. Bir oda seçin, tarihlerinizi belirleyin, para birimini değiştirin ve toplamın anında hesaplandığını görün.',
@@ -1315,7 +1333,7 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
       cta_deploy: 'Einführung planen', cta_demo: 'Demo entdecken', scroll: 'Zum Eintreten scrollen',
       tagline: 'KI-Systeme für Hotels, Kliniken & Unternehmen', badge: 'Live im Einsatz bei unseren Kunden',
       hero1: 'Wir entwickeln', hero2: 'KI-Systeme', hero3: 'für wachsende Unternehmen.',
-      hero_sub: 'Ihre Kunden buchen und vereinbaren Termine direkt auf Ihrer Website, Ihr KI-Assistent beantwortet ihre Fragen rund um die Uhr, und Bestätigungen und Erinnerungen gehen automatisch per WhatsApp, E-Mail und SMS raus. Zahlungen laufen sicher und ohne Vermittlerprovision.',
+      hero_sub: 'Buchungen, Termine, Kundenfragen und Benachrichtigungen — alles automatisch, rund um die Uhr.',
       pill1: '<b>24/7</b> KI-Assistent', pill2: '<b>3D Secure</b> iyzico-Zahlungen', pill3: '<b>WhatsApp</b> · E-Mail · SMS',
       demo_eyebrow: '01 — Live-Produktdemo', demo_title: 'Die Direktbuchungs-Engine',
       demo_lead: 'Eine unserer Engines, live auf dieser Seite mit Demodaten — hier als Hotel-Buchungssystem; derselbe Kern steuert Terminbuchungen für Kliniken. Zimmer wählen, Daten festlegen, Währung wechseln und zusehen, wie der Gesamtpreis in Echtzeit entsteht.',
@@ -1373,7 +1391,7 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
       cta_deploy: 'Planifier un déploiement', cta_demo: 'Découvrir la démo', scroll: 'Faites défiler pour entrer',
       tagline: 'Systèmes IA pour hôtels, cliniques & entreprises', badge: 'En production chez nos clients',
       hero1: 'Nous concevons', hero2: 'des systèmes IA', hero3: 'pour votre entreprise.',
-      hero_sub: 'Vos clients réservent et prennent rendez-vous directement sur votre site, votre assistant IA répond à leurs questions 24/7, et confirmations et rappels partent automatiquement par WhatsApp, e-mail et SMS. Paiements sécurisés, sans commission d\'intermédiaire.',
+      hero_sub: 'Réservations, rendez-vous, questions clients et notifications — tout automatisé, 24/7.',
       pill1: '<b>24/7</b> Assistant IA', pill2: '<b>3D Secure</b> Paiements iyzico', pill3: '<b>WhatsApp</b> · E-mail · SMS',
       demo_eyebrow: '01 — Démo produit en direct', demo_title: 'Le moteur de réservation directe',
       demo_lead: 'L\'un des moteurs que nous construisons, en direct sur cette page avec des données de démo — ici en moteur de réservation hôtelière ; le même cœur gère la prise de rendez-vous des cliniques. Choisissez une chambre, vos dates, changez de devise et voyez le total se calculer en temps réel.',
@@ -2469,7 +2487,7 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
       else if (fps > 58 && dpr < (lowGPU ? 1.5 : DPR_MAX)) { dpr = Math.min(lowGPU ? 1.5 : DPR_MAX, dpr + .25); renderer.setPixelRatio(dpr); pMat.uniforms.uPR.value = dpr; resize(); }
     }
 
-    var clock = new THREE.Clock(), running = true, T = 0;
+    var clock = new THREE.Clock(), running = true, T = 0, heroK = 1;
     document.addEventListener('visibilitychange', function () { running = !document.hidden; if (running) { clock.getDelta(); loop(); } });
     var qTmp = new THREE.Quaternion(), ringQ = new THREE.Quaternion(), tangent = new THREE.Vector3(), ringP = new THREE.Vector3();
 
@@ -2500,6 +2518,10 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
       var R = view.ring;
       core.position.y = Math.sin(t * .6) * .08 * (1 - R) - view.panel * .4;
       core.position.x = -view.panel * 1.3; core.position.z = -view.panel * 2.2;
+      // in the hero the symbol moves out from behind the headline: right of the copy on wide screens, above it on phones
+      var hk = Math.max(0, 1 - window.scrollY / (window.innerHeight * .9));
+      heroK += (hk - heroK) * .08;
+      if (window.innerWidth >= 900) core.position.x += heroK * 2.5; else core.position.y += heroK * 1.7;
       core.rotation.y = (mouse.x * .3 + Math.sin(t * .25) * .12) * (1 - R);
       core.rotation.x = -mouse.y * .15 * (1 - R);
       var breathe = 1 + .025 * Math.sin(t * 1.3);
@@ -2523,8 +2545,8 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
       beamMat.uniforms.uAlpha.value = beamA; haloMat.uniforms.uAlpha.value = .22 * beamA;
 
       var pulseV = .5 + .5 * Math.sin(t * 2.2);
-      flare.scale.setScalar((.8 + pulseV * .5) * beamA + .001); flare.material.opacity = beamA;
-      arcLight.intensity = (1.4 + pulseV * 1.8) * beamA;
+      flare.scale.setScalar((.55 + pulseV * .3) * beamA + .001); flare.material.opacity = beamA * .85;
+      arcLight.intensity = (1 + pulseV * 1) * beamA;
       sparks.forEach(function (s) { var u = (t * .55 + s.userData.ph) % 1; s.position.copy(arcCurve.getPoint(u)); s.material.opacity = Math.sin(u * Math.PI) * beamA; });
       // periodic light bursts along the beam
       if (t > burstAt) { burstAt = t + 1.2 + Math.random() * 1.6; burstT = t; burst.position.copy(arcCurve.getPoint(.15 + Math.random() * .7)); }
