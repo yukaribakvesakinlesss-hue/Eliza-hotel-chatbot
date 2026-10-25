@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>AXON Systems — AI Systems for Hotels, Clinics & Companies</title>
+<title>AXON Systems, AI Systems for Hotels, Clinics & Companies</title>
 <meta name="description" content="AXON builds AI systems for hotels, clinics and companies: direct booking and appointment engines, 24/7 AI assistants, WhatsApp, email and SMS automation, and secure payments.">
 <meta name="theme-color" content="#070B14">
 <meta property="og:title" content="AXON Systems">
@@ -76,7 +76,7 @@ main, footer { position: relative; z-index: 2; }
 .section { overflow-x: clip; }
 .section-head { position: relative; }
 .section-head::before { content: ""; position: absolute; inset: -48px -80px; z-index: -1; pointer-events: none; background: radial-gradient(ellipse at 35% 50%, rgba(2, 4, 8, .9) 0%, rgba(2, 4, 8, .72) 45%, rgba(2, 4, 8, 0) 75%); }
-.section-title { font: 500 clamp(30px, 4.6vw, 54px)/1.02 var(--font-display); letter-spacing: 0; color: var(--chrome-50); margin: var(--space-4) 0 var(--space-4); text-transform: uppercase; }
+.section-title { font: 500 clamp(28px, 3.8vw, 46px)/1.12 var(--font-display); letter-spacing: -.005em; color: var(--chrome-50); margin: var(--space-4) 0 var(--space-4); max-width: 22ch; }
 .section-lead { font: 300 clamp(16px, 1.6vw, 19px)/1.55 var(--font-sans); color: var(--chrome-200); margin: 0; }
 .mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
 
@@ -435,7 +435,7 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
 .foot a:hover { color: var(--chrome-50); }
 .foot-bottom { margin-top: var(--space-16); display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-4); font: 400 11px/1.5 var(--font-mono); color: var(--chrome-400); letter-spacing: .1em; }
 
-/* Logo image usage — the JPG sits on navy, so screen-blend it onto the void */
+/* Logo image usage, the JPG sits on navy, so screen-blend it onto the void */
 .logo-mark { display: inline-block; width: 72px; height: 22px; flex: none; background: url("images/axon-logo.jpg") no-repeat; background-size: 199.7px 133.1px; background-position: -64px -40px; mix-blend-mode: screen; filter: contrast(1.35); -webkit-mask-image: radial-gradient(closest-side, #000 60%, transparent); mask-image: radial-gradient(closest-side, #000 60%, transparent); }
 .brand { display: inline-flex; align-items: center; gap: 14px; text-decoration: none; }
 .foot-logo { width: min(420px, 100%); aspect-ratio: 1536 / 1024; background: url("images/axon-logo.jpg") center / 132% no-repeat; mix-blend-mode: screen; -webkit-mask-image: radial-gradient(closest-side, #000 60%, transparent); mask-image: radial-gradient(closest-side, #000 60%, transparent); margin: -40px 0 -30px -40px; }
@@ -637,6 +637,38 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
 /* Cursor glow (desktop) */
 .cursor-glow { position: fixed; left: 0; top: 0; width: 420px; height: 420px; margin: -210px 0 0 -210px; border-radius: 50%; background: radial-gradient(circle, rgba(56, 189, 248, .07), transparent 60%); pointer-events: none; z-index: 1; transform: translate3d(-999px, -999px, 0); }
 @media (hover: none) { .cursor-glow { display: none; } }
+
+/* ===== Calm mode: one quiet scene behind the hero, flat surfaces below ===== */
+#scene { transition: opacity .6s ease; }
+html.past-hero #scene, html.past-hero .vignette { opacity: 0; }
+.sys, .pkg, .glass { transform: none !important; }
+.sys::before { display: none; }
+.sys:hover { box-shadow: none; }
+.section-tight { padding-block: clamp(48px, 7vw, 88px); }
+.num-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); }
+.num-col { display: grid; gap: var(--space-4); align-content: start; }
+.num-h { margin: 0 0 var(--space-1); font: 400 12px/1.4 var(--font-mono); letter-spacing: .16em; text-transform: uppercase; color: var(--synapse); }
+.num-card { padding: clamp(20px, 2.4vw, 28px); border: 1px solid var(--hairline); border-radius: var(--radius-lg); background: rgba(10, 18, 36, .55); display: grid; gap: var(--space-2); }
+.num-card b { font: 500 clamp(40px, 4.4vw, 56px)/1 var(--font-display); color: var(--chrome-50); letter-spacing: -.01em; }
+.num-card p { margin: 0; color: var(--chrome-200); font-size: 15px; line-height: 1.55; }
+.num-card a { font: 400 12px/1.4 var(--font-mono); color: var(--chrome-400); text-decoration: underline; text-underline-offset: 3px; }
+.num-card a:hover { color: var(--chrome-50); }
+.num-close { margin: var(--space-8) 0 0; font-size: 17px; color: var(--chrome-200); }
+.num-close a { color: var(--synapse); text-decoration: none; white-space: nowrap; }
+@media (max-width: 900px) { .num-grid { grid-template-columns: minmax(0, 1fr); } }
+.pkg-sector { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin: calc(var(--space-16) * -.5) 0 var(--space-4); color: var(--chrome-400); font-size: 14px; }
+.pkg-sector button { font: 500 14px/1 var(--font-sans); padding: 10px 16px; border-radius: var(--radius-pill); border: 1px solid var(--hairline-strong); background: transparent; color: var(--chrome-200); cursor: pointer; transition: background .25s, color .25s; }
+.pkg-sector button[aria-pressed="true"] { background: var(--chrome-50); color: var(--void-950); border-color: var(--chrome-50); }
+.pkg-sector + .pkg-pills { margin-top: 0; }
+.pkg-tier { font: 400 11px/1.4 var(--font-mono); letter-spacing: .16em; text-transform: uppercase; color: var(--chrome-400); }
+.pkg h3.pkn { font: 500 24px/1.15 var(--font-display); min-height: 2.3em; }
+.fd { padding: clamp(24px, 4vw, 48px); display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: var(--space-8); align-items: center; }
+.fd .section-title { margin-top: var(--space-2); }
+.fd-list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); }
+.fd-list li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: var(--space-2); color: var(--chrome-200); }
+.fd-list li::before { content: "✓"; color: var(--synapse); font-weight: 600; }
+.fd-ctas { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: var(--space-3); }
+@media (max-width: 860px) { .fd { grid-template-columns: minmax(0, 1fr); } }
 </style>
 </head>
 <body>
@@ -645,7 +677,6 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
 <canvas id="scene" aria-hidden="true"></canvas>
 <div class="scene-fallback" aria-hidden="true"><img src="images/axon-logo.jpg" alt=""></div>
 <div class="vignette" aria-hidden="true"></div>
-<div class="cursor-glow" aria-hidden="true"></div>
 
 <!-- ===== Header ===== -->
 <header class="nav-shell">
@@ -653,9 +684,9 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
     <a href="#top" class="brand" aria-label="AXON"><span class="logo-mark" aria-hidden="true"></span><span class="wordmark chrome-text">Λ X O N</span></a>
     <ul class="nav-links">
       <li><a href="#systems" data-i18n="nav_systems">Systems</a></li>
+      <li><a href="#packages" data-i18n="nav_packages">Packages</a></li>
       <li><a href="#demo" data-i18n="nav_demo">Live Demo</a></li>
       <li><a href="#location" data-i18n="nav_location">Location</a></li>
-      <li><a href="#packages" data-i18n="nav_packages">Packages</a></li>
       <li><a href="#consultation" data-i18n="nav_consult">Consultation</a></li>
     </ul>
     <div class="nav-right">
@@ -665,7 +696,7 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
       <button class="icon-btn" id="soundToggle" aria-pressed="false" aria-label="Sound" data-i18n-aria="sound">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path class="wave" d="M15.5 8.5a5 5 0 0 1 0 7"/><path class="wave" d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
       </button>
-      <a href="#consultation" class="btn btn-primary" data-magnetic data-i18n="cta_deploy">Schedule Deployment</a>
+      <a href="#consultation" class="btn btn-primary" data-i18n="cta_deploy">Schedule Deployment</a>
       <button class="icon-btn menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Menu" data-i18n-aria="menu">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 8h16M4 16h16"/></svg>
       </button>
@@ -673,9 +704,9 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
   </nav>
   <div class="mobile-menu glass" id="mobileMenu" hidden>
     <a href="#systems" data-i18n="nav_systems">Systems</a>
+    <a href="#packages" data-i18n="nav_packages">Packages</a>
     <a href="#demo" data-i18n="nav_demo">Live Demo</a>
     <a href="#location" data-i18n="nav_location">Location</a>
-    <a href="#packages" data-i18n="nav_packages">Packages</a>
     <a href="#consultation" data-i18n="nav_consult">Consultation</a>
     <div class="lang lang-mobile" role="group" aria-label="Language" data-i18n-aria="lang_label">
       <button type="button" data-lang="tr">TR</button><button type="button" data-lang="en">EN</button><button type="button" data-lang="de">DE</button><button type="button" data-lang="fr">FR</button>
@@ -694,12 +725,11 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
       <h1 id="heroTitle">
         <span class="line"><span data-i18n="hero1">We engineer</span></span>
         <span class="line"><span><em data-i18n="hero2">AI systems</em></span></span>
-        <span class="line"><span data-i18n="hero3">for growing businesses.</span></span>
       </h1>
-      <p class="hero-sub" data-i18n="hero_sub">Bookings, appointments, customer questions and notifications — all automated, 24/7.</p>
+      <p class="hero-sub" data-i18n="hero_sub">Bookings, appointments, customer questions and notifications, all automated, 24/7.</p>
       <div class="hero-ctas">
-        <a href="#consultation" class="btn btn-primary" data-magnetic data-i18n="cta_deploy">Schedule Deployment</a>
-        <a href="#demo" class="btn btn-ghost" data-magnetic data-i18n="cta_demo">Explore the Demo</a>
+        <a href="#consultation" class="btn btn-primary" data-i18n="cta_deploy">Schedule Deployment</a>
+        <a href="#packages" class="btn btn-ghost" data-i18n="cta_demo">See the packages</a>
       </div>
     </div>
   </div>
@@ -715,11 +745,227 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
   </div>
 </div>
 
+<!-- ===== Numbers ===== -->
+<section class="section" id="numbers" aria-labelledby="numTitle">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow" data-i18n="num_eyebrow">The numbers</div>
+      <h2 class="section-title" id="numTitle" data-i18n="num_title">The request arrives. The answer is late.</h2>
+      <p class="section-lead" data-i18n="num_lead">These are not our numbers. They come from research, and every source is linked.</p>
+    </div>
+    <div class="num-grid">
+      <div class="num-col reveal">
+        <h3 class="num-h" data-i18n="num_g1">Every business</h3>
+        <div class="num-card"><b data-i18n="n1v">23%</b><p data-i18n="n1t"></p><a href="https://hbr.org/2011/03/the-short-life-of-online-sales-leads" target="_blank" rel="noopener" data-i18n="n1s">Harvard Business Review, 2011</a></div>
+        <div class="num-card"><b data-i18n="n2v">7×</b><p data-i18n="n2t"></p><a href="https://hbr.org/2011/03/the-short-life-of-online-sales-leads" target="_blank" rel="noopener" data-i18n="n2s">Harvard Business Review, 2011</a></div>
+      </div>
+      <div class="num-col reveal">
+        <h3 class="num-h" data-i18n="num_g2">Hotels</h3>
+        <div class="num-card"><b data-i18n="n3v">15–30%</b><p data-i18n="n3t"></p><a href="https://www.phocuswire.com/French-hoteliers-voice-concern-about-OTA-business-practices" target="_blank" rel="noopener" data-i18n="n3s">PhocusWire, sector reporting</a></div>
+        <div class="num-card"><b data-i18n="n4v">43%</b><p data-i18n="n4t"></p><a href="https://connectingtravel.com/news/hoteliers-accuse-booking.com-of-unfair-business-practices" target="_blank" rel="noopener" data-i18n="n4s">HOTREC study, 2024</a></div>
+      </div>
+      <div class="num-col reveal">
+        <h3 class="num-h" data-i18n="num_g3">Clinics</h3>
+        <div class="num-card"><b data-i18n="n5v">23%</b><p data-i18n="n5t"></p><a href="https://doi.org/10.1016/j.healthpol.2018.02.002" target="_blank" rel="noopener" data-i18n="n5s">Dantas et al., Health Policy, 2018</a></div>
+        <div class="num-card"><b data-i18n="n6v">36%</b><p data-i18n="n6t"></p><a href="https://www.mgma.com/getkaiasset/3d85ddee-e329-4280-b726-3a93d63c7771/InsightHealth-MGMA-Agentic-Impact-for-Intake-and-Beyond-Final.pdf" target="_blank" rel="noopener" data-i18n="n6s">MGMA and InsightHealth, 2026</a></div>
+      </div>
+    </div>
+    <p class="num-close reveal"><span data-i18n="num_close">AXON closes exactly this gap: every request is answered in seconds, day and night.</span> <a href="#packages" data-i18n="num_cta">See the packages →</a></p>
+  </div>
+</section>
+
+<!-- ===== Systems ===== -->
+<section class="section" id="systems" aria-labelledby="sysTitle">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow" data-i18n="sys_eyebrow">Systems</div>
+      <h2 class="section-title" id="sysTitle" data-i18n="sys_title">Five systems. One connected platform.</h2>
+      <p class="section-lead" data-i18n="sys_lead">Start with one system or combine them. Every system connects to the others.</p>
+    </div>
+    <div class="systems">
+      <article class="sys glass reveal">
+        <div class="sys-num"><span class="sys-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18M8 15h2M14 15h2"/></svg></span><span class="big">01</span></div>
+        <h3 data-i18n="s1_t">Reservation Management</h3>
+        <p class="sys-prob"><span class="sys-k" data-i18n="lbl_prob">The problem</span><span data-i18n="s1_p"></span></p>
+          <p class="sys-how"><span class="sys-k" data-i18n="lbl_how">How we solve it</span><span data-i18n="s1_how"></span></p>
+          <p class="sys-gain"><span class="sys-k" data-i18n="lbl_gain">What you gain</span><span data-i18n="s1_gain"></span></p>
+        <ul><li data-i18n="s1_1"></li><li data-i18n="s1_2"></li><li data-i18n="s1_3"></li><li data-i18n="s1_4"></li></ul>
+        <a class="sys-link" href="#demo" data-i18n="s1_link">See the booking demo →</a>
+      </article>
+      <article class="sys glass reveal">
+        <div class="sys-num"><span class="sys-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18M8 21h8M12 18v3"/></svg></span><span class="big">02</span></div>
+        <h3 data-i18n="s2_t">Website Design</h3>
+        <p class="sys-prob"><span class="sys-k" data-i18n="lbl_prob">The problem</span><span data-i18n="s2_p"></span></p>
+          <p class="sys-how"><span class="sys-k" data-i18n="lbl_how">How we solve it</span><span data-i18n="s2_how"></span></p>
+          <p class="sys-gain"><span class="sys-k" data-i18n="lbl_gain">What you gain</span><span data-i18n="s2_gain"></span></p>
+        <ul><li data-i18n="s2_1"></li><li data-i18n="s2_2"></li><li data-i18n="s2_3"></li><li data-i18n="s2_4"></li></ul>
+        <a class="sys-link" href="#top" data-i18n="s2_link">You're looking at an example ↑</a>
+      </article>
+      <article class="sys glass reveal">
+        <div class="sys-num"><span class="sys-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 11h.01M12 11h.01M15.5 11h.01"/></svg></span><span class="big">03</span></div>
+        <h3 data-i18n="s3_t">AI Chatbot</h3>
+        <p class="sys-prob"><span class="sys-k" data-i18n="lbl_prob">The problem</span><span data-i18n="s3_p"></span></p>
+          <p class="sys-how"><span class="sys-k" data-i18n="lbl_how">How we solve it</span><span data-i18n="s3_how"></span></p>
+          <p class="sys-gain"><span class="sys-k" data-i18n="lbl_gain">What you gain</span><span data-i18n="s3_gain"></span></p>
+        <ul><li data-i18n="s3_1"></li><li data-i18n="s3_2"></li><li data-i18n="s3_3"></li><li data-i18n="s3_4"></li></ul>
+        <a class="sys-link" href="#concierge" data-i18n="s3_link">Try the chatbot →</a>
+      </article>
+      <article class="sys glass reveal">
+        <div class="sys-num"><span class="sys-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></svg></span><span class="sys-tag" data-i18n="s4_tag">Most complete</span><span class="big">04</span></div>
+        <h3 data-i18n="s4_t">AI Assistant</h3>
+        <p class="sys-prob"><span class="sys-k" data-i18n="lbl_prob">The problem</span><span data-i18n="s4_p"></span></p>
+          <p class="sys-how"><span class="sys-k" data-i18n="lbl_how">How we solve it</span><span data-i18n="s4_how"></span></p>
+          <p class="sys-gain"><span class="sys-k" data-i18n="lbl_gain">What you gain</span><span data-i18n="s4_gain"></span></p>
+        <ul><li data-i18n="s4_1"></li><li data-i18n="s4_2"></li><li data-i18n="s4_3"></li><li data-i18n="s4_4"></li></ul>
+        <a class="sys-link" href="#concierge" data-i18n="s4_link">See how it flows →</a>
+      </article>
+
+      <article class="sys sys-wide glass reveal" id="personal">
+        <div class="sys-wide-text">
+          <div class="sys-num"><span class="sys-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 4.6L19 8.3l-3.8 3.4 1.1 5L12 14.2 7.7 16.7l1.1-5L5 8.3l5.1-.7L12 3z"/></svg></span><span class="sys-tag sys-tag-gold" data-i18n="s5_tag">Bonus · Private package</span><span class="big">05</span></div>
+          <h3 data-i18n="s5_t">Personal AI Assistant</h3>
+          <p class="sys-prob"><span class="sys-k" data-i18n="lbl_prob">The problem</span><span data-i18n="s5_p"></span></p>
+          <p class="sys-how"><span class="sys-k" data-i18n="lbl_how">How we solve it</span><span data-i18n="s5_how"></span></p>
+          <p class="sys-gain"><span class="sys-k" data-i18n="lbl_gain">What you gain</span><span data-i18n="s5_gain"></span></p>
+          <ul><li data-i18n="s5_1"></li><li data-i18n="s5_2"></li><li data-i18n="s5_3"></li><li data-i18n="s5_4"></li><li data-i18n="s5_5"></li></ul>
+          <a class="btn btn-primary" href="#consultation" data-i18n="s5_cta">Request your assistant</a>
+        </div>
+
+        <div class="pa" id="pa" aria-label="Personal assistant demo">
+          <div class="pa-head">
+            <span class="chat-avatar"><i></i></span>
+            <div class="pa-who"><b>NOVA</b><span><i class="dot"></i><span data-i18n="pa_status">Your personal assistant · online</span></span></div>
+            <span class="pa-demo" data-i18n="pa_demo">Live demo</span>
+          </div>
+          <div class="pa-tabs" role="group">
+            <button type="button" data-view="day" aria-pressed="true" data-i18n="pa_today">Today</button>
+            <button type="button" data-view="week" aria-pressed="false" data-i18n="pa_week">This week</button>
+            <span class="pa-date" id="paDate"></span>
+          </div>
+          <ol class="pa-agenda" id="paAgenda" aria-live="polite"></ol>
+          <div class="pa-msg" id="paMsg" role="status"></div>
+          <div class="chat-chips pa-chips">
+            <button class="chip" type="button" data-pa="plan" data-i18n="pa_c1">Plan my day tomorrow</button>
+            <button class="chip" type="button" data-pa="meet" data-i18n="pa_c2">Book a meeting Thu 14:00</button>
+            <button class="chip" type="button" data-pa="reply" data-i18n="pa_c3">Answer my WhatsApp</button>
+            <button class="chip" type="button" data-pa="dates" data-i18n="pa_c4">Important dates this week</button>
+          </div>
+          <form class="chat-form" id="paForm"><label class="sr-only" for="paInput">Message</label><input id="paInput" autocomplete="off" data-i18n-ph="pa_ph"><button class="send" type="submit" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Packages ===== -->
+<section class="section" id="packages" aria-labelledby="pkgTitle">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow" data-i18n="pkg_eyebrow">Packages</div>
+      <h2 class="section-title" id="pkgTitle" data-i18n="pkg_title">Set up once. Supported every month.</h2>
+      <p class="section-lead" data-i18n="pkg_lead">Your systems are set up once; a monthly package keeps them running, improving and monitored.</p>
+    </div>
+    <div class="pkg-sector reveal" role="group" aria-label="Sector">
+      <span data-i18n="sec_label">Your business:</span>
+      <button type="button" data-sector="hotel" aria-pressed="true" data-i18n="sec_hotel_b">Hotel</button><button type="button" data-sector="clinic" aria-pressed="false" data-i18n="sec_clinic_b">Clinic</button><button type="button" data-sector="company" aria-pressed="false" data-i18n="sec_company_b">Company</button>
+    </div>
+    <div class="pkg-pills reveal">
+      <span class="pill" data-i18n="pkg_pill1">Billed monthly</span>
+      <span class="pill" data-i18n="pkg_pill2">Secure payment with iyzico</span>
+      <span class="pill" data-i18n="pkg_pill3">Cancel anytime</span>
+    </div>
+    <div class="pkgs">
+      <article class="pkg glass reveal">
+        <span class="pkg-tier">Start</span>
+        <h3 class="pkn" data-pk="1"></h3>
+        <p data-i18n="pk1_for">For small businesses starting with one system.</p>
+        <div class="pkg-price" data-i18n="pkg_price">Monthly fee by quote</div>
+        <ul><li data-i18n="pk1_1"></li><li data-i18n="pk1_2"></li><li data-i18n="pk1_3"></li><li data-i18n="pk1_4"></li></ul>
+        <a class="btn btn-ghost" href="#consultation" data-i18n="pkg_cta">Get a quote</a>
+      </article>
+      <article class="pkg pkg-featured glass reveal">
+        <span class="pkg-badge" data-i18n="pkg_rec">Recommended</span>
+        <span class="pkg-tier">Pro</span>
+        <h3 class="pkn" data-pk="2"></h3>
+        <p data-i18n="pk2_for">For growing hotels, clinics and companies.</p>
+        <div class="pkg-price" data-i18n="pkg_price">Monthly fee by quote</div>
+        <ul><li data-i18n="pk2_1"></li><li data-i18n="pk2_2"></li><li data-i18n="pk2_3"></li><li data-i18n="pk2_4"></li><li data-i18n="pk2_5"></li></ul>
+        <a class="btn btn-primary" href="#consultation" data-i18n="pkg_cta">Get a quote</a>
+      </article>
+      <article class="pkg glass reveal">
+        <span class="pkg-tier" data-i18n="pk3_name">Enterprise</span>
+        <h3 class="pkn" data-pk="3"></h3>
+        <p data-i18n="pk3_for">For chains and multi-location operations.</p>
+        <div class="pkg-price" data-i18n="pkg_price">Monthly fee by quote</div>
+        <ul><li data-i18n="pk3_1"></li><li data-i18n="pk3_2"></li><li data-i18n="pk3_3"></li><li data-i18n="pk3_4"></li><li data-i18n="pk3_5"></li></ul>
+        <a class="btn btn-ghost" href="#consultation" data-i18n="pkg_cta">Get a quote</a>
+      </article>
+      <article class="pkg pkg-bonus glass reveal">
+        <span class="pkg-badge pkg-badge-violet" data-i18n="pkg_bonus">Bonus · Private</span>
+        <span class="pkg-tier" data-i18n="pk4_name">Personal Assistant</span>
+        <h3 class="pkn" data-pk="4"></h3>
+        <p data-i18n="pk4_for">For owners and executives.</p>
+        <div class="pkg-price" data-i18n="pkg_price">Monthly fee by quote</div>
+        <ul><li data-i18n="pk4_1"></li><li data-i18n="pk4_2"></li><li data-i18n="pk4_3"></li><li data-i18n="pk4_4"></li></ul>
+        <a class="btn btn-ghost" href="#personal" data-i18n="pkg_cta_pa">Try the demo</a>
+      </article>
+    </div>
+    <p class="pkg-note reveal" data-i18n="pkg_setup">One-time setup fee depends on the systems you choose. Every package includes setup support and team training.</p>
+
+    <div class="faq-grid">
+      <div class="faq-col glass reveal">
+        <h3 class="faq-h" data-i18n="terms_h">Subscription terms</h3>
+        <dl class="terms">
+          <div><dt data-i18n="tm1_t">Billing</dt><dd data-i18n="tm1_d"></dd></div>
+          <div><dt data-i18n="tm2_t">Payment</dt><dd data-i18n="tm2_d"></dd></div>
+          <div><dt data-i18n="tm3_t">Renewal</dt><dd data-i18n="tm3_d"></dd></div>
+          <div><dt data-i18n="tm4_t">Price changes</dt><dd data-i18n="tm4_d"></dd></div>
+          <div><dt data-i18n="tm5_t">Cancellation</dt><dd data-i18n="tm5_d"></dd></div>
+          <div><dt data-i18n="tm6_t">Refund</dt><dd data-i18n="tm6_d"></dd></div>
+          <div><dt data-i18n="tm7_t">Your data</dt><dd data-i18n="tm7_d"></dd></div>
+        </dl>
+      </div>
+      <div class="faq-col glass reveal">
+        <h3 class="faq-h" data-i18n="faq_h">Frequently asked questions</h3>
+        <div class="faq">
+          <details><summary data-i18n="fq1_q"></summary><p data-i18n="fq1_a"></p></details>
+          <details><summary data-i18n="fq2_q"></summary><p data-i18n="fq2_a"></p></details>
+          <details><summary data-i18n="fq3_q"></summary><p data-i18n="fq3_a"></p></details>
+          <details><summary data-i18n="fq4_q"></summary><p data-i18n="fq4_a"></p></details>
+          <details><summary data-i18n="fq5_q"></summary><p data-i18n="fq5_a"></p></details>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Free demo offer ===== -->
+<section class="section section-tight" id="free-demo" aria-labelledby="fdTitle">
+  <div class="wrap">
+    <div class="fd glass reveal">
+      <div>
+        <div class="eyebrow" data-i18n="fd_eyebrow">Free demo</div>
+        <h2 class="section-title" id="fdTitle" data-i18n="fd_title">See it working with your own business.</h2>
+        <p class="section-lead" data-i18n="fd_lead">Send us your business name and website. We prepare a demo that uses your own information and try it together in the call. Free, no commitment.</p>
+      </div>
+      <ul class="fd-list">
+        <li data-i18n="fd_1">A chatbot that answers with your prices and your questions</li>
+        <li data-i18n="fd_2">A booking screen with your rooms or treatments</li>
+        <li data-i18n="fd_3">Your location on the 3D map</li>
+      </ul>
+      <div class="fd-ctas">
+        <a href="#consultation" class="btn btn-primary" data-i18n="fd_cta">Request a free demo</a>
+        <a class="btn btn-ghost wa-link" target="_blank" rel="noopener" data-i18n="fd_wa">Ask on WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ===== Product demo ===== -->
 <section class="section" id="demo" aria-labelledby="demoTitle">
   <div class="wrap">
     <div class="section-head reveal">
-      <div class="eyebrow" data-i18n="demo_eyebrow">01 — Live Product Demo</div>
+      <div class="eyebrow" data-i18n="demo_eyebrow">Live Product Demo</div>
       <h2 class="section-title" id="demoTitle" data-i18n="demo_title">The Direct Booking Engine</h2>
       <p class="section-lead" data-i18n="demo_lead">The engine we deploy for hotels, running live on this page with demo inventory.</p>
       <div class="case-meta">
@@ -732,7 +978,7 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
     <div class="frame glass reveal" id="engine">
       <div class="frame-bar">
         <div class="frame-dots" aria-hidden="true"><i></i><i></i><i></i></div>
-        <div class="frame-url"><b>●</b> <span data-i18n="frame_url">yourhotel.com/book · secure booking engine — powered by AXON</span></div>
+        <div class="frame-url"><b>●</b> <span data-i18n="frame_url">yourhotel.com/book · secure booking engine, powered by AXON</span></div>
         <div class="seg" role="group" aria-label="Currency" id="currencySeg">
           <button type="button" data-cur="EUR" aria-pressed="true">EUR</button>
           <button type="button" data-cur="USD" aria-pressed="false">USD</button>
@@ -761,7 +1007,7 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
           </div>
           <div class="basket" id="basket"></div>
           <div class="pay-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span data-i18n="pay_row">iyzico 3D Secure · instant e-invoice</span></div>
-          <button type="button" class="btn btn-primary" id="reserveBtn" data-magnetic data-i18n="reserve">Reserve Direct</button>
+          <button type="button" class="btn btn-primary" id="reserveBtn" data-i18n="reserve">Reserve Direct</button>
           <div class="toast" id="engineToast" role="status"></div>
         </aside>
       </div>
@@ -781,11 +1027,28 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
           <div><b data-i18n="st4b">Reviews</b><span data-i18n="st4s">post-stay requests</span></div>
         </div>
         <div class="inspect-ctas">
-          <a class="btn btn-primary" href="#consultation" data-magnetic data-i18n="cta_private">Request a Private Demo</a>
-          <a class="btn btn-ghost" href="#concierge" data-magnetic data-i18n="cta_ask">Ask the AI Assistant</a>
+          <a class="btn btn-primary" href="#consultation" data-i18n="cta_private">Request a Private Demo</a>
+          <a class="btn btn-ghost" href="#concierge" data-i18n="cta_ask">Ask the AI Assistant</a>
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ===== Assistant sandbox ===== -->
+<section class="section" id="concierge" aria-labelledby="concTitle">
+  <div class="wrap sandbox">
+    <div class="reveal">
+      <div class="eyebrow" data-i18n="conc_eyebrow">Live AI Assistant Demo</div>
+      <h2 class="section-title" id="concTitle" data-i18n="conc_title">Ask AXON.</h2>
+      <p class="section-lead" data-i18n="conc_lead">The same assistant layer we train on a hotel's own knowledge, here trained on AXON.</p>
+      <div class="prompt-list">
+        <button class="prompt-btn" type="button" data-pk="p1"><span data-i18n="p1">What systems do you offer?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        <button class="prompt-btn" type="button" data-pk="p2"><span data-i18n="p2">How does the AI concierge work?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        <button class="prompt-btn" type="button" data-pk="p3"><span data-i18n="p3">Which payments do you support?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      </div>
+    </div>
+    <div class="reveal" id="inlineChatMount"></div>
   </div>
 </section>
 
@@ -793,7 +1056,7 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
 <section class="section" id="location" aria-labelledby="locTitle">
   <div class="wrap">
     <div class="section-head reveal">
-      <div class="eyebrow" data-i18n="loc_eyebrow">02 — Location Intelligence</div>
+      <div class="eyebrow" data-i18n="loc_eyebrow">Location Intelligence</div>
       <h2 class="section-title" id="locTitle" data-i18n="loc_title">Location sells the room.</h2>
       <p class="section-lead" data-i18n="loc_lead">Guests book where they can picture themselves.</p>
       <div class="case-meta">
@@ -856,7 +1119,7 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
           <span class="pill" data-i18n="map_l2">Landmarks · walking times</span>
         </div>
       </div>
-          <p class="loc-offline-note" data-i18n="loc_offline">Preview — the interactive 3D map loads on the live site.</p>
+          <p class="loc-offline-note" data-i18n="loc_offline">Preview, the interactive 3D map loads on the live site.</p>
         </div>
         <div class="loc-hud">
           <div class="seg loc-cats" role="group" aria-label="Category">
@@ -891,11 +1154,28 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
   </div>
 </section>
 
+<!-- ===== Process ===== -->
+<section class="section" id="process" aria-labelledby="procTitle">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow" data-i18n="proc_eyebrow">Process</div>
+      <h2 class="section-title" id="procTitle" data-i18n="proc_title">Live in four steps.</h2>
+      <p class="section-lead" data-i18n="proc_lead">You always know what happens next.</p>
+    </div>
+    <ol class="steps reveal">
+      <li class="step glass"><span class="step-n">01</span><b data-i18n="pr1_t">Free discovery call</b><span data-i18n="pr1_p"></span></li>
+      <li class="step glass"><span class="step-n">02</span><b data-i18n="pr2_t">Proposal and plan</b><span data-i18n="pr2_p"></span></li>
+      <li class="step glass"><span class="step-n">03</span><b data-i18n="pr3_t">Setup and integration</b><span data-i18n="pr3_p"></span></li>
+      <li class="step glass"><span class="step-n">04</span><b data-i18n="pr4_t">Training and go-live</b><span data-i18n="pr4_p"></span></li>
+    </ol>
+  </div>
+</section>
+
 <!-- ===== Partners ===== -->
 <section class="section" id="partners" aria-labelledby="partTitle">
   <div class="wrap">
     <div class="section-head reveal">
-      <div class="eyebrow" data-i18n="part_eyebrow">03 — Partners</div>
+      <div class="eyebrow" data-i18n="part_eyebrow">Partners</div>
       <h2 class="section-title" id="partTitle" data-i18n="part_title">Businesses we work with.</h2>
       <p class="section-lead" data-i18n="part_lead">Properties running AXON systems in production.</p>
     </div>
@@ -913,225 +1193,13 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
   </div>
 </section>
 
-<!-- ===== Systems ===== -->
-<section class="section" id="systems" aria-labelledby="sysTitle">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div class="eyebrow" data-i18n="sys_eyebrow">04 — Systems</div>
-      <h2 class="section-title" id="sysTitle" data-i18n="sys_title">Five systems. One connected platform.</h2>
-      <p class="section-lead" data-i18n="sys_lead">Start with one system or combine them. Every system connects to the others.</p>
-    </div>
-    <div class="systems">
-      <article class="sys glass reveal" data-tilt>
-        <div class="sys-num"><span class="sys-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18M8 15h2M14 15h2"/></svg></span><span class="big">01</span></div>
-        <h3 data-i18n="s1_t">Reservation Management</h3>
-        <p class="sys-prob"><span class="sys-k" data-i18n="lbl_prob">The problem</span><span data-i18n="s1_p"></span></p>
-          <p class="sys-how"><span class="sys-k" data-i18n="lbl_how">How we solve it</span><span data-i18n="s1_how"></span></p>
-          <p class="sys-gain"><span class="sys-k" data-i18n="lbl_gain">What you gain</span><span data-i18n="s1_gain"></span></p>
-        <ul><li data-i18n="s1_1"></li><li data-i18n="s1_2"></li><li data-i18n="s1_3"></li><li data-i18n="s1_4"></li></ul>
-        <a class="sys-link" href="#demo" data-i18n="s1_link">See the booking demo →</a>
-      </article>
-      <article class="sys glass reveal" data-tilt>
-        <div class="sys-num"><span class="sys-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18M8 21h8M12 18v3"/></svg></span><span class="big">02</span></div>
-        <h3 data-i18n="s2_t">Website Design</h3>
-        <p class="sys-prob"><span class="sys-k" data-i18n="lbl_prob">The problem</span><span data-i18n="s2_p"></span></p>
-          <p class="sys-how"><span class="sys-k" data-i18n="lbl_how">How we solve it</span><span data-i18n="s2_how"></span></p>
-          <p class="sys-gain"><span class="sys-k" data-i18n="lbl_gain">What you gain</span><span data-i18n="s2_gain"></span></p>
-        <ul><li data-i18n="s2_1"></li><li data-i18n="s2_2"></li><li data-i18n="s2_3"></li><li data-i18n="s2_4"></li></ul>
-        <a class="sys-link" href="#top" data-i18n="s2_link">You're looking at an example ↑</a>
-      </article>
-      <article class="sys glass reveal" data-tilt>
-        <div class="sys-num"><span class="sys-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 11h.01M12 11h.01M15.5 11h.01"/></svg></span><span class="big">03</span></div>
-        <h3 data-i18n="s3_t">AI Chatbot</h3>
-        <p class="sys-prob"><span class="sys-k" data-i18n="lbl_prob">The problem</span><span data-i18n="s3_p"></span></p>
-          <p class="sys-how"><span class="sys-k" data-i18n="lbl_how">How we solve it</span><span data-i18n="s3_how"></span></p>
-          <p class="sys-gain"><span class="sys-k" data-i18n="lbl_gain">What you gain</span><span data-i18n="s3_gain"></span></p>
-        <ul><li data-i18n="s3_1"></li><li data-i18n="s3_2"></li><li data-i18n="s3_3"></li><li data-i18n="s3_4"></li></ul>
-        <a class="sys-link" href="#concierge" data-i18n="s3_link">Try the chatbot →</a>
-      </article>
-      <article class="sys glass reveal" data-tilt>
-        <div class="sys-num"><span class="sys-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></svg></span><span class="sys-tag" data-i18n="s4_tag">Most complete</span><span class="big">04</span></div>
-        <h3 data-i18n="s4_t">AI Assistant</h3>
-        <p class="sys-prob"><span class="sys-k" data-i18n="lbl_prob">The problem</span><span data-i18n="s4_p"></span></p>
-          <p class="sys-how"><span class="sys-k" data-i18n="lbl_how">How we solve it</span><span data-i18n="s4_how"></span></p>
-          <p class="sys-gain"><span class="sys-k" data-i18n="lbl_gain">What you gain</span><span data-i18n="s4_gain"></span></p>
-        <ul><li data-i18n="s4_1"></li><li data-i18n="s4_2"></li><li data-i18n="s4_3"></li><li data-i18n="s4_4"></li></ul>
-        <a class="sys-link" href="#architecture" data-i18n="s4_link">See how it flows →</a>
-      </article>
-
-      <article class="sys sys-wide glass reveal" id="personal">
-        <div class="sys-wide-text">
-          <div class="sys-num"><span class="sys-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 4.6L19 8.3l-3.8 3.4 1.1 5L12 14.2 7.7 16.7l1.1-5L5 8.3l5.1-.7L12 3z"/></svg></span><span class="sys-tag sys-tag-gold" data-i18n="s5_tag">Bonus · Private package</span><span class="big">05</span></div>
-          <h3 data-i18n="s5_t">Personal AI Assistant</h3>
-          <p class="sys-prob"><span class="sys-k" data-i18n="lbl_prob">The problem</span><span data-i18n="s5_p"></span></p>
-          <p class="sys-how"><span class="sys-k" data-i18n="lbl_how">How we solve it</span><span data-i18n="s5_how"></span></p>
-          <p class="sys-gain"><span class="sys-k" data-i18n="lbl_gain">What you gain</span><span data-i18n="s5_gain"></span></p>
-          <ul><li data-i18n="s5_1"></li><li data-i18n="s5_2"></li><li data-i18n="s5_3"></li><li data-i18n="s5_4"></li><li data-i18n="s5_5"></li></ul>
-          <a class="btn btn-primary" href="#consultation" data-magnetic data-i18n="s5_cta">Request your assistant</a>
-        </div>
-
-        <div class="pa" id="pa" aria-label="Personal assistant demo">
-          <div class="pa-head">
-            <span class="chat-avatar"><i></i></span>
-            <div class="pa-who"><b>NOVA</b><span><i class="dot"></i><span data-i18n="pa_status">Your personal assistant · online</span></span></div>
-            <span class="pa-demo" data-i18n="pa_demo">Live demo</span>
-          </div>
-          <div class="pa-tabs" role="group">
-            <button type="button" data-view="day" aria-pressed="true" data-i18n="pa_today">Today</button>
-            <button type="button" data-view="week" aria-pressed="false" data-i18n="pa_week">This week</button>
-            <span class="pa-date" id="paDate"></span>
-          </div>
-          <ol class="pa-agenda" id="paAgenda" aria-live="polite"></ol>
-          <div class="pa-msg" id="paMsg" role="status"></div>
-          <div class="chat-chips pa-chips">
-            <button class="chip" type="button" data-pa="plan" data-i18n="pa_c1">Plan my day tomorrow</button>
-            <button class="chip" type="button" data-pa="meet" data-i18n="pa_c2">Book a meeting Thu 14:00</button>
-            <button class="chip" type="button" data-pa="reply" data-i18n="pa_c3">Answer my WhatsApp</button>
-            <button class="chip" type="button" data-pa="dates" data-i18n="pa_c4">Important dates this week</button>
-          </div>
-          <form class="chat-form" id="paForm"><label class="sr-only" for="paInput">Message</label><input id="paInput" autocomplete="off" data-i18n-ph="pa_ph"><button class="send" type="submit" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ===== Process ===== -->
-<section class="section" id="process" aria-labelledby="procTitle">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div class="eyebrow" data-i18n="proc_eyebrow">05 — Process</div>
-      <h2 class="section-title" id="procTitle" data-i18n="proc_title">Live in four steps.</h2>
-      <p class="section-lead" data-i18n="proc_lead">You always know what happens next.</p>
-    </div>
-    <ol class="steps reveal">
-      <li class="step glass"><span class="step-n">01</span><b data-i18n="pr1_t">Free discovery call</b><span data-i18n="pr1_p"></span></li>
-      <li class="step glass"><span class="step-n">02</span><b data-i18n="pr2_t">Proposal and plan</b><span data-i18n="pr2_p"></span></li>
-      <li class="step glass"><span class="step-n">03</span><b data-i18n="pr3_t">Setup and integration</b><span data-i18n="pr3_p"></span></li>
-      <li class="step glass"><span class="step-n">04</span><b data-i18n="pr4_t">Training and go-live</b><span data-i18n="pr4_p"></span></li>
-    </ol>
-  </div>
-</section>
-
-<!-- ===== Packages ===== -->
-<section class="section" id="packages" aria-labelledby="pkgTitle">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div class="eyebrow" data-i18n="pkg_eyebrow">06 — Packages</div>
-      <h2 class="section-title" id="pkgTitle" data-i18n="pkg_title">Set up once. Supported every month.</h2>
-      <p class="section-lead" data-i18n="pkg_lead">Your systems are set up once; a monthly package keeps them running, improving and monitored.</p>
-    </div>
-    <div class="pkg-pills reveal">
-      <span class="pill" data-i18n="pkg_pill1">Billed monthly</span>
-      <span class="pill" data-i18n="pkg_pill2">Secure payment with iyzico</span>
-      <span class="pill" data-i18n="pkg_pill3">Cancel anytime</span>
-    </div>
-    <div class="pkgs">
-      <article class="pkg glass reveal">
-        <h3>Start</h3>
-        <p data-i18n="pk1_for">For small businesses starting with one system.</p>
-        <div class="pkg-price" data-i18n="pkg_price">Monthly fee by quote</div>
-        <ul><li data-i18n="pk1_1"></li><li data-i18n="pk1_2"></li><li data-i18n="pk1_3"></li><li data-i18n="pk1_4"></li></ul>
-        <a class="btn btn-ghost" href="#consultation" data-magnetic data-i18n="pkg_cta">Get a quote</a>
-      </article>
-      <article class="pkg pkg-featured glass reveal">
-        <span class="pkg-badge" data-i18n="pkg_rec">Recommended</span>
-        <h3>Pro</h3>
-        <p data-i18n="pk2_for">For growing hotels, clinics and companies.</p>
-        <div class="pkg-price" data-i18n="pkg_price">Monthly fee by quote</div>
-        <ul><li data-i18n="pk2_1"></li><li data-i18n="pk2_2"></li><li data-i18n="pk2_3"></li><li data-i18n="pk2_4"></li><li data-i18n="pk2_5"></li></ul>
-        <a class="btn btn-primary" href="#consultation" data-magnetic data-i18n="pkg_cta">Get a quote</a>
-      </article>
-      <article class="pkg glass reveal">
-        <h3 data-i18n="pk3_name">Enterprise</h3>
-        <p data-i18n="pk3_for">For chains and multi-location operations.</p>
-        <div class="pkg-price" data-i18n="pkg_price">Monthly fee by quote</div>
-        <ul><li data-i18n="pk3_1"></li><li data-i18n="pk3_2"></li><li data-i18n="pk3_3"></li><li data-i18n="pk3_4"></li><li data-i18n="pk3_5"></li></ul>
-        <a class="btn btn-ghost" href="#consultation" data-magnetic data-i18n="pkg_cta">Get a quote</a>
-      </article>
-      <article class="pkg pkg-bonus glass reveal">
-        <span class="pkg-badge pkg-badge-violet" data-i18n="pkg_bonus">Bonus · Private</span>
-        <h3 data-i18n="pk4_name">Personal Assistant</h3>
-        <p data-i18n="pk4_for">For owners and executives.</p>
-        <div class="pkg-price" data-i18n="pkg_price">Monthly fee by quote</div>
-        <ul><li data-i18n="pk4_1"></li><li data-i18n="pk4_2"></li><li data-i18n="pk4_3"></li><li data-i18n="pk4_4"></li></ul>
-        <a class="btn btn-ghost" href="#personal" data-magnetic data-i18n="pkg_cta_pa">Try the demo</a>
-      </article>
-    </div>
-    <p class="pkg-note reveal" data-i18n="pkg_setup">One-time setup fee depends on the systems you choose. Every package includes setup support and team training.</p>
-
-    <div class="faq-grid">
-      <div class="faq-col glass reveal">
-        <h3 class="faq-h" data-i18n="terms_h">Subscription terms</h3>
-        <dl class="terms">
-          <div><dt data-i18n="tm1_t">Billing</dt><dd data-i18n="tm1_d"></dd></div>
-          <div><dt data-i18n="tm2_t">Payment</dt><dd data-i18n="tm2_d"></dd></div>
-          <div><dt data-i18n="tm3_t">Renewal</dt><dd data-i18n="tm3_d"></dd></div>
-          <div><dt data-i18n="tm4_t">Price changes</dt><dd data-i18n="tm4_d"></dd></div>
-          <div><dt data-i18n="tm5_t">Cancellation</dt><dd data-i18n="tm5_d"></dd></div>
-          <div><dt data-i18n="tm6_t">Refund</dt><dd data-i18n="tm6_d"></dd></div>
-          <div><dt data-i18n="tm7_t">Your data</dt><dd data-i18n="tm7_d"></dd></div>
-        </dl>
-      </div>
-      <div class="faq-col glass reveal">
-        <h3 class="faq-h" data-i18n="faq_h">Frequently asked questions</h3>
-        <div class="faq">
-          <details><summary data-i18n="fq1_q"></summary><p data-i18n="fq1_a"></p></details>
-          <details><summary data-i18n="fq2_q"></summary><p data-i18n="fq2_a"></p></details>
-          <details><summary data-i18n="fq3_q"></summary><p data-i18n="fq3_a"></p></details>
-          <details><summary data-i18n="fq4_q"></summary><p data-i18n="fq4_a"></p></details>
-          <details><summary data-i18n="fq5_q"></summary><p data-i18n="fq5_a"></p></details>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== Architecture ===== -->
-<section class="section" id="architecture" aria-labelledby="archTitle">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div class="eyebrow" data-i18n="arch_eyebrow">07 — Architecture</div>
-      <h2 class="section-title" id="archTitle" data-i18n="arch_title">From click to confirmed in one pulse.</h2>
-      <p class="section-lead" data-i18n="arch_lead">A serverless event chain.</p>
-    </div>
-    <div class="arch glass reveal">
-      <div class="flow" id="flow">
-        <div class="node"><span class="eyebrow" data-i18n="n1e">Edge</span><b data-i18n="n1b">Guest interface</b><span data-i18n="n1s">Booking engine · 3D map · concierge</span></div>
-        <div class="node"><span class="eyebrow" data-i18n="n2e">Yield</span><b data-i18n="n2b">Rate &amp; quota core</b><span data-i18n="n2s">Availability · FX · pricing rules</span></div>
-        <div class="node"><span class="eyebrow" data-i18n="n3e">Payments</span><b>iyzico 3D Secure</b><span data-i18n="n3s">Tokenised card · bank challenge</span></div>
-        <div class="node"><span class="eyebrow" data-i18n="n4e">Events</span><b data-i18n="n4b">Webhook bus</b><span data-i18n="n4s">Confirm · invoice · audit</span></div>
-        <div class="node"><span class="eyebrow" data-i18n="n5e">Dispatch</span><b data-i18n="n5b">Omni-channel</b><span>Email · SMS · WhatsApp</span></div>
-      </div>
-      <div class="log" id="log" aria-hidden="true"></div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== Assistant sandbox ===== -->
-<section class="section" id="concierge" aria-labelledby="concTitle">
-  <div class="wrap sandbox">
-    <div class="reveal">
-      <div class="eyebrow" data-i18n="conc_eyebrow">08 — Live AI Assistant Demo</div>
-      <h2 class="section-title" id="concTitle" data-i18n="conc_title">Ask AXON.</h2>
-      <p class="section-lead" data-i18n="conc_lead">The same assistant layer we train on a hotel's own knowledge — here trained on AXON.</p>
-      <div class="prompt-list">
-        <button class="prompt-btn" type="button" data-pk="p1"><span data-i18n="p1">What systems do you offer?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-        <button class="prompt-btn" type="button" data-pk="p2"><span data-i18n="p2">How does the AI concierge work?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-        <button class="prompt-btn" type="button" data-pk="p3"><span data-i18n="p3">Which payments do you support?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-      </div>
-    </div>
-    <div class="reveal" id="inlineChatMount"></div>
-  </div>
-</section>
-
 <!-- ===== About ===== -->
 <section class="section" id="about" aria-labelledby="aboutTitle">
   <div class="wrap">
     <div class="about glass reveal">
       <div class="about-photo" aria-hidden="true"><span>GG</span></div>
       <div class="about-text">
-        <div class="eyebrow" data-i18n="ab_eyebrow">09 — About</div>
+        <div class="eyebrow" data-i18n="ab_eyebrow">About</div>
         <h2 class="section-title" id="aboutTitle" data-i18n="ab_title">The team behind AXON.</h2>
         <p class="section-lead" data-i18n="ab_p">AXON was founded in Istanbul by Gülcan Genç.</p>
         <div class="about-meta">
@@ -1148,7 +1216,7 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
 <section class="section" id="consultation" aria-labelledby="consTitle">
   <div class="wrap">
     <div class="section-head reveal">
-      <div class="eyebrow" data-i18n="cons_eyebrow">10 — Executive Consultation</div>
+      <div class="eyebrow" data-i18n="cons_eyebrow">Executive Consultation</div>
       <h2 class="section-title" id="consTitle" data-i18n="cons_title">Schedule a deployment.</h2>
       <p class="section-lead" data-i18n="cons_lead">Tell us about your property.</p>
     </div>
@@ -1175,8 +1243,8 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
         <div class="form-foot">
           <span class="form-status" id="formStatus" role="status" data-i18n="form_note">No data is stored on this page</span>
           <div class="form-btns">
-            <a class="btn btn-ghost wa-link" target="_blank" rel="noopener" data-magnetic><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.2.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg><span data-i18n="wa_btn">WhatsApp</span></a>
-            <button class="btn btn-primary" type="submit" data-magnetic data-i18n="form_btn">Request Consultation</button>
+            <a class="btn btn-ghost wa-link" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.2.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg><span data-i18n="wa_btn">WhatsApp</span></a>
+            <button class="btn btn-primary" type="submit" data-i18n="form_btn">Request Consultation</button>
           </div>
         </div>
       </form>
@@ -1201,14 +1269,36 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
         </div>
         <div class="sig-preview" id="sigPreview"></div>
         <div class="sig-actions">
-          <button class="btn btn-primary" type="button" id="copyRich" data-magnetic data-i18n="copy_sig">Copy Signature</button>
-          <button class="btn btn-ghost" type="button" id="copyHtml" data-magnetic data-i18n="copy_html">Copy HTML</button>
+          <button class="btn btn-primary" type="button" id="copyRich" data-i18n="copy_sig">Copy Signature</button>
+          <button class="btn btn-ghost" type="button" id="copyHtml" data-i18n="copy_html">Copy HTML</button>
           <span class="form-status" id="sigStatus" role="status"></span>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- ===== Architecture ===== -->
+<section class="section" id="architecture" hidden aria-labelledby="archTitle">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow" data-i18n="arch_eyebrow">Architecture</div>
+      <h2 class="section-title" id="archTitle" data-i18n="arch_title">From click to confirmed in one pulse.</h2>
+      <p class="section-lead" data-i18n="arch_lead">A serverless event chain.</p>
+    </div>
+    <div class="arch glass reveal">
+      <div class="flow" id="flow">
+        <div class="node"><span class="eyebrow" data-i18n="n1e">Edge</span><b data-i18n="n1b">Guest interface</b><span data-i18n="n1s">Booking engine · 3D map · concierge</span></div>
+        <div class="node"><span class="eyebrow" data-i18n="n2e">Yield</span><b data-i18n="n2b">Rate &amp; quota core</b><span data-i18n="n2s">Availability · FX · pricing rules</span></div>
+        <div class="node"><span class="eyebrow" data-i18n="n3e">Payments</span><b>iyzico 3D Secure</b><span data-i18n="n3s">Tokenised card · bank challenge</span></div>
+        <div class="node"><span class="eyebrow" data-i18n="n4e">Events</span><b data-i18n="n4b">Webhook bus</b><span data-i18n="n4s">Confirm · invoice · audit</span></div>
+        <div class="node"><span class="eyebrow" data-i18n="n5e">Dispatch</span><b data-i18n="n5b">Omni-channel</b><span>Email · SMS · WhatsApp</span></div>
+      </div>
+      <div class="log" id="log" aria-hidden="true"></div>
+    </div>
+  </div>
+</section>
+
 </main>
 
 <footer>
@@ -1219,7 +1309,7 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
         <p style="margin:var(--space-4) 0 0;color:var(--chrome-400);max-width:360px" data-i18n="foot_tag">AI systems for hotels, clinics and companies. Built in Istanbul.</p>
       </div>
       <div><h4 class="eyebrow" data-i18n="nav_systems">Systems</h4><ul><li><a href="#systems" data-i18n="chk1">Reservation management</a></li><li><a href="#systems" data-i18n="chk2">Website design</a></li><li><a href="#concierge" data-i18n="chk3">AI chatbot</a></li><li><a href="#personal" data-i18n="chk5">Personal assistant</a></li></ul></div>
-      <div><h4 class="eyebrow" data-i18n="foot_studio">Studio</h4><ul><li><a href="#demo" data-i18n="nav_demo">Live Demo</a></li><li><a href="#location" data-i18n="nav_location">Location</a></li><li><a href="#partners" data-i18n="nav_partners">Partners</a></li><li><a href="#process" data-i18n="nav_process">Process</a></li><li><a href="#packages" data-i18n="nav_packages">Packages</a></li><li><a href="#architecture" data-i18n="nav_arch">Architecture</a></li><li><a href="#about" data-i18n="nav_about">About</a></li><li><a href="#consultation" data-i18n="nav_consult">Consultation</a></li><li><a href="/drop" data-i18n="nav_drop">Cinematic version</a></li><li><a class="wa-link" target="_blank" rel="noopener">WhatsApp</a></li></ul></div>
+      <div><h4 class="eyebrow" data-i18n="foot_studio">Studio</h4><ul><li><a href="#demo" data-i18n="nav_demo">Live Demo</a></li><li><a href="#location" data-i18n="nav_location">Location</a></li><li><a href="#partners" data-i18n="nav_partners">Partners</a></li><li><a href="#process" data-i18n="nav_process">Process</a></li><li><a href="#packages" data-i18n="nav_packages">Packages</a></li><li><a href="#about" data-i18n="nav_about">About</a></li><li><a href="#consultation" data-i18n="nav_consult">Consultation</a></li><li><a href="/drop" data-i18n="nav_drop">Cinematic version</a></li><li><a class="wa-link" target="_blank" rel="noopener">WhatsApp</a></li></ul></div>
     </div>
     <div class="foot-bottom"><span>© <span id="yr"></span> AXON SYSTEMS</span><span>Λ X O N · AI SYSTEMS</span></div>
   </div>
@@ -1312,7 +1402,7 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
 
   /* ================= Cursor glow, badge tilt, card tilt ================= */
   var glow = $('.cursor-glow');
-  if (finePointer) {
+  if (glow && finePointer) {
     window.addEventListener('pointermove', function (e) { glow.style.transform = 'translate3d(' + e.clientX + 'px,' + e.clientY + 'px,0)'; }, { passive: true });
   }
   if (finePointer && !reduceMotion) {
@@ -1354,56 +1444,56 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
       cta_deploy: 'Schedule Deployment', cta_demo: 'Explore the Demo', scroll: 'Scroll to enter',
       tagline: 'AI Systems for Hotels, Clinics & Companies', badge: 'Live in production with our clients',
       hero1: 'We engineer', hero2: 'AI systems', hero3: 'for growing businesses.',
-      hero_sub: 'Bookings, appointments, customer questions and notifications — all automated, 24/7.',
+      hero_sub: 'Bookings, appointments, customer questions and notifications, all automated, 24/7.',
       pill1: '<b>24/7</b> AI Assistant', pill2: '<b>3D Secure</b> iyzico Payments', pill3: '<b>WhatsApp</b> · Email · SMS',
-      demo_eyebrow: '01 — Live Product Demo', demo_title: 'The Direct Booking Engine',
-      demo_lead: 'One of the engines we build, running live on this page with demo data — here as a hotel booking engine; the same core powers appointment booking for clinics. Pick a room, choose your dates, switch currency and watch the total compute in real time.',
+      demo_eyebrow: 'Live Product Demo', demo_title: 'The Direct Booking Engine',
+      demo_lead: 'One of the engines we build, running live on this page with demo data, here as a hotel booking engine; the same core powers appointment booking for clinics. Pick a room, choose your dates, switch currency and watch the total compute in real time.',
       demo_m1: 'Live with our clients', demo_m2: 'White-label · your domain',
-      frame_url: 'yourhotel.com/book · secure booking engine — powered by AXON',
+      frame_url: 'yourhotel.com/book · secure booking engine, powered by AXON',
       leg_best: 'Best rate', leg_peak: 'Peak', leg_sold: 'Sold out', cal_hint: 'Nightly rates per room · demo inventory, illustrative pricing',
       cal_in: 'Select check-in', cal_out: 'Select check-out', cal_n: '{n} nights selected', sold: 'SOLD', dows: 'Mo,Tu,We,Th,Fr,Sa,Su',
       adults: 'Adults', pay_row: 'iyzico 3D Secure · instant e-invoice', reserve: 'Reserve Direct',
       up_to: 'up to {n} guests', spec1: 'Live quota', spec2: 'Rate plans', spec3: 'Instant confirm',
       b_empty: 'Choose check-in and check-out to see your total.', night: 'night', nights: 'nights', b_room: 'Room · avg {p}', b_extra: 'Extra guest', b_ota: 'OTA commission', b_total: 'Total', b_tax: 'VAT & accommodation tax included',
-      t_sold: 'A night in that range is sold out — choose another stay.', t_max: 'Maximum 21 nights in this demo.', t_hold: 'Demo hold placed · {room} · {total} → 3D Secure (simulated)',
+      t_sold: 'A night in that range is sold out, choose another stay.', t_max: 'Maximum 21 nights in this demo.', t_hold: 'Demo hold placed · {room} · {total} → 3D Secure (simulated)',
       rooms: [['Deluxe King', 'King bed', 'Your rooms, photos and rules are configured at deployment.'], ['Superior Twin', 'Two single beds', 'Rates and quotas sync with your inventory in real time.'], ['Junior Suite', 'King + sofa bed', 'Occupancy-based pricing per extra guest.'], ['Family Suite', 'King + two singles', 'Family rules and child policies built in.']],
       map_landmark: 'Landmark', map_route: 'walking route', map_museum: 'Museum', map_transit: 'Transit stop', map_old: 'Old Town', map_water: 'Waterfront', map_hotel: 'YOUR HOTEL',
       map_eyebrow: '3D Map Preview', map_title: 'Your destination,<br>rendered in 3D.', map_l1: 'Transit lines', map_l2: 'Landmarks · walking times',
       ins_eyebrow: 'Under the hood', ins_title: 'What ships with your engine.', ins_p: 'Serverless booking, payment and concierge services on your own domain; a multilingual front end; MapLibre 3D maps; and an AI concierge with WhatsApp handover.',
       st1b: 'Booking API', st1s: 'quota · rates · FX', st2b: 'AI Concierge', st2s: 'trained on your hotel', st3b: 'Dispatch', st4b: 'Reviews', st4s: 'post-stay requests',
       cta_private: 'Request a Private Demo', cta_ask: 'Ask the AI Assistant',
-      part_eyebrow: '03 — Partners', part_title: 'Businesses we work with.', part_lead: 'Clients running AXON systems in production.', part_next_b: 'Your business', part_next_s: 'Next deployment →',
+      part_eyebrow: 'Partners', part_title: 'Businesses we work with.', part_lead: 'Clients running AXON systems in production.', part_next_b: 'Your business', part_next_s: 'Next deployment →',
       
       
       
       
-      arch_eyebrow: '07 — Architecture', arch_title: 'From click to confirmed in one pulse.', arch_lead: 'A serverless event chain. Each reservation travels the same path — watch it run.',
+      arch_eyebrow: 'Architecture', arch_title: 'From click to confirmed in one pulse.', arch_lead: 'A serverless event chain. Each reservation travels the same path, watch it run.',
       n1e: 'Edge', n1b: 'Guest interface', n1s: 'Booking engine · 3D map · concierge', n2e: 'Yield', n2b: 'Rate & quota core', n2s: 'Availability · FX · pricing rules', n3e: 'Payments', n3s: 'Tokenised card · bank challenge', n4e: 'Events', n4b: 'Webhook bus', n4s: 'Confirm · invoice · audit', n5e: 'Dispatch', n5b: 'Omni-channel',
-      conc_eyebrow: '08 — Live AI Assistant Demo', conc_title: 'Ask AXON.', conc_lead: 'The same assistant we train on each client\'s own knowledge — here trained on AXON. Try a prompt below or type your own.',
+      conc_eyebrow: 'Live AI Assistant Demo', conc_title: 'Ask AXON.', conc_lead: 'The same assistant we train on each client\'s own knowledge, here trained on AXON. Try a prompt below or type your own.',
       p1: 'What systems do you offer?', p2: 'How does the AI concierge work?', p3: 'Which payments do you support?', c4: 'Do you charge OTA commission?', c5: 'Book a demo',
-      cons_eyebrow: '10 — Executive Consultation', cons_title: 'Schedule a deployment.', cons_lead: 'Tell us about your business. We respond within one business day with a plan and timeline.',
+      cons_eyebrow: 'Executive Consultation', cons_title: 'Schedule a deployment.', cons_lead: 'Tell us about your business. We respond within one business day with a plan and timeline.',
       term: 'Contact Terminal', f_name: 'Full name', ph_name: 'Your name', f_email: 'Work email', f_hotel: 'Company', ph_hotel: 'Company, hotel or clinic · city', f_keys: 'Size', f_sys: 'Systems of interest',
       f_brief: 'Brief', ph_brief: 'Current booking stack, OTA share, launch window…',
       form_note: 'No data is stored on this page', form_btn: 'Request Consultation', wa_btn: 'WhatsApp', wa_aria: 'Message us on WhatsApp',
-      err_name: 'Required — please add your name.', err_email: 'Required — please add a valid work email.', form_ok: 'Ready — opening your mail client…',
+      err_name: 'Required, please add your name.', err_email: 'Required, please add a valid work email.', form_ok: 'Ready, opening your mail client…',
       wa_text: 'Hello AXON, I would like to learn about your systems for my business.',
       sig_eyebrow: 'Executive Signature', sig_lead: 'Generate the founder\'s HTML email signature. Edit the fields, then copy it straight into Gmail, Outlook or Apple Mail.',
-      light: 'Light', dark: 'Dark', copy_sig: 'Copy Signature', copy_html: 'Copy HTML', m_html: 'HTML copied', m_sig: 'Signature copied — paste into your mail settings', m_fail: 'Copy failed — select the preview manually',
+      light: 'Light', dark: 'Dark', copy_sig: 'Copy Signature', copy_html: 'Copy HTML', m_html: 'HTML copied', m_sig: 'Signature copied, paste into your mail settings', m_fail: 'Copy failed, select the preview manually',
       foot_tag: 'AI systems for hotels, clinics and companies. Built in Istanbul.', foot_studio: 'Studio', fab: 'Ask AXON',
-      chat_status: 'Online · TR / EN / DE / FR', chat_ph: 'Ask about AXON systems…', chat_hi: 'Welcome to AXON. I\'m a demo of the AI assistant we build for businesses — ask me about our systems.',
+      chat_status: 'Online · TR / EN / DE / FR', chat_ph: 'Ask about AXON systems…', chat_hi: 'Welcome to AXON. I\'m a demo of the AI assistant we build for businesses, ask me about our systems.',
       
-      kb_ai: 'We train the assistant on your business: services, prices, policies, opening hours and FAQs — rooms and transfers for a hotel, treatments and appointment rules for a clinic. It answers customers 24/7 in their own language and hands the conversation to your team on WhatsApp whenever a human is needed.',
+      kb_ai: 'We train the assistant on your business: services, prices, policies, opening hours and FAQs, rooms and transfers for a hotel, treatments and appointment rules for a clinic. It answers customers 24/7 in their own language and hands the conversation to your team on WhatsApp whenever a human is needed.',
       kb_pay: 'Payments run through <b>iyzico 3D Secure</b>. Guests can see prices in <b>TRY, EUR or USD</b>, and invoices are generated automatically after confirmation.',
-      kb_ota: 'Bookings made through your own AXON engine carry <b>no OTA or platform commission</b> — the margin stays with you.',
+      kb_ota: 'Bookings made through your own AXON engine carry <b>no OTA or platform commission</b>: the margin stays with you.',
       kb_price: 'Every deployment is scoped to the property, so pricing is tailored. Send a brief through the consultation form and we\'ll come back with an outline and a quote.',
-      kb_time: 'Timelines depend on scope — number of rooms, languages and integrations. We share a deployment plan with dates after the first consultation.',
-      kb_map: 'We build interactive 3D maps with MapLibre GL: your property, nearby landmarks, transit lines and walking times — embedded right in your booking flow.',
-      kb_lang: 'Sites and the AI concierge are multilingual — Turkish, English, German and French, with more languages on request.',
-      kb_auto: 'Every reservation event triggers the right message: confirmation emails and SMS, WhatsApp updates, check-in instructions and post-stay review requests — no manual work for your team.',
-      kb_ref: 'Our systems run in production with our clients — see the Partners section. Ask for a private walkthrough in the consultation form.',
+      kb_time: 'Timelines depend on scope, number of rooms, languages and integrations. We share a deployment plan with dates after the first consultation.',
+      kb_map: 'We build interactive 3D maps with MapLibre GL: your property, nearby landmarks, transit lines and walking times, embedded right in your booking flow.',
+      kb_lang: 'Sites and the AI concierge are multilingual, Turkish, English, German and French, with more languages on request.',
+      kb_auto: 'Every reservation event triggers the right message: confirmation emails and SMS, WhatsApp updates, check-in instructions and post-stay review requests, no manual work for your team.',
+      kb_ref: 'Our systems run in production with our clients, see the Partners section. Ask for a private walkthrough in the consultation form.',
       kb_contact: 'You can reach the founder, Gülcan Genç, through the consultation form or directly on WhatsApp.',
       kb_hi: 'Welcome to AXON. Ask me about our booking engine, AI concierge, payments or automations.',
-      kb_fallback: 'I\'m the AXON demo assistant — I can explain our booking engine, AI assistant, payments, 3D maps and automations. For anything specific to your business, leave a brief in the consultation form.',
+      kb_fallback: 'I\'m the AXON demo assistant, I can explain our booking engine, AI assistant, payments, 3D maps and automations. For anything specific to your business, leave a brief in the consultation form.',
       kb_wa: 'Message us on WhatsApp'
     },
     tr: {
@@ -1412,56 +1502,56 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
       cta_deploy: 'Kurulum Planla', cta_demo: 'Demoyu Keşfet', scroll: 'Keşfetmek için kaydırın',
       tagline: 'Oteller, Klinikler ve Şirketler için Yapay Zekâ Sistemleri', badge: 'Müşterilerimizde canlı kullanımda',
       hero1: 'İşletmeniz için', hero2: 'yapay zekâ sistemleri', hero3: 'tasarlıyoruz.',
-      hero_sub: 'Rezervasyon, randevu, müşteri soruları ve bildirimler — hepsi otomatik, 7/24.',
+      hero_sub: 'Rezervasyon, randevu, müşteri soruları ve bildirimler, hepsi otomatik, 7/24.',
       pill1: '<b>7/24</b> Yapay Zekâ Asistanı', pill2: '<b>3D Secure</b> iyzico Ödeme', pill3: '<b>WhatsApp</b> · E-posta · SMS',
-      demo_eyebrow: '01 — Canlı Ürün Demosu', demo_title: 'Doğrudan Rezervasyon Motoru',
-      demo_lead: 'Kurduğumuz motorlardan biri, bu sayfada demo verilerle canlı çalışıyor — burada otel rezervasyon motoru olarak; aynı altyapı klinikler için randevu sistemine dönüşüyor. Bir oda seçin, tarihlerinizi belirleyin, para birimini değiştirin ve toplamın anında hesaplandığını görün.',
+      demo_eyebrow: 'Canlı Ürün Demosu', demo_title: 'Doğrudan Rezervasyon Motoru',
+      demo_lead: 'Kurduğumuz motorlardan biri, bu sayfada demo verilerle canlı çalışıyor, burada otel rezervasyon motoru olarak; aynı altyapı klinikler için randevu sistemine dönüşüyor. Bir oda seçin, tarihlerinizi belirleyin, para birimini değiştirin ve toplamın anında hesaplandığını görün.',
       demo_m1: 'Müşterilerimizde canlı', demo_m2: 'Beyaz etiket · kendi alan adınız',
-      frame_url: 'otelinizin-sitesi.com/rezervasyon · güvenli rezervasyon motoru — AXON altyapısı',
+      frame_url: 'otelinizin-sitesi.com/rezervasyon · güvenli rezervasyon motoru, AXON altyapısı',
       leg_best: 'En iyi fiyat', leg_peak: 'Yoğun', leg_sold: 'Dolu', cal_hint: 'Oda başı gecelik fiyatlar · demo envanter, örnek fiyatlar',
       cal_in: 'Giriş tarihi seçin', cal_out: 'Çıkış tarihi seçin', cal_n: '{n} gece seçildi', sold: 'DOLU', dows: 'Pt,Sa,Ça,Pe,Cu,Ct,Pz',
       adults: 'Yetişkin', pay_row: 'iyzico 3D Secure · anında e-fatura', reserve: 'Doğrudan Rezervasyon',
       up_to: 'en fazla {n} kişi', spec1: 'Canlı kontenjan', spec2: 'Fiyat planları', spec3: 'Anında onay',
       b_empty: 'Toplamı görmek için giriş ve çıkış tarihlerini seçin.', night: 'gece', nights: 'gece', b_room: 'Oda · ort. {p}', b_extra: 'Ek kişi', b_ota: 'OTA komisyonu', b_total: 'Toplam', b_tax: 'KDV ve konaklama vergisi dahil',
-      t_sold: 'Bu aralıkta dolu bir gece var — başka tarih seçin.', t_max: 'Bu demoda en fazla 21 gece.', t_hold: 'Demo rezervasyon · {room} · {total} → 3D Secure (simülasyon)',
+      t_sold: 'Bu aralıkta dolu bir gece var, başka tarih seçin.', t_max: 'Bu demoda en fazla 21 gece.', t_hold: 'Demo rezervasyon · {room} · {total} → 3D Secure (simülasyon)',
       rooms: [['Deluxe King', 'King yatak', 'Odalarınız, fotoğraflarınız ve kurallarınız kurulumda tanımlanır.'], ['Superior Twin', 'İki tek kişilik yatak', 'Fiyat ve kontenjanlar envanterinizle anlık senkronize olur.'], ['Junior Suite', 'King + çekyat', 'Ek kişi başına doluluk bazlı fiyatlama.'], ['Aile Suiti', 'King + iki tek yatak', 'Aile kuralları ve çocuk politikaları hazır.']],
       map_landmark: 'Simge yapı', map_route: 'yürüyüş rotası', map_museum: 'Müze', map_transit: 'Durak', map_old: 'Tarihi merkez', map_water: 'Sahil', map_hotel: 'OTELİNİZ',
       map_eyebrow: '3D Harita Önizleme', map_title: 'Destinasyonunuz,<br>3D olarak.', map_l1: 'Ulaşım hatları', map_l2: 'Simge yapılar · yürüme süreleri',
       ins_eyebrow: 'Altyapı', ins_title: 'Motorunuzla birlikte gelenler.', ins_p: 'Kendi alan adınızda sunucusuz rezervasyon, ödeme ve konsiyerj servisleri; çok dilli arayüz; MapLibre 3D haritalar ve WhatsApp aktarımlı yapay zekâ konsiyerj.',
       st1b: 'Rezervasyon API', st1s: 'kontenjan · fiyat · kur', st2b: 'Yapay Zekâ Konsiyerj', st2s: 'otelinize özel eğitilir', st3b: 'Bildirimler', st4b: 'Yorumlar', st4s: 'konaklama sonrası talepler',
       cta_private: 'Özel Demo Talep Et', cta_ask: 'Yapay Zekâya Sor',
-      part_eyebrow: '03 — Partnerler', part_title: 'Çalıştığımız işletmeler.', part_lead: 'AXON sistemlerini canlı kullanan müşterilerimiz.', part_next_b: 'Sizin işletmeniz', part_next_s: 'Sıradaki kurulum →',
+      part_eyebrow: 'Partnerler', part_title: 'Çalıştığımız işletmeler.', part_lead: 'AXON sistemlerini canlı kullanan müşterilerimiz.', part_next_b: 'Sizin işletmeniz', part_next_s: 'Sıradaki kurulum →',
       
       
       
       
-      arch_eyebrow: '07 — Mimari', arch_title: 'Tıklamadan onaya tek nabızda.', arch_lead: 'Sunucusuz bir olay zinciri. Her rezervasyon aynı yoldan geçer — izleyin.',
+      arch_eyebrow: 'Mimari', arch_title: 'Tıklamadan onaya tek nabızda.', arch_lead: 'Sunucusuz bir olay zinciri. Her rezervasyon aynı yoldan geçer, izleyin.',
       n1e: 'Ön yüz', n1b: 'Misafir arayüzü', n1s: 'Rezervasyon motoru · 3D harita · konsiyerj', n2e: 'Gelir', n2b: 'Fiyat & kontenjan çekirdeği', n2s: 'Müsaitlik · kur · fiyat kuralları', n3e: 'Ödeme', n3s: 'Tokenize kart · banka doğrulaması', n4e: 'Olaylar', n4b: 'Webhook hattı', n4s: 'Onay · fatura · kayıt', n5e: 'Bildirim', n5b: 'Çok kanallı',
-      conc_eyebrow: '08 — Canlı Yapay Zekâ Demosu', conc_title: 'AXON\'a sorun.', conc_lead: 'Her müşterimizin kendi bilgileriyle eğittiğimiz asistan — burada AXON hakkında eğitildi. Aşağıdaki sorulardan birini deneyin ya da kendi sorunuzu yazın.',
+      conc_eyebrow: 'Canlı Yapay Zekâ Demosu', conc_title: 'AXON\'a sorun.', conc_lead: 'Her müşterimizin kendi bilgileriyle eğittiğimiz asistan, burada AXON hakkında eğitildi. Aşağıdaki sorulardan birini deneyin ya da kendi sorunuzu yazın.',
       p1: 'Hangi sistemleri sunuyorsunuz?', p2: 'Yapay zekâ konsiyerj nasıl çalışıyor?', p3: 'Hangi ödeme yöntemlerini destekliyorsunuz?', c4: 'OTA komisyonu alıyor musunuz?', c5: 'Demo talep et',
-      cons_eyebrow: '10 — Yönetici Danışmanlığı', cons_title: 'Kurulum planlayın.', cons_lead: 'İşletmenizi anlatın. Bir iş günü içinde plan ve takvimle dönüş yapıyoruz.',
+      cons_eyebrow: 'Yönetici Danışmanlığı', cons_title: 'Kurulum planlayın.', cons_lead: 'İşletmenizi anlatın. Bir iş günü içinde plan ve takvimle dönüş yapıyoruz.',
       term: 'İletişim Terminali', f_name: 'Ad soyad', ph_name: 'Adınız', f_email: 'İş e-postası', f_hotel: 'Şirket', ph_hotel: 'Şirket, otel veya klinik · şehir', f_keys: 'Büyüklük', f_sys: 'İlgilendiğiniz sistemler',
       f_brief: 'Kısa bilgi', ph_brief: 'Mevcut rezervasyon altyapısı, OTA payı, hedef tarih…',
       form_note: 'Bu sayfada hiçbir veri saklanmaz', form_btn: 'Danışmanlık Talep Et', wa_btn: 'WhatsApp', wa_aria: 'WhatsApp\'tan yazın',
-      err_name: 'Zorunlu — lütfen adınızı yazın.', err_email: 'Zorunlu — lütfen geçerli bir e-posta yazın.', form_ok: 'Hazır — e-posta uygulamanız açılıyor…',
+      err_name: 'Zorunlu, lütfen adınızı yazın.', err_email: 'Zorunlu, lütfen geçerli bir e-posta yazın.', form_ok: 'Hazır, e-posta uygulamanız açılıyor…',
       wa_text: 'Merhaba AXON, işletmem için sistemleriniz hakkında bilgi almak istiyorum.',
       sig_eyebrow: 'Yönetici İmzası', sig_lead: 'Kurucunun HTML e-posta imzasını oluşturun. Alanları düzenleyin, sonra Gmail, Outlook veya Apple Mail\'e yapıştırın.',
-      light: 'Açık', dark: 'Koyu', copy_sig: 'İmzayı Kopyala', copy_html: 'HTML Kopyala', m_html: 'HTML kopyalandı', m_sig: 'İmza kopyalandı — e-posta ayarlarınıza yapıştırın', m_fail: 'Kopyalanamadı — önizlemeyi elle seçin',
+      light: 'Açık', dark: 'Koyu', copy_sig: 'İmzayı Kopyala', copy_html: 'HTML Kopyala', m_html: 'HTML kopyalandı', m_sig: 'İmza kopyalandı, e-posta ayarlarınıza yapıştırın', m_fail: 'Kopyalanamadı, önizlemeyi elle seçin',
       foot_tag: 'Oteller, klinikler ve şirketler için yapay zekâ sistemleri. İstanbul\'da geliştirildi.', foot_studio: 'Stüdyo', fab: 'AXON\'a Sor',
-      chat_status: 'Çevrimiçi · TR / EN / DE / FR', chat_ph: 'AXON sistemleri hakkında sorun…', chat_hi: 'AXON\'a hoş geldiniz. İşletmelere kurduğumuz yapay zekâ asistanının demosuyum — sistemlerimizi sorun.',
+      chat_status: 'Çevrimiçi · TR / EN / DE / FR', chat_ph: 'AXON sistemleri hakkında sorun…', chat_hi: 'AXON\'a hoş geldiniz. İşletmelere kurduğumuz yapay zekâ asistanının demosuyum, sistemlerimizi sorun.',
       
-      kb_ai: 'Asistanı işletmenize göre eğitiyoruz: hizmetler, fiyatlar, kurallar, çalışma saatleri ve sık sorulan sorular — otel için odalar ve transferler, klinik için tedaviler ve randevu kuralları. Müşterilere 7/24 kendi dillerinde yanıt verir ve gerektiğinde konuşmayı WhatsApp üzerinden ekibinize aktarır.',
+      kb_ai: 'Asistanı işletmenize göre eğitiyoruz: hizmetler, fiyatlar, kurallar, çalışma saatleri ve sık sorulan sorular, otel için odalar ve transferler, klinik için tedaviler ve randevu kuralları. Müşterilere 7/24 kendi dillerinde yanıt verir ve gerektiğinde konuşmayı WhatsApp üzerinden ekibinize aktarır.',
       kb_pay: 'Ödemeler <b>iyzico 3D Secure</b> ile alınır. Misafirler fiyatları <b>TRY, EUR veya USD</b> görebilir; onaydan sonra fatura otomatik oluşur.',
-      kb_ota: 'Kendi AXON motorunuz üzerinden gelen rezervasyonlarda <b>OTA veya platform komisyonu yoktur</b> — kazanç sizde kalır.',
+      kb_ota: 'Kendi AXON motorunuz üzerinden gelen rezervasyonlarda <b>OTA veya platform komisyonu yoktur</b>: kazanç sizde kalır.',
       kb_price: 'Her kurulum tesise göre planlandığı için fiyat size özeldir. Danışmanlık formundan kısa bilgi gönderin, taslak ve teklifle dönelim.',
-      kb_time: 'Süre kapsama bağlıdır — oda sayısı, diller ve entegrasyonlar. İlk görüşmeden sonra tarihli bir kurulum planı paylaşıyoruz.',
-      kb_map: 'MapLibre GL ile interaktif 3D haritalar yapıyoruz: tesisiniz, yakın simge yapılar, ulaşım hatları ve yürüme süreleri — rezervasyon akışınızın içinde.',
-      kb_lang: 'Siteler ve yapay zekâ konsiyerj çok dillidir — Türkçe, İngilizce, Almanca ve Fransızca; talebe göre başka diller de eklenir.',
-      kb_auto: 'Her rezervasyon olayı doğru mesajı tetikler: onay e-postası ve SMS, WhatsApp bildirimleri, check-in bilgileri ve konaklama sonrası yorum talepleri — ekibinize manuel iş kalmaz.',
-      kb_ref: 'Sistemlerimiz müşterilerimizde canlı çalışıyor — Partnerler bölümüne bakın. Özel bir tanıtım için danışmanlık formunu kullanın.',
+      kb_time: 'Süre kapsama bağlıdır, oda sayısı, diller ve entegrasyonlar. İlk görüşmeden sonra tarihli bir kurulum planı paylaşıyoruz.',
+      kb_map: 'MapLibre GL ile interaktif 3D haritalar yapıyoruz: tesisiniz, yakın simge yapılar, ulaşım hatları ve yürüme süreleri, rezervasyon akışınızın içinde.',
+      kb_lang: 'Siteler ve yapay zekâ konsiyerj çok dillidir, Türkçe, İngilizce, Almanca ve Fransızca; talebe göre başka diller de eklenir.',
+      kb_auto: 'Her rezervasyon olayı doğru mesajı tetikler: onay e-postası ve SMS, WhatsApp bildirimleri, check-in bilgileri ve konaklama sonrası yorum talepleri, ekibinize manuel iş kalmaz.',
+      kb_ref: 'Sistemlerimiz müşterilerimizde canlı çalışıyor, Partnerler bölümüne bakın. Özel bir tanıtım için danışmanlık formunu kullanın.',
       kb_contact: 'Kurucumuz Gülcan Genç\'e danışmanlık formundan ya da doğrudan WhatsApp\'tan ulaşabilirsiniz.',
       kb_hi: 'AXON\'a hoş geldiniz. Rezervasyon motoru, yapay zekâ konsiyerj, ödemeler veya otomasyonlar hakkında sorun.',
-      kb_fallback: 'Ben AXON demo asistanıyım — rezervasyon motoru, yapay zekâ asistanı, ödemeler, 3D haritalar ve otomasyonları anlatabilirim. İşletmenize özel konular için danışmanlık formuna kısa bilgi bırakın.',
+      kb_fallback: 'Ben AXON demo asistanıyım, rezervasyon motoru, yapay zekâ asistanı, ödemeler, 3D haritalar ve otomasyonları anlatabilirim. İşletmenize özel konular için danışmanlık formuna kısa bilgi bırakın.',
       kb_wa: 'WhatsApp\'tan yazın'
     },
     de: {
@@ -1470,56 +1560,56 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
       cta_deploy: 'Einführung planen', cta_demo: 'Demo entdecken', scroll: 'Zum Eintreten scrollen',
       tagline: 'KI-Systeme für Hotels, Kliniken & Unternehmen', badge: 'Live im Einsatz bei unseren Kunden',
       hero1: 'Wir entwickeln', hero2: 'KI-Systeme', hero3: 'für wachsende Unternehmen.',
-      hero_sub: 'Buchungen, Termine, Kundenfragen und Benachrichtigungen — alles automatisch, rund um die Uhr.',
+      hero_sub: 'Buchungen, Termine, Kundenfragen und Benachrichtigungen, alles automatisch, rund um die Uhr.',
       pill1: '<b>24/7</b> KI-Assistent', pill2: '<b>3D Secure</b> iyzico-Zahlungen', pill3: '<b>WhatsApp</b> · E-Mail · SMS',
-      demo_eyebrow: '01 — Live-Produktdemo', demo_title: 'Die Direktbuchungs-Engine',
-      demo_lead: 'Eine unserer Engines, live auf dieser Seite mit Demodaten — hier als Hotel-Buchungssystem; derselbe Kern steuert Terminbuchungen für Kliniken. Zimmer wählen, Daten festlegen, Währung wechseln und zusehen, wie der Gesamtpreis in Echtzeit entsteht.',
+      demo_eyebrow: 'Live-Produktdemo', demo_title: 'Die Direktbuchungs-Engine',
+      demo_lead: 'Eine unserer Engines, live auf dieser Seite mit Demodaten, hier als Hotel-Buchungssystem; derselbe Kern steuert Terminbuchungen für Kliniken. Zimmer wählen, Daten festlegen, Währung wechseln und zusehen, wie der Gesamtpreis in Echtzeit entsteht.',
       demo_m1: 'Live bei unseren Kunden', demo_m2: 'White-Label · Ihre Domain',
-      frame_url: 'ihrhotel.de/buchen · sichere Buchungs-Engine — powered by AXON',
+      frame_url: 'ihrhotel.de/buchen · sichere Buchungs-Engine, powered by AXON',
       leg_best: 'Bester Preis', leg_peak: 'Hochsaison', leg_sold: 'Ausgebucht', cal_hint: 'Preise pro Zimmer und Nacht · Demo-Inventar, Beispielpreise',
       cal_in: 'Anreise wählen', cal_out: 'Abreise wählen', cal_n: '{n} Nächte gewählt', sold: 'BELEGT', dows: 'Mo,Di,Mi,Do,Fr,Sa,So',
       adults: 'Erwachsene', pay_row: 'iyzico 3D Secure · sofortige E-Rechnung', reserve: 'Direkt buchen',
       up_to: 'bis zu {n} Gäste', spec1: 'Live-Kontingent', spec2: 'Ratenpläne', spec3: 'Sofortbestätigung',
       b_empty: 'Wählen Sie An- und Abreise, um den Gesamtpreis zu sehen.', night: 'Nacht', nights: 'Nächte', b_room: 'Zimmer · Ø {p}', b_extra: 'Zusätzlicher Gast', b_ota: 'OTA-Provision', b_total: 'Gesamt', b_tax: 'MwSt. und Beherbergungssteuer inklusive',
-      t_sold: 'Eine Nacht in diesem Zeitraum ist ausgebucht — bitte andere Daten wählen.', t_max: 'Maximal 21 Nächte in dieser Demo.', t_hold: 'Demo-Reservierung · {room} · {total} → 3D Secure (simuliert)',
+      t_sold: 'Eine Nacht in diesem Zeitraum ist ausgebucht, bitte andere Daten wählen.', t_max: 'Maximal 21 Nächte in dieser Demo.', t_hold: 'Demo-Reservierung · {room} · {total} → 3D Secure (simuliert)',
       rooms: [['Deluxe King', 'Kingsize-Bett', 'Ihre Zimmer, Fotos und Regeln werden bei der Einführung konfiguriert.'], ['Superior Twin', 'Zwei Einzelbetten', 'Preise und Kontingente synchronisieren sich in Echtzeit.'], ['Junior Suite', 'Kingsize + Schlafsofa', 'Belegungsabhängige Preise pro Zusatzgast.'], ['Familiensuite', 'Kingsize + zwei Einzelbetten', 'Familienregeln und Kinderrichtlinien integriert.']],
       map_landmark: 'Wahrzeichen', map_route: 'Fußweg', map_museum: 'Museum', map_transit: 'Haltestelle', map_old: 'Altstadt', map_water: 'Uferpromenade', map_hotel: 'IHR HOTEL',
       map_eyebrow: '3D-Kartenvorschau', map_title: 'Ihr Reiseziel,<br>in 3D.', map_l1: 'ÖPNV-Linien', map_l2: 'Wahrzeichen · Gehzeiten',
       ins_eyebrow: 'Unter der Haube', ins_title: 'Was Ihre Engine mitbringt.', ins_p: 'Serverlose Buchungs-, Zahlungs- und Concierge-Dienste auf Ihrer eigenen Domain; ein mehrsprachiges Frontend; MapLibre-3D-Karten; und ein KI-Concierge mit WhatsApp-Übergabe.',
       st1b: 'Buchungs-API', st1s: 'Kontingent · Preise · Wechselkurs', st2b: 'KI-Concierge', st2s: 'auf Ihr Hotel trainiert', st3b: 'Versand', st4b: 'Bewertungen', st4s: 'Anfragen nach dem Aufenthalt',
       cta_private: 'Private Demo anfragen', cta_ask: 'KI-Assistent fragen',
-      part_eyebrow: '03 — Partner', part_title: 'Unternehmen, mit denen wir arbeiten.', part_lead: 'Kunden, die AXON-Systeme im Live-Betrieb nutzen.', part_next_b: 'Ihr Unternehmen', part_next_s: 'Nächste Einführung →',
+      part_eyebrow: 'Partner', part_title: 'Unternehmen, mit denen wir arbeiten.', part_lead: 'Kunden, die AXON-Systeme im Live-Betrieb nutzen.', part_next_b: 'Ihr Unternehmen', part_next_s: 'Nächste Einführung →',
       
       
       
       
-      arch_eyebrow: '07 — Architektur', arch_title: 'Vom Klick zur Bestätigung in einem Impuls.', arch_lead: 'Eine serverlose Ereigniskette. Jede Buchung nimmt denselben Weg — sehen Sie zu.',
+      arch_eyebrow: 'Architektur', arch_title: 'Vom Klick zur Bestätigung in einem Impuls.', arch_lead: 'Eine serverlose Ereigniskette. Jede Buchung nimmt denselben Weg, sehen Sie zu.',
       n1e: 'Edge', n1b: 'Gästeoberfläche', n1s: 'Buchungs-Engine · 3D-Karte · Concierge', n2e: 'Yield', n2b: 'Preis- & Kontingentkern', n2s: 'Verfügbarkeit · Wechselkurs · Preisregeln', n3e: 'Zahlungen', n3s: 'Tokenisierte Karte · Bankprüfung', n4e: 'Ereignisse', n4b: 'Webhook-Bus', n4s: 'Bestätigung · Rechnung · Protokoll', n5e: 'Versand', n5b: 'Omnichannel',
-      conc_eyebrow: '08 — Live-KI-Assistent', conc_title: 'Fragen Sie AXON.', conc_lead: 'Derselbe Assistent, den wir mit dem Wissen jedes Kunden trainieren — hier auf AXON trainiert. Probieren Sie eine Frage aus oder schreiben Sie Ihre eigene.',
+      conc_eyebrow: 'Live-KI-Assistent', conc_title: 'Fragen Sie AXON.', conc_lead: 'Derselbe Assistent, den wir mit dem Wissen jedes Kunden trainieren, hier auf AXON trainiert. Probieren Sie eine Frage aus oder schreiben Sie Ihre eigene.',
       p1: 'Welche Systeme bieten Sie an?', p2: 'Wie funktioniert der KI-Concierge?', p3: 'Welche Zahlungen unterstützen Sie?', c4: 'Berechnen Sie OTA-Provision?', c5: 'Demo buchen',
-      cons_eyebrow: '10 — Beratung', cons_title: 'Einführung planen.', cons_lead: 'Erzählen Sie uns von Ihrem Unternehmen. Wir melden uns innerhalb eines Werktags mit Plan und Zeitrahmen.',
+      cons_eyebrow: 'Beratung', cons_title: 'Einführung planen.', cons_lead: 'Erzählen Sie uns von Ihrem Unternehmen. Wir melden uns innerhalb eines Werktags mit Plan und Zeitrahmen.',
       term: 'Kontaktterminal', f_name: 'Vollständiger Name', ph_name: 'Ihr Name', f_email: 'Geschäftliche E-Mail', f_hotel: 'Unternehmen', ph_hotel: 'Unternehmen, Hotel oder Klinik · Stadt', f_keys: 'Größe', f_sys: 'Gewünschte Systeme',
       f_brief: 'Kurzbeschreibung', ph_brief: 'Aktuelles Buchungssystem, OTA-Anteil, Zeitplan…',
       form_note: 'Auf dieser Seite werden keine Daten gespeichert', form_btn: 'Beratung anfragen', wa_btn: 'WhatsApp', wa_aria: 'Schreiben Sie uns auf WhatsApp',
-      err_name: 'Pflichtfeld — bitte Namen angeben.', err_email: 'Pflichtfeld — bitte gültige E-Mail angeben.', form_ok: 'Bereit — Ihr E-Mail-Programm wird geöffnet…',
+      err_name: 'Pflichtfeld, bitte Namen angeben.', err_email: 'Pflichtfeld, bitte gültige E-Mail angeben.', form_ok: 'Bereit, Ihr E-Mail-Programm wird geöffnet…',
       wa_text: 'Hallo AXON, ich möchte mehr über Ihre Systeme für mein Unternehmen erfahren.',
       sig_eyebrow: 'E-Mail-Signatur', sig_lead: 'Erstellen Sie die HTML-Signatur der Gründerin. Felder anpassen und direkt in Gmail, Outlook oder Apple Mail einfügen.',
-      light: 'Hell', dark: 'Dunkel', copy_sig: 'Signatur kopieren', copy_html: 'HTML kopieren', m_html: 'HTML kopiert', m_sig: 'Signatur kopiert — in den Mail-Einstellungen einfügen', m_fail: 'Kopieren fehlgeschlagen — Vorschau manuell markieren',
+      light: 'Hell', dark: 'Dunkel', copy_sig: 'Signatur kopieren', copy_html: 'HTML kopieren', m_html: 'HTML kopiert', m_sig: 'Signatur kopiert, in den Mail-Einstellungen einfügen', m_fail: 'Kopieren fehlgeschlagen, Vorschau manuell markieren',
       foot_tag: 'KI-Systeme für Hotels, Kliniken und Unternehmen. Entwickelt in Istanbul.', foot_studio: 'Studio', fab: 'AXON fragen',
-      chat_status: 'Online · TR / EN / DE / FR', chat_ph: 'Fragen zu AXON-Systemen…', chat_hi: 'Willkommen bei AXON. Ich bin eine Demo des KI-Assistenten, den wir für Unternehmen bauen — fragen Sie mich zu unseren Systemen.',
+      chat_status: 'Online · TR / EN / DE / FR', chat_ph: 'Fragen zu AXON-Systemen…', chat_hi: 'Willkommen bei AXON. Ich bin eine Demo des KI-Assistenten, den wir für Unternehmen bauen, fragen Sie mich zu unseren Systemen.',
       
-      kb_ai: 'Wir trainieren den Assistenten auf Ihr Unternehmen: Leistungen, Preise, Regeln, Öffnungszeiten und häufige Fragen — Zimmer und Transfers für ein Hotel, Behandlungen und Terminregeln für eine Klinik. Er antwortet Kunden rund um die Uhr in ihrer Sprache und übergibt bei Bedarf per WhatsApp an Ihr Team.',
+      kb_ai: 'Wir trainieren den Assistenten auf Ihr Unternehmen: Leistungen, Preise, Regeln, Öffnungszeiten und häufige Fragen, Zimmer und Transfers für ein Hotel, Behandlungen und Terminregeln für eine Klinik. Er antwortet Kunden rund um die Uhr in ihrer Sprache und übergibt bei Bedarf per WhatsApp an Ihr Team.',
       kb_pay: 'Zahlungen laufen über <b>iyzico 3D Secure</b>. Gäste sehen Preise in <b>TRY, EUR oder USD</b>; Rechnungen entstehen nach der Bestätigung automatisch.',
-      kb_ota: 'Buchungen über Ihre eigene AXON-Engine kosten <b>keine OTA- oder Plattformprovision</b> — die Marge bleibt bei Ihnen.',
+      kb_ota: 'Buchungen über Ihre eigene AXON-Engine kosten <b>keine OTA- oder Plattformprovision</b>: die Marge bleibt bei Ihnen.',
       kb_price: 'Jede Einführung wird auf das Haus zugeschnitten, daher ist der Preis individuell. Senden Sie uns über das Beratungsformular eine Kurzbeschreibung, und wir melden uns mit Plan und Angebot.',
-      kb_time: 'Die Dauer hängt vom Umfang ab — Zimmerzahl, Sprachen und Integrationen. Nach dem ersten Gespräch erhalten Sie einen Einführungsplan mit Terminen.',
-      kb_map: 'Wir bauen interaktive 3D-Karten mit MapLibre GL: Ihr Haus, Sehenswürdigkeiten, ÖPNV-Linien und Gehzeiten — direkt im Buchungsablauf.',
-      kb_lang: 'Websites und KI-Concierge sind mehrsprachig — Türkisch, Englisch, Deutsch und Französisch, weitere Sprachen auf Anfrage.',
-      kb_auto: 'Jedes Buchungsereignis löst die richtige Nachricht aus: Bestätigungs-E-Mails und SMS, WhatsApp-Updates, Check-in-Infos und Bewertungsanfragen — ohne Handarbeit für Ihr Team.',
-      kb_ref: 'Unsere Systeme laufen live bei unseren Kunden — siehe Abschnitt Partner. Für eine private Vorführung nutzen Sie das Beratungsformular.',
+      kb_time: 'Die Dauer hängt vom Umfang ab, Zimmerzahl, Sprachen und Integrationen. Nach dem ersten Gespräch erhalten Sie einen Einführungsplan mit Terminen.',
+      kb_map: 'Wir bauen interaktive 3D-Karten mit MapLibre GL: Ihr Haus, Sehenswürdigkeiten, ÖPNV-Linien und Gehzeiten, direkt im Buchungsablauf.',
+      kb_lang: 'Websites und KI-Concierge sind mehrsprachig, Türkisch, Englisch, Deutsch und Französisch, weitere Sprachen auf Anfrage.',
+      kb_auto: 'Jedes Buchungsereignis löst die richtige Nachricht aus: Bestätigungs-E-Mails und SMS, WhatsApp-Updates, Check-in-Infos und Bewertungsanfragen, ohne Handarbeit für Ihr Team.',
+      kb_ref: 'Unsere Systeme laufen live bei unseren Kunden, siehe Abschnitt Partner. Für eine private Vorführung nutzen Sie das Beratungsformular.',
       kb_contact: 'Sie erreichen die Gründerin Gülcan Genç über das Beratungsformular oder direkt per WhatsApp.',
       kb_hi: 'Willkommen bei AXON. Fragen Sie mich zu Buchungs-Engine, KI-Concierge, Zahlungen oder Automationen.',
-      kb_fallback: 'Ich bin der AXON-Demo-Assistent — ich erkläre Buchungs-Engine, KI-Assistent, Zahlungen, 3D-Karten und Automationen. Für Fragen zu Ihrem Unternehmen hinterlassen Sie eine Kurzbeschreibung im Beratungsformular.',
+      kb_fallback: 'Ich bin der AXON-Demo-Assistent, ich erkläre Buchungs-Engine, KI-Assistent, Zahlungen, 3D-Karten und Automationen. Für Fragen zu Ihrem Unternehmen hinterlassen Sie eine Kurzbeschreibung im Beratungsformular.',
       kb_wa: 'Auf WhatsApp schreiben'
     },
     fr: {
@@ -1528,63 +1618,63 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
       cta_deploy: 'Planifier un déploiement', cta_demo: 'Découvrir la démo', scroll: 'Faites défiler pour entrer',
       tagline: 'Systèmes IA pour hôtels, cliniques & entreprises', badge: 'En production chez nos clients',
       hero1: 'Nous concevons', hero2: 'des systèmes IA', hero3: 'pour votre entreprise.',
-      hero_sub: 'Réservations, rendez-vous, questions clients et notifications — tout automatisé, 24/7.',
+      hero_sub: 'Réservations, rendez-vous, questions clients et notifications, tout automatisé, 24/7.',
       pill1: '<b>24/7</b> Assistant IA', pill2: '<b>3D Secure</b> Paiements iyzico', pill3: '<b>WhatsApp</b> · E-mail · SMS',
-      demo_eyebrow: '01 — Démo produit en direct', demo_title: 'Le moteur de réservation directe',
-      demo_lead: 'L\'un des moteurs que nous construisons, en direct sur cette page avec des données de démo — ici en moteur de réservation hôtelière ; le même cœur gère la prise de rendez-vous des cliniques. Choisissez une chambre, vos dates, changez de devise et voyez le total se calculer en temps réel.',
+      demo_eyebrow: 'Démo produit en direct', demo_title: 'Le moteur de réservation directe',
+      demo_lead: 'L\'un des moteurs que nous construisons, en direct sur cette page avec des données de démo, ici en moteur de réservation hôtelière ; le même cœur gère la prise de rendez-vous des cliniques. Choisissez une chambre, vos dates, changez de devise et voyez le total se calculer en temps réel.',
       demo_m1: 'En production chez nos clients', demo_m2: 'Marque blanche · votre domaine',
-      frame_url: 'votrehotel.fr/reserver · moteur de réservation sécurisé — propulsé par AXON',
+      frame_url: 'votrehotel.fr/reserver · moteur de réservation sécurisé, propulsé par AXON',
       leg_best: 'Meilleur tarif', leg_peak: 'Haute saison', leg_sold: 'Complet', cal_hint: 'Tarifs par chambre et par nuit · inventaire de démo, prix indicatifs',
       cal_in: 'Choisir l\'arrivée', cal_out: 'Choisir le départ', cal_n: '{n} nuits sélectionnées', sold: 'COMPLET', dows: 'Lu,Ma,Me,Je,Ve,Sa,Di',
       adults: 'Adultes', pay_row: 'iyzico 3D Secure · facture électronique instantanée', reserve: 'Réserver en direct',
       up_to: 'jusqu\'à {n} personnes', spec1: 'Quota en direct', spec2: 'Plans tarifaires', spec3: 'Confirmation instantanée',
       b_empty: 'Choisissez l\'arrivée et le départ pour voir le total.', night: 'nuit', nights: 'nuits', b_room: 'Chambre · moy. {p}', b_extra: 'Personne supplémentaire', b_ota: 'Commission OTA', b_total: 'Total', b_tax: 'TVA et taxe de séjour incluses',
-      t_sold: 'Une nuit de cette période est complète — choisissez d\'autres dates.', t_max: '21 nuits maximum dans cette démo.', t_hold: 'Réservation de démo · {room} · {total} → 3D Secure (simulé)',
+      t_sold: 'Une nuit de cette période est complète, choisissez d\'autres dates.', t_max: '21 nuits maximum dans cette démo.', t_hold: 'Réservation de démo · {room} · {total} → 3D Secure (simulé)',
       rooms: [['Deluxe King', 'Lit king size', 'Vos chambres, photos et règles sont configurées au déploiement.'], ['Supérieure Twin', 'Deux lits simples', 'Tarifs et quotas synchronisés en temps réel avec votre inventaire.'], ['Junior Suite', 'King size + canapé-lit', 'Tarification selon l\'occupation par personne supplémentaire.'], ['Suite Familiale', 'King size + deux lits simples', 'Règles familiales et politiques enfants intégrées.']],
       map_landmark: 'Monument', map_route: 'itinéraire à pied', map_museum: 'Musée', map_transit: 'Arrêt', map_old: 'Vieille ville', map_water: 'Front de mer', map_hotel: 'VOTRE HÔTEL',
       map_eyebrow: 'Aperçu de carte 3D', map_title: 'Votre destination,<br>en 3D.', map_l1: 'Lignes de transport', map_l2: 'Monuments · temps de marche',
       ins_eyebrow: 'Sous le capot', ins_title: 'Ce qui accompagne votre moteur.', ins_p: 'Services serverless de réservation, de paiement et de conciergerie sur votre propre domaine ; une interface multilingue ; des cartes 3D MapLibre ; et un concierge IA avec relais WhatsApp.',
       st1b: 'API de réservation', st1s: 'quota · tarifs · devises', st2b: 'Concierge IA', st2s: 'entraîné sur votre hôtel', st3b: 'Envois', st4b: 'Avis', st4s: 'demandes après séjour',
       cta_private: 'Demander une démo privée', cta_ask: 'Interroger l\'assistant IA',
-      part_eyebrow: '03 — Partenaires', part_title: 'Les entreprises avec qui nous travaillons.', part_lead: 'Clients utilisant les systèmes AXON en production.', part_next_b: 'Votre entreprise', part_next_s: 'Prochain déploiement →',
+      part_eyebrow: 'Partenaires', part_title: 'Les entreprises avec qui nous travaillons.', part_lead: 'Clients utilisant les systèmes AXON en production.', part_next_b: 'Votre entreprise', part_next_s: 'Prochain déploiement →',
       
       
       
       
-      arch_eyebrow: '07 — Architecture', arch_title: 'Du clic à la confirmation en une impulsion.', arch_lead: 'Une chaîne d\'événements serverless. Chaque réservation suit le même chemin — regardez-la passer.',
+      arch_eyebrow: 'Architecture', arch_title: 'Du clic à la confirmation en une impulsion.', arch_lead: 'Une chaîne d\'événements serverless. Chaque réservation suit le même chemin, regardez-la passer.',
       n1e: 'Edge', n1b: 'Interface client', n1s: 'Moteur de réservation · carte 3D · concierge', n2e: 'Yield', n2b: 'Cœur tarifs & quotas', n2s: 'Disponibilité · devises · règles tarifaires', n3e: 'Paiements', n3s: 'Carte tokenisée · validation bancaire', n4e: 'Événements', n4b: 'Bus webhook', n4s: 'Confirmation · facture · journal', n5e: 'Envois', n5b: 'Omnicanal',
-      conc_eyebrow: '08 — Démo de l\'assistant IA', conc_title: 'Demandez à AXON.', conc_lead: 'Le même assistant que nous entraînons sur les connaissances de chaque client — ici entraîné sur AXON. Essayez une question ou écrivez la vôtre.',
+      conc_eyebrow: 'Démo de l\'assistant IA', conc_title: 'Demandez à AXON.', conc_lead: 'Le même assistant que nous entraînons sur les connaissances de chaque client, ici entraîné sur AXON. Essayez une question ou écrivez la vôtre.',
       p1: 'Quels systèmes proposez-vous ?', p2: 'Comment fonctionne le concierge IA ?', p3: 'Quels paiements acceptez-vous ?', c4: 'Prenez-vous une commission OTA ?', c5: 'Réserver une démo',
-      cons_eyebrow: '10 — Consultation', cons_title: 'Planifier un déploiement.', cons_lead: 'Parlez-nous de votre entreprise. Nous répondons sous un jour ouvré avec un plan et un calendrier.',
+      cons_eyebrow: 'Consultation', cons_title: 'Planifier un déploiement.', cons_lead: 'Parlez-nous de votre entreprise. Nous répondons sous un jour ouvré avec un plan et un calendrier.',
       term: 'Terminal de contact', f_name: 'Nom complet', ph_name: 'Votre nom', f_email: 'E-mail professionnel', f_hotel: 'Entreprise', ph_hotel: 'Entreprise, hôtel ou clinique · ville', f_keys: 'Taille', f_sys: 'Systèmes souhaités',
       f_brief: 'Brief', ph_brief: 'Outils de réservation actuels, part OTA, calendrier…',
       form_note: 'Aucune donnée n\'est enregistrée sur cette page', form_btn: 'Demander une consultation', wa_btn: 'WhatsApp', wa_aria: 'Écrivez-nous sur WhatsApp',
-      err_name: 'Obligatoire — indiquez votre nom.', err_email: 'Obligatoire — indiquez un e-mail valide.', form_ok: 'Prêt — ouverture de votre messagerie…',
+      err_name: 'Obligatoire, indiquez votre nom.', err_email: 'Obligatoire, indiquez un e-mail valide.', form_ok: 'Prêt, ouverture de votre messagerie…',
       wa_text: 'Bonjour AXON, je souhaite en savoir plus sur vos systèmes pour mon entreprise.',
       sig_eyebrow: 'Signature e-mail', sig_lead: 'Générez la signature HTML de la fondatrice. Modifiez les champs puis collez-la dans Gmail, Outlook ou Apple Mail.',
-      light: 'Clair', dark: 'Sombre', copy_sig: 'Copier la signature', copy_html: 'Copier le HTML', m_html: 'HTML copié', m_sig: 'Signature copiée — collez-la dans vos réglages e-mail', m_fail: 'Échec de la copie — sélectionnez l\'aperçu manuellement',
+      light: 'Clair', dark: 'Sombre', copy_sig: 'Copier la signature', copy_html: 'Copier le HTML', m_html: 'HTML copié', m_sig: 'Signature copiée, collez-la dans vos réglages e-mail', m_fail: 'Échec de la copie, sélectionnez l\'aperçu manuellement',
       foot_tag: 'Systèmes IA pour hôtels, cliniques et entreprises. Conçu à Istanbul.', foot_studio: 'Studio', fab: 'Demander à AXON',
-      chat_status: 'En ligne · TR / EN / DE / FR', chat_ph: 'Une question sur les systèmes AXON…', chat_hi: 'Bienvenue chez AXON. Je suis une démo de l\'assistant IA que nous créons pour les entreprises — posez-moi vos questions.',
+      chat_status: 'En ligne · TR / EN / DE / FR', chat_ph: 'Une question sur les systèmes AXON…', chat_hi: 'Bienvenue chez AXON. Je suis une démo de l\'assistant IA que nous créons pour les entreprises, posez-moi vos questions.',
       
-      kb_ai: 'Nous entraînons l\'assistant sur votre entreprise : services, prix, règles, horaires et questions fréquentes — chambres et transferts pour un hôtel, soins et règles de rendez-vous pour une clinique. Il répond aux clients 24/7 dans leur langue et transfère la conversation à votre équipe sur WhatsApp si besoin.',
+      kb_ai: 'Nous entraînons l\'assistant sur votre entreprise : services, prix, règles, horaires et questions fréquentes, chambres et transferts pour un hôtel, soins et règles de rendez-vous pour une clinique. Il répond aux clients 24/7 dans leur langue et transfère la conversation à votre équipe sur WhatsApp si besoin.',
       kb_pay: 'Les paiements passent par <b>iyzico 3D Secure</b>. Les clients voient les prix en <b>TRY, EUR ou USD</b> ; les factures sont générées automatiquement après confirmation.',
-      kb_ota: 'Les réservations via votre propre moteur AXON n\'ont <b>aucune commission OTA ni plateforme</b> — la marge vous reste.',
+      kb_ota: 'Les réservations via votre propre moteur AXON n\'ont <b>aucune commission OTA ni plateforme</b>: la marge vous reste.',
       kb_price: 'Chaque déploiement est adapté à l\'établissement : le prix est donc sur mesure. Envoyez un brief via le formulaire et nous revenons avec un plan et un devis.',
-      kb_time: 'La durée dépend du périmètre — nombre de chambres, langues et intégrations. Nous partageons un plan daté après le premier échange.',
-      kb_map: 'Nous créons des cartes 3D interactives avec MapLibre GL : votre établissement, les monuments proches, les lignes de transport et les temps de marche — intégrés au parcours de réservation.',
-      kb_lang: 'Les sites et le concierge IA sont multilingues — turc, anglais, allemand et français, d\'autres langues sur demande.',
-      kb_auto: 'Chaque événement de réservation déclenche le bon message : e-mails et SMS de confirmation, mises à jour WhatsApp, infos de check-in et demandes d\'avis — sans travail manuel pour votre équipe.',
-      kb_ref: 'Nos systèmes tournent en production chez nos clients — voir la section Partenaires. Demandez une présentation privée via le formulaire.',
+      kb_time: 'La durée dépend du périmètre, nombre de chambres, langues et intégrations. Nous partageons un plan daté après le premier échange.',
+      kb_map: 'Nous créons des cartes 3D interactives avec MapLibre GL : votre établissement, les monuments proches, les lignes de transport et les temps de marche, intégrés au parcours de réservation.',
+      kb_lang: 'Les sites et le concierge IA sont multilingues, turc, anglais, allemand et français, d\'autres langues sur demande.',
+      kb_auto: 'Chaque événement de réservation déclenche le bon message : e-mails et SMS de confirmation, mises à jour WhatsApp, infos de check-in et demandes d\'avis, sans travail manuel pour votre équipe.',
+      kb_ref: 'Nos systèmes tournent en production chez nos clients, voir la section Partenaires. Demandez une présentation privée via le formulaire.',
       kb_contact: 'Vous pouvez joindre la fondatrice, Gülcan Genç, via le formulaire de consultation ou directement sur WhatsApp.',
       kb_hi: 'Bienvenue chez AXON. Posez-moi vos questions sur le moteur de réservation, le concierge IA, les paiements ou les automatisations.',
-      kb_fallback: 'Je suis l\'assistant de démo AXON — je peux présenter le moteur de réservation, l\'assistant IA, les paiements, les cartes 3D et les automatisations. Pour votre entreprise, laissez un brief dans le formulaire.',
+      kb_fallback: 'Je suis l\'assistant de démo AXON, je peux présenter le moteur de réservation, l\'assistant IA, les paiements, les cartes 3D et les automatisations. Pour votre entreprise, laissez un brief dans le formulaire.',
       kb_wa: 'Écrire sur WhatsApp'
     }
   };
   // Systems section and personal-assistant demo copy
   var I18N_SYS = {
     en: {
-      sys_eyebrow: '04 — Systems', sys_title: 'Five systems. One connected platform.', sys_lead: 'Start with one system or combine them — every system connects to the others.',
+      sys_eyebrow: 'Systems', sys_title: 'Five systems. One connected platform.', sys_lead: 'Start with one system or combine them, every system connects to the others.',
       lbl_gain: 'What you gain', s1_gain: 'More direct bookings without commission, no more double bookings, and a team that spends its time on guests instead of the calendar.', s2_gain: 'Visitors turn into customers, and the bookings that used to go to agencies come back to you.', s3_gain: 'Requests that arrive at night are no longer lost, and your team spends its time on guests instead of repeat questions.', s4_gain: 'No message slips through, everyone sees who answered what, and bookings land in the calendar on their own.', s5_gain: 'You stay in control of your day. Nothing important is forgotten, and messages stop waiting for you.',
       lbl_prob: 'The problem', lbl_how: 'How we solve it', s1_how: 'We bring every booking and appointment into one calendar. Availability updates instantly, confirmations and payments run automatically, and you simply watch the dashboard.', s2_how: 'We build a fast, multilingual site for your brand. Every page leads to one step: book, make an appointment or ask for a call. Payments and the chatbot come built in.', s3_how: 'We put an assistant trained on your business on your website and WhatsApp line. It answers price, availability, address and policy questions in seconds and takes the booking or appointment. Anything it does not know goes to your team.', s4_how: 'We connect every channel to one assistant. It reads and answers every message from one place, creates the booking, adds it to Google Calendar and hands the conversation to the right person on your team when needed. You see everything in one panel.', s5_how: 'We set up an assistant just for you. It knows your calendar, email and WhatsApp. It plans your day, books meetings, drafts replies and sends them with your approval.',
       s1_t: 'Reservation Management', s1_p: 'Bookings are scattered across the phone, WhatsApp, email and booking sites. Tracking is manual, so double bookings and missed payments happen, and agencies take a large commission.',
@@ -1598,22 +1688,22 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
       s5_tag: 'Bonus · Private package', s5_t: 'Personal AI Assistant', s5_p: 'Your day is split between meetings, calls and messages. An important date slips, and replies waiting for you keep piling up.',
       s5_1: 'Plans your day, week and month', s5_2: 'Schedules meetings, calls and reservations', s5_3: 'Answers emails and WhatsApp for you', s5_4: 'Morning briefing and daily reminders', s5_5: 'A personality and tone shaped to you', s5_cta: 'Request your assistant',
       chk1: 'Reservation management', chk2: 'Website design', chk3: 'AI chatbot', chk4: 'AI assistant', chk5: 'Personal assistant',
-      kb_sys: 'AXON offers five systems for hotels, clinics and companies:\n• <b>Reservation Management</b> — confirmations, payments, live occupancy and reports\n• <b>Website Design</b> — 3D websites with payments, maps and chatbot\n• <b>AI Chatbot</b> — answers customers 24/7 and takes bookings\n• <b>AI Assistant</b> — WhatsApp, email and Instagram replies, bookings and Google Calendar\n• <b>Personal AI Assistant</b> — a private assistant that plans your days\n\nStart with one or combine them.',
+      kb_sys: 'AXON offers five systems for hotels, clinics and companies:\n• <b>Reservation Management</b>: confirmations, payments, live occupancy and reports\n• <b>Website Design</b>: 3D websites with payments, maps and chatbot\n• <b>AI Chatbot</b>: answers customers 24/7 and takes bookings\n• <b>AI Assistant</b>: WhatsApp, email and Instagram replies, bookings and Google Calendar\n• <b>Personal AI Assistant</b>: a private assistant that plans your days\n\nStart with one or combine them.',
       pa_status: 'Your personal assistant · online', pa_demo: 'Live demo', pa_today: 'Today', pa_week: 'This week', pa_tomorrow: 'Tomorrow', pa_ph: 'Ask Nova to plan, book or reply…',
       pa_c1: 'Plan my day tomorrow', pa_c2: 'Book a meeting with Ahmet Yılmaz on Thursday 14:00', pa_c3: 'Answer my WhatsApp messages', pa_c4: 'Important dates this week',
       pa_day: [['08:30', 'Morning briefing', '3 new emails · 2 WhatsApp messages'], ['10:00', 'Call with supplier', 'Prices for next season'], ['13:00', 'Lunch with a client', 'Reminder sent at 11:00'], ['16:30', 'Booking review', 'Occupancy report is ready'], ['20:00', 'Messages to approve', '4 replies drafted for you']],
-      pa_plan: [['08:00', 'Morning briefing', 'Your day in 2 minutes'], ['09:30', 'Focus time', 'No calls — notifications muted'], ['11:00', 'Team meeting', 'Agenda sent to the team'], ['14:00', 'Client call', 'Notes from last call attached'], ['17:30', 'Daily report', 'Bookings, payments, messages'], ['19:00', 'Gym', 'You asked me to keep this free']],
+      pa_plan: [['08:00', 'Morning briefing', 'Your day in 2 minutes'], ['09:30', 'Focus time', 'No calls, notifications muted'], ['11:00', 'Team meeting', 'Agenda sent to the team'], ['14:00', 'Client call', 'Notes from last call attached'], ['17:30', 'Daily report', 'Bookings, payments, messages'], ['19:00', 'Gym', 'You asked me to keep this free']],
       pa_weekl: [['MON', 'Team meeting', '09:30'], ['TUE', 'Client call', '14:00'], ['WED', 'Accountant', 'Invoices due'], ['FRI', 'Weekly report', '17:00']],
       pa_new: ['THU', 'Meeting · Ahmet Yılmaz', '14:00 · invitation sent'],
       pa_r_plan: 'Done. Tomorrow is planned: focus time in the morning, your team meeting at 11:00 and the client call at 14:00. I kept the evening free for the gym.',
       pa_r_meet: 'Booked: Thursday 14:00 with Ahmet Yılmaz. I sent the invitation, added it to your calendar and I\'ll remind you 30 minutes before.',
-      pa_r_reply: 'I answered 2 WhatsApp messages:\n• <b>Elif Kaya</b>: “Thank you, your reservation for Friday is confirmed.”\n• <b>Supplier</b>: “We received your offer, we\'ll come back by Wednesday.”\nOne message needs your decision — I pinned it for you.',
-      pa_r_dates: 'This week:\n• <b>Wednesday</b> — invoices due to the accountant\n• <b>Thursday</b> — meeting with Ahmet Yılmaz, 14:00\n• <b>Saturday</b> — Elif\'s birthday 🎂 — shall I send flowers?',
+      pa_r_reply: 'I answered 2 WhatsApp messages:\n• <b>Elif Kaya</b>: “Thank you, your reservation for Friday is confirmed.”\n• <b>Supplier</b>: “We received your offer, we\'ll come back by Wednesday.”\nOne message needs your decision, I pinned it for you.',
+      pa_r_dates: 'This week:\n• <b>Wednesday</b>: invoices due to the accountant\n• <b>Thursday</b>: meeting with Ahmet Yılmaz, 14:00\n• <b>Saturday</b>: Elif\'s birthday 🎂, shall I send flowers?',
       pa_r_hi: 'Good morning. You have 5 items today and 4 replies waiting for your approval. What shall I take care of first?',
       pa_r_fallback: 'In this demo I can plan your day, book a meeting, answer your WhatsApp messages or list important dates. Your real assistant is trained on your own calendar, contacts and style.'
     },
     tr: {
-      sys_eyebrow: '04 — Sistemler', sys_title: 'Beş sistem. Tek bağlantılı platform.', sys_lead: 'Tek bir sistemle başlayın ya da birleştirin — her sistem diğerleriyle bağlantılı çalışır.',
+      sys_eyebrow: 'Sistemler', sys_title: 'Beş sistem. Tek bağlantılı platform.', sys_lead: 'Tek bir sistemle başlayın ya da birleştirin, her sistem diğerleriyle bağlantılı çalışır.',
       lbl_gain: 'Ne kazanırsınız', s1_gain: 'Komisyonsuz direkt rezervasyonlarınız artar, çifte rezervasyon biter, ekibiniz takvimle değil misafirle ilgilenir.', s2_gain: 'Siteye gelen ziyaretçi müşteriye dönüşür, acenteye giden rezervasyon size döner.', s3_gain: 'Gece gelen talep de kaybolmaz, ekibiniz tekrar eden sorular yerine misafire zaman ayırır.', s4_gain: 'Hiçbir mesaj gözden kaçmaz, kimin neyi cevapladığı görünür, rezervasyon takvime kendiliğinden düşer.', s5_gain: 'Gününüzün kontrolü sizde olur. Önemli hiçbir şey unutulmaz, mesajlar sizi beklemez.',
       lbl_prob: 'Sorun', lbl_how: 'Nasıl çözüyoruz', s1_how: 'Bütün rezervasyon ve randevuları tek bir takvimde topluyoruz. Müsaitlik anında güncellenir, onay ve ödeme kendiliğinden işler, siz sadece paneli takip edersiniz.', s2_how: 'Markanıza özel, hızlı ve çok dilli bir site kuruyoruz. Her sayfa ziyaretçiyi tek bir adıma götürür: rezervasyon, randevu ya da ön görüşme. Ödeme ve chatbot hazır gelir.', s3_how: 'Sitenize ve WhatsApp hattınıza, işletmenizin bilgileriyle eğitilmiş bir asistan kuruyoruz. Fiyat, müsaitlik, adres ve kurallar gibi soruları saniyeler içinde cevaplar, rezervasyonu ya da randevuyu alır. Bilmediği soruyu ekibinize aktarır.', s4_how: 'Bütün kanalları tek bir asistana bağlıyoruz. Her mesajı tek yerden okur ve cevaplar, rezervasyonu oluşturur, Google Takvim\'e işler, gerektiğinde konuşmayı ekibinizden doğru kişiye devreder. Siz her şeyi tek panelden görürsünüz.', s5_how: 'Sadece size özel bir asistan kuruyoruz. Takviminizi, e-postanızı ve WhatsApp\'ınızı bilir. Gününüzü planlar, toplantı ayarlar, cevap taslaklarını hazırlar ve sizin onayınızla gönderir.',
       s1_t: 'Rezervasyon Yönetimi', s1_p: 'Rezervasyonlar telefon, WhatsApp, e-posta ve rezervasyon siteleri arasında dağılır. Takip elle yapılır, çifte rezervasyon ve unutulan ödeme olur, acentelere yüksek komisyon gider.',
@@ -1627,22 +1717,22 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
       s5_tag: 'Bonus · Özel paket', s5_t: 'Kişisel Yapay Zekâ Asistanı', s5_p: 'Gününüz toplantı, arama ve mesajlar arasında bölünür. Önemli bir tarih unutulur, cevap bekleyen mesajlar birikir.',
       s5_1: 'Gün, hafta ve ay planlaması', s5_2: 'Toplantı, görüşme ve rezervasyon ayarlama', s5_3: 'E-posta ve WhatsApp\'ları sizin yerinize yanıtlar', s5_4: 'Sabah özeti ve günlük hatırlatmalar', s5_5: 'Size göre şekillenen kişilik ve üslup', s5_cta: 'Asistanınızı talep edin',
       chk1: 'Rezervasyon yönetimi', chk2: 'Web sitesi tasarımı', chk3: 'Yapay zekâ chatbot', chk4: 'Yapay zekâ asistanı', chk5: 'Kişisel asistan',
-      kb_sys: 'AXON oteller, klinikler ve şirketler için beş sistem sunar:\n• <b>Rezervasyon Yönetimi</b> — onaylar, ödemeler, anlık doluluk ve raporlar\n• <b>Web Sitesi Tasarımı</b> — ödeme, harita ve chatbot dahil 3D siteler\n• <b>Yapay Zekâ Chatbot</b> — müşterilere 7/24 yanıt verir, rezervasyon alır\n• <b>Yapay Zekâ Asistanı</b> — WhatsApp, e-posta ve Instagram yanıtları, rezervasyon ve Google Takvim\n• <b>Kişisel Yapay Zekâ Asistanı</b> — günlerinizi planlayan size özel asistan\n\nTek biriyle başlayabilir ya da birleştirebilirsiniz.',
+      kb_sys: 'AXON oteller, klinikler ve şirketler için beş sistem sunar:\n• <b>Rezervasyon Yönetimi</b>: onaylar, ödemeler, anlık doluluk ve raporlar\n• <b>Web Sitesi Tasarımı</b>: ödeme, harita ve chatbot dahil 3D siteler\n• <b>Yapay Zekâ Chatbot</b>: müşterilere 7/24 yanıt verir, rezervasyon alır\n• <b>Yapay Zekâ Asistanı</b>: WhatsApp, e-posta ve Instagram yanıtları, rezervasyon ve Google Takvim\n• <b>Kişisel Yapay Zekâ Asistanı</b>: günlerinizi planlayan size özel asistan\n\nTek biriyle başlayabilir ya da birleştirebilirsiniz.',
       pa_status: 'Kişisel asistanınız · çevrimiçi', pa_demo: 'Canlı demo', pa_today: 'Bugün', pa_week: 'Bu hafta', pa_tomorrow: 'Yarın', pa_ph: 'Nova\'dan planlama, randevu veya yanıt isteyin…',
       pa_c1: 'Yarınki günümü planla', pa_c2: 'Perşembe 14:00\'te Ahmet Yılmaz ile toplantı ayarla', pa_c3: 'WhatsApp mesajlarımı yanıtla', pa_c4: 'Bu haftanın önemli tarihleri',
       pa_day: [['08:30', 'Sabah özeti', '3 yeni e-posta · 2 WhatsApp mesajı'], ['10:00', 'Tedarikçi görüşmesi', 'Gelecek sezon fiyatları'], ['13:00', 'Müşteriyle öğle yemeği', 'Hatırlatma 11:00\'de gönderildi'], ['16:30', 'Rezervasyon kontrolü', 'Doluluk raporu hazır'], ['20:00', 'Onay bekleyen mesajlar', 'Sizin için 4 yanıt hazırlandı']],
-      pa_plan: [['08:00', 'Sabah özeti', 'Gününüz 2 dakikada'], ['09:30', 'Odak zamanı', 'Arama yok — bildirimler sessizde'], ['11:00', 'Ekip toplantısı', 'Gündem ekibe gönderildi'], ['14:00', 'Müşteri görüşmesi', 'Önceki görüşme notları ekte'], ['17:30', 'Günlük rapor', 'Rezervasyonlar, ödemeler, mesajlar'], ['19:00', 'Spor', 'Bu saati boş tutmamı istemiştiniz']],
+      pa_plan: [['08:00', 'Sabah özeti', 'Gününüz 2 dakikada'], ['09:30', 'Odak zamanı', 'Arama yok, bildirimler sessizde'], ['11:00', 'Ekip toplantısı', 'Gündem ekibe gönderildi'], ['14:00', 'Müşteri görüşmesi', 'Önceki görüşme notları ekte'], ['17:30', 'Günlük rapor', 'Rezervasyonlar, ödemeler, mesajlar'], ['19:00', 'Spor', 'Bu saati boş tutmamı istemiştiniz']],
       pa_weekl: [['PZT', 'Ekip toplantısı', '09:30'], ['SAL', 'Müşteri görüşmesi', '14:00'], ['ÇAR', 'Muhasebeci', 'Fatura son günü'], ['CUM', 'Haftalık rapor', '17:00']],
       pa_new: ['PER', 'Toplantı · Ahmet Yılmaz', '14:00 · davet gönderildi'],
       pa_r_plan: 'Tamamdır. Yarın planlandı: sabah odak zamanı, 11:00\'de ekip toplantısı ve 14:00\'te müşteri görüşmesi. Akşamı spor için boş bıraktım.',
       pa_r_meet: 'Ayarlandı: Perşembe 14:00, Ahmet Yılmaz ile. Daveti gönderdim, takviminize ekledim ve 30 dakika önce size hatırlatacağım.',
-      pa_r_reply: '2 WhatsApp mesajını yanıtladım:\n• <b>Elif Kaya</b>: “Teşekkürler, cuma günkü rezervasyonunuz onaylandı.”\n• <b>Tedarikçi</b>: “Teklifinizi aldık, çarşambaya kadar dönüş yapacağız.”\nBir mesaj sizin kararınızı bekliyor — en üste sabitledim.',
-      pa_r_dates: 'Bu hafta:\n• <b>Çarşamba</b> — muhasebeciye fatura son günü\n• <b>Perşembe</b> — Ahmet Yılmaz ile toplantı, 14:00\n• <b>Cumartesi</b> — Elif\'in doğum günü 🎂 — çiçek göndereyim mi?',
+      pa_r_reply: '2 WhatsApp mesajını yanıtladım:\n• <b>Elif Kaya</b>: “Teşekkürler, cuma günkü rezervasyonunuz onaylandı.”\n• <b>Tedarikçi</b>: “Teklifinizi aldık, çarşambaya kadar dönüş yapacağız.”\nBir mesaj sizin kararınızı bekliyor, en üste sabitledim.',
+      pa_r_dates: 'Bu hafta:\n• <b>Çarşamba</b>: muhasebeciye fatura son günü\n• <b>Perşembe</b>: Ahmet Yılmaz ile toplantı, 14:00\n• <b>Cumartesi</b>: Elif\'in doğum günü 🎂, çiçek göndereyim mi?',
       pa_r_hi: 'Günaydın. Bugün 5 maddeniz ve onayınızı bekleyen 4 yanıt var. İlk neyle ilgileneyim?',
       pa_r_fallback: 'Bu demoda gününüzü planlayabilir, toplantı ayarlayabilir, WhatsApp mesajlarınızı yanıtlayabilir veya önemli tarihleri listeleyebilirim. Gerçek asistanınız kendi takviminiz, kişileriniz ve üslubunuzla eğitilir.'
     },
     de: {
-      sys_eyebrow: '04 — Systeme', sys_title: 'Fünf Systeme. Eine vernetzte Plattform.', sys_lead: 'Starten Sie mit einem System oder kombinieren Sie sie — jedes System ist mit den anderen verbunden.',
+      sys_eyebrow: 'Systeme', sys_title: 'Fünf Systeme. Eine vernetzte Plattform.', sys_lead: 'Starten Sie mit einem System oder kombinieren Sie sie, jedes System ist mit den anderen verbunden.',
       lbl_gain: 'Was Sie gewinnen', s1_gain: 'Mehr provisionsfreie Direktbuchungen, keine Doppelbuchungen mehr und ein Team, das sich um Gäste statt um den Kalender kümmert.', s2_gain: 'Besucher werden zu Kunden, und Buchungen, die früher an Portale gingen, kommen zu Ihnen zurück.', s3_gain: 'Auch nachts eingehende Anfragen gehen nicht mehr verloren, und Ihr Team hat Zeit für Gäste statt für immer gleiche Fragen.', s4_gain: 'Keine Nachricht geht unter, jeder sieht, wer was beantwortet hat, und Buchungen landen von selbst im Kalender.', s5_gain: 'Sie behalten Ihren Tag im Griff. Nichts Wichtiges wird vergessen, und keine Nachricht bleibt liegen.',
       lbl_prob: 'Das Problem', lbl_how: 'So lösen wir es', s1_how: 'Wir führen alle Buchungen und Termine in einem Kalender zusammen. Die Verfügbarkeit aktualisiert sich sofort, Bestätigungen und Zahlungen laufen automatisch, und Sie behalten alles im Dashboard im Blick.', s2_how: 'Wir bauen eine schnelle, mehrsprachige Website für Ihre Marke. Jede Seite führt zu einem Schritt: buchen, Termin vereinbaren oder Rückruf anfragen. Zahlung und Chatbot sind bereits integriert.', s3_how: 'Wir richten auf Ihrer Website und Ihrer WhatsApp-Nummer einen Assistenten ein, der mit Ihren Informationen trainiert ist. Er beantwortet Fragen zu Preis, Verfügbarkeit, Anfahrt und Regeln in Sekunden und nimmt Buchungen oder Termine an. Was er nicht weiß, gibt er an Ihr Team weiter.', s4_how: 'Wir verbinden alle Kanäle mit einem Assistenten. Er liest und beantwortet jede Nachricht an einem Ort, legt die Buchung an, trägt sie in Google Kalender ein und übergibt das Gespräch bei Bedarf an die richtige Person im Team. Sie sehen alles in einem Panel.', s5_how: 'Wir richten einen Assistenten nur für Sie ein. Er kennt Ihren Kalender, Ihre E-Mails und Ihr WhatsApp. Er plant Ihren Tag, vereinbart Meetings, entwirft Antworten und sendet sie mit Ihrer Freigabe.',
       s1_t: 'Reservierungsmanagement', s1_p: 'Buchungen verteilen sich auf Telefon, WhatsApp, E-Mail und Buchungsportale. Alles wird von Hand verfolgt, es kommt zu Doppelbuchungen und vergessenen Zahlungen, und Portale kassieren hohe Provisionen.',
@@ -1656,22 +1746,22 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
       s5_tag: 'Bonus · Privates Paket', s5_t: 'Persönlicher KI-Assistent', s5_p: 'Ihr Tag zerfällt in Meetings, Anrufe und Nachrichten. Ein wichtiger Termin geht unter, und unbeantwortete Nachrichten stapeln sich.',
       s5_1: 'Plant Tag, Woche und Monat', s5_2: 'Vereinbart Meetings, Gespräche und Reservierungen', s5_3: 'Beantwortet E-Mails und WhatsApp für Sie', s5_4: 'Morgen-Briefing und tägliche Erinnerungen', s5_5: 'Persönlichkeit und Ton nach Ihren Wünschen', s5_cta: 'Assistenten anfragen',
       chk1: 'Reservierungsmanagement', chk2: 'Webdesign', chk3: 'KI-Chatbot', chk4: 'KI-Assistent', chk5: 'Persönlicher Assistent',
-      kb_sys: 'AXON bietet fünf Systeme für Hotels, Kliniken und Unternehmen:\n• <b>Reservierungsmanagement</b> — Bestätigungen, Zahlungen, Live-Auslastung und Berichte\n• <b>Webdesign</b> — 3D-Websites mit Zahlungen, Karten und Chatbot\n• <b>KI-Chatbot</b> — beantwortet Kunden rund um die Uhr und nimmt Buchungen an\n• <b>KI-Assistent</b> — Antworten auf WhatsApp, E-Mail und Instagram, Buchungen und Google Kalender\n• <b>Persönlicher KI-Assistent</b> — ein privater Assistent, der Ihre Tage plant\n\nStarten Sie mit einem oder kombinieren Sie sie.',
+      kb_sys: 'AXON bietet fünf Systeme für Hotels, Kliniken und Unternehmen:\n• <b>Reservierungsmanagement</b>: Bestätigungen, Zahlungen, Live-Auslastung und Berichte\n• <b>Webdesign</b>: 3D-Websites mit Zahlungen, Karten und Chatbot\n• <b>KI-Chatbot</b>: beantwortet Kunden rund um die Uhr und nimmt Buchungen an\n• <b>KI-Assistent</b>: Antworten auf WhatsApp, E-Mail und Instagram, Buchungen und Google Kalender\n• <b>Persönlicher KI-Assistent</b>: ein privater Assistent, der Ihre Tage plant\n\nStarten Sie mit einem oder kombinieren Sie sie.',
       pa_status: 'Ihr persönlicher Assistent · online', pa_demo: 'Live-Demo', pa_today: 'Heute', pa_week: 'Diese Woche', pa_tomorrow: 'Morgen', pa_ph: 'Nova planen, buchen oder antworten lassen…',
       pa_c1: 'Plane meinen Tag morgen', pa_c2: 'Meeting mit Ahmet Yılmaz am Donnerstag 14:00', pa_c3: 'Beantworte meine WhatsApp-Nachrichten', pa_c4: 'Wichtige Termine diese Woche',
       pa_day: [['08:30', 'Morgen-Briefing', '3 neue E-Mails · 2 WhatsApp-Nachrichten'], ['10:00', 'Gespräch mit Lieferant', 'Preise für die nächste Saison'], ['13:00', 'Mittagessen mit Kunden', 'Erinnerung um 11:00 gesendet'], ['16:30', 'Buchungsprüfung', 'Auslastungsbericht ist fertig'], ['20:00', 'Nachrichten freigeben', '4 Antworten für Sie vorbereitet']],
-      pa_plan: [['08:00', 'Morgen-Briefing', 'Ihr Tag in 2 Minuten'], ['09:30', 'Fokuszeit', 'Keine Anrufe — Benachrichtigungen stumm'], ['11:00', 'Teammeeting', 'Agenda ans Team gesendet'], ['14:00', 'Kundengespräch', 'Notizen vom letzten Gespräch angehängt'], ['17:30', 'Tagesbericht', 'Buchungen, Zahlungen, Nachrichten'], ['19:00', 'Sport', 'Sie wollten diese Zeit frei halten']],
+      pa_plan: [['08:00', 'Morgen-Briefing', 'Ihr Tag in 2 Minuten'], ['09:30', 'Fokuszeit', 'Keine Anrufe, Benachrichtigungen stumm'], ['11:00', 'Teammeeting', 'Agenda ans Team gesendet'], ['14:00', 'Kundengespräch', 'Notizen vom letzten Gespräch angehängt'], ['17:30', 'Tagesbericht', 'Buchungen, Zahlungen, Nachrichten'], ['19:00', 'Sport', 'Sie wollten diese Zeit frei halten']],
       pa_weekl: [['MO', 'Teammeeting', '09:30'], ['DI', 'Kundengespräch', '14:00'], ['MI', 'Steuerberater', 'Rechnungen fällig'], ['FR', 'Wochenbericht', '17:00']],
       pa_new: ['DO', 'Meeting · Ahmet Yılmaz', '14:00 · Einladung gesendet'],
       pa_r_plan: 'Erledigt. Morgen ist geplant: Fokuszeit am Vormittag, Teammeeting um 11:00 und das Kundengespräch um 14:00. Den Abend habe ich für den Sport freigehalten.',
-      pa_r_meet: 'Gebucht: Donnerstag 14:00 mit Ahmet Yılmaz. Einladung gesendet, im Kalender eingetragen — ich erinnere Sie 30 Minuten vorher.',
-      pa_r_reply: 'Ich habe 2 WhatsApp-Nachrichten beantwortet:\n• <b>Elif Kaya</b>: „Danke, Ihre Reservierung für Freitag ist bestätigt.“\n• <b>Lieferant</b>: „Wir haben Ihr Angebot erhalten und melden uns bis Mittwoch.“\nEine Nachricht braucht Ihre Entscheidung — ich habe sie oben angeheftet.',
-      pa_r_dates: 'Diese Woche:\n• <b>Mittwoch</b> — Rechnungen an den Steuerberater\n• <b>Donnerstag</b> — Meeting mit Ahmet Yılmaz, 14:00\n• <b>Samstag</b> — Elifs Geburtstag 🎂 — soll ich Blumen schicken?',
+      pa_r_meet: 'Gebucht: Donnerstag 14:00 mit Ahmet Yılmaz. Einladung gesendet, im Kalender eingetragen, ich erinnere Sie 30 Minuten vorher.',
+      pa_r_reply: 'Ich habe 2 WhatsApp-Nachrichten beantwortet:\n• <b>Elif Kaya</b>: „Danke, Ihre Reservierung für Freitag ist bestätigt.“\n• <b>Lieferant</b>: „Wir haben Ihr Angebot erhalten und melden uns bis Mittwoch.“\nEine Nachricht braucht Ihre Entscheidung, ich habe sie oben angeheftet.',
+      pa_r_dates: 'Diese Woche:\n• <b>Mittwoch</b>: Rechnungen an den Steuerberater\n• <b>Donnerstag</b>: Meeting mit Ahmet Yılmaz, 14:00\n• <b>Samstag</b>: Elifs Geburtstag 🎂, soll ich Blumen schicken?',
       pa_r_hi: 'Guten Morgen. Heute stehen 5 Punkte an und 4 Antworten warten auf Ihre Freigabe. Womit soll ich beginnen?',
       pa_r_fallback: 'In dieser Demo kann ich Ihren Tag planen, ein Meeting buchen, WhatsApp-Nachrichten beantworten oder wichtige Termine auflisten. Ihr echter Assistent wird auf Ihren Kalender, Ihre Kontakte und Ihren Stil trainiert.'
     },
     fr: {
-      sys_eyebrow: '04 — Systèmes', sys_title: 'Cinq systèmes. Une plateforme connectée.', sys_lead: 'Commencez par un système ou combinez-les — chaque système est relié aux autres.',
+      sys_eyebrow: 'Systèmes', sys_title: 'Cinq systèmes. Une plateforme connectée.', sys_lead: 'Commencez par un système ou combinez-les, chaque système est relié aux autres.',
       lbl_gain: 'Ce que vous y gagnez', s1_gain: 'Plus de réservations directes sans commission, fini les doubles réservations, et une équipe qui s\'occupe des clients plutôt que du calendrier.', s2_gain: 'Les visiteurs deviennent des clients, et les réservations qui partaient vers les agences vous reviennent.', s3_gain: 'Les demandes de la nuit ne se perdent plus, et votre équipe consacre son temps aux clients plutôt qu\'aux questions répétitives.', s4_gain: 'Aucun message n\'est oublié, chacun voit qui a répondu à quoi, et les réservations arrivent seules dans le calendrier.', s5_gain: 'Vous gardez la maîtrise de votre journée. Rien d\'important n\'est oublié et aucun message ne reste en attente.',
       lbl_prob: 'Le problème', lbl_how: 'Notre solution', s1_how: 'Nous réunissons toutes les réservations et tous les rendez-vous dans un seul calendrier. Les disponibilités se mettent à jour instantanément, confirmations et paiements sont automatiques, et vous suivez tout sur le tableau de bord.', s2_how: 'Nous créons un site rapide et multilingue pour votre marque. Chaque page mène à une seule action : réserver, prendre rendez-vous ou demander un appel. Paiement et chatbot sont inclus.', s3_how: 'Nous installons sur votre site et votre ligne WhatsApp un assistant formé avec les informations de votre établissement. Il répond en quelques secondes aux questions de prix, de disponibilité, d\'adresse et de règles, et prend la réservation ou le rendez-vous. Ce qu\'il ne sait pas, il le transmet à votre équipe.', s4_how: 'Nous connectons tous les canaux à un seul assistant. Il lit et répond à chaque message depuis un seul endroit, crée la réservation, l\'ajoute à Google Agenda et passe la conversation à la bonne personne de votre équipe si besoin. Vous voyez tout dans un seul panneau.', s5_how: 'Nous créons un assistant rien que pour vous. Il connaît votre agenda, vos e-mails et votre WhatsApp. Il planifie votre journée, organise vos réunions, prépare des brouillons de réponse et les envoie avec votre accord.',
       s1_t: 'Gestion des réservations', s1_p: 'Les réservations sont éparpillées entre le téléphone, WhatsApp, l\'e-mail et les plateformes. Le suivi se fait à la main, les doubles réservations et les paiements oubliés arrivent, et les agences prennent une forte commission.',
@@ -1685,17 +1775,17 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
       s5_tag: 'Bonus · Offre privée', s5_t: 'Assistant IA personnel', s5_p: 'Votre journée se partage entre réunions, appels et messages. Une date importante passe à la trappe et les réponses en attente s\'accumulent.',
       s5_1: 'Planifie journée, semaine et mois', s5_2: 'Organise réunions, appels et réservations', s5_3: 'Répond à vos e-mails et WhatsApp', s5_4: 'Briefing du matin et rappels quotidiens', s5_5: 'Une personnalité et un ton à votre image', s5_cta: 'Demander votre assistant',
       chk1: 'Gestion des réservations', chk2: 'Création de site web', chk3: 'Chatbot IA', chk4: 'Assistant IA', chk5: 'Assistant personnel',
-      kb_sys: 'AXON propose cinq systèmes pour hôtels, cliniques et entreprises :\n• <b>Gestion des réservations</b> — confirmations, paiements, occupation en direct et rapports\n• <b>Création de site web</b> — sites 3D avec paiements, cartes et chatbot\n• <b>Chatbot IA</b> — répond aux clients 24/7 et prend les réservations\n• <b>Assistant IA</b> — réponses WhatsApp, e-mail et Instagram, réservations et Google Agenda\n• <b>Assistant IA personnel</b> — un assistant privé qui planifie vos journées\n\nCommencez par un seul ou combinez-les.',
+      kb_sys: 'AXON propose cinq systèmes pour hôtels, cliniques et entreprises :\n• <b>Gestion des réservations</b>: confirmations, paiements, occupation en direct et rapports\n• <b>Création de site web</b>: sites 3D avec paiements, cartes et chatbot\n• <b>Chatbot IA</b>: répond aux clients 24/7 et prend les réservations\n• <b>Assistant IA</b>: réponses WhatsApp, e-mail et Instagram, réservations et Google Agenda\n• <b>Assistant IA personnel</b>: un assistant privé qui planifie vos journées\n\nCommencez par un seul ou combinez-les.',
       pa_status: 'Votre assistant personnel · en ligne', pa_demo: 'Démo live', pa_today: 'Aujourd\'hui', pa_week: 'Cette semaine', pa_tomorrow: 'Demain', pa_ph: 'Demandez à Nova de planifier, réserver ou répondre…',
       pa_c1: 'Planifie ma journée de demain', pa_c2: 'Réunion avec Ahmet Yılmaz jeudi à 14h00', pa_c3: 'Réponds à mes messages WhatsApp', pa_c4: 'Dates importantes cette semaine',
       pa_day: [['08:30', 'Briefing du matin', '3 nouveaux e-mails · 2 messages WhatsApp'], ['10:00', 'Appel fournisseur', 'Tarifs de la saison prochaine'], ['13:00', 'Déjeuner client', 'Rappel envoyé à 11:00'], ['16:30', 'Revue des réservations', 'Rapport d\'occupation prêt'], ['20:00', 'Messages à valider', '4 réponses préparées pour vous']],
-      pa_plan: [['08:00', 'Briefing du matin', 'Votre journée en 2 minutes'], ['09:30', 'Temps de concentration', 'Pas d\'appels — notifications coupées'], ['11:00', 'Réunion d\'équipe', 'Ordre du jour envoyé'], ['14:00', 'Appel client', 'Notes du dernier appel jointes'], ['17:30', 'Rapport du jour', 'Réservations, paiements, messages'], ['19:00', 'Sport', 'Vous m\'avez demandé de garder ce créneau']],
+      pa_plan: [['08:00', 'Briefing du matin', 'Votre journée en 2 minutes'], ['09:30', 'Temps de concentration', 'Pas d\'appels, notifications coupées'], ['11:00', 'Réunion d\'équipe', 'Ordre du jour envoyé'], ['14:00', 'Appel client', 'Notes du dernier appel jointes'], ['17:30', 'Rapport du jour', 'Réservations, paiements, messages'], ['19:00', 'Sport', 'Vous m\'avez demandé de garder ce créneau']],
       pa_weekl: [['LUN', 'Réunion d\'équipe', '09:30'], ['MAR', 'Appel client', '14:00'], ['MER', 'Comptable', 'Factures à remettre'], ['VEN', 'Rapport hebdomadaire', '17:00']],
       pa_new: ['JEU', 'Réunion · Ahmet Yılmaz', '14:00 · invitation envoyée'],
       pa_r_plan: 'C\'est fait. Demain est planifié : concentration le matin, réunion d\'équipe à 11h00 et appel client à 14h00. J\'ai gardé la soirée libre pour le sport.',
-      pa_r_meet: 'Réservé : jeudi 14h00 avec Ahmet Yılmaz. Invitation envoyée, ajoutée à votre agenda — je vous le rappelle 30 minutes avant.',
-      pa_r_reply: 'J\'ai répondu à 2 messages WhatsApp :\n• <b>Elif Kaya</b> : « Merci, votre réservation de vendredi est confirmée. »\n• <b>Fournisseur</b> : « Nous avons bien reçu votre offre, retour d\'ici mercredi. »\nUn message attend votre décision — je l\'ai épinglé en haut.',
-      pa_r_dates: 'Cette semaine :\n• <b>Mercredi</b> — factures à remettre au comptable\n• <b>Jeudi</b> — réunion avec Ahmet Yılmaz, 14h00\n• <b>Samedi</b> — anniversaire d\'Elif 🎂 — j\'envoie des fleurs ?',
+      pa_r_meet: 'Réservé : jeudi 14h00 avec Ahmet Yılmaz. Invitation envoyée, ajoutée à votre agenda, je vous le rappelle 30 minutes avant.',
+      pa_r_reply: 'J\'ai répondu à 2 messages WhatsApp :\n• <b>Elif Kaya</b> : « Merci, votre réservation de vendredi est confirmée. »\n• <b>Fournisseur</b> : « Nous avons bien reçu votre offre, retour d\'ici mercredi. »\nUn message attend votre décision, je l\'ai épinglé en haut.',
+      pa_r_dates: 'Cette semaine :\n• <b>Mercredi</b>: factures à remettre au comptable\n• <b>Jeudi</b>: réunion avec Ahmet Yılmaz, 14h00\n• <b>Samedi</b>: anniversaire d\'Elif 🎂, j\'envoie des fleurs ?',
       pa_r_hi: 'Bonjour. Vous avez 5 points aujourd\'hui et 4 réponses attendent votre validation. Par quoi je commence ?',
       pa_r_fallback: 'Dans cette démo, je peux planifier votre journée, réserver une réunion, répondre à vos messages WhatsApp ou lister les dates importantes. Votre véritable assistant est entraîné sur votre agenda, vos contacts et votre style.'
     }
@@ -1707,12 +1797,12 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
       nav_packages: 'Packages', nav_process: 'Process', nav_about: 'About',
       ref_eliza: 'Direct booking engine, 24/7 multilingual AI concierge and WhatsApp automation.',
       loc_london: 'London', loc_usa: 'USA', loc_tr: 'Türkiye', sec_hotel: 'Hotel', sec_clinic: 'Private clinic', sec_jewel: 'Jewellery',
-      proc_eyebrow: '05 — Process', proc_title: 'Live in four steps.', proc_lead: 'You always know what happens next — from the first call to go-live.',
+      proc_eyebrow: 'Process', proc_title: 'Live in four steps.', proc_lead: 'You always know what happens next, from the first call to go-live.',
       pr1_t: 'Free discovery call', pr1_p: 'We listen to your business, your channels and your goals in 30 minutes.',
-      pr2_t: 'Proposal and plan', pr2_p: 'You get the right systems for you, a timeline and a price — in writing.',
+      pr2_t: 'Proposal and plan', pr2_p: 'You get the right systems for you, a timeline and a price, in writing.',
       pr3_t: 'Setup and integration', pr3_p: 'We set up the systems, connect them to your channels and test them with you.',
       pr4_t: 'Training and go-live', pr4_p: 'We train your team, take the system live and start monitoring it.',
-      pkg_eyebrow: '06 — Packages', pkg_title: 'Set up once. Supported every month.', pkg_lead: 'Your systems are set up once; a monthly package keeps them running, improving and monitored. The monthly fee is quoted for your business.',
+      pkg_eyebrow: 'Packages', pkg_title: 'Set up once. Supported every month.', pkg_lead: 'Your systems are set up once; a monthly package keeps them running, improving and monitored. The monthly fee is quoted for your business.',
       pkg_pill1: 'Billed monthly', pkg_pill2: 'Secure payment with iyzico', pkg_pill3: 'Cancel anytime',
       pkg_price: 'Monthly fee by quote', pkg_cta: 'Get a quote', pkg_cta_pa: 'Try the demo', pkg_rec: 'Recommended', pkg_bonus: 'Bonus · Private',
       pk1_for: 'For small businesses starting with one system.', pk1_1: 'One system of your choice', pk1_2: 'Hosting and security updates', pk1_3: 'Monthly performance report', pk1_4: 'Email support, reply within 2 business days',
@@ -1729,24 +1819,24 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
       tm6_t: 'Refund', tm6_d: 'Yearly packages are fully refunded if cancelled within the first 14 days.',
       tm7_t: 'Your data', tm7_d: 'Your data belongs to you. On cancellation we hand over an export.',
       fq1_q: 'How long does setup take?', fq1_a: 'It depends on the systems and channels. After the first call you get a plan with dates.',
-      fq2_q: 'Does it work with my current website?', fq2_a: 'Yes. The chatbot and assistant can be added to your existing site — or we redesign the site for you.',
+      fq2_q: 'Does it work with my current website?', fq2_a: 'Yes. The chatbot and assistant can be added to your existing site, or we redesign the site for you.',
       fq3_q: 'Which channels are supported?', fq3_a: 'Your website, WhatsApp, email, SMS and Instagram.',
       fq4_q: 'Is there a minimum contract?', fq4_a: 'Monthly packages renew every month and can be cancelled anytime.',
       fq5_q: 'Which languages does the AI speak?', fq5_a: 'Turkish, English, German and French out of the box; more languages on request.',
-      ab_eyebrow: '09 — About', ab_title: 'The team behind AXON.', ab_role: 'Founder',
-      ab_p: 'AXON was founded in Istanbul by Gülcan Genç. We build and run AI systems for hotels, clinics and companies — from the first call to daily support.',
+      ab_eyebrow: 'About', ab_title: 'The team behind AXON.', ab_role: 'Founder',
+      ab_p: 'AXON was founded in Istanbul by Gülcan Genç. We build and run AI systems for hotels, clinics and companies, from the first call to daily support.',
       store_note: 'This site stores your language choice in your browser. No tracking cookies.', store_ok: 'OK'
     },
     tr: {
       nav_packages: 'Paketler', nav_process: 'Süreç', nav_about: 'Hakkımızda',
       ref_eliza: 'Doğrudan rezervasyon motoru, 7/24 çok dilli yapay zekâ konsiyerj ve WhatsApp otomasyonu.',
       loc_london: 'Londra', loc_usa: 'ABD', loc_tr: 'Türkiye', sec_hotel: 'Otel', sec_clinic: 'Özel klinik', sec_jewel: 'Mücevher',
-      proc_eyebrow: '05 — Süreç', proc_title: 'Dört adımda canlıdasınız.', proc_lead: 'İlk görüşmeden canlıya almaya kadar her adımda ne olacağını bilirsiniz.',
+      proc_eyebrow: 'Süreç', proc_title: 'Dört adımda canlıdasınız.', proc_lead: 'İlk görüşmeden canlıya almaya kadar her adımda ne olacağını bilirsiniz.',
       pr1_t: 'Ücretsiz keşif görüşmesi', pr1_p: 'İşletmenizi, kanallarınızı ve hedeflerinizi 30 dakikada dinliyoruz.',
       pr2_t: 'Teklif ve plan', pr2_p: 'Size uygun sistemleri, takvimi ve fiyatı yazılı olarak sunuyoruz.',
       pr3_t: 'Kurulum ve entegrasyon', pr3_p: 'Sistemleri kuruyor, kanallarınıza bağlıyor ve sizinle birlikte test ediyoruz.',
       pr4_t: 'Eğitim ve canlıya alma', pr4_p: 'Ekibinizi eğitiyor, sistemi canlıya alıyor ve izlemeye başlıyoruz.',
-      pkg_eyebrow: '06 — Paketler', pkg_title: 'Kurulum bir kez. Destek her ay.', pkg_lead: 'Sistemleriniz bir kez kurulur; aylık paketle çalışır, gelişir ve izlenir. Aylık bedel işletmenize göre teklifle belirlenir.',
+      pkg_eyebrow: 'Paketler', pkg_title: 'Kurulum bir kez. Destek her ay.', pkg_lead: 'Sistemleriniz bir kez kurulur; aylık paketle çalışır, gelişir ve izlenir. Aylık bedel işletmenize göre teklifle belirlenir.',
       pkg_pill1: 'Aylık faturalanır', pkg_pill2: 'iyzico ile güvenli ödeme', pkg_pill3: 'Dilediğiniz zaman iptal',
       pkg_price: 'Aylık bedel teklife göre', pkg_cta: 'Teklif al', pkg_cta_pa: 'Demoyu deneyin', pkg_rec: 'Önerilen', pkg_bonus: 'Bonus · Özel',
       pk1_for: 'Tek sistemle başlayan küçük işletmeler için.', pk1_1: 'Seçtiğiniz bir sistem', pk1_2: 'Barındırma ve güvenlik güncellemeleri', pk1_3: 'Aylık performans raporu', pk1_4: 'E-posta destek, 2 iş günü içinde yanıt',
@@ -1767,20 +1857,20 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
       fq3_q: 'Hangi kanallar destekleniyor?', fq3_a: 'Web siteniz, WhatsApp, e-posta, SMS ve Instagram.',
       fq4_q: 'Taahhüt var mı?', fq4_a: 'Aylık paketler her ay yenilenir ve dilediğiniz zaman iptal edilebilir.',
       fq5_q: 'Yapay zekâ hangi dilleri konuşuyor?', fq5_a: 'Türkçe, İngilizce, Almanca ve Fransızca hazır; talebe göre başka diller de eklenir.',
-      ab_eyebrow: '09 — Hakkımızda', ab_title: 'AXON\'un arkasındaki ekip.', ab_role: 'Kurucu',
-      ab_p: 'AXON, Gülcan Genç tarafından İstanbul\'da kuruldu. Oteller, klinikler ve şirketler için yapay zekâ sistemlerini kuruyor ve işletiyoruz — ilk görüşmeden günlük desteğe kadar.',
+      ab_eyebrow: 'Hakkımızda', ab_title: 'AXON\'un arkasındaki ekip.', ab_role: 'Kurucu',
+      ab_p: 'AXON, Gülcan Genç tarafından İstanbul\'da kuruldu. Oteller, klinikler ve şirketler için yapay zekâ sistemlerini kuruyor ve işletiyoruz, ilk görüşmeden günlük desteğe kadar.',
       store_note: 'Bu site dil tercihinizi tarayıcınızda saklar. Takip çerezi kullanılmaz.', store_ok: 'Tamam'
     },
     de: {
       nav_packages: 'Pakete', nav_process: 'Ablauf', nav_about: 'Über uns',
       ref_eliza: 'Direktbuchungs-Engine, mehrsprachiger KI-Concierge rund um die Uhr und WhatsApp-Automation.',
       loc_london: 'London', loc_usa: 'USA', loc_tr: 'Türkei', sec_hotel: 'Hotel', sec_clinic: 'Privatklinik', sec_jewel: 'Schmuck',
-      proc_eyebrow: '05 — Ablauf', proc_title: 'In vier Schritten live.', proc_lead: 'Vom ersten Gespräch bis zum Go-live wissen Sie immer, was als Nächstes passiert.',
+      proc_eyebrow: 'Ablauf', proc_title: 'In vier Schritten live.', proc_lead: 'Vom ersten Gespräch bis zum Go-live wissen Sie immer, was als Nächstes passiert.',
       pr1_t: 'Kostenloses Erstgespräch', pr1_p: 'Wir hören uns Ihr Unternehmen, Ihre Kanäle und Ziele in 30 Minuten an.',
-      pr2_t: 'Angebot und Plan', pr2_p: 'Sie erhalten die passenden Systeme, einen Zeitplan und einen Preis — schriftlich.',
+      pr2_t: 'Angebot und Plan', pr2_p: 'Sie erhalten die passenden Systeme, einen Zeitplan und einen Preis, schriftlich.',
       pr3_t: 'Einrichtung und Integration', pr3_p: 'Wir richten die Systeme ein, verbinden sie mit Ihren Kanälen und testen sie mit Ihnen.',
       pr4_t: 'Schulung und Go-live', pr4_p: 'Wir schulen Ihr Team, schalten das System live und überwachen es.',
-      pkg_eyebrow: '06 — Pakete', pkg_title: 'Einmal einrichten. Jeden Monat betreut.', pkg_lead: 'Ihre Systeme werden einmal eingerichtet; ein Monatspaket hält sie in Betrieb, entwickelt sie weiter und überwacht sie. Die Monatsgebühr wird für Ihr Unternehmen angeboten.',
+      pkg_eyebrow: 'Pakete', pkg_title: 'Einmal einrichten. Jeden Monat betreut.', pkg_lead: 'Ihre Systeme werden einmal eingerichtet; ein Monatspaket hält sie in Betrieb, entwickelt sie weiter und überwacht sie. Die Monatsgebühr wird für Ihr Unternehmen angeboten.',
       pkg_pill1: 'Monatliche Abrechnung', pkg_pill2: 'Sichere Zahlung mit iyzico', pkg_pill3: 'Jederzeit kündbar',
       pkg_price: 'Monatsgebühr nach Angebot', pkg_cta: 'Angebot anfordern', pkg_cta_pa: 'Demo testen', pkg_rec: 'Empfohlen', pkg_bonus: 'Bonus · Privat',
       pk1_for: 'Für kleine Unternehmen, die mit einem System starten.', pk1_1: 'Ein System Ihrer Wahl', pk1_2: 'Hosting und Sicherheitsupdates', pk1_3: 'Monatlicher Leistungsbericht', pk1_4: 'E-Mail-Support, Antwort in 2 Werktagen',
@@ -1797,24 +1887,24 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
       tm6_t: 'Erstattung', tm6_d: 'Jahrespakete werden bei Kündigung in den ersten 14 Tagen vollständig erstattet.',
       tm7_t: 'Ihre Daten', tm7_d: 'Ihre Daten gehören Ihnen. Bei Kündigung erhalten Sie einen Export.',
       fq1_q: 'Wie lange dauert die Einrichtung?', fq1_a: 'Das hängt von Systemen und Kanälen ab. Nach dem Erstgespräch erhalten Sie einen Plan mit Terminen.',
-      fq2_q: 'Funktioniert es mit meiner bestehenden Website?', fq2_a: 'Ja. Chatbot und Assistent lassen sich in Ihre Website einbinden — oder wir gestalten sie neu.',
+      fq2_q: 'Funktioniert es mit meiner bestehenden Website?', fq2_a: 'Ja. Chatbot und Assistent lassen sich in Ihre Website einbinden, oder wir gestalten sie neu.',
       fq3_q: 'Welche Kanäle werden unterstützt?', fq3_a: 'Ihre Website, WhatsApp, E-Mail, SMS und Instagram.',
       fq4_q: 'Gibt es eine Mindestlaufzeit?', fq4_a: 'Monatspakete verlängern sich monatlich und sind jederzeit kündbar.',
       fq5_q: 'Welche Sprachen spricht die KI?', fq5_a: 'Türkisch, Englisch, Deutsch und Französisch; weitere Sprachen auf Anfrage.',
-      ab_eyebrow: '09 — Über uns', ab_title: 'Das Team hinter AXON.', ab_role: 'Gründerin',
-      ab_p: 'AXON wurde von Gülcan Genç in Istanbul gegründet. Wir bauen und betreiben KI-Systeme für Hotels, Kliniken und Unternehmen — vom ersten Gespräch bis zum täglichen Support.',
+      ab_eyebrow: 'Über uns', ab_title: 'Das Team hinter AXON.', ab_role: 'Gründerin',
+      ab_p: 'AXON wurde von Gülcan Genç in Istanbul gegründet. Wir bauen und betreiben KI-Systeme für Hotels, Kliniken und Unternehmen, vom ersten Gespräch bis zum täglichen Support.',
       store_note: 'Diese Website speichert Ihre Sprachwahl in Ihrem Browser. Keine Tracking-Cookies.', store_ok: 'OK'
     },
     fr: {
       nav_packages: 'Offres', nav_process: 'Méthode', nav_about: 'À propos',
       ref_eliza: 'Moteur de réservation directe, concierge IA multilingue 24/7 et automatisation WhatsApp.',
       loc_london: 'Londres', loc_usa: 'États-Unis', loc_tr: 'Turquie', sec_hotel: 'Hôtel', sec_clinic: 'Clinique privée', sec_jewel: 'Joaillerie',
-      proc_eyebrow: '05 — Méthode', proc_title: 'En ligne en quatre étapes.', proc_lead: 'Du premier appel à la mise en ligne, vous savez toujours ce qui vient ensuite.',
+      proc_eyebrow: 'Méthode', proc_title: 'En ligne en quatre étapes.', proc_lead: 'Du premier appel à la mise en ligne, vous savez toujours ce qui vient ensuite.',
       pr1_t: 'Appel découverte gratuit', pr1_p: 'Nous écoutons votre activité, vos canaux et vos objectifs en 30 minutes.',
-      pr2_t: 'Proposition et plan', pr2_p: 'Vous recevez les systèmes adaptés, un calendrier et un prix — par écrit.',
+      pr2_t: 'Proposition et plan', pr2_p: 'Vous recevez les systèmes adaptés, un calendrier et un prix, par écrit.',
       pr3_t: 'Installation et intégration', pr3_p: 'Nous installons les systèmes, les connectons à vos canaux et les testons avec vous.',
       pr4_t: 'Formation et mise en ligne', pr4_p: 'Nous formons votre équipe, mettons le système en ligne et le surveillons.',
-      pkg_eyebrow: '06 — Offres', pkg_title: 'Installé une fois. Accompagné chaque mois.', pkg_lead: 'Vos systèmes sont installés une fois ; une offre mensuelle les fait tourner, évoluer et surveiller. Le tarif mensuel est établi sur devis.',
+      pkg_eyebrow: 'Offres', pkg_title: 'Installé une fois. Accompagné chaque mois.', pkg_lead: 'Vos systèmes sont installés une fois ; une offre mensuelle les fait tourner, évoluer et surveiller. Le tarif mensuel est établi sur devis.',
       pkg_pill1: 'Facturation mensuelle', pkg_pill2: 'Paiement sécurisé avec iyzico', pkg_pill3: 'Résiliable à tout moment',
       pkg_price: 'Tarif mensuel sur devis', pkg_cta: 'Demander un devis', pkg_cta_pa: 'Essayer la démo', pkg_rec: 'Recommandé', pkg_bonus: 'Bonus · Privé',
       pk1_for: 'Pour les petites entreprises qui démarrent avec un système.', pk1_1: 'Un système au choix', pk1_2: 'Hébergement et mises à jour de sécurité', pk1_3: 'Rapport de performance mensuel', pk1_4: 'Support e-mail, réponse sous 2 jours ouvrés',
@@ -1831,12 +1921,12 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
       tm6_t: 'Remboursement', tm6_d: 'Les offres annuelles sont intégralement remboursées en cas de résiliation dans les 14 premiers jours.',
       tm7_t: 'Vos données', tm7_d: 'Vos données vous appartiennent. En cas de résiliation, nous vous remettons un export.',
       fq1_q: 'Combien de temps dure l\'installation ?', fq1_a: 'Cela dépend des systèmes et des canaux. Après le premier appel, vous recevez un plan daté.',
-      fq2_q: 'Est-ce compatible avec mon site actuel ?', fq2_a: 'Oui. Le chatbot et l\'assistant s\'ajoutent à votre site — ou nous le refaisons pour vous.',
+      fq2_q: 'Est-ce compatible avec mon site actuel ?', fq2_a: 'Oui. Le chatbot et l\'assistant s\'ajoutent à votre site, ou nous le refaisons pour vous.',
       fq3_q: 'Quels canaux sont pris en charge ?', fq3_a: 'Votre site, WhatsApp, e-mail, SMS et Instagram.',
       fq4_q: 'Y a-t-il un engagement ?', fq4_a: 'Les offres mensuelles se renouvellent chaque mois et sont résiliables à tout moment.',
       fq5_q: 'Quelles langues parle l\'IA ?', fq5_a: 'Turc, anglais, allemand et français ; d\'autres langues sur demande.',
-      ab_eyebrow: '09 — À propos', ab_title: 'L\'équipe derrière AXON.', ab_role: 'Fondatrice',
-      ab_p: 'AXON a été fondée à Istanbul par Gülcan Genç. Nous construisons et opérons des systèmes IA pour hôtels, cliniques et entreprises — du premier appel au support quotidien.',
+      ab_eyebrow: 'À propos', ab_title: 'L\'équipe derrière AXON.', ab_role: 'Fondatrice',
+      ab_p: 'AXON a été fondée à Istanbul par Gülcan Genç. Nous construisons et opérons des systèmes IA pour hôtels, cliniques et entreprises, du premier appel au support quotidien.',
       store_note: 'Ce site enregistre votre choix de langue dans votre navigateur. Aucun cookie de suivi.', store_ok: 'OK'
     }
   };
@@ -1844,59 +1934,322 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
   // 3D location map copy
   var I18N_LOC = {
     en: {
-      nav_location: 'Location', loc_eyebrow: '02 — Location Intelligence', loc_title: 'Location sells the room.',
+      nav_location: 'Location', loc_eyebrow: 'Location Intelligence', loc_title: 'Location sells the room.',
       loc_lead: 'Guests book where they can picture themselves. We turn your address into a live 3D map: real buildings, walking times to every sight and stop, and a route drawn on tap.',
       loc_cat_all: 'All', loc_cat_sight: 'Sights', loc_cat_transit: 'Transit', loc_cat_shop: 'Shopping', loc_cat_park: 'Parks',
       loc_night: 'Night', loc_dusk: 'Dusk', loc_day: 'Day', loc_tour: 'Start tour', loc_stop: 'Stop tour', loc_recenter: 'Back to hotel',
       loc_hotel: 'YOUR HOTEL', loc_sub: 'Demo location · Historic Peninsula, Istanbul', loc_score_unit: 'places within a 15-min walk',
       loc_nearby: 'Nearby', loc_min: 'min', loc_min_walk: 'min walk', loc_straight: 'straight line',
       loc_est: 'Estimated at walking pace along the streets. Your live map uses real routes.', loc_hint: 'Tap a place on the map or in the list to see the route and walking time.',
-      loc_offline: 'Preview — the interactive 3D map loads on the live site.',
+      loc_offline: 'Preview, the interactive 3D map loads on the live site.',
       loc_f1: '3D buildings & terrain', loc_f2: 'Walking-time rings', loc_f3: 'Routes on tap', loc_f4: 'Map labels in the guest\'s language',
       poi_hagia: 'Hagia Sophia', poi_bluemosque: 'Blue Mosque', poi_cistern: 'Basilica Cistern', poi_topkapi: 'Topkapı Palace', poi_suleymaniye: 'Süleymaniye Mosque', poi_galata: 'Galata Tower',
       poi_grandbazaar: 'Grand Bazaar', poi_spicebazaar: 'Spice Bazaar', poi_gulhane: 'Gülhane Park', poi_t1sultanahmet: 'Sultanahmet tram (T1)', poi_t1cemberlitas: 'Çemberlitaş tram (T1)', poi_eminonu: 'Eminönü ferries', poi_sirkeci: 'Sirkeci Marmaray'
     },
     tr: {
-      nav_location: 'Konum', loc_eyebrow: '02 — Konum Zekâsı', loc_title: 'Odayı konum satar.',
+      nav_location: 'Konum', loc_eyebrow: 'Konum Zekâsı', loc_title: 'Odayı konum satar.',
       loc_lead: 'Misafir, kendini hayal edebildiği yeri rezerve eder. Adresinizi canlı bir 3D haritaya dönüştürüyoruz: gerçek binalar, her yere yürüme süresi ve dokununca çizilen rota.',
       loc_cat_all: 'Tümü', loc_cat_sight: 'Gezilecek yerler', loc_cat_transit: 'Ulaşım', loc_cat_shop: 'Alışveriş', loc_cat_park: 'Parklar',
       loc_night: 'Gece', loc_dusk: 'Gün batımı', loc_day: 'Gündüz', loc_tour: 'Turu başlat', loc_stop: 'Turu durdur', loc_recenter: 'Otele dön',
       loc_hotel: 'OTELİNİZ', loc_sub: 'Demo konum · Tarihi Yarımada, İstanbul', loc_score_unit: 'yer 15 dakika yürüme mesafesinde',
       loc_nearby: 'Yakındakiler', loc_min: 'dk', loc_min_walk: 'dk yürüme', loc_straight: 'kuş uçuşu',
       loc_est: 'Sokaklar boyunca yürüme hızına göre tahmin. Canlı haritanızda gerçek rotalar kullanılır.', loc_hint: 'Rotayı ve yürüme süresini görmek için haritada ya da listede bir yere dokunun.',
-      loc_offline: 'Önizleme — etkileşimli 3D harita canlı sitede yüklenir.',
+      loc_offline: 'Önizleme, etkileşimli 3D harita canlı sitede yüklenir.',
       loc_f1: '3D binalar ve arazi', loc_f2: 'Yürüme süresi halkaları', loc_f3: 'Dokununca rota', loc_f4: 'Misafirin dilinde harita',
       poi_hagia: 'Ayasofya', poi_bluemosque: 'Sultanahmet Camii', poi_cistern: 'Yerebatan Sarnıcı', poi_topkapi: 'Topkapı Sarayı', poi_suleymaniye: 'Süleymaniye Camii', poi_galata: 'Galata Kulesi',
       poi_grandbazaar: 'Kapalıçarşı', poi_spicebazaar: 'Mısır Çarşısı', poi_gulhane: 'Gülhane Parkı', poi_t1sultanahmet: 'Sultanahmet tramvay (T1)', poi_t1cemberlitas: 'Çemberlitaş tramvay (T1)', poi_eminonu: 'Eminönü iskelesi', poi_sirkeci: 'Sirkeci Marmaray'
     },
     de: {
-      nav_location: 'Lage', loc_eyebrow: '02 — Lage-Intelligenz', loc_title: 'Die Lage verkauft das Zimmer.',
+      nav_location: 'Lage', loc_eyebrow: 'Lage-Intelligenz', loc_title: 'Die Lage verkauft das Zimmer.',
       loc_lead: 'Gäste buchen dort, wo sie sich sehen können. Wir machen aus Ihrer Adresse eine lebendige 3D-Karte: echte Gebäude, Gehzeiten zu jedem Ziel und eine Route auf Fingertipp.',
       loc_cat_all: 'Alle', loc_cat_sight: 'Sehenswürdigkeiten', loc_cat_transit: 'ÖPNV', loc_cat_shop: 'Shopping', loc_cat_park: 'Parks',
       loc_night: 'Nacht', loc_dusk: 'Abend', loc_day: 'Tag', loc_tour: 'Tour starten', loc_stop: 'Tour stoppen', loc_recenter: 'Zum Hotel',
       loc_hotel: 'IHR HOTEL', loc_sub: 'Demo-Standort · Historische Halbinsel, Istanbul', loc_score_unit: 'Orte in 15 Gehminuten',
       loc_nearby: 'In der Nähe', loc_min: 'Min.', loc_min_walk: 'Min. zu Fuß', loc_straight: 'Luftlinie',
       loc_est: 'Geschätzt im Gehtempo entlang der Straßen. Ihre Live-Karte nutzt echte Routen.', loc_hint: 'Tippen Sie auf einen Ort auf der Karte oder in der Liste, um Route und Gehzeit zu sehen.',
-      loc_offline: 'Vorschau — die interaktive 3D-Karte lädt auf der Live-Website.',
+      loc_offline: 'Vorschau, die interaktive 3D-Karte lädt auf der Live-Website.',
       loc_f1: '3D-Gebäude & Gelände', loc_f2: 'Gehzeit-Ringe', loc_f3: 'Routen auf Fingertipp', loc_f4: 'Karte in der Sprache des Gastes',
       poi_hagia: 'Hagia Sophia', poi_bluemosque: 'Blaue Moschee', poi_cistern: 'Cisterna Basilica', poi_topkapi: 'Topkapı-Palast', poi_suleymaniye: 'Süleymaniye-Moschee', poi_galata: 'Galataturm',
       poi_grandbazaar: 'Großer Basar', poi_spicebazaar: 'Ägyptischer Basar', poi_gulhane: 'Gülhane-Park', poi_t1sultanahmet: 'Tram Sultanahmet (T1)', poi_t1cemberlitas: 'Tram Çemberlitaş (T1)', poi_eminonu: 'Fähren Eminönü', poi_sirkeci: 'Sirkeci Marmaray'
     },
     fr: {
-      nav_location: 'Emplacement', loc_eyebrow: '02 — Intelligence de l\'emplacement', loc_title: 'L\'emplacement vend la chambre.',
+      nav_location: 'Emplacement', loc_eyebrow: 'Intelligence de l\'emplacement', loc_title: 'L\'emplacement vend la chambre.',
       loc_lead: 'Les clients réservent là où ils se projettent. Nous transformons votre adresse en carte 3D vivante : vrais bâtiments, temps de marche vers chaque lieu et itinéraire en un geste.',
       loc_cat_all: 'Tout', loc_cat_sight: 'À voir', loc_cat_transit: 'Transports', loc_cat_shop: 'Shopping', loc_cat_park: 'Parcs',
       loc_night: 'Nuit', loc_dusk: 'Crépuscule', loc_day: 'Jour', loc_tour: 'Lancer la visite', loc_stop: 'Arrêter la visite', loc_recenter: 'Retour à l\'hôtel',
       loc_hotel: 'VOTRE HÔTEL', loc_sub: 'Emplacement de démo · Péninsule historique, Istanbul', loc_score_unit: 'lieux à 15 min à pied',
       loc_nearby: 'À proximité', loc_min: 'min', loc_min_walk: 'min à pied', loc_straight: 'à vol d\'oiseau',
       loc_est: 'Estimation au rythme de marche par les rues. Votre carte en ligne utilise de vrais itinéraires.', loc_hint: 'Touchez un lieu sur la carte ou dans la liste pour voir l\'itinéraire et le temps de marche.',
-      loc_offline: 'Aperçu — la carte 3D interactive se charge sur le site en ligne.',
+      loc_offline: 'Aperçu, la carte 3D interactive se charge sur le site en ligne.',
       loc_f1: 'Bâtiments 3D & relief', loc_f2: 'Anneaux de temps de marche', loc_f3: 'Itinéraires en un geste', loc_f4: 'Carte dans la langue du client',
       poi_hagia: 'Sainte-Sophie', poi_bluemosque: 'Mosquée bleue', poi_cistern: 'Citerne Basilique', poi_topkapi: 'Palais de Topkapı', poi_suleymaniye: 'Mosquée Süleymaniye', poi_galata: 'Tour de Galata',
       poi_grandbazaar: 'Grand Bazar', poi_spicebazaar: 'Bazar égyptien', poi_gulhane: 'Parc de Gülhane', poi_t1sultanahmet: 'Tram Sultanahmet (T1)', poi_t1cemberlitas: 'Tram Çemberlitaş (T1)', poi_eminonu: 'Ferries d\'Eminönü', poi_sirkeci: 'Sirkeci Marmaray'
     }
   };
   Object.keys(I18N_LOC).forEach(function (l) { Object.keys(I18N_LOC[l]).forEach(function (k) { I18N[l][k] = I18N_LOC[l][k]; }); });
+  var I18N_CALM = {
+    "en": {
+      "tagline": "AI systems for hotels, clinics and companies",
+      "hero1": "Stop losing",
+      "hero2": "customers.",
+      "hero3": "",
+      "hero_sub": "We build systems that answer every request from WhatsApp, Instagram, email and your website in seconds, and take the booking or appointment themselves.",
+      "cta_deploy": "Get a free demo",
+      "cta_demo": "See the packages",
+      "num_eyebrow": "The numbers",
+      "num_title": "The request arrives. The answer is late.",
+      "num_lead": "These are not our numbers. They come from research, and every source is linked.",
+      "num_g1": "Every business",
+      "num_g2": "Hotels",
+      "num_g3": "Clinics",
+      "n1v": "23%",
+      "n1t": "of 2,241 US companies tested never answered an online inquiry at all.",
+      "n1s": "Harvard Business Review, 2011",
+      "n2v": "7×",
+      "n2t": "more likely to win the customer when the reply comes within an hour instead of an hour later.",
+      "n2s": "Harvard Business Review, 2011",
+      "n3v": "15–30%",
+      "n3t": "commission that online travel agencies take from each booking.",
+      "n3s": "PhocusWire, sector reporting",
+      "n4v": "43%",
+      "n4t": "of European hotels say online agencies sell their rooms cheaper than the hotel itself.",
+      "n4s": "HOTREC study, 2024",
+      "n5v": "23%",
+      "n5t": "average no-show rate for outpatient appointments, across 105 studies.",
+      "n5s": "Dantas et al., Health Policy, 2018",
+      "n6v": "36%",
+      "n6t": "of US medical practices say at least 1 in 9 calls goes unanswered or to voicemail at peak hours.",
+      "n6s": "MGMA and InsightHealth, 2026",
+      "num_close": "AXON closes exactly this gap: every request is answered in seconds, day and night.",
+      "num_cta": "See the packages →",
+      "fd_eyebrow": "Free demo",
+      "fd_title": "See it working with your own business.",
+      "fd_lead": "Send us your business name and website. We prepare a demo that uses your own information and try it together in the call. Free, no commitment.",
+      "fd_1": "A chatbot that answers with your prices and your questions",
+      "fd_2": "A booking screen with your rooms or treatments",
+      "fd_3": "Your location on the 3D map",
+      "fd_cta": "Request a free demo",
+      "fd_wa": "Ask on WhatsApp",
+      "sec_label": "Your business:",
+      "sec_hotel_b": "Hotel",
+      "sec_clinic_b": "Clinic",
+      "sec_company_b": "Company",
+      "pkg_title": "Pick your problem. We set up the package.",
+      "pkg_lead": "Every package solves one clear problem. Set up once, then a monthly plan keeps it running and improving.",
+      "pk1_n_hotel": "Never Lose a Guest",
+      "pk1_n_clinic": "Never Lose a Patient",
+      "pk1_n_company": "Never Lose a Customer",
+      "pk2_n_hotel": "Fill Your Rooms",
+      "pk2_n_clinic": "Fill Your Calendar",
+      "pk2_n_company": "Win New Customers",
+      "pk3_n_hotel": "All Your Hotels, One Panel",
+      "pk3_n_clinic": "All Your Clinics, One Panel",
+      "pk3_n_company": "All Your Teams, One Panel",
+      "pk4_n_hotel": "Own Your Day",
+      "pk4_n_clinic": "Own Your Day",
+      "pk4_n_company": "Own Your Day",
+      "pk1_for": "If slow replies cost you customers. Start with one system: an assistant that answers 24/7.",
+      "pk2_for": "If rooms or appointment slots stay empty and agencies take a commission. Direct booking plus an assistant on every channel.",
+      "pk3_for": "To run several locations, teams and channels from one place. All five systems.",
+      "pk4_for": "For owners buried in messages and meetings."
+    },
+    "tr": {
+      "tagline": "Oteller, klinikler ve şirketler için yapay zekâ sistemleri",
+      "hero1": "Hiçbir müşteriyi",
+      "hero2": "kaybetmeyin.",
+      "hero3": "",
+      "hero_sub": "WhatsApp, Instagram, e-posta ve web sitenizden gelen her talebe saniyeler içinde cevap veren, rezervasyonu ve randevuyu kendisi alan sistemler kuruyoruz.",
+      "cta_deploy": "Ücretsiz demo iste",
+      "cta_demo": "Paketleri gör",
+      "num_eyebrow": "Rakamlar",
+      "num_title": "Talep geliyor. Cevap gecikiyor.",
+      "num_lead": "Bu rakamlar bizim değil, araştırmaların. Her birinin kaynağı altında.",
+      "num_g1": "Bütün işletmeler",
+      "num_g2": "Oteller",
+      "num_g3": "Klinikler",
+      "n1v": "%23",
+      "n1t": "ABD'de test edilen 2.241 şirketin internetten gelen talebe hiç cevap vermeyenlerin oranı.",
+      "n1s": "Harvard Business Review, 2011",
+      "n2v": "7 kat",
+      "n2t": "İlk bir saat içinde dönen işletmenin müşteriyi kazanma ihtimali, bir saat sonra dönene göre.",
+      "n2s": "Harvard Business Review, 2011",
+      "n3v": "%15–30",
+      "n3t": "Online acentelerin her rezervasyondan aldığı komisyon.",
+      "n3s": "PhocusWire, sektör yayınları",
+      "n4v": "%43",
+      "n4t": "Acentelerin odalarını kendilerinden ucuza sattığını söyleyen Avrupa otellerinin oranı.",
+      "n4s": "HOTREC araştırması, 2024",
+      "n5v": "%23",
+      "n5t": "Randevusuna gelmeyen hasta oranının ortalaması (105 araştırma).",
+      "n5s": "Dantas ve ark., Health Policy, 2018",
+      "n6v": "%36",
+      "n6t": "Yoğun saatlerde her 9 aramadan en az 1'inin cevapsız kaldığını söyleyen ABD muayenehanelerinin oranı.",
+      "n6s": "MGMA ve InsightHealth, 2026",
+      "num_close": "AXON tam bu boşluğu kapatır: her talep gece gündüz saniyeler içinde cevaplanır.",
+      "num_cta": "Paketleri gör →",
+      "fd_eyebrow": "Ücretsiz demo",
+      "fd_title": "Kendi işletmenizle çalışırken görün.",
+      "fd_lead": "İşletmenizin adını ve sitesini gönderin. Sizin bilgilerinizle çalışan bir demo hazırlayalım, görüşmede birlikte deneyelim. Ücretsiz, taahhütsüz.",
+      "fd_1": "Sizin fiyatlarınız ve sorularınızla cevap veren chatbot",
+      "fd_2": "Sizin odalarınız ya da tedavilerinizle rezervasyon ekranı",
+      "fd_3": "3D haritada sizin konumunuz",
+      "fd_cta": "Ücretsiz demo iste",
+      "fd_wa": "WhatsApp'tan sor",
+      "sec_label": "İşletmeniz:",
+      "sec_hotel_b": "Otel",
+      "sec_clinic_b": "Klinik",
+      "sec_company_b": "Şirket",
+      "pkg_title": "Sorununuzu seçin, paketi biz kuralım.",
+      "pkg_lead": "Her paket net bir sorunu çözer. Bir kez kurulur, aylık paketle çalışır ve gelişir.",
+      "pk1_n_hotel": "Misafir Kaybetmeyin",
+      "pk1_n_clinic": "Hasta Kaybetmeyin",
+      "pk1_n_company": "Müşteri Kaybetmeyin",
+      "pk2_n_hotel": "Odalarınızı Doldurun",
+      "pk2_n_clinic": "Takviminizi Doldurun",
+      "pk2_n_company": "Yeni Müşteri Bulun",
+      "pk3_n_hotel": "Tüm Otelleriniz Tek Panelde",
+      "pk3_n_clinic": "Tüm Şubeleriniz Tek Panelde",
+      "pk3_n_company": "Tüm Ekipler Tek Panelde",
+      "pk4_n_hotel": "Gününüz Kontrolünüzde",
+      "pk4_n_clinic": "Gününüz Kontrolünüzde",
+      "pk4_n_company": "Gününüz Kontrolünüzde",
+      "pk1_for": "Mesajlara geç cevap yüzünden müşteri kaçıyorsa. Tek sistemle başlarsınız: 7/24 cevap veren asistan.",
+      "pk2_for": "Boş oda ya da boş randevu kalıyorsa ve acentelere komisyon ödüyorsanız. Direkt rezervasyon ve tüm kanallarda asistan.",
+      "pk3_for": "Birden fazla şube, ekip ve kanalı tek yerden yönetmek için. Beş sistemin tamamı.",
+      "pk4_for": "Mesaj ve toplantı yükü altında kalan işletme sahipleri için."
+    },
+    "de": {
+      "tagline": "KI-Systeme für Hotels, Kliniken und Unternehmen",
+      "hero1": "Verlieren Sie",
+      "hero2": "keine Kunden mehr.",
+      "hero3": "",
+      "hero_sub": "Wir bauen Systeme, die jede Anfrage über WhatsApp, Instagram, E-Mail und Ihre Website in Sekunden beantworten und Buchungen oder Termine selbst annehmen.",
+      "cta_deploy": "Kostenlose Demo",
+      "cta_demo": "Pakete ansehen",
+      "num_eyebrow": "Die Zahlen",
+      "num_title": "Die Anfrage kommt. Die Antwort kommt zu spät.",
+      "num_lead": "Das sind nicht unsere Zahlen. Sie stammen aus Studien, jede Quelle ist verlinkt.",
+      "num_g1": "Alle Unternehmen",
+      "num_g2": "Hotels",
+      "num_g3": "Kliniken",
+      "n1v": "23 %",
+      "n1t": "der 2.241 getesteten US-Unternehmen haben auf eine Online-Anfrage nie geantwortet.",
+      "n1s": "Harvard Business Review, 2011",
+      "n2v": "7×",
+      "n2t": "höher ist die Chance, den Kunden zu gewinnen, wenn die Antwort innerhalb einer Stunde kommt statt eine Stunde später.",
+      "n2s": "Harvard Business Review, 2011",
+      "n3v": "15–30 %",
+      "n3t": "Provision verlangen Online-Reiseportale pro Buchung.",
+      "n3s": "PhocusWire, Branchenberichte",
+      "n4v": "43 %",
+      "n4t": "der europäischen Hotels sagen, dass Portale ihre Zimmer günstiger verkaufen als das Hotel selbst.",
+      "n4s": "HOTREC-Studie, 2024",
+      "n5v": "23 %",
+      "n5t": "beträgt die durchschnittliche No-Show-Rate bei ambulanten Terminen (105 Studien).",
+      "n5s": "Dantas et al., Health Policy, 2018",
+      "n6v": "36 %",
+      "n6t": "der US-Arztpraxen sagen, dass zu Stoßzeiten mindestens jeder 9. Anruf unbeantwortet bleibt oder auf der Mailbox landet.",
+      "n6s": "MGMA und InsightHealth, 2026",
+      "num_close": "Genau diese Lücke schließt AXON: Jede Anfrage wird in Sekunden beantwortet, Tag und Nacht.",
+      "num_cta": "Pakete ansehen →",
+      "fd_eyebrow": "Kostenlose Demo",
+      "fd_title": "Sehen Sie es mit Ihrem eigenen Betrieb.",
+      "fd_lead": "Senden Sie uns Namen und Website Ihres Betriebs. Wir bereiten eine Demo mit Ihren eigenen Informationen vor und testen sie gemeinsam im Gespräch. Kostenlos und unverbindlich.",
+      "fd_1": "Ein Chatbot, der mit Ihren Preisen und Fragen antwortet",
+      "fd_2": "Eine Buchungsmaske mit Ihren Zimmern oder Behandlungen",
+      "fd_3": "Ihr Standort auf der 3D-Karte",
+      "fd_cta": "Kostenlose Demo anfragen",
+      "fd_wa": "Per WhatsApp fragen",
+      "sec_label": "Ihr Betrieb:",
+      "sec_hotel_b": "Hotel",
+      "sec_clinic_b": "Klinik",
+      "sec_company_b": "Unternehmen",
+      "pkg_title": "Wählen Sie Ihr Problem. Wir richten das Paket ein.",
+      "pkg_lead": "Jedes Paket löst ein klares Problem. Einmal eingerichtet, hält ein Monatsplan es am Laufen und entwickelt es weiter.",
+      "pk1_n_hotel": "Keinen Gast mehr verlieren",
+      "pk1_n_clinic": "Keinen Patienten mehr verlieren",
+      "pk1_n_company": "Keinen Kunden mehr verlieren",
+      "pk2_n_hotel": "Zimmer füllen",
+      "pk2_n_clinic": "Terminkalender füllen",
+      "pk2_n_company": "Neue Kunden gewinnen",
+      "pk3_n_hotel": "Alle Hotels in einem Panel",
+      "pk3_n_clinic": "Alle Standorte in einem Panel",
+      "pk3_n_company": "Alle Teams in einem Panel",
+      "pk4_n_hotel": "Ihr Tag im Griff",
+      "pk4_n_clinic": "Ihr Tag im Griff",
+      "pk4_n_company": "Ihr Tag im Griff",
+      "pk1_for": "Wenn langsame Antworten Sie Kunden kosten. Starten Sie mit einem System: einem Assistenten, der rund um die Uhr antwortet.",
+      "pk2_for": "Wenn Zimmer oder Termine leer bleiben und Portale Provision kassieren. Direktbuchung plus Assistent auf allen Kanälen.",
+      "pk3_for": "Um mehrere Standorte, Teams und Kanäle zentral zu steuern. Alle fünf Systeme.",
+      "pk4_for": "Für Inhaber, die in Nachrichten und Meetings untergehen."
+    },
+    "fr": {
+      "tagline": "Systèmes IA pour hôtels, cliniques et entreprises",
+      "hero1": "Ne perdez plus",
+      "hero2": "aucun client.",
+      "hero3": "",
+      "hero_sub": "Nous créons des systèmes qui répondent en quelques secondes à chaque demande venue de WhatsApp, Instagram, de l'e-mail et de votre site, et prennent eux-mêmes la réservation ou le rendez-vous.",
+      "cta_deploy": "Démo gratuite",
+      "cta_demo": "Voir les offres",
+      "num_eyebrow": "Les chiffres",
+      "num_title": "La demande arrive. La réponse tarde.",
+      "num_lead": "Ce ne sont pas nos chiffres. Ils viennent d'études, chaque source est liée.",
+      "num_g1": "Toutes les entreprises",
+      "num_g2": "Hôtels",
+      "num_g3": "Cliniques",
+      "n1v": "23 %",
+      "n1t": "des 2 241 entreprises américaines testées n'ont jamais répondu à une demande en ligne.",
+      "n1s": "Harvard Business Review, 2011",
+      "n2v": "7×",
+      "n2t": "plus de chances de gagner le client quand la réponse arrive dans l'heure plutôt qu'une heure plus tard.",
+      "n2s": "Harvard Business Review, 2011",
+      "n3v": "15–30 %",
+      "n3t": "de commission prélevée par les agences de voyage en ligne sur chaque réservation.",
+      "n3s": "PhocusWire, presse spécialisée",
+      "n4v": "43 %",
+      "n4t": "des hôtels européens disent que les agences vendent leurs chambres moins cher que l'hôtel lui-même.",
+      "n4s": "Étude HOTREC, 2024",
+      "n5v": "23 %",
+      "n5t": "taux moyen de rendez-vous non honorés en consultation externe (105 études).",
+      "n5s": "Dantas et al., Health Policy, 2018",
+      "n6v": "36 %",
+      "n6t": "des cabinets médicaux américains disent qu'aux heures de pointe au moins 1 appel sur 9 reste sans réponse ou tombe sur la messagerie.",
+      "n6s": "MGMA et InsightHealth, 2026",
+      "num_close": "AXON comble exactement ce manque : chaque demande reçoit une réponse en quelques secondes, jour et nuit.",
+      "num_cta": "Voir les offres →",
+      "fd_eyebrow": "Démo gratuite",
+      "fd_title": "Voyez-le fonctionner avec votre propre établissement.",
+      "fd_lead": "Envoyez-nous le nom et le site de votre établissement. Nous préparons une démo avec vos propres informations et la testons ensemble pendant l'appel. Gratuit et sans engagement.",
+      "fd_1": "Un chatbot qui répond avec vos prix et vos questions",
+      "fd_2": "Un écran de réservation avec vos chambres ou vos soins",
+      "fd_3": "Votre emplacement sur la carte 3D",
+      "fd_cta": "Demander une démo gratuite",
+      "fd_wa": "Demander sur WhatsApp",
+      "sec_label": "Votre activité :",
+      "sec_hotel_b": "Hôtel",
+      "sec_clinic_b": "Clinique",
+      "sec_company_b": "Entreprise",
+      "pkg_title": "Choisissez votre problème. Nous installons l'offre.",
+      "pkg_lead": "Chaque offre résout un problème précis. Installée une fois, puis un abonnement mensuel la fait tourner et évoluer.",
+      "pk1_n_hotel": "Plus aucun client perdu",
+      "pk1_n_clinic": "Plus aucun patient perdu",
+      "pk1_n_company": "Plus aucun prospect perdu",
+      "pk2_n_hotel": "Remplissez vos chambres",
+      "pk2_n_clinic": "Remplissez votre agenda",
+      "pk2_n_company": "Gagnez de nouveaux clients",
+      "pk3_n_hotel": "Tous vos hôtels, un seul tableau",
+      "pk3_n_clinic": "Toutes vos cliniques, un seul tableau",
+      "pk3_n_company": "Toutes vos équipes, un seul tableau",
+      "pk4_n_hotel": "Maîtrisez votre journée",
+      "pk4_n_clinic": "Maîtrisez votre journée",
+      "pk4_n_company": "Maîtrisez votre journée",
+      "pk1_for": "Si des réponses tardives vous font perdre des clients. Commencez avec un système : un assistant qui répond 24h/24.",
+      "pk2_for": "Si des chambres ou des créneaux restent vides et que les agences prennent une commission. Réservation directe et assistant sur tous les canaux.",
+      "pk3_for": "Pour piloter plusieurs sites, équipes et canaux depuis un seul endroit. Les cinq systèmes.",
+      "pk4_for": "Pour les dirigeants submergés de messages et de réunions."
+    }
+  };
+  Object.keys(I18N_CALM).forEach(function (l) { Object.keys(I18N_CALM[l]).forEach(function (k) { I18N[l][k] = I18N_CALM[l][k]; }); });
   var lang = 'en';
   try { var saved = localStorage.getItem('axonLang'); if (LANGS.indexOf(saved) > -1) lang = saved; } catch (e) {}
   if (lang === 'en') { var nl = (navigator.language || 'en').slice(0, 2).toLowerCase(); var stored = null; try { stored = localStorage.getItem('axonLang'); } catch (e) {} if (!stored && LANGS.indexOf(nl) > -1) lang = nl; }
@@ -2476,7 +2829,7 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
     var body = 'Name: ' + name + '\nEmail: ' + email + '\nProperty: ' + f.hotel.value + '\nRooms: ' + f.rooms.value + '\nSystems: ' + sys + '\nLanguage: ' + lang.toUpperCase() + '\n\n' + f.message.value;
     st.className = 'form-status ok'; st.textContent = t('form_ok');
     Sound.chime();
-    window.location.href = 'mailto:' + CONTACT_EMAIL + '?subject=' + encodeURIComponent('AXON consultation — ' + (f.hotel.value || name)) + '&body=' + encodeURIComponent(body);
+    window.location.href = 'mailto:' + CONTACT_EMAIL + '?subject=' + encodeURIComponent('AXON consultation, ' + (f.hotel.value || name)) + '&body=' + encodeURIComponent(body);
   });
 
   /* ================= Signature generator ================= */
@@ -2542,6 +2895,22 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
   if (!storeSeen) storeNote.removeAttribute('hidden');
   $('#storeOk').addEventListener('click', function () { storeNote.setAttribute('hidden', ''); try { localStorage.setItem('axonStoreOk', '1'); } catch (e) {} });
 
+
+  /* ================= Packages: problem-first names by sector ================= */
+  var pkgSector = 'hotel';
+  try { pkgSector = localStorage.getItem('axonSector') || 'hotel'; } catch (e) {}
+  function renderPkgNames() {
+    $$('.pkn').forEach(function (h) { h.textContent = t('pk' + h.getAttribute('data-pk') + '_n_' + pkgSector); });
+    $$('.pkg-sector button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-sector') === pkgSector)); });
+  }
+  $$('.pkg-sector button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      pkgSector = b.getAttribute('data-sector');
+      try { localStorage.setItem('axonSector', pkgSector); } catch (e) {}
+      renderPkgNames();
+    });
+  });
+  langListeners.push(renderPkgNames);
   applyLang(lang);
 
   $('#yr').textContent = new Date().getFullYear();
@@ -2549,7 +2918,7 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
   var intro = $('#intro');
   function endIntro() { intro.classList.add('done'); document.documentElement.classList.add('loaded'); }
   var seen = false; try { seen = sessionStorage.getItem('axonIntro') === '1'; sessionStorage.setItem('axonIntro', '1'); } catch (e) {}
-  if (reduceMotion || seen) { intro.classList.add('done'); }
+  if (true) { intro.classList.add('done'); }
   else {
     requestAnimationFrame(function () { intro.classList.add('show'); });
     var introT = setTimeout(endIntro, 2300);
@@ -2763,7 +3132,7 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { uiTex.needsUpdate = true; });
 
     /* --- B. Interactive particle constellation --- */
-    var N = lowGPU ? 900 : 1800;
+    var N = lowGPU ? 500 : 900;
     var base = new Float32Array(N * 3), pos = new Float32Array(N * 3), vel = new Float32Array(N * 3), ph = new Float32Array(N * 2), cols = new Float32Array(N * 3), sizes = new Float32Array(N);
     var tmp = new THREE.Color();
     for (var i = 0; i < N; i++) {
@@ -2829,7 +3198,7 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
         // encode to sRGB as the scene renders, so bloom and grain run on display values (no 8-bit banding in the darks)
         composer.renderTarget1.texture.encoding = composer.renderTarget2.texture.encoding = THREE.sRGBEncoding;
         composer.addPass(new THREE.RenderPass(scene, camera));
-        bloom = new THREE.UnrealBloomPass(new THREE.Vector2(256, 256), 1.4, 0.65, 0.85);
+        bloom = new THREE.UnrealBloomPass(new THREE.Vector2(256, 256), 0.75, 0.6, 0.88);
         composer.addPass(bloom);
         finalPass = new THREE.ShaderPass({
           uniforms: { tDiffuse: { value: null }, uTime: { value: 0 }, uGrain: { value: .055 }, uVig: { value: .85 } },
@@ -2861,14 +3230,10 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
     function keyframes() {
       var pDemo = sectionP('#demo', .25), pSys = sectionP('#systems', .5), pCons = Math.max(sectionP('#consultation', .4), pSys + .12);
       var pArch = Math.min(pCons - .04, pSys + (pCons - pSys) * .45);
+      // calm mode: the camera holds the hero composition for the whole page
       return [
         { p: 0, x: 0, y: 0, z: 7, lx: 0, ly: 0, lz: 0, panel: 0, ring: 0, roll: 0 },
-        { p: pDemo, x: -3.2, y: 2.6, z: 6.8, lx: 2.3, ly: 0.15, lz: 0.2, panel: 1, ring: 0, roll: -0.06 },
-        { p: (pDemo + pSys) / 2 + .02, x: 0, y: 0.15, z: 1.6, lx: 0, ly: 0, lz: -6, panel: 0, ring: 0, roll: 0.04 },
-        { p: pSys, x: 0, y: -0.1, z: -7, lx: 0.2, ly: -0.2, lz: -22, panel: 0, ring: 0, roll: 0.1 },
-        { p: pArch, x: 5.6, y: 3.0, z: -4.2, lx: 0, ly: 0, lz: 0, panel: 0, ring: 0, roll: 0 },
-        { p: pCons, x: 0, y: 4.0, z: 5.2, lx: 0, ly: -0.1, lz: 0, panel: 0, ring: 1, roll: 0 },
-        { p: 1, x: 0, y: 4.6, z: 6.0, lx: 0, ly: -0.2, lz: 0, panel: 0, ring: 1, roll: 0 }
+        { p: 1, x: 0, y: 0, z: 7, lx: 0, ly: 0, lz: 0, panel: 0, ring: 0, roll: 0 }
       ];
     }
     var KEYS = keyframes(), tl = null, gsapOn = !!(window.gsap && window.ScrollTrigger);
@@ -2935,7 +3300,9 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
     function loop() {
       if (!running) return;
       requestAnimationFrame(loop);
-      var dt = Math.min(clock.getDelta(), .05), speed = reduceMotion ? .15 : 1;
+      var dt = Math.min(clock.getDelta(), .05), speed = reduceMotion ? .1 : .45;
+      // calm mode: the scene only lives behind the hero; below it the page is still
+      if (window.scrollY > window.innerHeight * 1.05) return;
       T += dt * speed; var t = T;
       adapt(dt);
 
