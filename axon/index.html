@@ -460,7 +460,9 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
 .partner .dot { position: absolute; top: var(--space-6); right: var(--space-6); }
 .partner b { font: 500 22px/1.15 var(--font-display); color: var(--chrome-50); letter-spacing: .02em; }
 .partner span:not(.dot) { font: 400 12px/1.4 var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--chrome-400); }
-.partner-next { padding: 0; display: grid; }
+.partner-next { padding: 0; display: grid; grid-column: 1 / -1; }
+.partner-next a { min-height: 0 !important; grid-template-columns: auto auto; justify-content: space-between; align-items: center; }
+.partner-more b { font-size: 20px !important; }
 .partner-next a { min-height: 132px; padding: var(--space-6); display: grid; align-content: end; gap: 6px; border: 1px dashed var(--hairline-strong); border-radius: var(--radius-lg); text-decoration: none; transition: border-color .3s, background .3s; }
 .partner-next a:hover { border-color: var(--hairline-active); background: var(--glass); }
 .partner-next b { color: var(--chrome-200); }
@@ -1188,6 +1190,7 @@ html.past-hero #scene, html.past-hero .vignette { opacity: 0; }
       <li class="partner glass"><span class="dot ok"></span><b>Mediwell Clinic</b><span data-i18n="loc_london">London</span><p class="partner-res" data-i18n="sec_clinic">Private clinic</p></li>
       <li class="partner glass"><span class="dot ok"></span><b>Mayo Clinic</b><span data-i18n="loc_usa">USA</span><p class="partner-res" data-i18n="sec_clinic">Private clinic</p></li>
       <li class="partner glass"><span class="dot ok"></span><b>Aeterna Serpenti</b><span data-i18n="loc_tr">Türkiye</span><p class="partner-res" data-i18n="sec_jewel">Jewellery</p></li>
+      <li class="partner partner-more glass"><b data-i18n="part_more_b">And many more</b><p class="partner-res" data-i18n="part_more_p">Some of our clients prefer not to have their names published, so we keep them confidential.</p></li>
       <li class="partner partner-next"><a href="#consultation"><b data-i18n="part_next_b">Your hotel</b><span data-i18n="part_next_s">Next deployment →</span></a></li>
     </ul>
   </div>
@@ -1989,6 +1992,7 @@ html.past-hero #scene, html.past-hero .vignette { opacity: 0; }
   Object.keys(I18N_LOC).forEach(function (l) { Object.keys(I18N_LOC[l]).forEach(function (k) { I18N[l][k] = I18N_LOC[l][k]; }); });
   var I18N_CALM = {
     "en": {
+    "part_more_b": 'And many more', "part_more_p": 'Some of our clients prefer not to have their names published, so we keep them confidential.',
       "tagline": "AI systems for hotels, clinics and companies",
       "hero1": "Stop losing",
       "hero2": "customers.",
@@ -2054,6 +2058,7 @@ html.past-hero #scene, html.past-hero .vignette { opacity: 0; }
       "pk4_for": "For owners buried in messages and meetings."
     },
     "tr": {
+    "part_more_b": 'Ve daha niceleri', "part_more_p": 'Bazı müşterilerimiz isimlerinin yayınlanmamasını tercih ediyor, bu yüzden onları gizli tutuyoruz.',
       "tagline": "Oteller, klinikler ve şirketler için yapay zekâ sistemleri",
       "hero1": "Hiçbir müşteriyi",
       "hero2": "kaybetmeyin.",
@@ -2119,6 +2124,7 @@ html.past-hero #scene, html.past-hero .vignette { opacity: 0; }
       "pk4_for": "Mesaj ve toplantı yükü altında kalan işletme sahipleri için."
     },
     "de": {
+    "part_more_b": 'Und viele mehr', "part_more_p": 'Einige unserer Kunden möchten nicht namentlich genannt werden, deshalb bleiben sie vertraulich.',
       "tagline": "KI-Systeme für Hotels, Kliniken und Unternehmen",
       "hero1": "Verlieren Sie",
       "hero2": "keine Kunden mehr.",
@@ -2184,6 +2190,7 @@ html.past-hero #scene, html.past-hero .vignette { opacity: 0; }
       "pk4_for": "Für Inhaber, die in Nachrichten und Meetings untergehen."
     },
     "fr": {
+    "part_more_b": 'Et bien d\'autres', "part_more_p": 'Certains de nos clients préfèrent ne pas voir leur nom publié, nous les gardons donc confidentiels.',
       "tagline": "Systèmes IA pour hôtels, cliniques et entreprises",
       "hero1": "Ne perdez plus",
       "hero2": "aucun client.",
