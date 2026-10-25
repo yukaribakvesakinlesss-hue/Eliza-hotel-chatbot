@@ -190,13 +190,14 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border:0;border-radiu
 @media (max-width:860px){.steps{grid-template-columns:minmax(0,1fr)}}
 
 /* clients */
-.clients{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;margin-top:56px}
-.client{padding:34px 30px;display:flex;flex-direction:column;gap:8px;min-height:200px;justify-content:flex-end}
+.clients{display:grid;grid-template-columns:repeat(4, minmax(0,1fr));gap:18px;margin-top:56px}
+.client{padding:28px 26px;display:flex;flex-direction:column;gap:8px;min-height:170px;justify-content:flex-end}
 .client .city{font-family:var(--mono);font-size:12px;color:var(--text-secondary);letter-spacing:.14em;text-transform:uppercase}
-.client b{font-family:var(--display);font-size:28px;font-weight:700}
+.client b{font-family:var(--display);font-size:23px;line-height:1.15;font-weight:700}
 .client p{margin:0;color:var(--text-secondary)}
 .client.you{border-style:dashed;background:transparent}
-@media (max-width:760px){.clients{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:1000px){.clients{grid-template-columns:repeat(2, minmax(0,1fr))}}
+@media (max-width:560px){.clients{grid-template-columns:minmax(0,1fr)}.client{min-height:0}}
 
 /* faq */
 .faq{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;margin-top:56px}
@@ -397,7 +398,13 @@ footer{padding:56px 0 40px;border-top:1px solid var(--hairline);color:var(--text
         <div class="eyebrow mono">04 · Çalıştığımız işletmeler</div>
         <div class="clients">
           <div class="client glass rv rv-clip"><span class="city">İstanbul · Otel</span><b>Hotel Eliza</b><p>Rezervasyon sistemi ve yapay zekâ asistanı.</p></div>
-          <div class="client glass you rv rv-clip" style="transition-delay:.15s"><span class="city">Sıradaki</span><b>Sizin işletmeniz</b><p>Otel, klinik ya da şirket. Ön görüşme ücretsiz.</p></div>
+          <div class="client glass rv rv-clip" style="transition-delay:0.08s"><span class="city">Londra · Otel</span><b>art'otel London Hoxton</b></div>
+          <div class="client glass rv rv-clip" style="transition-delay:0.16s"><span class="city">Londra · Otel</span><b>The Resident Covent Garden</b></div>
+          <div class="client glass rv rv-clip" style="transition-delay:0.24s"><span class="city">Londra · Otel</span><b>Rosewood London</b></div>
+          <div class="client glass rv rv-clip"><span class="city">Londra · Özel klinik</span><b>Mediwell Clinic</b></div>
+          <div class="client glass rv rv-clip" style="transition-delay:0.08s"><span class="city">ABD · Klinik</span><b>Mayo Clinic</b></div>
+          <div class="client glass rv rv-clip" style="transition-delay:0.16s"><span class="city">Türkiye · Mücevher</span><b>Aeterna Serpenti</b></div>
+          <div class="client glass you rv rv-clip" style="transition-delay:.24s"><span class="city">Sıradaki</span><b>Sizin işletmeniz</b><p>Otel, klinik ya da şirket. Ön görüşme ücretsiz.</p></div>
         </div>
       </div>
     </section>
