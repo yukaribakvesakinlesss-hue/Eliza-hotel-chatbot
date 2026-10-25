@@ -1,0 +1,739 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AXON Systems · Hiçbir talep kaybolmaz</title>
+<meta name="description" content="Oteller, klinikler ve şirketler için rezervasyon, randevu ve yapay zekâ asistanı sistemleri.">
+<meta name="theme-color" content="#04070D">
+<!-- DEPLOY STEP: og:url and og:image need the live absolute URL before going online -->
+<meta property="og:title" content="AXON Systems · Hiçbir talep kaybolmaz">
+<meta property="og:description" content="Oteller, klinikler ve şirketler için rezervasyon, randevu ve yapay zekâ asistanı sistemleri.">
+<meta property="og:image" content="assets/hero-ending.jpg">
+<meta property="og:url" content="./">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --canvas:#04070D;
+  --panel:#0A1220;
+  --panel-2:#0D1729;
+  --accent:#E6EBF2;
+  --accent-hover:#FFFFFF;
+  --accent-muted:rgba(56,189,248,.22);
+  --cyan:#38BDF8;
+  --violet:#818CF8;
+  --text-secondary:#93A2B8;
+  --text-primary:#F1F4F8;
+  --hairline:rgba(255,255,255,.08);
+  --display:'Syne', 'Avenir Next', 'Segoe UI', sans-serif;
+  --body:'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif;
+  --mono:'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --gutter:clamp(16px, 4vw, 48px);
+}
+*{box-sizing:border-box}
+html{background:var(--canvas);color-scheme:dark;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--canvas);color:var(--text-primary);font-family:var(--body);font-size:17px;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img,video,svg{display:block;max-width:100%}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:6px}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-secondary)}
+.wrap{width:min(1180px, 100% - 2*var(--gutter));margin-inline:auto}
+
+/* ---------- fixed environment layer: whisper particles ---------- */
+#env{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.55}
+main,header,footer{position:relative;z-index:1}
+
+/* ---------- nav ---------- */
+.nav{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:18px var(--gutter);transition:background .5s var(--ease), border-color .5s var(--ease);border-bottom:1px solid transparent}
+.nav.solid{background:rgba(4,7,13,.72);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-color:var(--hairline)}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.brand img{width:34px;height:34px;border-radius:9px;object-fit:cover}
+.brand span{font-family:var(--display);font-weight:700;letter-spacing:.32em;font-size:15px}
+.nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0}
+.nav ul a{text-decoration:none;font-size:14px;color:var(--text-secondary);transition:color .3s}
+.nav ul a:hover{color:var(--text-primary)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 24px;border-radius:999px;font:600 15px/1 var(--body);text-decoration:none;border:1px solid transparent;cursor:pointer;transition:background .35s var(--ease), color .35s var(--ease), transform .35s var(--ease), box-shadow .35s var(--ease)}
+.btn-primary{background:var(--accent);color:#05080F;box-shadow:0 0 0 0 rgba(230,235,242,.0)}
+.btn-primary:hover{background:var(--accent-hover);transform:translateY(-1px);box-shadow:0 10px 40px -10px rgba(159,220,255,.55)}
+.btn-ghost{border-color:rgba(255,255,255,.18);color:var(--text-primary);background:rgba(255,255,255,.02)}
+.btn-ghost:hover{border-color:rgba(56,189,248,.5)}
+.nav .btn{min-height:40px;padding:0 18px;font-size:14px}
+@media (max-width:860px){.nav ul{display:none}}
+
+/* ---------- hero scrub ---------- */
+.hero{position:relative;height:440vh}
+.hero-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:#03060B}
+.hero-media{position:absolute;inset:0}
+.hero-media video,.hero-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero-media img.static{opacity:0;transition:opacity .6s var(--ease)}
+.hero-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(4,7,13,.55) 0%, rgba(4,7,13,0) 22%, rgba(4,7,13,0) 78%, rgba(4,7,13,.9) 100%);pointer-events:none}
+.band{position:absolute;z-index:2;max-width:min(520px, 86vw);opacity:0;will-change:opacity, transform}
+.band::before{content:"";position:absolute;inset:-60px -80px;z-index:-1;background:radial-gradient(closest-side, rgba(3,6,11,.78), rgba(3,6,11,0));opacity:var(--scrim, 0);pointer-events:none}
+.band h2,.band h1{font-family:var(--display);font-weight:700;letter-spacing:-.01em;line-height:1.04;margin:0 0 14px;text-shadow:0 2px 24px rgba(0,0,0,.65)}
+.band h2{font-size:clamp(34px, 4.6vw, 62px)}
+.band p{margin:0;color:#C9D3DF;font-size:clamp(16px, 1.4vw, 19px);text-shadow:0 1px 12px rgba(0,0,0,.8)}
+.band .mono{display:block;margin-bottom:16px}
+.b1{left:var(--gutter);top:50%;transform:translateY(-50%)}
+.b2{right:var(--gutter);top:50%;transform:translateY(-50%);text-align:right}
+.b3{left:var(--gutter);top:50%;transform:translateY(-50%)}
+.b4{left:50%;top:11vh;transform:translateX(-50%);text-align:center;width:min(1120px, 92vw);max-width:none}
+.b4 h1{font-size:clamp(42px, 6vw, 88px)}
+.b4 p{max-width:600px;margin:0 auto 28px}
+.b4 .ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.b2 .line,.b1 .line,.b3 .line{display:block}
+.loader{position:absolute;right:var(--gutter);bottom:28px;z-index:3;display:flex;align-items:center;gap:12px;opacity:0;transition:opacity .5s var(--ease)}
+.loader.on{opacity:1}
+.loader svg{width:30px;height:30px;transform:rotate(-90deg)}
+.loader circle{fill:none;stroke-width:2}
+.loader .track{stroke:rgba(255,255,255,.12)}
+.loader .bar{stroke:var(--accent);stroke-linecap:round;stroke-dasharray:88;stroke-dashoffset:88;transition:stroke-dashoffset .3s linear}
+.scroll-cue{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:10px;transition:opacity .5s var(--ease)}
+.scroll-cue i{width:1px;height:42px;background:linear-gradient(var(--accent), transparent);animation:cue 2.2s var(--ease) infinite}
+@keyframes cue{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* static hero (phones, reduced motion, save-data, file://, video failure) */
+html.static-hero .hero{height:auto}
+html.static-hero .hero-stage{position:relative;height:100vh;height:100svh;min-height:620px}
+html.static-hero .hero-media video{display:none}
+html.static-hero .hero-media img.static{opacity:1}
+html.static-hero .b1,html.static-hero .b2,html.static-hero .b3,html.static-hero .loader{display:none}
+html.static-hero .b4{opacity:1;--scrim:1}
+html.static-hero .scroll-cue{opacity:1}
+@media (max-width:760px){
+  html.static-hero .hero-media img.static{height:66%;bottom:auto;-webkit-mask-image:linear-gradient(180deg,#000 72%,transparent);mask-image:linear-gradient(180deg,#000 72%,transparent)}
+  .b4{top:auto;bottom:max(6vh, 40px)}
+  .b4 .ctas .btn{flex:1 1 auto}
+  .scroll-cue{display:none}
+}
+
+/* ---------- sections ---------- */
+section{padding:clamp(88px, 12vw, 160px) 0}
+.eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.eyebrow::before{content:"";width:28px;height:1px;background:linear-gradient(90deg, var(--cyan), transparent)}
+.h2{font-family:var(--display);font-weight:700;font-size:clamp(32px, 4.4vw, 58px);line-height:1.06;letter-spacing:-.01em;margin:0 0 20px;max-width:16ch}
+.lead{color:var(--text-secondary);font-size:clamp(17px, 1.5vw, 20px);max-width:58ch;margin:0}
+.glass{background:linear-gradient(180deg, rgba(13,23,41,.72), rgba(10,18,32,.55));border:1px solid var(--hairline);border-radius:22px;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+
+/* entrances, one per section */
+.rv{transition:opacity 1s var(--ease), transform 1s var(--ease), filter 1s var(--ease), clip-path 1.2s var(--ease)}
+.rv-up{opacity:0;transform:translateY(34px)}
+.rv-blur{opacity:0;filter:blur(14px)}
+.rv-clip{clip-path:inset(0 0 100% 0)}
+.rv-scale{opacity:0;transform:scale(.96)}
+.rv-left{opacity:0;transform:translateX(-36px)}
+.in.rv-up,.in.rv-left{opacity:1;transform:none}
+.in.rv-blur{opacity:1;filter:none}
+.in.rv-clip{clip-path:inset(0 0 0 0)}
+.in.rv-scale{opacity:1;transform:none}
+
+/* drip line: the drop's path drawn down the page */
+.drip{position:absolute;left:max(10px, calc((100vw - 1180px)/2 - 34px));top:0;height:100%;width:24px;pointer-events:none;z-index:0}
+.drip path{fill:none;stroke:url(#dripGrad);stroke-width:1.2}
+@media (max-width:760px){.drip{display:none}}
+.below{position:relative}
+
+/* lost drops */
+.stats{display:grid;grid-template-columns:repeat(3, minmax(0,1fr));gap:18px;margin-top:56px}
+.stat{padding:30px 28px}
+.stat b{display:block;font-family:var(--display);font-size:clamp(40px, 4.6vw, 64px);line-height:1;letter-spacing:-.02em;margin-bottom:14px;background:linear-gradient(180deg, #fff, #9FB2C9);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat p{margin:0;color:var(--text-secondary);font-size:15.5px}
+.src{margin-top:18px;font-size:12.5px;color:#6B7A90}
+.src a{color:#8392A8}
+@media (max-width:860px){.stats{grid-template-columns:minmax(0,1fr)}}
+
+/* calculator: the interactive moment */
+.calc{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:0;margin-top:56px;overflow:hidden}
+.calc-in{padding:clamp(26px, 4vw, 48px);display:grid;gap:30px}
+.calc-out{padding:clamp(26px, 4vw, 48px);border-left:1px solid var(--hairline);display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+.calc-out::before{content:"";position:absolute;width:420px;height:420px;right:-160px;bottom:-200px;border-radius:50%;border:1px solid rgba(159,220,255,.25);box-shadow:0 0 80px rgba(56,189,248,.12) inset}
+.field label{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px;font-size:15px;color:#C9D3DF}
+.field output{font-family:var(--mono);font-size:14px;color:var(--text-primary)}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:28px;background:transparent;cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:2px;background:linear-gradient(90deg, var(--cyan) var(--p,50%), rgba(255,255,255,.12) var(--p,50%));border-radius:2px}
+input[type=range]::-moz-range-track{height:2px;background:rgba(255,255,255,.12)}
+input[type=range]::-moz-range-progress{height:2px;background:var(--cyan)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;margin-top:-9px;border-radius:50%;background:radial-gradient(circle at 35% 30%, #fff, #9FB2C9 60%, #4B5A70);box-shadow:0 0 0 4px rgba(56,189,248,.15)}
+input[type=range]::-moz-range-thumb{width:20px;height:20px;border:0;border-radius:50%;background:radial-gradient(circle at 35% 30%, #fff, #9FB2C9 60%, #4B5A70)}
+.big{font-family:var(--display);font-size:clamp(54px, 7vw, 92px);line-height:.95;letter-spacing:-.02em;margin:10px 0 8px;position:relative}
+.calc-out p{margin:0;color:var(--text-secondary);position:relative}
+.calc-out .money{margin-top:22px;padding-top:22px;border-top:1px solid var(--hairline);color:#C9D3DF}
+.calc-out .money strong{color:var(--text-primary)}
+.calc-note{font-size:12.5px;color:#6B7A90;margin-top:16px;position:relative}
+@media (max-width:860px){.calc{grid-template-columns:minmax(0,1fr)}.calc-out{border-left:0;border-top:1px solid var(--hairline)}}
+
+/* systems */
+.sys{display:grid;grid-template-columns:repeat(6, minmax(0,1fr));gap:18px;margin-top:56px}
+.sys article{grid-column:span 2;padding:30px 28px 32px;position:relative;overflow:hidden;transition:border-color .4s var(--ease), transform .5s var(--ease)}
+.sys article:nth-child(4),.sys article:nth-child(5){grid-column:span 3}
+.sys article:hover{border-color:rgba(56,189,248,.35);transform:translateY(-3px)}
+.sys .n{font-family:var(--mono);font-size:12px;color:var(--cyan);letter-spacing:.14em}
+.sys h3{font-family:var(--display);font-size:22px;line-height:1.2;margin:18px 0 10px}
+.sys p{margin:0;color:var(--text-secondary);font-size:15.5px}
+.sys .tag{position:absolute;top:26px;right:24px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--violet);border:1px solid rgba(129,140,248,.35);padding:4px 10px;border-radius:99px}
+@media (max-width:980px){.sys{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.sys article,.sys article:nth-child(4),.sys article:nth-child(5){grid-column:auto}}
+@media (max-width:640px){.sys{grid-template-columns:minmax(0,1fr)}}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3, minmax(0,1fr));gap:18px;margin-top:56px;counter-reset:s}
+.step{padding:34px 30px}
+.step svg{width:64px;height:64px;margin-bottom:26px}
+.step svg .d{fill:none;stroke:var(--accent);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:var(--len, 200);stroke-dashoffset:var(--len, 200);transition:stroke-dashoffset 1.8s var(--ease)}
+.step svg .c{fill:none;stroke:var(--cyan);stroke-width:1.4;opacity:0;transition:opacity 1s var(--ease) 1.2s}
+.step.in svg .d{stroke-dashoffset:0}
+.step.in svg .c{opacity:1}
+.step h3{font-family:var(--display);font-size:24px;margin:0 0 10px}
+.step h3 small{font-family:var(--mono);font-size:12px;color:var(--text-secondary);letter-spacing:.14em;margin-right:10px;vertical-align:middle}
+.step p{margin:0;color:var(--text-secondary)}
+@media (max-width:860px){.steps{grid-template-columns:minmax(0,1fr)}}
+
+/* clients */
+.clients{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;margin-top:56px}
+.client{padding:34px 30px;display:flex;flex-direction:column;gap:8px;min-height:200px;justify-content:flex-end}
+.client .city{font-family:var(--mono);font-size:12px;color:var(--text-secondary);letter-spacing:.14em;text-transform:uppercase}
+.client b{font-family:var(--display);font-size:28px;font-weight:700}
+.client p{margin:0;color:var(--text-secondary)}
+.client.you{border-style:dashed;background:transparent}
+@media (max-width:760px){.clients{grid-template-columns:minmax(0,1fr)}}
+
+/* faq */
+.faq{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;margin-top:56px}
+.faq details{padding:0 26px;border-radius:18px}
+.faq summary{list-style:none;cursor:pointer;padding:24px 34px 24px 0;font-weight:600;font-size:17px;position:relative}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"";position:absolute;right:4px;top:50%;width:10px;height:10px;border-right:1.5px solid var(--text-secondary);border-bottom:1.5px solid var(--text-secondary);transform:translateY(-70%) rotate(45deg);transition:transform .4s var(--ease)}
+.faq details[open] summary::after{transform:translateY(-30%) rotate(225deg)}
+.faq details p{margin:0 0 24px;color:var(--text-secondary)}
+@media (max-width:860px){.faq{grid-template-columns:minmax(0,1fr)}}
+
+/* contact */
+.contact{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(28px, 5vw, 70px);align-items:start}
+.contact-art{position:relative;border-radius:22px;overflow:hidden;aspect-ratio:4/5;border:1px solid var(--hairline)}
+.contact-art img{width:100%;height:100%;object-fit:cover;object-position:50% 72%}
+.contact-art::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(4,7,13,.75), rgba(4,7,13,0) 45%, rgba(4,7,13,.35))}
+.contact-art .cap{position:absolute;left:26px;right:26px;top:24px;z-index:1}
+.contact-art .cap b{display:block;font-family:var(--display);font-size:22px;margin-bottom:6px}
+.contact-art .cap span{color:var(--text-secondary);font-size:15px}
+form{padding:clamp(24px, 4vw, 40px);display:grid;gap:18px}
+.row2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
+.f label{display:block;font-size:14px;color:#C9D3DF;margin-bottom:8px}
+.f input,.f select,.f textarea{width:100%;background:rgba(2,4,8,.55);border:1px solid rgba(255,255,255,.12);border-radius:12px;color:var(--text-primary);font:16px/1.4 var(--body);padding:14px 16px;transition:border-color .3s}
+.f textarea{min-height:120px;resize:vertical}
+.f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:rgba(56,189,248,.6)}
+.form-foot{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.form-foot small{color:#6B7A90;font-size:13px;flex:1 1 220px}
+.ok{display:none;padding:18px 20px;border-radius:14px;border:1px solid rgba(56,189,248,.35);background:rgba(56,189,248,.06);color:#C9D3DF}
+form.sent .ok{display:block}
+@media (max-width:860px){.contact{grid-template-columns:minmax(0,1fr)}.contact-art{aspect-ratio:16/10}}
+@media (max-width:560px){.row2{grid-template-columns:minmax(0,1fr)}}
+
+footer{padding:56px 0 40px;border-top:1px solid var(--hairline);color:var(--text-secondary);font-size:14.5px}
+.foot{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.foot a{text-decoration:none}
+.foot a:hover{color:var(--text-primary)}
+
+.wa{position:fixed;right:20px;bottom:20px;z-index:30;width:54px;height:54px;border-radius:50%;display:grid;place-items:center;background:#0F1A2B;border:1px solid rgba(255,255,255,.14);box-shadow:0 12px 40px rgba(0,0,0,.45);opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .5s var(--ease), transform .5s var(--ease)}
+.wa.on{opacity:1;transform:none;pointer-events:auto}
+.wa svg{width:24px;height:24px;fill:#E6EBF2}
+
+@media (prefers-reduced-motion: reduce){
+  .rv,.rv-up,.rv-blur,.rv-clip,.rv-scale,.rv-left{opacity:1 !important;transform:none !important;filter:none !important;clip-path:none !important;transition:none !important}
+  .step svg .d{stroke-dashoffset:0;transition:none}
+  .step svg .c{opacity:1;transition:none}
+  .scroll-cue i{animation:none}
+  #env{display:none}
+}
+</style>
+</head>
+<body>
+<canvas id="env" aria-hidden="true"></canvas>
+
+<header class="nav" id="nav">
+  <a class="brand" href="#top" aria-label="AXON Systems ana sayfa"><img src="assets/axon-logo.jpg" alt="" width="34" height="34"><span>AXON</span></a>
+  <ul>
+    <li><a href="#kacan">Kaçan talepler</a></li>
+    <li><a href="#sistemler">Sistemler</a></li>
+    <li><a href="#nasil">Nasıl çalışır</a></li>
+    <li><a href="#sorular">Sorular</a></li>
+  </ul>
+  <a class="btn btn-primary" href="#gorusme">Ön görüşme</a>
+</header>
+
+<main id="top">
+  <!-- ================= HERO: scroll-scrubbed film ================= -->
+  <section class="hero" id="hero" aria-label="Giriş" style="padding:0">
+    <div class="hero-stage">
+      <div class="hero-media">
+        <img class="static" src="assets/hero-ending.jpg" alt="Karanlık bir yüzeyde duran sıvı metal damla ve etrafında ışık halkası" width="1920" height="1080">
+        <video id="film" muted playsinline preload="none" poster="assets/hero-poster.jpg" aria-hidden="true"></video>
+      </div>
+
+      <div class="band b1" data-a="0" data-b=".2">
+        <span class="mono">AXON Systems</span>
+        <h2>Her mesaj bir müşteri.</h2>
+        <p>Gece 02.14'te gelen de.</p>
+      </div>
+      <div class="band b2" data-a=".24" data-b=".44">
+        <h2>Çoğu işletmede bir kısmı kaybolur.</h2>
+        <p>Telefon çalar, kimse açamaz. Mesaj sabaha kalır.</p>
+      </div>
+      <div class="band b3" data-a=".48" data-b=".66">
+        <h2>AXON yakalar.</h2>
+        <p>Rezervasyon, randevu, soru. Saniyeler içinde cevap.</p>
+      </div>
+      <div class="band b4" data-a=".74" data-b="1.01">
+        <h1>Hiçbir talep kaybolmaz.</h1>
+        <p>Oteller, klinikler ve şirketler için rezervasyon, randevu ve yapay zekâ asistanı sistemleri.</p>
+        <div class="ctas">
+          <a class="btn btn-primary" href="#gorusme">Ücretsiz ön görüşme al</a>
+          <a class="btn btn-ghost" href="#kacan">Önce hesapla</a>
+        </div>
+      </div>
+
+      <div class="loader" id="loader" role="status" aria-live="polite">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><circle class="track" cx="16" cy="16" r="14"/><circle class="bar" id="loaderBar" cx="16" cy="16" r="14"/></svg>
+        <span class="mono" id="loaderTxt">Film yükleniyor</span>
+      </div>
+      <div class="scroll-cue" id="cue" aria-hidden="true"><span class="mono">Kaydır</span><i></i></div>
+    </div>
+  </section>
+
+  <div class="below">
+    <svg class="drip" id="drip" aria-hidden="true" preserveAspectRatio="none">
+      <defs><linearGradient id="dripGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E6EBF2" stop-opacity=".0"/><stop offset=".08" stop-color="#E6EBF2" stop-opacity=".5"/><stop offset=".6" stop-color="#38BDF8" stop-opacity=".35"/><stop offset="1" stop-color="#818CF8" stop-opacity=".0"/></linearGradient></defs>
+      <path id="dripPath" d=""/>
+    </svg>
+
+    <!-- ================= Lost drops ================= -->
+    <section id="kacan">
+      <div class="wrap">
+        <div class="eyebrow mono">01 · Kaçan damlalar</div>
+        <h2 class="h2 rv rv-up">Talep geliyor. Cevap gecikiyor.</h2>
+        <p class="lead rv rv-up">Misafir gece yazar, hasta öğle arasında arar, müşteri hafta sonu sorar. Cevap gelmezse bir sonraki seçeneğe geçer. Rakamlar sektörün kendisinden.</p>
+        <div class="stats">
+          <div class="stat glass rv rv-up"><b>%15–30</b><p>Online acentelerin bir otel rezervasyonundan aldığı komisyon.</p></div>
+          <div class="stat glass rv rv-up" style="transition-delay:.12s"><b>%43</b><p>Acentelerin kendi fiyatlarının altına indiğini söyleyen Avrupa'daki otellerin oranı.</p></div>
+          <div class="stat glass rv rv-up" style="transition-delay:.24s"><b>%15–30</b><p>Sağlık sektöründe sık verilen, randevusuna gelmeyen hasta oranı.</p></div>
+        </div>
+        <p class="src">Kaynaklar: <a href="https://connectingtravel.com/news/hoteliers-accuse-booking.com-of-unfair-business-practices" target="_blank" rel="noopener">Hotrec 2024 araştırması</a>, <a href="https://www.phocuswire.com/French-hoteliers-voice-concern-about-OTA-business-practices" target="_blank" rel="noopener">PhocusWire</a>, <a href="https://www.wati.io/geo/blog/which-software-for-healthcare-clinics-automates-appointment-reminders-on-whatsapp-and-lets-patients-confirm-or-reschedule-without-calling" target="_blank" rel="noopener">sektör yayınları</a>.</p>
+
+        <!-- the interactive moment -->
+        <div class="calc glass rv rv-scale" id="calc">
+          <div class="calc-in">
+            <div>
+              <div class="mono" style="margin-bottom:10px">Kaçan talep hesaplayıcı</div>
+              <p style="margin:0;color:var(--text-secondary)">Kendi rakamlarınızı kaydırın. Bir dakika sürer.</p>
+            </div>
+            <div class="field">
+              <label for="cReq">Ayda gelen talep <output id="oReq">400</output></label>
+              <input type="range" id="cReq" min="50" max="3000" step="50" value="400">
+            </div>
+            <div class="field">
+              <label for="cMiss">Cevapsız kalan ya da geç cevaplanan <output id="oMiss">%20</output></label>
+              <input type="range" id="cMiss" min="5" max="60" step="1" value="20">
+            </div>
+            <div class="field">
+              <label for="cVal">Bir rezervasyonun ya da randevunun ortalama değeri <output id="oVal">₺3.000</output></label>
+              <input type="range" id="cVal" min="250" max="25000" step="250" value="3000">
+            </div>
+          </div>
+          <div class="calc-out" aria-live="polite">
+            <div class="mono">Her ay kaybolan</div>
+            <div class="big" id="rLost">80</div>
+            <p>talep cevapsız ya da geç kalıyor.</p>
+            <p class="money">Bunların sadece üçte biri dönse: <strong id="rMoney">ayda ₺80.000</strong></p>
+            <p class="calc-note">Tahmindir. Üçte bir oranı örnek bir varsayım, ön görüşmede kendi verinizle hesaplarız.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Systems ================= -->
+    <section id="sistemler">
+      <div class="wrap">
+        <div class="eyebrow mono">02 · Sistemler</div>
+        <h2 class="h2 rv rv-blur">Beş sistem. Tek hedef: talebi yakalamak.</h2>
+        <p class="lead rv rv-blur">İhtiyacınız olanı seçersiniz. Hepsi birbiriyle konuşur.</p>
+        <div class="sys">
+          <article class="glass rv rv-up"><span class="n">01</span><h3>Rezervasyon ve randevu yönetimi</h3><p>Müsaitlik, ödeme ve onay tek ekranda. Sizi doğrudan bulan müşteri komisyonsuz rezervasyon yapar.</p></article>
+          <article class="glass rv rv-up" style="transition-delay:.1s"><span class="n">02</span><h3>Web sitesi tasarımı</h3><p>Hızlı açılan, çok dilli, ziyaretçiyi tek bir adıma götüren site.</p></article>
+          <article class="glass rv rv-up" style="transition-delay:.2s"><span class="n">03</span><h3>Yapay zekâ sohbet asistanı</h3><p>Sitenizde ve WhatsApp'ta gece gündüz cevap verir, talebi kayda geçirir, ekibinize iletir.</p></article>
+          <article class="glass rv rv-up"><span class="n">04</span><h3>Yapay zekâ asistanı</h3><p>Ekibinizin içerideki sorularını cevaplar, raporu hazırlar, unutulan işi hatırlatır.</p></article>
+          <article class="glass rv rv-up" style="transition-delay:.1s"><span class="tag">Özel paket</span><span class="n">05</span><h3>Kişisel yapay zekâ asistanı</h3><p>Sadece size ait. Takviminiz, notlarınız, konuşma tarzınız. Gününüzü sizin yerinize toparlar.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= How it works ================= -->
+    <section id="nasil">
+      <div class="wrap">
+        <div class="eyebrow mono">03 · Nasıl çalışır</div>
+        <h2 class="h2 rv rv-left">Üç adım. Sonra talepler kendiliğinden yerine oturur.</h2>
+        <div class="steps">
+          <div class="step glass rv">
+            <svg viewBox="0 0 64 64" aria-hidden="true"><path class="d" style="--len:120" d="M10 22a10 10 0 0 1 10-10h24a10 10 0 0 1 10 10v12a10 10 0 0 1-10 10H28l-10 8v-8a8 8 0 0 1-8-8z"/><circle class="c" cx="24" cy="28" r="2"/><circle class="c" cx="32" cy="28" r="2"/><circle class="c" cx="40" cy="28" r="2"/></svg>
+            <h3><small>01</small>Görüşme</h3>
+            <p>30 dakika. İşletmenizi, kanallarınızı ve nerede talep kaçtığını birlikte konuşuruz.</p>
+          </div>
+          <div class="step glass rv" style="transition-delay:.15s">
+            <svg viewBox="0 0 64 64" aria-hidden="true"><path class="d" style="--len:170" d="M32 8c-8 12-16 20-16 30a16 16 0 0 0 32 0c0-10-8-18-16-30z"/><circle class="c" cx="32" cy="38" r="6"/></svg>
+            <h3><small>02</small>Kurulum</h3>
+            <p>Sistemi kurar, sizin bilgilerinizle ve sizin tonunuzla hazırlar, ekibinize gösteririz.</p>
+          </div>
+          <div class="step glass rv" style="transition-delay:.3s">
+            <svg viewBox="0 0 64 64" aria-hidden="true"><path class="d" style="--len:190" d="M8 40c6-4 12-4 18 0s12 4 18 0 10-4 12-2"/><path class="d" style="--len:120" d="M32 34V10m-8 8 8-8 8 8"/><circle class="c" cx="32" cy="50" r="3"/></svg>
+            <h3><small>03</small>Yayında</h3>
+            <p>Talepler gelmeye başlar. Her ay kısa bir rapor, ihtiyaç olduğunda hızlı destek.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Clients ================= -->
+    <section id="musteriler" style="padding-top:0">
+      <div class="wrap">
+        <div class="eyebrow mono">04 · Çalıştığımız işletmeler</div>
+        <div class="clients">
+          <div class="client glass rv rv-clip"><span class="city">İstanbul · Otel</span><b>Hotel Eliza</b><p>Rezervasyon sistemi ve yapay zekâ asistanı.</p></div>
+          <div class="client glass you rv rv-clip" style="transition-delay:.15s"><span class="city">Sıradaki</span><b>Sizin işletmeniz</b><p>Otel, klinik ya da şirket. Ön görüşme ücretsiz.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FAQ ================= -->
+    <section id="sorular">
+      <div class="wrap">
+        <div class="eyebrow mono">05 · Sorular</div>
+        <h2 class="h2 rv rv-up">En çok sorulanlar.</h2>
+        <div class="faq">
+          <details class="glass"><summary>Robot gibi mi konuşur?</summary><p>Hayır. Sizin bilgilerinizle ve sizin tonunuzla konuşur. Kısa, sıcak, net. Yayına almadan önce siz deneyip onaylarsınız.</p></details>
+          <details class="glass"><summary>Yanlış cevap verirse ne olur?</summary><p>Sadece sizin onayladığınız bilgilerle cevap verir. Emin olmadığı bir soruda tahmin yürütmez, talebi ekibinize aktarır.</p></details>
+          <details class="glass"><summary>Müşteri bir insana ulaşabilir mi?</summary><p>Evet. "Bir yetkiliyle görüşmek istiyorum" demesi yeterli. Talep o anda ekibinize düşer.</p></details>
+          <details class="glass"><summary>Verilerim nerede durur?</summary><p>Misafir ve hasta bilgileri sizin hesabınızda tutulur, reklam için kullanılmaz. Kurulumda KVKK gerekliliklerini birlikte gözden geçiririz.</p></details>
+          <details class="glass"><summary>Booking'i bırakmam mı gerekiyor?</summary><p>Hayır. Acenteler kalabilir. Amaç, sizi doğrudan bulan müşterinin komisyon ödemeden rezervasyon yapabilmesi.</p></details>
+          <details class="glass"><summary>Kurulum ne kadar sürer?</summary><p>İşletmenin büyüklüğüne ve seçtiğiniz sistemlere göre değişir. Ön görüşmenin sonunda size net bir tarih veririz.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Contact: the one call to action ================= -->
+    <section id="gorusme">
+      <div class="wrap contact">
+        <div class="contact-art rv rv-scale">
+          <img src="assets/hero-ending.jpg" alt="" loading="lazy" width="1920" height="1080">
+          <div class="cap"><b>Gülcan Genç</b><span>Kurucu, AXON Systems</span></div>
+        </div>
+        <div>
+          <div class="eyebrow mono">06 · Ön görüşme</div>
+          <h2 class="h2 rv rv-up">Kaçan talepleri birlikte bulalım.</h2>
+          <p class="lead rv rv-up" style="margin-bottom:30px">30 dakikalık ücretsiz görüşme. Hiçbir taahhüt yok.</p>
+          <form class="glass" id="form" novalidate>
+            <div class="row2">
+              <div class="f"><label for="fName">Adınız</label><input id="fName" name="name" autocomplete="name" required></div>
+              <div class="f"><label for="fType">İşletme türü</label>
+                <select id="fType" name="type"><option>Otel</option><option>Klinik</option><option>Şirket</option><option>Diğer</option></select></div>
+            </div>
+            <div class="f"><label for="fContact">Telefon ya da e-posta</label><input id="fContact" name="contact" autocomplete="email" required></div>
+            <div class="f"><label for="fMsg">Kısaca anlatın (isteğe bağlı)</label><textarea id="fMsg" name="msg" placeholder="Örnek: 24 odalı butik otel, WhatsApp'tan gelen soruları yetiştiremiyoruz."></textarea></div>
+            <div class="form-foot">
+              <button class="btn btn-primary" type="submit">Ücretsiz ön görüşme al</button>
+              <small>Gönder'e basınca kendi e-posta uygulamanız açılır, mesaj gulcanyesilbudak@icloud.com adresine gider.</small>
+            </div>
+            <div class="ok" role="status">E-posta uygulamanız açıldı. Orada Gönder'e bastığınızda mesajınız bize ulaşır. İsterseniz <a class="wa-link" href="#">WhatsApp'tan</a> da yazabilirsiniz.</div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div><b style="color:var(--text-primary);font-family:var(--display);letter-spacing:.28em">AXON</b> Systems · Kurucu Gülcan Genç</div>
+    <div style="display:flex;gap:22px;flex-wrap:wrap">
+      <a href="mailto:gulcanyesilbudak@icloud.com">gulcanyesilbudak@icloud.com</a>
+      <a href="tel:+905540248698">+90 554 024 86 98</a>
+      <a class="wa-link" href="#">WhatsApp</a>
+    </div>
+  </div>
+</footer>
+
+<a class="wa wa-link" id="wa" href="#" aria-label="WhatsApp'tan yazın"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.8-1.4a.5.5 0 0 0 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .2-1.2c-.1-.1-.3-.2-.5-.3z"/></svg></a>
+
+<script>
+(function () {
+  'use strict';
+  var root = document.documentElement;
+  var VIDEO_URL = 'assets/hero-scrub.mp4';
+  var WHATSAPP = '905540248698';
+  var EMAIL = 'gulcanyesilbudak@icloud.com';
+
+  // ---------- WhatsApp links ----------
+  var waHref = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent('Merhaba, AXON sistemleri hakkında bilgi almak istiyorum.');
+  Array.prototype.forEach.call(document.querySelectorAll('.wa-link'), function (a) { a.href = waHref; a.target = '_blank'; a.rel = 'noopener'; });
+
+  // ---------- the five static-hero gates, kept live ----------
+  var mqSmall = matchMedia('(max-width: 760px)');
+  var mqReduce = matchMedia('(prefers-reduced-motion: reduce)');
+  var conn = navigator.connection || null;
+  var videoFailed = location.protocol === 'file:';           // fetch is blocked on file://, so the still hero is the honest state
+  function saveData() { return !!(conn && (conn.saveData || /(^|-)2g$/.test(conn.effectiveType || ''))); }
+  function wantsStatic() { return mqSmall.matches || mqReduce.matches || saveData() || videoFailed; }
+
+  var hero = document.getElementById('hero');
+  var video = document.getElementById('film');
+  var loader = document.getElementById('loader');
+  var loaderBar = document.getElementById('loaderBar');
+  var loaderTxt = document.getElementById('loaderTxt');
+  var cue = document.getElementById('cue');
+  var bands = Array.prototype.map.call(document.querySelectorAll('.band'), function (el) {
+    return { el: el, a: +el.dataset.a, b: +el.dataset.b, op: -1, y: 99 };
+  });
+
+  var staticMode = null, loadStarted = false, ready = false;
+
+  function applyGates() {
+    var s = wantsStatic();
+    if (s === staticMode) return;
+    staticMode = s;
+    root.classList.toggle('static-hero', s);
+    if (s) {
+      bands.forEach(function (b) { b.el.style.opacity = ''; b.el.style.transform = ''; b.el.style.removeProperty('--scrim'); b.op = -1; });
+    } else {
+      startLoad();
+      kick();
+    }
+  }
+  [mqSmall, mqReduce].forEach(function (m) {
+    if (m.addEventListener) m.addEventListener('change', applyGates); else m.addListener(applyGates);
+  });
+  if (conn && conn.addEventListener) conn.addEventListener('change', applyGates);
+
+  // ---------- Blob fetch behind an honest loading ring ----------
+  function startLoad() {
+    if (loadStarted) return;
+    loadStarted = true;
+    loader.classList.add('on');
+    var timeout = setTimeout(function () { fail(); }, 45000);
+    fetch(VIDEO_URL).then(function (res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      var total = +res.headers.get('Content-Length') || 0;
+      if (!res.body || !res.body.getReader) return res.blob();
+      var reader = res.body.getReader(), got = 0, chunks = [];
+      function pump() {
+        return reader.read().then(function (r) {
+          if (r.done) return new Blob(chunks, { type: 'video/mp4' });
+          chunks.push(r.value); got += r.value.length;
+          if (total) {
+            loaderBar.style.strokeDashoffset = String(88 * (1 - got / total));
+            loaderTxt.textContent = 'Film yükleniyor · %' + Math.round(got / total * 100);
+          }
+          return pump();
+        });
+      }
+      return pump();
+    }).then(function (blob) {
+      video.src = URL.createObjectURL(blob);
+      video.addEventListener('loadeddata', function () {
+        clearTimeout(timeout);
+        ready = true;
+        loader.classList.remove('on');
+        cur = -1; kick();
+      }, { once: true });
+      video.addEventListener('error', fail, { once: true });
+      video.load();
+    }).catch(fail);
+    function fail() {
+      clearTimeout(timeout);
+      if (ready) return;
+      videoFailed = true;
+      loader.classList.remove('on');
+      applyGates();
+    }
+  }
+
+  // ---------- scroll -> progress -> lerped time, gated seeks, delta DOM writes ----------
+  var cur = 0, target = 0, running = false, seeking = false, last = 0;
+  video.addEventListener('seeked', function () { seeking = false; if (!running) kick(); });
+
+  function heroProgress() {
+    var r = hero.getBoundingClientRect();
+    var span = hero.offsetHeight - innerHeight;
+    return span > 0 ? Math.min(1, Math.max(0, -r.top / span)) : 0;
+  }
+
+  function bandOpacity(p, a, b) {
+    var ramp = 0.035;
+    if (p < a - ramp || p > b + ramp) return 0;
+    if (p < a + ramp) return a <= 0 ? 1 : (p - (a - ramp)) / (2 * ramp);
+    if (p > b - ramp) return b >= 1 ? 1 : ((b + ramp) - p) / (2 * ramp);
+    return 1;
+  }
+
+  function paintBands(p) {
+    for (var i = 0; i < bands.length; i++) {
+      var B = bands[i];
+      var o = bandOpacity(p, B.a, B.b);
+      o = o * o * (3 - 2 * o);
+      if (Math.abs(o - B.op) < 0.004) continue;
+      B.op = o;
+      var lift = (1 - o) * 18;
+      B.el.style.opacity = o.toFixed(3);
+      B.el.style.setProperty('--scrim', o.toFixed(3));
+      if (B.el.classList.contains('b4')) B.el.style.transform = 'translate(-50%,' + lift.toFixed(1) + 'px)';
+      else if (B.el.classList.contains('b2')) B.el.style.transform = 'translate(' + lift.toFixed(1) + 'px,-50%)';
+      else if (B.el.classList.contains('b3')) B.el.style.transform = 'translateY(-50%)';
+      else B.el.style.transform = 'translate(' + (-lift).toFixed(1) + 'px,-50%)';
+      if (B.el.classList.contains('b3')) B.el.style.filter = o > 0.98 ? '' : 'blur(' + ((1 - o) * 10).toFixed(1) + 'px)';
+    }
+  }
+
+  var cueOn = true;
+  function tick(now) {
+    var dt = Math.min(0.1, (now - (last || now)) / 1000); last = now;
+    var p = heroProgress();
+    var dur = ready ? video.duration || 6 : 6;
+    target = p * dur;
+    if (cur < 0) cur = target;
+    cur += (target - cur) * (1 - Math.exp(-dt * 9));
+    if (Math.abs(target - cur) < 0.002) cur = target;
+    if (ready && !seeking && Math.abs(video.currentTime - cur) > 0.012) {
+      seeking = true;
+      video.currentTime = cur;
+    }
+    paintBands(cur / dur);
+    var showCue = p < 0.02;
+    if (showCue !== cueOn) { cueOn = showCue; cue.style.opacity = showCue ? '1' : '0'; }
+    if (cur === target && !seeking) { running = false; last = 0; return; }
+    requestAnimationFrame(tick);
+  }
+  function kick() {
+    if (staticMode || running) return;
+    running = true;
+    requestAnimationFrame(tick);
+  }
+  addEventListener('scroll', kick, { passive: true });
+  addEventListener('resize', kick);
+
+  applyGates();
+  if (staticMode === false) kick();
+
+  // ---------- nav, WhatsApp button ----------
+  var nav = document.getElementById('nav'), wa = document.getElementById('wa');
+  var navSolid = null, waOn = null;
+  function onScrollUi() {
+    var past = scrollY > (staticMode ? innerHeight * 0.6 : hero.offsetHeight - innerHeight * 0.8);
+    if (past !== navSolid) { navSolid = past; nav.classList.toggle('solid', past); }
+    if (past !== waOn) { waOn = past; wa.classList.toggle('on', past); }
+  }
+  addEventListener('scroll', onScrollUi, { passive: true });
+  onScrollUi();
+
+  // ---------- section entrances ----------
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { rootMargin: '0px 0px -12% 0px' });
+  Array.prototype.forEach.call(document.querySelectorAll('.rv'), function (el) { io.observe(el); });
+
+  // ---------- the drop's path, drawn down the page as you scroll ----------
+  var below = document.querySelector('.below'), drip = document.getElementById('drip'), dripPath = document.getElementById('dripPath');
+  var dripLen = 0, dripShown = -1;
+  function buildDrip() {
+    var h = below.offsetHeight;
+    drip.setAttribute('viewBox', '0 0 24 ' + h);
+    var d = 'M12 0', y = 0, k = 0;
+    while (y < h) { var ny = Math.min(h, y + 420); d += ' C' + (12 + (k % 2 ? -7 : 7)) + ' ' + (y + 140) + ' ' + (12 + (k % 2 ? 7 : -7)) + ' ' + (ny - 140) + ' 12 ' + ny; y = ny; k++; }
+    dripPath.setAttribute('d', d);
+    dripLen = dripPath.getTotalLength();
+    dripPath.style.strokeDasharray = dripLen;
+    dripShown = -1; drawDrip();
+  }
+  function drawDrip() {
+    if (!dripLen) return;
+    var r = below.getBoundingClientRect();
+    var k = Math.min(1, Math.max(0, (innerHeight * 0.75 - r.top) / r.height));
+    if (mqReduce.matches) k = 1;
+    if (Math.abs(k - dripShown) < 0.002) return;
+    dripShown = k;
+    dripPath.style.strokeDashoffset = String(dripLen * (1 - k));
+  }
+  addEventListener('scroll', drawDrip, { passive: true });
+  addEventListener('resize', buildDrip);
+  addEventListener('load', buildDrip);
+  buildDrip();
+
+  // ---------- calculator ----------
+  var cReq = document.getElementById('cReq'), cMiss = document.getElementById('cMiss'), cVal = document.getElementById('cVal');
+  var oReq = document.getElementById('oReq'), oMiss = document.getElementById('oMiss'), oVal = document.getElementById('oVal');
+  var rLost = document.getElementById('rLost'), rMoney = document.getElementById('rMoney');
+  var fmt = new Intl.NumberFormat('tr-TR');
+  var shownLost = 80, animFrom = 80, animTo = 80, animT0 = 0;
+  function fill(input) { input.style.setProperty('--p', ((input.value - input.min) / (input.max - input.min) * 100) + '%'); }
+  function calc() {
+    var req = +cReq.value, miss = +cMiss.value, val = +cVal.value;
+    oReq.textContent = fmt.format(req);
+    oMiss.textContent = '%' + miss;
+    oVal.textContent = '₺' + fmt.format(val);
+    var lost = Math.round(req * miss / 100);
+    rMoney.textContent = 'ayda ₺' + fmt.format(Math.round(lost / 3 * val / 1000) * 1000);
+    animFrom = shownLost; animTo = lost; animT0 = performance.now();
+    requestAnimationFrame(countUp);
+    [cReq, cMiss, cVal].forEach(fill);
+  }
+  function countUp(now) {
+    var k = mqReduce.matches ? 1 : Math.min(1, (now - animT0) / 500);
+    k = 1 - Math.pow(1 - k, 3);
+    shownLost = Math.round(animFrom + (animTo - animFrom) * k);
+    rLost.textContent = fmt.format(shownLost);
+    if (k < 1) requestAnimationFrame(countUp);
+  }
+  [cReq, cMiss, cVal].forEach(function (i) { i.addEventListener('input', calc); });
+  calc();
+
+  // ---------- form: mailto, honest success state ----------
+  var form = document.getElementById('form');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = form.name.value.trim(), contact = form.contact.value.trim();
+    if (!name) { form.name.focus(); return; }
+    if (!contact) { form.contact.focus(); return; }
+    var body = 'Ad: ' + name + '\nİşletme türü: ' + form.type.value + '\nİletişim: ' + contact + '\n\n' + form.msg.value.trim()
+      + '\n\nTahmini kaçan talep: ayda ' + rLost.textContent;
+    location.href = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent('Ön görüşme talebi: ' + name) + '&body=' + encodeURIComponent(body);
+    form.classList.add('sent');
+  });
+
+  // ---------- fixed environment layer: whisper-level drifting motes ----------
+  var cv = document.getElementById('env'), cx = cv.getContext('2d'), motes = [], envRun = false;
+  function sizeEnv() {
+    var dpr = Math.min(2, devicePixelRatio || 1);
+    cv.width = innerWidth * dpr; cv.height = innerHeight * dpr;
+    cv.style.width = innerWidth + 'px'; cv.style.height = innerHeight + 'px';
+    cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  for (var i = 0; i < 46; i++) motes.push({ x: Math.random(), y: Math.random(), r: .5 + Math.random() * 1.3, s: .004 + Math.random() * .01, ph: Math.random() * 6.28 });
+  function env(now) {
+    if (mqReduce.matches || document.hidden) { envRun = false; return; }
+    cx.clearRect(0, 0, innerWidth, innerHeight);
+    var t = now / 1000;
+    for (var i = 0; i < motes.length; i++) {
+      var m = motes[i];
+      var y = ((m.y - t * m.s) % 1 + 1) % 1;
+      var x = m.x + Math.sin(t * .2 + m.ph) * .01;
+      var a = .25 + .35 * Math.sin(t * .7 + m.ph);
+      cx.beginPath(); cx.arc(x * innerWidth, y * innerHeight, m.r, 0, 6.283);
+      cx.fillStyle = 'rgba(190,215,240,' + Math.max(0, a).toFixed(3) + ')'; cx.fill();
+    }
+    requestAnimationFrame(env);
+  }
+  function startEnv() { if (!envRun && !mqReduce.matches) { envRun = true; requestAnimationFrame(env); } }
+  sizeEnv(); startEnv();
+  addEventListener('resize', sizeEnv);
+  document.addEventListener('visibilitychange', startEnv);
+  if (mqReduce.addEventListener) mqReduce.addEventListener('change', startEnv);
+})();
+</script>
+</body>
+</html>
