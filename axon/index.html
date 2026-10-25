@@ -11,6 +11,7 @@
 <meta property="og:image" content="images/axon-logo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 /* ===== Tokens (AXON Systems design system) ===== */
@@ -267,7 +268,7 @@ main, footer { position: relative; z-index: 2; }
 .engine-side .btn { width: 100%; }
 .toast { font: 400 12px/1.5 var(--font-mono); color: var(--success); min-height: 1.5em; }
 
-.case-lower { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: var(--space-6); margin-top: var(--space-6); }
+.case-lower { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-6); margin-top: var(--space-6); }
 @media (max-width: 1000px) { .case-lower { grid-template-columns: 1fr; } }
 .map-card { position: relative; overflow: hidden; min-height: 380px; perspective: 1100px; }
 .map-stage { position: absolute; inset: -10% -6% -24%; transform: rotateX(48deg) rotateZ(var(--rz, -8deg)) translateY(var(--ty, 0px)); transform-origin: 50% 60%; transition: transform .6s var(--ease); }
@@ -566,6 +567,66 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
 .fab, .wa-fab, .store-note { transition: opacity .4s var(--ease), transform .4s var(--ease); }
 html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .store-note { opacity: 0; transform: translateY(12px); pointer-events: none; }
 
+
+/* Location: live 3D map */
+.loc { display: grid; grid-template-columns: minmax(0, 1fr) 340px; overflow: hidden; padding: 0; min-height: 640px; }
+@media (max-width: 1000px) { .loc { grid-template-columns: minmax(0, 1fr); } }
+.loc-map { position: relative; min-height: 640px; background: #04070d; }
+@media (max-width: 1000px) { .loc-map { min-height: 460px; } }
+.loc-canvas { position: absolute; inset: 0; }
+.loc-fallback { position: absolute; inset: 0; display: none; }
+.loc-fallback .map-card { position: absolute; inset: 0; min-height: 0; border-radius: 0; }
+.loc.loc-offline .loc-fallback { display: block; }
+.loc.loc-offline .loc-canvas { display: none; }
+.loc-offline-note { position: absolute; left: var(--space-4); right: var(--space-4); bottom: 76px; margin: 0; text-align: center; font: 400 12px/1.4 var(--font-mono); color: var(--chrome-400); }
+.loc-hud { position: absolute; top: var(--space-4); left: var(--space-4); right: 64px; display: flex; flex-wrap: wrap; gap: var(--space-2); z-index: 3; pointer-events: none; }
+.loc-hud > * { pointer-events: auto; }
+.loc-hud-bottom { top: auto; bottom: var(--space-4); right: var(--space-4); align-items: center; }
+.loc-hud .seg { background: rgba(4, 7, 13, .78); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); flex-wrap: wrap; }
+.loc-hud .seg button { font-family: var(--font-sans); font-size: 12px; padding: 8px 12px; }
+.loc-btn { padding: 11px 16px; font-size: 11px; }
+.loc-hud-bottom .loc-light { margin-right: auto; }
+.loc[data-preset="day"] .loc-hud .seg { background: rgba(255, 255, 255, .82); }
+.loc[data-preset="day"] .loc-hud .seg button { color: #334155; }
+.loc[data-preset="day"] .loc-hud .seg button[aria-pressed="true"] { background: #0f172a; color: #f8fafc; }
+.loc-panel { border-left: 1px solid var(--hairline); display: flex; flex-direction: column; min-height: 0; max-height: 640px; background: rgba(4, 7, 13, .6); }
+@media (max-width: 1000px) { .loc-panel { border-left: 0; border-top: 1px solid var(--hairline); max-height: none; } }
+.loc-head { padding: var(--space-6); border-bottom: 1px solid var(--hairline); display: grid; gap: var(--space-2); }
+.loc-sub { margin: 0; font: 400 13px/1.45 var(--font-sans); color: var(--chrome-400); }
+.loc-score { display: flex; align-items: baseline; gap: var(--space-3); margin-top: var(--space-2); }
+.loc-score strong { font: 500 44px/1 var(--font-display); color: var(--chrome-50); }
+.loc-score span { font: 400 14px/1.35 var(--font-sans); color: var(--chrome-200); }
+.loc-card { padding: var(--space-4) var(--space-6); border-bottom: 1px solid var(--hairline); display: grid; gap: var(--space-2); min-height: 132px; align-content: start; }
+.loc-card b { font: 500 20px/1.25 var(--font-display); color: var(--chrome-50); }
+.loc-card p { margin: 0; font: 400 13px/1.5 var(--font-sans); color: var(--chrome-400); }
+.loc-card-stats { display: flex; gap: var(--space-6); }
+.loc-card-stats span { font: 400 12px/1.4 var(--font-sans); color: var(--chrome-400); }
+.loc-card-stats strong { display: block; font: 500 24px/1.1 var(--font-mono); color: var(--synapse); }
+.loc-nearby { padding: var(--space-4) var(--space-6) var(--space-2); }
+.loc-list { list-style: none; margin: 0; padding: 0 var(--space-3) var(--space-4); overflow-y: auto; flex: 1; }
+.loc-row { width: 100%; display: grid; grid-template-columns: 10px minmax(0, 1fr) auto; gap: var(--space-3); align-items: center; padding: 10px var(--space-3); border: 0; border-radius: var(--radius-md); background: transparent; text-align: left; cursor: pointer; color: var(--chrome-200); transition: background .25s; }
+.loc-row:hover, .loc-row.on { background: var(--glass-strong); }
+.loc-row i { width: 10px; height: 10px; border-radius: 50%; }
+.loc-row-name { font: 500 14px/1.3 var(--font-sans); color: var(--chrome-50); }
+.loc-row-name small { display: block; font: 400 11px/1.4 var(--font-sans); color: var(--chrome-400); }
+.loc-row-min { font: 500 13px/1 var(--font-mono); color: var(--synapse); white-space: nowrap; }
+/* map markers */
+.loc-hotel { position: relative; width: 22px; height: 22px; }
+.loc-hotel-dot { position: absolute; inset: 3px; border-radius: 50%; background: #F8FAFC; box-shadow: 0 0 0 4px rgba(56, 189, 248, .55), 0 0 24px rgba(56, 189, 248, .9); }
+.loc-hotel-pulse { position: absolute; inset: -14px; border-radius: 50%; border: 2px solid rgba(56, 189, 248, .8); animation: mpulse 2.4s ease-out infinite; }
+.loc-hotel-label { position: absolute; left: 50%; bottom: calc(100% + 10px); transform: translateX(-50%); white-space: nowrap; padding: 6px 10px; border-radius: var(--radius-pill); background: #F8FAFC; color: #020408; font: 600 11px/1 var(--font-sans); letter-spacing: .12em; box-shadow: 0 6px 18px rgba(0, 0, 0, .4); }
+.loc-ring-label span { display: inline-block; padding: 3px 8px; border-radius: var(--radius-pill); background: rgba(4, 7, 13, .8); border: 1px solid rgba(56, 189, 248, .5); color: #bae6fd; font: 500 10px/1.2 var(--font-mono); white-space: nowrap; }
+.loc-pin { --c: #818CF8; position: relative; display: grid; justify-items: center; gap: 4px; padding: 0; border: 0; background: none; cursor: pointer; }
+.loc-pin i { width: 14px; height: 14px; border-radius: 50%; background: var(--c); border: 2px solid #04070d; box-shadow: 0 0 0 1px var(--c), 0 0 14px var(--c); transition: transform .25s var(--ease); }
+.loc-pin-label { order: -1; white-space: nowrap; padding: 4px 8px; border-radius: var(--radius-pill); background: rgba(4, 7, 13, .82); color: #e2e8f0; font: 500 11px/1.2 var(--font-sans); opacity: 0; transform: translateY(4px); transition: opacity .25s, transform .25s; pointer-events: none; }
+.loc-pin:hover .loc-pin-label, .loc-pin:focus-visible .loc-pin-label, .loc-pin.on .loc-pin-label { opacity: 1; transform: none; }
+.loc-pin.on i { transform: scale(1.4); }
+.loc .maplibregl-ctrl-group { background: rgba(4, 7, 13, .82); border: 1px solid var(--hairline); }
+.loc .maplibregl-ctrl-group button + button { border-top-color: var(--hairline); }
+.loc .maplibregl-ctrl-group .maplibregl-ctrl-icon { filter: invert(1) brightness(1.4); }
+.loc .maplibregl-ctrl-attrib { background: rgba(4, 7, 13, .7); color: #94a3b8; }
+.loc .maplibregl-ctrl-attrib a { color: #cbd5e1; }
+
 /* Cursor glow (desktop) */
 .cursor-glow { position: fixed; left: 0; top: 0; width: 420px; height: 420px; margin: -210px 0 0 -210px; border-radius: 50%; background: radial-gradient(circle, rgba(56, 189, 248, .07), transparent 60%); pointer-events: none; z-index: 1; transform: translate3d(-999px, -999px, 0); }
 @media (hover: none) { .cursor-glow { display: none; } }
@@ -586,7 +647,7 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
     <ul class="nav-links">
       <li><a href="#systems" data-i18n="nav_systems">Systems</a></li>
       <li><a href="#demo" data-i18n="nav_demo">Live Demo</a></li>
-      <li><a href="#partners" data-i18n="nav_partners">Partners</a></li>
+      <li><a href="#location" data-i18n="nav_location">Location</a></li>
       <li><a href="#packages" data-i18n="nav_packages">Packages</a></li>
       <li><a href="#consultation" data-i18n="nav_consult">Consultation</a></li>
     </ul>
@@ -606,7 +667,7 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
   <div class="mobile-menu glass" id="mobileMenu" hidden>
     <a href="#systems" data-i18n="nav_systems">Systems</a>
     <a href="#demo" data-i18n="nav_demo">Live Demo</a>
-    <a href="#partners" data-i18n="nav_partners">Partners</a>
+    <a href="#location" data-i18n="nav_location">Location</a>
     <a href="#packages" data-i18n="nav_packages">Packages</a>
     <a href="#consultation" data-i18n="nav_consult">Consultation</a>
     <div class="lang lang-mobile" role="group" aria-label="Language" data-i18n-aria="lang_label">
@@ -700,7 +761,46 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
     </div>
 
     <div class="case-lower">
-      <div class="map-card glass reveal" id="mapCard">
+      <div class="inspect glass reveal">
+        <div>
+          <div class="eyebrow" data-i18n="ins_eyebrow">Under the hood</div>
+          <h3 data-i18n="ins_title">What ships with your engine.</h3>
+          <p data-i18n="ins_p">Serverless booking, payment and concierge services on your own domain.</p>
+        </div>
+        <div class="stack">
+          <div><b data-i18n="st1b">Booking API</b><span data-i18n="st1s">quota · rates · FX</span></div>
+          <div><b data-i18n="st2b">AI Concierge</b><span data-i18n="st2s">trained on your hotel</span></div>
+          <div><b data-i18n="st3b">Dispatch</b><span>email · sms · whatsapp</span></div>
+          <div><b data-i18n="st4b">Reviews</b><span data-i18n="st4s">post-stay requests</span></div>
+        </div>
+        <div class="inspect-ctas">
+          <a class="btn btn-primary" href="#consultation" data-magnetic data-i18n="cta_private">Request a Private Demo</a>
+          <a class="btn btn-ghost" href="#concierge" data-magnetic data-i18n="cta_ask">Ask the AI Assistant</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Location ===== -->
+<section class="section" id="location" aria-labelledby="locTitle">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow" data-i18n="loc_eyebrow">02 — Location Intelligence</div>
+      <h2 class="section-title" id="locTitle" data-i18n="loc_title">Location sells the room.</h2>
+      <p class="section-lead" data-i18n="loc_lead">Guests book where they can picture themselves.</p>
+      <div class="case-meta">
+        <span class="pill" data-i18n="loc_f1">3D buildings &amp; terrain</span>
+        <span class="pill" data-i18n="loc_f2">Walking-time rings</span>
+        <span class="pill" data-i18n="loc_f3">Routes on tap</span>
+        <span class="pill" data-i18n="loc_f4">Map labels in the guest's language</span>
+      </div>
+    </div>
+    <div class="loc glass reveal" id="loc" data-preset="night">
+      <div class="loc-map">
+        <div class="loc-canvas" id="locCanvas"></div>
+        <div class="loc-fallback">
+          <div class="map-card" id="mapCard">
         <div class="map-stage" aria-hidden="true">
           <svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice">
             <defs>
@@ -749,24 +849,37 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
           <span class="pill" data-i18n="map_l2">Landmarks · walking times</span>
         </div>
       </div>
-
-      <div class="inspect glass reveal">
-        <div>
-          <div class="eyebrow" data-i18n="ins_eyebrow">Under the hood</div>
-          <h3 data-i18n="ins_title">What ships with your engine.</h3>
-          <p data-i18n="ins_p">Serverless booking, payment and concierge services on your own domain.</p>
+          <p class="loc-offline-note" data-i18n="loc_offline">Preview — the interactive 3D map loads on the live site.</p>
         </div>
-        <div class="stack">
-          <div><b data-i18n="st1b">Booking API</b><span data-i18n="st1s">quota · rates · FX</span></div>
-          <div><b data-i18n="st2b">AI Concierge</b><span data-i18n="st2s">trained on your hotel</span></div>
-          <div><b data-i18n="st3b">Dispatch</b><span>email · sms · whatsapp</span></div>
-          <div><b data-i18n="st4b">Reviews</b><span data-i18n="st4s">post-stay requests</span></div>
+        <div class="loc-hud">
+          <div class="seg loc-cats" role="group" aria-label="Category">
+            <button type="button" data-cat="all" aria-pressed="true" data-i18n="loc_cat_all">All</button>
+            <button type="button" data-cat="sight" aria-pressed="false" data-i18n="loc_cat_sight">Sights</button>
+            <button type="button" data-cat="transit" aria-pressed="false" data-i18n="loc_cat_transit">Transit</button>
+            <button type="button" data-cat="shop" aria-pressed="false" data-i18n="loc_cat_shop">Shopping</button>
+            <button type="button" data-cat="park" aria-pressed="false" data-i18n="loc_cat_park">Parks</button>
+          </div>
         </div>
-        <div class="inspect-ctas">
-          <a class="btn btn-primary" href="#consultation" data-magnetic data-i18n="cta_private">Request a Private Demo</a>
-          <a class="btn btn-ghost" href="#concierge" data-magnetic data-i18n="cta_ask">Ask the AI Assistant</a>
+        <div class="loc-hud loc-hud-bottom">
+          <div class="seg loc-light" role="group" aria-label="Light">
+            <button type="button" data-preset="night" aria-pressed="true" data-i18n="loc_night">Night</button>
+            <button type="button" data-preset="dusk" aria-pressed="false" data-i18n="loc_dusk">Dusk</button>
+            <button type="button" data-preset="day" aria-pressed="false" data-i18n="loc_day">Day</button>
+          </div>
+          <button type="button" class="btn btn-ghost loc-btn" id="locRecenter" data-i18n="loc_recenter">Back to hotel</button>
+          <button type="button" class="btn btn-primary loc-btn" id="locTour">Start tour</button>
         </div>
       </div>
+      <aside class="loc-panel">
+        <div class="loc-head">
+          <div class="eyebrow" data-i18n="loc_hotel">YOUR HOTEL</div>
+          <p class="loc-sub" data-i18n="loc_sub">Demo location · Historic Peninsula, Istanbul</p>
+          <div class="loc-score"><strong id="locScore">—</strong><span data-i18n="loc_score_unit">places within a 15-min walk</span></div>
+        </div>
+        <div class="loc-card" id="locCard" aria-live="polite"></div>
+        <div class="label loc-nearby" data-i18n="loc_nearby">Nearby</div>
+        <ul class="loc-list" id="locList"></ul>
+      </aside>
     </div>
   </div>
 </section>
@@ -775,7 +888,7 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
 <section class="section" id="partners" aria-labelledby="partTitle">
   <div class="wrap">
     <div class="section-head reveal">
-      <div class="eyebrow" data-i18n="part_eyebrow">02 — Partners</div>
+      <div class="eyebrow" data-i18n="part_eyebrow">03 — Partners</div>
       <h2 class="section-title" id="partTitle" data-i18n="part_title">Businesses we work with.</h2>
       <p class="section-lead" data-i18n="part_lead">Properties running AXON systems in production.</p>
     </div>
@@ -797,7 +910,7 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
 <section class="section" id="systems" aria-labelledby="sysTitle">
   <div class="wrap">
     <div class="section-head reveal">
-      <div class="eyebrow" data-i18n="sys_eyebrow">03 — Systems</div>
+      <div class="eyebrow" data-i18n="sys_eyebrow">04 — Systems</div>
       <h2 class="section-title" id="sysTitle" data-i18n="sys_title">Five systems. One connected platform.</h2>
       <p class="section-lead" data-i18n="sys_lead">Start with one system or combine them. Every system connects to the others.</p>
     </div>
@@ -870,7 +983,7 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
 <section class="section" id="process" aria-labelledby="procTitle">
   <div class="wrap">
     <div class="section-head reveal">
-      <div class="eyebrow" data-i18n="proc_eyebrow">04 — Process</div>
+      <div class="eyebrow" data-i18n="proc_eyebrow">05 — Process</div>
       <h2 class="section-title" id="procTitle" data-i18n="proc_title">Live in four steps.</h2>
       <p class="section-lead" data-i18n="proc_lead">You always know what happens next.</p>
     </div>
@@ -887,7 +1000,7 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
 <section class="section" id="packages" aria-labelledby="pkgTitle">
   <div class="wrap">
     <div class="section-head reveal">
-      <div class="eyebrow" data-i18n="pkg_eyebrow">05 — Packages</div>
+      <div class="eyebrow" data-i18n="pkg_eyebrow">06 — Packages</div>
       <h2 class="section-title" id="pkgTitle" data-i18n="pkg_title">Set up once. Supported every month.</h2>
       <p class="section-lead" data-i18n="pkg_lead">Your systems are set up once; a monthly package keeps them running, improving and monitored.</p>
     </div>
@@ -961,7 +1074,7 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
 <section class="section" id="architecture" aria-labelledby="archTitle">
   <div class="wrap">
     <div class="section-head reveal">
-      <div class="eyebrow" data-i18n="arch_eyebrow">06 — Architecture</div>
+      <div class="eyebrow" data-i18n="arch_eyebrow">07 — Architecture</div>
       <h2 class="section-title" id="archTitle" data-i18n="arch_title">From click to confirmed in one pulse.</h2>
       <p class="section-lead" data-i18n="arch_lead">A serverless event chain.</p>
     </div>
@@ -982,7 +1095,7 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
 <section class="section" id="concierge" aria-labelledby="concTitle">
   <div class="wrap sandbox">
     <div class="reveal">
-      <div class="eyebrow" data-i18n="conc_eyebrow">07 — Live AI Assistant Demo</div>
+      <div class="eyebrow" data-i18n="conc_eyebrow">08 — Live AI Assistant Demo</div>
       <h2 class="section-title" id="concTitle" data-i18n="conc_title">Ask AXON.</h2>
       <p class="section-lead" data-i18n="conc_lead">The same assistant layer we train on a hotel's own knowledge — here trained on AXON.</p>
       <div class="prompt-list">
@@ -1001,7 +1114,7 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
     <div class="about glass reveal">
       <div class="about-photo" aria-hidden="true"><span>GG</span></div>
       <div class="about-text">
-        <div class="eyebrow" data-i18n="ab_eyebrow">08 — About</div>
+        <div class="eyebrow" data-i18n="ab_eyebrow">09 — About</div>
         <h2 class="section-title" id="aboutTitle" data-i18n="ab_title">The team behind AXON.</h2>
         <p class="section-lead" data-i18n="ab_p">AXON was founded in Istanbul by Gülcan Genç.</p>
         <div class="about-meta">
@@ -1018,7 +1131,7 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
 <section class="section" id="consultation" aria-labelledby="consTitle">
   <div class="wrap">
     <div class="section-head reveal">
-      <div class="eyebrow" data-i18n="cons_eyebrow">09 — Executive Consultation</div>
+      <div class="eyebrow" data-i18n="cons_eyebrow">10 — Executive Consultation</div>
       <h2 class="section-title" id="consTitle" data-i18n="cons_title">Schedule a deployment.</h2>
       <p class="section-lead" data-i18n="cons_lead">Tell us about your property.</p>
     </div>
@@ -1089,7 +1202,7 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
         <p style="margin:var(--space-4) 0 0;color:var(--chrome-400);max-width:360px" data-i18n="foot_tag">AI systems for hotels, clinics and companies. Built in Istanbul.</p>
       </div>
       <div><h4 class="eyebrow" data-i18n="nav_systems">Systems</h4><ul><li><a href="#systems" data-i18n="chk1">Reservation management</a></li><li><a href="#systems" data-i18n="chk2">Website design</a></li><li><a href="#concierge" data-i18n="chk3">AI chatbot</a></li><li><a href="#personal" data-i18n="chk5">Personal assistant</a></li></ul></div>
-      <div><h4 class="eyebrow" data-i18n="foot_studio">Studio</h4><ul><li><a href="#demo" data-i18n="nav_demo">Live Demo</a></li><li><a href="#partners" data-i18n="nav_partners">Partners</a></li><li><a href="#process" data-i18n="nav_process">Process</a></li><li><a href="#packages" data-i18n="nav_packages">Packages</a></li><li><a href="#architecture" data-i18n="nav_arch">Architecture</a></li><li><a href="#about" data-i18n="nav_about">About</a></li><li><a href="#consultation" data-i18n="nav_consult">Consultation</a></li><li><a class="wa-link" target="_blank" rel="noopener">WhatsApp</a></li></ul></div>
+      <div><h4 class="eyebrow" data-i18n="foot_studio">Studio</h4><ul><li><a href="#demo" data-i18n="nav_demo">Live Demo</a></li><li><a href="#location" data-i18n="nav_location">Location</a></li><li><a href="#partners" data-i18n="nav_partners">Partners</a></li><li><a href="#process" data-i18n="nav_process">Process</a></li><li><a href="#packages" data-i18n="nav_packages">Packages</a></li><li><a href="#architecture" data-i18n="nav_arch">Architecture</a></li><li><a href="#about" data-i18n="nav_about">About</a></li><li><a href="#consultation" data-i18n="nav_consult">Consultation</a></li><li><a class="wa-link" target="_blank" rel="noopener">WhatsApp</a></li></ul></div>
     </div>
     <div class="foot-bottom"><span>© <span id="yr"></span> AXON SYSTEMS</span><span>Λ X O N · AI SYSTEMS</span></div>
   </div>
@@ -1111,6 +1224,7 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js" defer></script>
+<script src="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script>
@@ -1241,16 +1355,16 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
       ins_eyebrow: 'Under the hood', ins_title: 'What ships with your engine.', ins_p: 'Serverless booking, payment and concierge services on your own domain; a multilingual front end; MapLibre 3D maps; and an AI concierge with WhatsApp handover.',
       st1b: 'Booking API', st1s: 'quota · rates · FX', st2b: 'AI Concierge', st2s: 'trained on your hotel', st3b: 'Dispatch', st4b: 'Reviews', st4s: 'post-stay requests',
       cta_private: 'Request a Private Demo', cta_ask: 'Ask the AI Assistant',
-      part_eyebrow: '02 — Partners', part_title: 'Businesses we work with.', part_lead: 'Clients running AXON systems in production.', part_next_b: 'Your business', part_next_s: 'Next deployment →',
+      part_eyebrow: '03 — Partners', part_title: 'Businesses we work with.', part_lead: 'Clients running AXON systems in production.', part_next_b: 'Your business', part_next_s: 'Next deployment →',
       
       
       
       
-      arch_eyebrow: '06 — Architecture', arch_title: 'From click to confirmed in one pulse.', arch_lead: 'A serverless event chain. Each reservation travels the same path — watch it run.',
+      arch_eyebrow: '07 — Architecture', arch_title: 'From click to confirmed in one pulse.', arch_lead: 'A serverless event chain. Each reservation travels the same path — watch it run.',
       n1e: 'Edge', n1b: 'Guest interface', n1s: 'Booking engine · 3D map · concierge', n2e: 'Yield', n2b: 'Rate & quota core', n2s: 'Availability · FX · pricing rules', n3e: 'Payments', n3s: 'Tokenised card · bank challenge', n4e: 'Events', n4b: 'Webhook bus', n4s: 'Confirm · invoice · audit', n5e: 'Dispatch', n5b: 'Omni-channel',
-      conc_eyebrow: '07 — Live AI Assistant Demo', conc_title: 'Ask AXON.', conc_lead: 'The same assistant we train on each client\'s own knowledge — here trained on AXON. Try a prompt below or type your own.',
+      conc_eyebrow: '08 — Live AI Assistant Demo', conc_title: 'Ask AXON.', conc_lead: 'The same assistant we train on each client\'s own knowledge — here trained on AXON. Try a prompt below or type your own.',
       p1: 'What systems do you offer?', p2: 'How does the AI concierge work?', p3: 'Which payments do you support?', c4: 'Do you charge OTA commission?', c5: 'Book a demo',
-      cons_eyebrow: '09 — Executive Consultation', cons_title: 'Schedule a deployment.', cons_lead: 'Tell us about your business. We respond within one business day with a plan and timeline.',
+      cons_eyebrow: '10 — Executive Consultation', cons_title: 'Schedule a deployment.', cons_lead: 'Tell us about your business. We respond within one business day with a plan and timeline.',
       term: 'Contact Terminal', f_name: 'Full name', ph_name: 'Your name', f_email: 'Work email', f_hotel: 'Company', ph_hotel: 'Company, hotel or clinic · city', f_keys: 'Size', f_sys: 'Systems of interest',
       f_brief: 'Brief', ph_brief: 'Current booking stack, OTA share, launch window…',
       form_note: 'No data is stored on this page', form_btn: 'Request Consultation', wa_btn: 'WhatsApp', wa_aria: 'Message us on WhatsApp',
@@ -1299,16 +1413,16 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
       ins_eyebrow: 'Altyapı', ins_title: 'Motorunuzla birlikte gelenler.', ins_p: 'Kendi alan adınızda sunucusuz rezervasyon, ödeme ve konsiyerj servisleri; çok dilli arayüz; MapLibre 3D haritalar ve WhatsApp aktarımlı yapay zekâ konsiyerj.',
       st1b: 'Rezervasyon API', st1s: 'kontenjan · fiyat · kur', st2b: 'Yapay Zekâ Konsiyerj', st2s: 'otelinize özel eğitilir', st3b: 'Bildirimler', st4b: 'Yorumlar', st4s: 'konaklama sonrası talepler',
       cta_private: 'Özel Demo Talep Et', cta_ask: 'Yapay Zekâya Sor',
-      part_eyebrow: '02 — Partnerler', part_title: 'Çalıştığımız işletmeler.', part_lead: 'AXON sistemlerini canlı kullanan müşterilerimiz.', part_next_b: 'Sizin işletmeniz', part_next_s: 'Sıradaki kurulum →',
+      part_eyebrow: '03 — Partnerler', part_title: 'Çalıştığımız işletmeler.', part_lead: 'AXON sistemlerini canlı kullanan müşterilerimiz.', part_next_b: 'Sizin işletmeniz', part_next_s: 'Sıradaki kurulum →',
       
       
       
       
-      arch_eyebrow: '06 — Mimari', arch_title: 'Tıklamadan onaya tek nabızda.', arch_lead: 'Sunucusuz bir olay zinciri. Her rezervasyon aynı yoldan geçer — izleyin.',
+      arch_eyebrow: '07 — Mimari', arch_title: 'Tıklamadan onaya tek nabızda.', arch_lead: 'Sunucusuz bir olay zinciri. Her rezervasyon aynı yoldan geçer — izleyin.',
       n1e: 'Ön yüz', n1b: 'Misafir arayüzü', n1s: 'Rezervasyon motoru · 3D harita · konsiyerj', n2e: 'Gelir', n2b: 'Fiyat & kontenjan çekirdeği', n2s: 'Müsaitlik · kur · fiyat kuralları', n3e: 'Ödeme', n3s: 'Tokenize kart · banka doğrulaması', n4e: 'Olaylar', n4b: 'Webhook hattı', n4s: 'Onay · fatura · kayıt', n5e: 'Bildirim', n5b: 'Çok kanallı',
-      conc_eyebrow: '07 — Canlı Yapay Zekâ Demosu', conc_title: 'AXON\'a sorun.', conc_lead: 'Her müşterimizin kendi bilgileriyle eğittiğimiz asistan — burada AXON hakkında eğitildi. Aşağıdaki sorulardan birini deneyin ya da kendi sorunuzu yazın.',
+      conc_eyebrow: '08 — Canlı Yapay Zekâ Demosu', conc_title: 'AXON\'a sorun.', conc_lead: 'Her müşterimizin kendi bilgileriyle eğittiğimiz asistan — burada AXON hakkında eğitildi. Aşağıdaki sorulardan birini deneyin ya da kendi sorunuzu yazın.',
       p1: 'Hangi sistemleri sunuyorsunuz?', p2: 'Yapay zekâ konsiyerj nasıl çalışıyor?', p3: 'Hangi ödeme yöntemlerini destekliyorsunuz?', c4: 'OTA komisyonu alıyor musunuz?', c5: 'Demo talep et',
-      cons_eyebrow: '09 — Yönetici Danışmanlığı', cons_title: 'Kurulum planlayın.', cons_lead: 'İşletmenizi anlatın. Bir iş günü içinde plan ve takvimle dönüş yapıyoruz.',
+      cons_eyebrow: '10 — Yönetici Danışmanlığı', cons_title: 'Kurulum planlayın.', cons_lead: 'İşletmenizi anlatın. Bir iş günü içinde plan ve takvimle dönüş yapıyoruz.',
       term: 'İletişim Terminali', f_name: 'Ad soyad', ph_name: 'Adınız', f_email: 'İş e-postası', f_hotel: 'Şirket', ph_hotel: 'Şirket, otel veya klinik · şehir', f_keys: 'Büyüklük', f_sys: 'İlgilendiğiniz sistemler',
       f_brief: 'Kısa bilgi', ph_brief: 'Mevcut rezervasyon altyapısı, OTA payı, hedef tarih…',
       form_note: 'Bu sayfada hiçbir veri saklanmaz', form_btn: 'Danışmanlık Talep Et', wa_btn: 'WhatsApp', wa_aria: 'WhatsApp\'tan yazın',
@@ -1357,16 +1471,16 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
       ins_eyebrow: 'Unter der Haube', ins_title: 'Was Ihre Engine mitbringt.', ins_p: 'Serverlose Buchungs-, Zahlungs- und Concierge-Dienste auf Ihrer eigenen Domain; ein mehrsprachiges Frontend; MapLibre-3D-Karten; und ein KI-Concierge mit WhatsApp-Übergabe.',
       st1b: 'Buchungs-API', st1s: 'Kontingent · Preise · Wechselkurs', st2b: 'KI-Concierge', st2s: 'auf Ihr Hotel trainiert', st3b: 'Versand', st4b: 'Bewertungen', st4s: 'Anfragen nach dem Aufenthalt',
       cta_private: 'Private Demo anfragen', cta_ask: 'KI-Assistent fragen',
-      part_eyebrow: '02 — Partner', part_title: 'Unternehmen, mit denen wir arbeiten.', part_lead: 'Kunden, die AXON-Systeme im Live-Betrieb nutzen.', part_next_b: 'Ihr Unternehmen', part_next_s: 'Nächste Einführung →',
+      part_eyebrow: '03 — Partner', part_title: 'Unternehmen, mit denen wir arbeiten.', part_lead: 'Kunden, die AXON-Systeme im Live-Betrieb nutzen.', part_next_b: 'Ihr Unternehmen', part_next_s: 'Nächste Einführung →',
       
       
       
       
-      arch_eyebrow: '06 — Architektur', arch_title: 'Vom Klick zur Bestätigung in einem Impuls.', arch_lead: 'Eine serverlose Ereigniskette. Jede Buchung nimmt denselben Weg — sehen Sie zu.',
+      arch_eyebrow: '07 — Architektur', arch_title: 'Vom Klick zur Bestätigung in einem Impuls.', arch_lead: 'Eine serverlose Ereigniskette. Jede Buchung nimmt denselben Weg — sehen Sie zu.',
       n1e: 'Edge', n1b: 'Gästeoberfläche', n1s: 'Buchungs-Engine · 3D-Karte · Concierge', n2e: 'Yield', n2b: 'Preis- & Kontingentkern', n2s: 'Verfügbarkeit · Wechselkurs · Preisregeln', n3e: 'Zahlungen', n3s: 'Tokenisierte Karte · Bankprüfung', n4e: 'Ereignisse', n4b: 'Webhook-Bus', n4s: 'Bestätigung · Rechnung · Protokoll', n5e: 'Versand', n5b: 'Omnichannel',
-      conc_eyebrow: '07 — Live-KI-Assistent', conc_title: 'Fragen Sie AXON.', conc_lead: 'Derselbe Assistent, den wir mit dem Wissen jedes Kunden trainieren — hier auf AXON trainiert. Probieren Sie eine Frage aus oder schreiben Sie Ihre eigene.',
+      conc_eyebrow: '08 — Live-KI-Assistent', conc_title: 'Fragen Sie AXON.', conc_lead: 'Derselbe Assistent, den wir mit dem Wissen jedes Kunden trainieren — hier auf AXON trainiert. Probieren Sie eine Frage aus oder schreiben Sie Ihre eigene.',
       p1: 'Welche Systeme bieten Sie an?', p2: 'Wie funktioniert der KI-Concierge?', p3: 'Welche Zahlungen unterstützen Sie?', c4: 'Berechnen Sie OTA-Provision?', c5: 'Demo buchen',
-      cons_eyebrow: '09 — Beratung', cons_title: 'Einführung planen.', cons_lead: 'Erzählen Sie uns von Ihrem Unternehmen. Wir melden uns innerhalb eines Werktags mit Plan und Zeitrahmen.',
+      cons_eyebrow: '10 — Beratung', cons_title: 'Einführung planen.', cons_lead: 'Erzählen Sie uns von Ihrem Unternehmen. Wir melden uns innerhalb eines Werktags mit Plan und Zeitrahmen.',
       term: 'Kontaktterminal', f_name: 'Vollständiger Name', ph_name: 'Ihr Name', f_email: 'Geschäftliche E-Mail', f_hotel: 'Unternehmen', ph_hotel: 'Unternehmen, Hotel oder Klinik · Stadt', f_keys: 'Größe', f_sys: 'Gewünschte Systeme',
       f_brief: 'Kurzbeschreibung', ph_brief: 'Aktuelles Buchungssystem, OTA-Anteil, Zeitplan…',
       form_note: 'Auf dieser Seite werden keine Daten gespeichert', form_btn: 'Beratung anfragen', wa_btn: 'WhatsApp', wa_aria: 'Schreiben Sie uns auf WhatsApp',
@@ -1415,16 +1529,16 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
       ins_eyebrow: 'Sous le capot', ins_title: 'Ce qui accompagne votre moteur.', ins_p: 'Services serverless de réservation, de paiement et de conciergerie sur votre propre domaine ; une interface multilingue ; des cartes 3D MapLibre ; et un concierge IA avec relais WhatsApp.',
       st1b: 'API de réservation', st1s: 'quota · tarifs · devises', st2b: 'Concierge IA', st2s: 'entraîné sur votre hôtel', st3b: 'Envois', st4b: 'Avis', st4s: 'demandes après séjour',
       cta_private: 'Demander une démo privée', cta_ask: 'Interroger l\'assistant IA',
-      part_eyebrow: '02 — Partenaires', part_title: 'Les entreprises avec qui nous travaillons.', part_lead: 'Clients utilisant les systèmes AXON en production.', part_next_b: 'Votre entreprise', part_next_s: 'Prochain déploiement →',
+      part_eyebrow: '03 — Partenaires', part_title: 'Les entreprises avec qui nous travaillons.', part_lead: 'Clients utilisant les systèmes AXON en production.', part_next_b: 'Votre entreprise', part_next_s: 'Prochain déploiement →',
       
       
       
       
-      arch_eyebrow: '06 — Architecture', arch_title: 'Du clic à la confirmation en une impulsion.', arch_lead: 'Une chaîne d\'événements serverless. Chaque réservation suit le même chemin — regardez-la passer.',
+      arch_eyebrow: '07 — Architecture', arch_title: 'Du clic à la confirmation en une impulsion.', arch_lead: 'Une chaîne d\'événements serverless. Chaque réservation suit le même chemin — regardez-la passer.',
       n1e: 'Edge', n1b: 'Interface client', n1s: 'Moteur de réservation · carte 3D · concierge', n2e: 'Yield', n2b: 'Cœur tarifs & quotas', n2s: 'Disponibilité · devises · règles tarifaires', n3e: 'Paiements', n3s: 'Carte tokenisée · validation bancaire', n4e: 'Événements', n4b: 'Bus webhook', n4s: 'Confirmation · facture · journal', n5e: 'Envois', n5b: 'Omnicanal',
-      conc_eyebrow: '07 — Démo de l\'assistant IA', conc_title: 'Demandez à AXON.', conc_lead: 'Le même assistant que nous entraînons sur les connaissances de chaque client — ici entraîné sur AXON. Essayez une question ou écrivez la vôtre.',
+      conc_eyebrow: '08 — Démo de l\'assistant IA', conc_title: 'Demandez à AXON.', conc_lead: 'Le même assistant que nous entraînons sur les connaissances de chaque client — ici entraîné sur AXON. Essayez une question ou écrivez la vôtre.',
       p1: 'Quels systèmes proposez-vous ?', p2: 'Comment fonctionne le concierge IA ?', p3: 'Quels paiements acceptez-vous ?', c4: 'Prenez-vous une commission OTA ?', c5: 'Réserver une démo',
-      cons_eyebrow: '09 — Consultation', cons_title: 'Planifier un déploiement.', cons_lead: 'Parlez-nous de votre entreprise. Nous répondons sous un jour ouvré avec un plan et un calendrier.',
+      cons_eyebrow: '10 — Consultation', cons_title: 'Planifier un déploiement.', cons_lead: 'Parlez-nous de votre entreprise. Nous répondons sous un jour ouvré avec un plan et un calendrier.',
       term: 'Terminal de contact', f_name: 'Nom complet', ph_name: 'Votre nom', f_email: 'E-mail professionnel', f_hotel: 'Entreprise', ph_hotel: 'Entreprise, hôtel ou clinique · ville', f_keys: 'Taille', f_sys: 'Systèmes souhaités',
       f_brief: 'Brief', ph_brief: 'Outils de réservation actuels, part OTA, calendrier…',
       form_note: 'Aucune donnée n\'est enregistrée sur cette page', form_btn: 'Demander une consultation', wa_btn: 'WhatsApp', wa_aria: 'Écrivez-nous sur WhatsApp',
@@ -1453,7 +1567,7 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
   // Systems section and personal-assistant demo copy
   var I18N_SYS = {
     en: {
-      sys_eyebrow: '03 — Systems', sys_title: 'Five systems. One connected platform.', sys_lead: 'Start with one system or combine them — every system connects to the others.',
+      sys_eyebrow: '04 — Systems', sys_title: 'Five systems. One connected platform.', sys_lead: 'Start with one system or combine them — every system connects to the others.',
       s1_t: 'Reservation Management', s1_p: 'We run your reservations for you. Confirmations, payments and booking checks are handled for you, and you see your occupancy live.',
       s1_1: 'Automatic confirmations & payment tracking', s1_2: 'Live occupancy and availability rates', s1_3: 'Daily and weekly performance reports', s1_4: 'Booking checks to prevent errors and double bookings', s1_link: 'See the booking demo →',
       s2_t: 'Website Design', s2_p: 'Professional websites built for your brand — like the 3D site you are browsing right now — with everything you need to sell online.',
@@ -1480,7 +1594,7 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
       pa_r_fallback: 'In this demo I can plan your day, book a meeting, answer your WhatsApp messages or list important dates. Your real assistant is trained on your own calendar, contacts and style.'
     },
     tr: {
-      sys_eyebrow: '03 — Sistemler', sys_title: 'Beş sistem. Tek bağlantılı platform.', sys_lead: 'Tek bir sistemle başlayın ya da birleştirin — her sistem diğerleriyle bağlantılı çalışır.',
+      sys_eyebrow: '04 — Sistemler', sys_title: 'Beş sistem. Tek bağlantılı platform.', sys_lead: 'Tek bir sistemle başlayın ya da birleştirin — her sistem diğerleriyle bağlantılı çalışır.',
       s1_t: 'Rezervasyon Yönetimi', s1_p: 'Rezervasyonlarınızı sizin yerinize biz yönetiyoruz. Onaylar, ödemeler ve rezervasyon kontrolü sizin için yürütülür; doluluk durumunuzu anlık takip edersiniz.',
       s1_1: 'Otomatik onay ve ödeme takibi', s1_2: 'Anlık doluluk ve boşluk oranları', s1_3: 'Günlük ve haftalık performans raporları', s1_4: 'Hata ve çifte rezervasyona karşı kontrol', s1_link: 'Rezervasyon demosunu görün →',
       s2_t: 'Web Sitesi Tasarımı', s2_p: 'Markanıza özel profesyonel web siteleri — tıpkı şu an gezdiğiniz bu 3D site gibi — online satış için gereken her şeyle birlikte.',
@@ -1507,7 +1621,7 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
       pa_r_fallback: 'Bu demoda gününüzü planlayabilir, toplantı ayarlayabilir, WhatsApp mesajlarınızı yanıtlayabilir veya önemli tarihleri listeleyebilirim. Gerçek asistanınız kendi takviminiz, kişileriniz ve üslubunuzla eğitilir.'
     },
     de: {
-      sys_eyebrow: '03 — Systeme', sys_title: 'Fünf Systeme. Eine vernetzte Plattform.', sys_lead: 'Starten Sie mit einem System oder kombinieren Sie sie — jedes System ist mit den anderen verbunden.',
+      sys_eyebrow: '04 — Systeme', sys_title: 'Fünf Systeme. Eine vernetzte Plattform.', sys_lead: 'Starten Sie mit einem System oder kombinieren Sie sie — jedes System ist mit den anderen verbunden.',
       s1_t: 'Reservierungsmanagement', s1_p: 'Wir verwalten Ihre Reservierungen für Sie. Bestätigungen, Zahlungen und Buchungsprüfungen laufen für Sie, und Sie sehen Ihre Auslastung live.',
       s1_1: 'Automatische Bestätigungen & Zahlungsverfolgung', s1_2: 'Auslastung und Verfügbarkeit in Echtzeit', s1_3: 'Tägliche und wöchentliche Berichte', s1_4: 'Prüfungen gegen Fehler und Doppelbuchungen', s1_link: 'Zur Buchungsdemo →',
       s2_t: 'Webdesign', s2_p: 'Professionelle Websites für Ihre Marke — wie die 3D-Seite, die Sie gerade sehen — mit allem, was Sie für den Online-Verkauf brauchen.',
@@ -1534,7 +1648,7 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
       pa_r_fallback: 'In dieser Demo kann ich Ihren Tag planen, ein Meeting buchen, WhatsApp-Nachrichten beantworten oder wichtige Termine auflisten. Ihr echter Assistent wird auf Ihren Kalender, Ihre Kontakte und Ihren Stil trainiert.'
     },
     fr: {
-      sys_eyebrow: '03 — Systèmes', sys_title: 'Cinq systèmes. Une plateforme connectée.', sys_lead: 'Commencez par un système ou combinez-les — chaque système est relié aux autres.',
+      sys_eyebrow: '04 — Systèmes', sys_title: 'Cinq systèmes. Une plateforme connectée.', sys_lead: 'Commencez par un système ou combinez-les — chaque système est relié aux autres.',
       s1_t: 'Gestion des réservations', s1_p: 'Nous gérons vos réservations pour vous. Confirmations, paiements et contrôles sont pris en charge, et vous suivez votre taux d\'occupation en direct.',
       s1_1: 'Confirmations automatiques & suivi des paiements', s1_2: 'Taux d\'occupation et disponibilités en direct', s1_3: 'Rapports quotidiens et hebdomadaires', s1_4: 'Contrôles contre les erreurs et doubles réservations', s1_link: 'Voir la démo de réservation →',
       s2_t: 'Création de site web', s2_p: 'Des sites professionnels à votre image — comme le site 3D que vous parcourez — avec tout le nécessaire pour vendre en ligne.',
@@ -1568,12 +1682,12 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
       nav_packages: 'Packages', nav_process: 'Process', nav_about: 'About',
       ref_eliza: 'Direct booking engine, 24/7 multilingual AI concierge and WhatsApp automation.',
       loc_london: 'London', loc_usa: 'USA', loc_tr: 'Türkiye', sec_hotel: 'Hotel', sec_clinic: 'Private clinic', sec_jewel: 'Jewellery',
-      proc_eyebrow: '04 — Process', proc_title: 'Live in four steps.', proc_lead: 'You always know what happens next — from the first call to go-live.',
+      proc_eyebrow: '05 — Process', proc_title: 'Live in four steps.', proc_lead: 'You always know what happens next — from the first call to go-live.',
       pr1_t: 'Free discovery call', pr1_p: 'We listen to your business, your channels and your goals in 30 minutes.',
       pr2_t: 'Proposal and plan', pr2_p: 'You get the right systems for you, a timeline and a price — in writing.',
       pr3_t: 'Setup and integration', pr3_p: 'We set up the systems, connect them to your channels and test them with you.',
       pr4_t: 'Training and go-live', pr4_p: 'We train your team, take the system live and start monitoring it.',
-      pkg_eyebrow: '05 — Packages', pkg_title: 'Set up once. Supported every month.', pkg_lead: 'Your systems are set up once; a monthly package keeps them running, improving and monitored. The monthly fee is quoted for your business.',
+      pkg_eyebrow: '06 — Packages', pkg_title: 'Set up once. Supported every month.', pkg_lead: 'Your systems are set up once; a monthly package keeps them running, improving and monitored. The monthly fee is quoted for your business.',
       pkg_pill1: 'Billed monthly', pkg_pill2: 'Secure payment with iyzico', pkg_pill3: 'Cancel anytime',
       pkg_price: 'Monthly fee by quote', pkg_cta: 'Get a quote', pkg_cta_pa: 'Try the demo', pkg_rec: 'Recommended', pkg_bonus: 'Bonus · Private',
       pk1_for: 'For small businesses starting with one system.', pk1_1: 'One system of your choice', pk1_2: 'Hosting and security updates', pk1_3: 'Monthly performance report', pk1_4: 'Email support, reply within 2 business days',
@@ -1594,7 +1708,7 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
       fq3_q: 'Which channels are supported?', fq3_a: 'Your website, WhatsApp, email, SMS and Instagram.',
       fq4_q: 'Is there a minimum contract?', fq4_a: 'Monthly packages renew every month and can be cancelled anytime.',
       fq5_q: 'Which languages does the AI speak?', fq5_a: 'Turkish, English, German and French out of the box; more languages on request.',
-      ab_eyebrow: '08 — About', ab_title: 'The team behind AXON.', ab_role: 'Founder',
+      ab_eyebrow: '09 — About', ab_title: 'The team behind AXON.', ab_role: 'Founder',
       ab_p: 'AXON was founded in Istanbul by Gülcan Genç. We build and run AI systems for hotels, clinics and companies — from the first call to daily support.',
       store_note: 'This site stores your language choice in your browser. No tracking cookies.', store_ok: 'OK'
     },
@@ -1602,12 +1716,12 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
       nav_packages: 'Paketler', nav_process: 'Süreç', nav_about: 'Hakkımızda',
       ref_eliza: 'Doğrudan rezervasyon motoru, 7/24 çok dilli yapay zekâ konsiyerj ve WhatsApp otomasyonu.',
       loc_london: 'Londra', loc_usa: 'ABD', loc_tr: 'Türkiye', sec_hotel: 'Otel', sec_clinic: 'Özel klinik', sec_jewel: 'Mücevher',
-      proc_eyebrow: '04 — Süreç', proc_title: 'Dört adımda canlıdasınız.', proc_lead: 'İlk görüşmeden canlıya almaya kadar her adımda ne olacağını bilirsiniz.',
+      proc_eyebrow: '05 — Süreç', proc_title: 'Dört adımda canlıdasınız.', proc_lead: 'İlk görüşmeden canlıya almaya kadar her adımda ne olacağını bilirsiniz.',
       pr1_t: 'Ücretsiz keşif görüşmesi', pr1_p: 'İşletmenizi, kanallarınızı ve hedeflerinizi 30 dakikada dinliyoruz.',
       pr2_t: 'Teklif ve plan', pr2_p: 'Size uygun sistemleri, takvimi ve fiyatı yazılı olarak sunuyoruz.',
       pr3_t: 'Kurulum ve entegrasyon', pr3_p: 'Sistemleri kuruyor, kanallarınıza bağlıyor ve sizinle birlikte test ediyoruz.',
       pr4_t: 'Eğitim ve canlıya alma', pr4_p: 'Ekibinizi eğitiyor, sistemi canlıya alıyor ve izlemeye başlıyoruz.',
-      pkg_eyebrow: '05 — Paketler', pkg_title: 'Kurulum bir kez. Destek her ay.', pkg_lead: 'Sistemleriniz bir kez kurulur; aylık paketle çalışır, gelişir ve izlenir. Aylık bedel işletmenize göre teklifle belirlenir.',
+      pkg_eyebrow: '06 — Paketler', pkg_title: 'Kurulum bir kez. Destek her ay.', pkg_lead: 'Sistemleriniz bir kez kurulur; aylık paketle çalışır, gelişir ve izlenir. Aylık bedel işletmenize göre teklifle belirlenir.',
       pkg_pill1: 'Aylık faturalanır', pkg_pill2: 'iyzico ile güvenli ödeme', pkg_pill3: 'Dilediğiniz zaman iptal',
       pkg_price: 'Aylık bedel teklife göre', pkg_cta: 'Teklif al', pkg_cta_pa: 'Demoyu deneyin', pkg_rec: 'Önerilen', pkg_bonus: 'Bonus · Özel',
       pk1_for: 'Tek sistemle başlayan küçük işletmeler için.', pk1_1: 'Seçtiğiniz bir sistem', pk1_2: 'Barındırma ve güvenlik güncellemeleri', pk1_3: 'Aylık performans raporu', pk1_4: 'E-posta destek, 2 iş günü içinde yanıt',
@@ -1628,7 +1742,7 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
       fq3_q: 'Hangi kanallar destekleniyor?', fq3_a: 'Web siteniz, WhatsApp, e-posta, SMS ve Instagram.',
       fq4_q: 'Taahhüt var mı?', fq4_a: 'Aylık paketler her ay yenilenir ve dilediğiniz zaman iptal edilebilir.',
       fq5_q: 'Yapay zekâ hangi dilleri konuşuyor?', fq5_a: 'Türkçe, İngilizce, Almanca ve Fransızca hazır; talebe göre başka diller de eklenir.',
-      ab_eyebrow: '08 — Hakkımızda', ab_title: 'AXON\'un arkasındaki ekip.', ab_role: 'Kurucu',
+      ab_eyebrow: '09 — Hakkımızda', ab_title: 'AXON\'un arkasındaki ekip.', ab_role: 'Kurucu',
       ab_p: 'AXON, Gülcan Genç tarafından İstanbul\'da kuruldu. Oteller, klinikler ve şirketler için yapay zekâ sistemlerini kuruyor ve işletiyoruz — ilk görüşmeden günlük desteğe kadar.',
       store_note: 'Bu site dil tercihinizi tarayıcınızda saklar. Takip çerezi kullanılmaz.', store_ok: 'Tamam'
     },
@@ -1636,12 +1750,12 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
       nav_packages: 'Pakete', nav_process: 'Ablauf', nav_about: 'Über uns',
       ref_eliza: 'Direktbuchungs-Engine, mehrsprachiger KI-Concierge rund um die Uhr und WhatsApp-Automation.',
       loc_london: 'London', loc_usa: 'USA', loc_tr: 'Türkei', sec_hotel: 'Hotel', sec_clinic: 'Privatklinik', sec_jewel: 'Schmuck',
-      proc_eyebrow: '04 — Ablauf', proc_title: 'In vier Schritten live.', proc_lead: 'Vom ersten Gespräch bis zum Go-live wissen Sie immer, was als Nächstes passiert.',
+      proc_eyebrow: '05 — Ablauf', proc_title: 'In vier Schritten live.', proc_lead: 'Vom ersten Gespräch bis zum Go-live wissen Sie immer, was als Nächstes passiert.',
       pr1_t: 'Kostenloses Erstgespräch', pr1_p: 'Wir hören uns Ihr Unternehmen, Ihre Kanäle und Ziele in 30 Minuten an.',
       pr2_t: 'Angebot und Plan', pr2_p: 'Sie erhalten die passenden Systeme, einen Zeitplan und einen Preis — schriftlich.',
       pr3_t: 'Einrichtung und Integration', pr3_p: 'Wir richten die Systeme ein, verbinden sie mit Ihren Kanälen und testen sie mit Ihnen.',
       pr4_t: 'Schulung und Go-live', pr4_p: 'Wir schulen Ihr Team, schalten das System live und überwachen es.',
-      pkg_eyebrow: '05 — Pakete', pkg_title: 'Einmal einrichten. Jeden Monat betreut.', pkg_lead: 'Ihre Systeme werden einmal eingerichtet; ein Monatspaket hält sie in Betrieb, entwickelt sie weiter und überwacht sie. Die Monatsgebühr wird für Ihr Unternehmen angeboten.',
+      pkg_eyebrow: '06 — Pakete', pkg_title: 'Einmal einrichten. Jeden Monat betreut.', pkg_lead: 'Ihre Systeme werden einmal eingerichtet; ein Monatspaket hält sie in Betrieb, entwickelt sie weiter und überwacht sie. Die Monatsgebühr wird für Ihr Unternehmen angeboten.',
       pkg_pill1: 'Monatliche Abrechnung', pkg_pill2: 'Sichere Zahlung mit iyzico', pkg_pill3: 'Jederzeit kündbar',
       pkg_price: 'Monatsgebühr nach Angebot', pkg_cta: 'Angebot anfordern', pkg_cta_pa: 'Demo testen', pkg_rec: 'Empfohlen', pkg_bonus: 'Bonus · Privat',
       pk1_for: 'Für kleine Unternehmen, die mit einem System starten.', pk1_1: 'Ein System Ihrer Wahl', pk1_2: 'Hosting und Sicherheitsupdates', pk1_3: 'Monatlicher Leistungsbericht', pk1_4: 'E-Mail-Support, Antwort in 2 Werktagen',
@@ -1662,7 +1776,7 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
       fq3_q: 'Welche Kanäle werden unterstützt?', fq3_a: 'Ihre Website, WhatsApp, E-Mail, SMS und Instagram.',
       fq4_q: 'Gibt es eine Mindestlaufzeit?', fq4_a: 'Monatspakete verlängern sich monatlich und sind jederzeit kündbar.',
       fq5_q: 'Welche Sprachen spricht die KI?', fq5_a: 'Türkisch, Englisch, Deutsch und Französisch; weitere Sprachen auf Anfrage.',
-      ab_eyebrow: '08 — Über uns', ab_title: 'Das Team hinter AXON.', ab_role: 'Gründerin',
+      ab_eyebrow: '09 — Über uns', ab_title: 'Das Team hinter AXON.', ab_role: 'Gründerin',
       ab_p: 'AXON wurde von Gülcan Genç in Istanbul gegründet. Wir bauen und betreiben KI-Systeme für Hotels, Kliniken und Unternehmen — vom ersten Gespräch bis zum täglichen Support.',
       store_note: 'Diese Website speichert Ihre Sprachwahl in Ihrem Browser. Keine Tracking-Cookies.', store_ok: 'OK'
     },
@@ -1670,12 +1784,12 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
       nav_packages: 'Offres', nav_process: 'Méthode', nav_about: 'À propos',
       ref_eliza: 'Moteur de réservation directe, concierge IA multilingue 24/7 et automatisation WhatsApp.',
       loc_london: 'Londres', loc_usa: 'États-Unis', loc_tr: 'Turquie', sec_hotel: 'Hôtel', sec_clinic: 'Clinique privée', sec_jewel: 'Joaillerie',
-      proc_eyebrow: '04 — Méthode', proc_title: 'En ligne en quatre étapes.', proc_lead: 'Du premier appel à la mise en ligne, vous savez toujours ce qui vient ensuite.',
+      proc_eyebrow: '05 — Méthode', proc_title: 'En ligne en quatre étapes.', proc_lead: 'Du premier appel à la mise en ligne, vous savez toujours ce qui vient ensuite.',
       pr1_t: 'Appel découverte gratuit', pr1_p: 'Nous écoutons votre activité, vos canaux et vos objectifs en 30 minutes.',
       pr2_t: 'Proposition et plan', pr2_p: 'Vous recevez les systèmes adaptés, un calendrier et un prix — par écrit.',
       pr3_t: 'Installation et intégration', pr3_p: 'Nous installons les systèmes, les connectons à vos canaux et les testons avec vous.',
       pr4_t: 'Formation et mise en ligne', pr4_p: 'Nous formons votre équipe, mettons le système en ligne et le surveillons.',
-      pkg_eyebrow: '05 — Offres', pkg_title: 'Installé une fois. Accompagné chaque mois.', pkg_lead: 'Vos systèmes sont installés une fois ; une offre mensuelle les fait tourner, évoluer et surveiller. Le tarif mensuel est établi sur devis.',
+      pkg_eyebrow: '06 — Offres', pkg_title: 'Installé une fois. Accompagné chaque mois.', pkg_lead: 'Vos systèmes sont installés une fois ; une offre mensuelle les fait tourner, évoluer et surveiller. Le tarif mensuel est établi sur devis.',
       pkg_pill1: 'Facturation mensuelle', pkg_pill2: 'Paiement sécurisé avec iyzico', pkg_pill3: 'Résiliable à tout moment',
       pkg_price: 'Tarif mensuel sur devis', pkg_cta: 'Demander un devis', pkg_cta_pa: 'Essayer la démo', pkg_rec: 'Recommandé', pkg_bonus: 'Bonus · Privé',
       pk1_for: 'Pour les petites entreprises qui démarrent avec un système.', pk1_1: 'Un système au choix', pk1_2: 'Hébergement et mises à jour de sécurité', pk1_3: 'Rapport de performance mensuel', pk1_4: 'Support e-mail, réponse sous 2 jours ouvrés',
@@ -1696,12 +1810,68 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
       fq3_q: 'Quels canaux sont pris en charge ?', fq3_a: 'Votre site, WhatsApp, e-mail, SMS et Instagram.',
       fq4_q: 'Y a-t-il un engagement ?', fq4_a: 'Les offres mensuelles se renouvellent chaque mois et sont résiliables à tout moment.',
       fq5_q: 'Quelles langues parle l\'IA ?', fq5_a: 'Turc, anglais, allemand et français ; d\'autres langues sur demande.',
-      ab_eyebrow: '08 — À propos', ab_title: 'L\'équipe derrière AXON.', ab_role: 'Fondatrice',
+      ab_eyebrow: '09 — À propos', ab_title: 'L\'équipe derrière AXON.', ab_role: 'Fondatrice',
       ab_p: 'AXON a été fondée à Istanbul par Gülcan Genç. Nous construisons et opérons des systèmes IA pour hôtels, cliniques et entreprises — du premier appel au support quotidien.',
       store_note: 'Ce site enregistre votre choix de langue dans votre navigateur. Aucun cookie de suivi.', store_ok: 'OK'
     }
   };
   Object.keys(I18N_MORE).forEach(function (l) { Object.keys(I18N_MORE[l]).forEach(function (k) { I18N[l][k] = I18N_MORE[l][k]; }); });
+  // 3D location map copy
+  var I18N_LOC = {
+    en: {
+      nav_location: 'Location', loc_eyebrow: '02 — Location Intelligence', loc_title: 'Location sells the room.',
+      loc_lead: 'Guests book where they can picture themselves. We turn your address into a live 3D map: real buildings, walking times to every sight and stop, and a route drawn on tap.',
+      loc_cat_all: 'All', loc_cat_sight: 'Sights', loc_cat_transit: 'Transit', loc_cat_shop: 'Shopping', loc_cat_park: 'Parks',
+      loc_night: 'Night', loc_dusk: 'Dusk', loc_day: 'Day', loc_tour: 'Start tour', loc_stop: 'Stop tour', loc_recenter: 'Back to hotel',
+      loc_hotel: 'YOUR HOTEL', loc_sub: 'Demo location · Historic Peninsula, Istanbul', loc_score_unit: 'places within a 15-min walk',
+      loc_nearby: 'Nearby', loc_min: 'min', loc_min_walk: 'min walk', loc_straight: 'straight line',
+      loc_est: 'Estimated at walking pace along the streets. Your live map uses real routes.', loc_hint: 'Tap a place on the map or in the list to see the route and walking time.',
+      loc_offline: 'Preview — the interactive 3D map loads on the live site.',
+      loc_f1: '3D buildings & terrain', loc_f2: 'Walking-time rings', loc_f3: 'Routes on tap', loc_f4: 'Map labels in the guest\'s language',
+      poi_hagia: 'Hagia Sophia', poi_bluemosque: 'Blue Mosque', poi_cistern: 'Basilica Cistern', poi_topkapi: 'Topkapı Palace', poi_suleymaniye: 'Süleymaniye Mosque', poi_galata: 'Galata Tower',
+      poi_grandbazaar: 'Grand Bazaar', poi_spicebazaar: 'Spice Bazaar', poi_gulhane: 'Gülhane Park', poi_t1sultanahmet: 'Sultanahmet tram (T1)', poi_t1cemberlitas: 'Çemberlitaş tram (T1)', poi_eminonu: 'Eminönü ferries', poi_sirkeci: 'Sirkeci Marmaray'
+    },
+    tr: {
+      nav_location: 'Konum', loc_eyebrow: '02 — Konum Zekâsı', loc_title: 'Odayı konum satar.',
+      loc_lead: 'Misafir, kendini hayal edebildiği yeri rezerve eder. Adresinizi canlı bir 3D haritaya dönüştürüyoruz: gerçek binalar, her yere yürüme süresi ve dokununca çizilen rota.',
+      loc_cat_all: 'Tümü', loc_cat_sight: 'Gezilecek yerler', loc_cat_transit: 'Ulaşım', loc_cat_shop: 'Alışveriş', loc_cat_park: 'Parklar',
+      loc_night: 'Gece', loc_dusk: 'Gün batımı', loc_day: 'Gündüz', loc_tour: 'Turu başlat', loc_stop: 'Turu durdur', loc_recenter: 'Otele dön',
+      loc_hotel: 'OTELİNİZ', loc_sub: 'Demo konum · Tarihi Yarımada, İstanbul', loc_score_unit: 'yer 15 dakika yürüme mesafesinde',
+      loc_nearby: 'Yakındakiler', loc_min: 'dk', loc_min_walk: 'dk yürüme', loc_straight: 'kuş uçuşu',
+      loc_est: 'Sokaklar boyunca yürüme hızına göre tahmin. Canlı haritanızda gerçek rotalar kullanılır.', loc_hint: 'Rotayı ve yürüme süresini görmek için haritada ya da listede bir yere dokunun.',
+      loc_offline: 'Önizleme — etkileşimli 3D harita canlı sitede yüklenir.',
+      loc_f1: '3D binalar ve arazi', loc_f2: 'Yürüme süresi halkaları', loc_f3: 'Dokununca rota', loc_f4: 'Misafirin dilinde harita',
+      poi_hagia: 'Ayasofya', poi_bluemosque: 'Sultanahmet Camii', poi_cistern: 'Yerebatan Sarnıcı', poi_topkapi: 'Topkapı Sarayı', poi_suleymaniye: 'Süleymaniye Camii', poi_galata: 'Galata Kulesi',
+      poi_grandbazaar: 'Kapalıçarşı', poi_spicebazaar: 'Mısır Çarşısı', poi_gulhane: 'Gülhane Parkı', poi_t1sultanahmet: 'Sultanahmet tramvay (T1)', poi_t1cemberlitas: 'Çemberlitaş tramvay (T1)', poi_eminonu: 'Eminönü iskelesi', poi_sirkeci: 'Sirkeci Marmaray'
+    },
+    de: {
+      nav_location: 'Lage', loc_eyebrow: '02 — Lage-Intelligenz', loc_title: 'Die Lage verkauft das Zimmer.',
+      loc_lead: 'Gäste buchen dort, wo sie sich sehen können. Wir machen aus Ihrer Adresse eine lebendige 3D-Karte: echte Gebäude, Gehzeiten zu jedem Ziel und eine Route auf Fingertipp.',
+      loc_cat_all: 'Alle', loc_cat_sight: 'Sehenswürdigkeiten', loc_cat_transit: 'ÖPNV', loc_cat_shop: 'Shopping', loc_cat_park: 'Parks',
+      loc_night: 'Nacht', loc_dusk: 'Abend', loc_day: 'Tag', loc_tour: 'Tour starten', loc_stop: 'Tour stoppen', loc_recenter: 'Zum Hotel',
+      loc_hotel: 'IHR HOTEL', loc_sub: 'Demo-Standort · Historische Halbinsel, Istanbul', loc_score_unit: 'Orte in 15 Gehminuten',
+      loc_nearby: 'In der Nähe', loc_min: 'Min.', loc_min_walk: 'Min. zu Fuß', loc_straight: 'Luftlinie',
+      loc_est: 'Geschätzt im Gehtempo entlang der Straßen. Ihre Live-Karte nutzt echte Routen.', loc_hint: 'Tippen Sie auf einen Ort auf der Karte oder in der Liste, um Route und Gehzeit zu sehen.',
+      loc_offline: 'Vorschau — die interaktive 3D-Karte lädt auf der Live-Website.',
+      loc_f1: '3D-Gebäude & Gelände', loc_f2: 'Gehzeit-Ringe', loc_f3: 'Routen auf Fingertipp', loc_f4: 'Karte in der Sprache des Gastes',
+      poi_hagia: 'Hagia Sophia', poi_bluemosque: 'Blaue Moschee', poi_cistern: 'Cisterna Basilica', poi_topkapi: 'Topkapı-Palast', poi_suleymaniye: 'Süleymaniye-Moschee', poi_galata: 'Galataturm',
+      poi_grandbazaar: 'Großer Basar', poi_spicebazaar: 'Ägyptischer Basar', poi_gulhane: 'Gülhane-Park', poi_t1sultanahmet: 'Tram Sultanahmet (T1)', poi_t1cemberlitas: 'Tram Çemberlitaş (T1)', poi_eminonu: 'Fähren Eminönü', poi_sirkeci: 'Sirkeci Marmaray'
+    },
+    fr: {
+      nav_location: 'Emplacement', loc_eyebrow: '02 — Intelligence de l\'emplacement', loc_title: 'L\'emplacement vend la chambre.',
+      loc_lead: 'Les clients réservent là où ils se projettent. Nous transformons votre adresse en carte 3D vivante : vrais bâtiments, temps de marche vers chaque lieu et itinéraire en un geste.',
+      loc_cat_all: 'Tout', loc_cat_sight: 'À voir', loc_cat_transit: 'Transports', loc_cat_shop: 'Shopping', loc_cat_park: 'Parcs',
+      loc_night: 'Nuit', loc_dusk: 'Crépuscule', loc_day: 'Jour', loc_tour: 'Lancer la visite', loc_stop: 'Arrêter la visite', loc_recenter: 'Retour à l\'hôtel',
+      loc_hotel: 'VOTRE HÔTEL', loc_sub: 'Emplacement de démo · Péninsule historique, Istanbul', loc_score_unit: 'lieux à 15 min à pied',
+      loc_nearby: 'À proximité', loc_min: 'min', loc_min_walk: 'min à pied', loc_straight: 'à vol d\'oiseau',
+      loc_est: 'Estimation au rythme de marche par les rues. Votre carte en ligne utilise de vrais itinéraires.', loc_hint: 'Touchez un lieu sur la carte ou dans la liste pour voir l\'itinéraire et le temps de marche.',
+      loc_offline: 'Aperçu — la carte 3D interactive se charge sur le site en ligne.',
+      loc_f1: 'Bâtiments 3D & relief', loc_f2: 'Anneaux de temps de marche', loc_f3: 'Itinéraires en un geste', loc_f4: 'Carte dans la langue du client',
+      poi_hagia: 'Sainte-Sophie', poi_bluemosque: 'Mosquée bleue', poi_cistern: 'Citerne Basilique', poi_topkapi: 'Palais de Topkapı', poi_suleymaniye: 'Mosquée Süleymaniye', poi_galata: 'Tour de Galata',
+      poi_grandbazaar: 'Grand Bazar', poi_spicebazaar: 'Bazar égyptien', poi_gulhane: 'Parc de Gülhane', poi_t1sultanahmet: 'Tram Sultanahmet (T1)', poi_t1cemberlitas: 'Tram Çemberlitaş (T1)', poi_eminonu: 'Ferries d\'Eminönü', poi_sirkeci: 'Sirkeci Marmaray'
+    }
+  };
+  Object.keys(I18N_LOC).forEach(function (l) { Object.keys(I18N_LOC[l]).forEach(function (k) { I18N[l][k] = I18N_LOC[l][k]; }); });
   var lang = 'en';
   try { var saved = localStorage.getItem('axonLang'); if (LANGS.indexOf(saved) > -1) lang = saved; } catch (e) {}
   if (lang === 'en') { var nl = (navigator.language || 'en').slice(0, 2).toLowerCase(); var stored = null; try { stored = localStorage.getItem('axonLang'); } catch (e) {} if (!stored && LANGS.indexOf(nl) > -1) lang = nl; }
@@ -2027,6 +2197,242 @@ html:not(.past-hero) .fab, html:not(.past-hero) .wa-fab, html:not(.past-hero) .s
     paRun(hit ? hit[0] : null, { text: safe });
   });
   langListeners.push(paRender);
+
+  /* ================= 3D location map ================= */
+  // Demo location in Istanbul's Historic Peninsula; coordinates are approximate public positions.
+  var LOC_HOTEL = [28.9727, 41.0087];
+  var LOC_POIS = [
+    { id: 'hagia', cat: 'sight', ll: [28.9802, 41.0086] },
+    { id: 'bluemosque', cat: 'sight', ll: [28.9768, 41.0054] },
+    { id: 'cistern', cat: 'sight', ll: [28.9779, 41.0084] },
+    { id: 'topkapi', cat: 'sight', ll: [28.9834, 41.0115] },
+    { id: 'suleymaniye', cat: 'sight', ll: [28.9639, 41.0162] },
+    { id: 'galata', cat: 'sight', ll: [28.9742, 41.0256] },
+    { id: 'grandbazaar', cat: 'shop', ll: [28.9680, 41.0107] },
+    { id: 'spicebazaar', cat: 'shop', ll: [28.9706, 41.0165] },
+    { id: 'gulhane', cat: 'park', ll: [28.9813, 41.0129] },
+    { id: 't1sultanahmet', cat: 'transit', ll: [28.9759, 41.0077] },
+    { id: 't1cemberlitas', cat: 'transit', ll: [28.9715, 41.0084] },
+    { id: 'eminonu', cat: 'transit', ll: [28.9737, 41.0170] },
+    { id: 'sirkeci', cat: 'transit', ll: [28.9779, 41.0146] }
+  ];
+  var LOC_CAT_COLOR = { sight: '#818CF8', transit: '#38BDF8', shop: '#F8FAFC', park: '#5EEAD4' };
+  var WALK_M_PER_MIN = 80, DETOUR = 1.25; // street paths run ~25% longer than a straight line
+
+  function distM(a, b) {
+    var R = 6371000, toR = Math.PI / 180, dLat = (b[1] - a[1]) * toR, dLng = (b[0] - a[0]) * toR;
+    var h = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(a[1] * toR) * Math.cos(b[1] * toR) * Math.sin(dLng / 2) * Math.sin(dLng / 2);
+    return 2 * R * Math.asin(Math.sqrt(h));
+  }
+  function walkMin(m) { return Math.max(1, Math.round(m * DETOUR / WALK_M_PER_MIN)); }
+  LOC_POIS.forEach(function (p) { p.m = distM(LOC_HOTEL, p.ll); p.min = walkMin(p.m); });
+  LOC_POIS.sort(function (a, b) { return a.m - b.m; });
+  function fmtDist(m) { return m < 1000 ? Math.round(m / 10) * 10 + ' m' : (m / 1000).toLocaleString(LOCALE[lang], { maximumFractionDigits: 1 }) + ' km'; }
+  function circleRing(c, r, n) {
+    var out = [], latR = r / 111320, lngR = r / (111320 * Math.cos(c[1] * Math.PI / 180));
+    for (var i = 0; i <= n; i++) { var a = i / n * Math.PI * 2; out.push([c[0] + Math.cos(a) * lngR, c[1] + Math.sin(a) * latR]); }
+    return out;
+  }
+  function arcLine(a, b, n) {
+    // a gentle curve so routes read as a path, not a ruler line
+    var mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2, dx = b[0] - a[0], dy = b[1] - a[1];
+    var cx = mx - dy * .22, cy = my + dx * .22, out = [];
+    for (var i = 0; i <= n; i++) { var t2 = i / n, u = 1 - t2; out.push([u * u * a[0] + 2 * u * t2 * cx + t2 * t2 * b[0], u * u * a[1] + 2 * u * t2 * cy + t2 * t2 * b[1]]); }
+    return out;
+  }
+  function bearingTo(a, b) {
+    var toR = Math.PI / 180, y = Math.sin((b[0] - a[0]) * toR) * Math.cos(b[1] * toR);
+    var x = Math.cos(a[1] * toR) * Math.sin(b[1] * toR) - Math.sin(a[1] * toR) * Math.cos(b[1] * toR) * Math.cos((b[0] - a[0]) * toR);
+    return Math.atan2(y, x) / toR;
+  }
+
+  var LOC_PRESETS = {
+    night: { bg: '#04070d', land: '#0a1220', park: '#0c1d1f', water: '#0a2036', road: 'rgba(148,163,184,.22)', major: 'rgba(148,163,184,.42)', rail: 'rgba(56,189,248,.5)', label: '#9fb0c6', halo: '#04070d', b0: '#16213a', b1: '#2c3f6a', b2: '#5b6fb0', light: '#cfe3ff', lightI: .35, sky: '#04070d', horizon: '#123155', fog: '#04070d' },
+    dusk: { bg: '#1b1426', land: '#221a31', park: '#1f2a2e', water: '#1b2b4d', road: 'rgba(253,186,140,.25)', major: 'rgba(253,186,140,.5)', rail: 'rgba(129,140,248,.6)', label: '#ead6ff', halo: '#1b1426', b0: '#3a2d4f', b1: '#7b5675', b2: '#e09a7b', light: '#ffb98a', lightI: .55, sky: '#2a1c3c', horizon: '#f39a7a', fog: '#2a1c3c' },
+    day: { bg: '#e9eef4', land: '#eef2f6', park: '#d7ecdf', water: '#a7cde6', road: '#ffffff', major: '#fdf3d8', rail: 'rgba(37,99,235,.55)', label: '#334155', halo: '#ffffff', b0: '#d9dee6', b1: '#c4ccd8', b2: '#aab5c6', light: '#ffffff', lightI: .4, sky: '#8fc3ef', horizon: '#e6f2ff', fog: '#e6f2ff' }
+  };
+
+  var loc = { map: null, ready: false, preset: 'night', cat: 'all', sel: null, touring: false, tourT: null, orbit: false, markers: [], ringMarkers: [], routeAnim: 0 };
+  var locEl = $('#loc'), locCanvas = $('#locCanvas'), locList = $('#locList'), locCard = $('#locCard');
+
+  function poiName(p) { return t('poi_' + p.id); }
+  function catName(c) { return t('loc_cat_' + c); }
+  function visiblePois() { return LOC_POIS.filter(function (p) { return loc.cat === 'all' || p.cat === loc.cat; }); }
+
+  function renderLocPanel() {
+    $('#locScore').textContent = LOC_POIS.filter(function (p) { return p.min <= 15; }).length;
+    locList.innerHTML = visiblePois().map(function (p) {
+      return '<li><button type="button" class="loc-row' + (loc.sel === p.id ? ' on' : '') + '" data-poi="' + p.id + '"><i style="background:' + LOC_CAT_COLOR[p.cat] + '"></i><span class="loc-row-name">' + poiName(p) + '<small>' + catName(p.cat) + '</small></span><span class="loc-row-min">' + p.min + ' ' + t('loc_min') + '</span></button></li>';
+    }).join('');
+    var p = LOC_POIS.filter(function (x) { return x.id === loc.sel; })[0];
+    locCard.innerHTML = p
+      ? '<div class="eyebrow" style="color:' + LOC_CAT_COLOR[p.cat] + '">' + catName(p.cat) + '</div><b>' + poiName(p) + '</b><div class="loc-card-stats"><span><strong>' + p.min + '</strong> ' + t('loc_min_walk') + '</span><span><strong>' + fmtDist(p.m) + '</strong> ' + t('loc_straight') + '</span></div><p>' + t('loc_est') + '</p>'
+      : '<p>' + t('loc_hint') + '</p>';
+    $$('.loc-cats button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.cat === loc.cat)); });
+    $$('.loc-light button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.preset === loc.preset)); });
+    $('#locTour').textContent = loc.touring ? t('loc_stop') : t('loc_tour');
+    loc.markers.forEach(function (m) {
+      var pp = m._poi, el = m.getElement();
+      el.style.display = (loc.cat === 'all' || pp.cat === loc.cat) ? '' : 'none';
+      el.classList.toggle('on', loc.sel === pp.id);
+      $('.loc-pin-label', el).textContent = poiName(pp);
+    });
+    loc.ringMarkers.forEach(function (m) { $('span', m.getElement()).textContent = m._min + ' ' + t('loc_min'); });
+    var hl = $('.loc-hotel-label'); if (hl) hl.textContent = t('loc_hotel');
+  }
+
+  function themeMap(name) {
+    var m = loc.map, P = LOC_PRESETS[name]; if (!m || !m.getStyle()) return;
+    m.getStyle().layers.forEach(function (l) {
+      var id = l.id.toLowerCase();
+      try {
+        if (l.type === 'background') m.setPaintProperty(l.id, 'background-color', P.bg);
+        else if (l.type === 'fill' && l.id.indexOf('axon-') !== 0) {
+          var col = /water|ocean|sea|river|lake/.test(id) ? P.water : /park|wood|grass|forest|green|cemetery/.test(id) ? P.park : P.land;
+          m.setPaintProperty(l.id, 'fill-color', col);
+          if (/building/.test(id)) m.setLayoutProperty(l.id, 'visibility', 'none');
+        }
+        else if (l.type === 'line' && l.id.indexOf('axon-') !== 0) {
+          var lc = /water|river|canal|stream/.test(id) ? P.water : /rail|transit|tram|subway/.test(id) ? P.rail : /motorway|trunk|primary|major/.test(id) ? P.major : /boundary|admin/.test(id) ? 'rgba(0,0,0,0)' : P.road;
+          m.setPaintProperty(l.id, 'line-color', lc);
+        }
+        else if (l.type === 'fill-extrusion' && l.id !== 'axon-3d') m.setLayoutProperty(l.id, 'visibility', 'none');
+        else if (l.type === 'symbol') {
+          m.setPaintProperty(l.id, 'text-color', P.label); m.setPaintProperty(l.id, 'text-halo-color', P.halo); m.setPaintProperty(l.id, 'text-halo-width', 1.2);
+          if (/poi|housenum/.test(id)) m.setLayoutProperty(l.id, 'visibility', 'none');
+          var tf = m.getLayoutProperty(l.id, 'text-field');
+          if (tf && JSON.stringify(tf).indexOf('name') > -1) m.setLayoutProperty(l.id, 'text-field', ['coalesce', ['get', 'name:' + lang], ['get', 'name:latin'], ['get', 'name']]);
+        }
+      } catch (e) { /* layers without these properties are left alone */ }
+    });
+    if (m.getLayer('axon-3d')) {
+      m.setPaintProperty('axon-3d', 'fill-extrusion-color', ['interpolate', ['linear'], ['coalesce', ['get', 'render_height'], ['get', 'height'], 10], 0, P.b0, 25, P.b1, 70, P.b2]);
+    }
+    try { m.setLight({ anchor: 'viewport', color: P.light, intensity: P.lightI, position: [1.3, 210, 40] }); } catch (e) {}
+    try { m.setSky({ 'sky-color': P.sky, 'horizon-color': P.horizon, 'fog-color': P.fog, 'sky-horizon-blend': .6, 'horizon-fog-blend': .7, 'fog-ground-blend': .4, 'atmosphere-blend': ['interpolate', ['linear'], ['zoom'], 0, 1, 9, 1, 12, 0] }); } catch (e) {}
+    locEl.dataset.preset = name;
+  }
+
+  function addOverlays() {
+    var m = loc.map;
+    var src = Object.keys(m.getStyle().sources).filter(function (k) { return m.getStyle().sources[k].type === 'vector'; })[0];
+    if (src && !m.getLayer('axon-3d')) {
+      try {
+        m.addLayer({ id: 'axon-3d', type: 'fill-extrusion', source: src, 'source-layer': 'building', minzoom: 13,
+          paint: { 'fill-extrusion-height': ['interpolate', ['linear'], ['zoom'], 13, 0, 14.5, ['coalesce', ['get', 'render_height'], ['get', 'height'], 10]],
+                   'fill-extrusion-base': ['coalesce', ['get', 'render_min_height'], ['get', 'min_height'], 0], 'fill-extrusion-opacity': .92, 'fill-extrusion-vertical-gradient': true } });
+      } catch (e) {}
+    }
+    var rings = [15, 10, 5].map(function (min) { return { type: 'Feature', properties: { min: min }, geometry: { type: 'Polygon', coordinates: [circleRing(LOC_HOTEL, min * WALK_M_PER_MIN / DETOUR, 96)] } }; });
+    m.addSource('axon-iso', { type: 'geojson', data: { type: 'FeatureCollection', features: rings } });
+    m.addLayer({ id: 'axon-iso-fill', type: 'fill', source: 'axon-iso', paint: { 'fill-color': '#38BDF8', 'fill-opacity': ['match', ['get', 'min'], 5, .14, 10, .08, .05] } });
+    m.addLayer({ id: 'axon-iso-line', type: 'line', source: 'axon-iso', paint: { 'line-color': '#38BDF8', 'line-width': 1.4, 'line-opacity': .75, 'line-dasharray': [2, 2] } });
+    m.addSource('axon-route', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
+    m.addLayer({ id: 'axon-route-glow', type: 'line', source: 'axon-route', layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#38BDF8', 'line-width': 14, 'line-opacity': .22, 'line-blur': 6 } });
+    m.addLayer({ id: 'axon-route', type: 'line', source: 'axon-route', layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#F8FAFC', 'line-width': 3.5 } });
+
+    // HTML markers: crisp at any zoom and independent of the style's fonts
+    var hotel = document.createElement('div'); hotel.className = 'loc-hotel';
+    hotel.innerHTML = '<span class="loc-hotel-pulse"></span><span class="loc-hotel-dot"></span><span class="loc-hotel-label"></span>';
+    new window.maplibregl.Marker({ element: hotel, anchor: 'center' }).setLngLat(LOC_HOTEL).addTo(m);
+    [5, 10, 15].forEach(function (min) {
+      var el = document.createElement('div'); el.className = 'loc-ring-label'; el.innerHTML = '<span></span>';
+      var r = circleRing(LOC_HOTEL, min * WALK_M_PER_MIN / DETOUR, 4)[1];
+      var mk = new window.maplibregl.Marker({ element: el, anchor: 'bottom' }).setLngLat(r).addTo(m); mk._min = min; loc.ringMarkers.push(mk);
+    });
+    LOC_POIS.forEach(function (p) {
+      var el = document.createElement('button'); el.type = 'button'; el.className = 'loc-pin'; el.style.setProperty('--c', LOC_CAT_COLOR[p.cat]);
+      el.innerHTML = '<i></i><span class="loc-pin-label"></span>';
+      el.addEventListener('click', function (e) { e.stopPropagation(); stopTour(); selectPoi(p.id); });
+      var mk = new window.maplibregl.Marker({ element: el, anchor: 'bottom' }).setLngLat(p.ll).addTo(m); mk._poi = p; loc.markers.push(mk);
+    });
+  }
+
+  function drawRoute(p) {
+    var m = loc.map; if (!m || !m.getSource('axon-route')) return;
+    var full = arcLine(LOC_HOTEL, p.ll, 80), start = performance.now(), dur = reduceMotion ? 1 : 1100, id = ++loc.routeAnim;
+    (function step(now) {
+      if (id !== loc.routeAnim) return;
+      var k = Math.min(1, (now - start) / dur), n = Math.max(2, Math.round(k * full.length));
+      m.getSource('axon-route').setData({ type: 'Feature', properties: {}, geometry: { type: 'LineString', coordinates: full.slice(0, n) } });
+      if (k < 1) requestAnimationFrame(step);
+    })(start);
+  }
+
+  function selectPoi(id) {
+    var p = LOC_POIS.filter(function (x) { return x.id === id; })[0]; if (!p) return;
+    loc.sel = id; loc.orbit = false; renderLocPanel(); Sound.click();
+    if (!loc.map || !loc.ready) return;
+    drawRoute(p);
+    var b = bearingTo(LOC_HOTEL, p.ll) - 25;
+    loc.map.fitBounds([[Math.min(LOC_HOTEL[0], p.ll[0]), Math.min(LOC_HOTEL[1], p.ll[1])], [Math.max(LOC_HOTEL[0], p.ll[0]), Math.max(LOC_HOTEL[1], p.ll[1])]],
+      { padding: { top: 110, bottom: 90, left: 90, right: 90 }, pitch: 62, bearing: b, maxZoom: 16.6, duration: reduceMotion ? 0 : 2400, essential: true });
+  }
+
+  function stopTour() { loc.touring = false; clearTimeout(loc.tourT); renderLocPanel(); }
+  function runTour(i) {
+    if (!loc.touring) return;
+    var list = visiblePois(); if (!list.length) return stopTour();
+    selectPoi(list[i % list.length].id);
+    loc.tourT = setTimeout(function () { runTour(i + 1); }, 4200);
+  }
+
+  function startOrbit() {
+    var m = loc.map; if (!m || reduceMotion) return;
+    loc.orbit = true;
+    (function spin() { if (!loc.orbit) return; m.easeTo({ bearing: m.getBearing() + 40, duration: 16000, easing: function (x) { return x; } }); m.once('moveend', spin); })();
+  }
+
+  function locFallback() { locEl.classList.add('loc-offline'); }
+
+  function initLocMap() {
+    if (loc.map) return;
+    if (!window.maplibregl || !webglOKForMap()) return locFallback();
+    var m;
+    try {
+      m = loc.map = new window.maplibregl.Map({
+        container: locCanvas, style: 'https://tiles.openfreemap.org/styles/liberty',
+        center: [28.97, 41.0], zoom: 1.4, pitch: 0, bearing: 0, maxPitch: 75,
+        cooperativeGestures: true, attributionControl: { compact: true }
+      });
+    } catch (e) { return locFallback(); }
+    m.addControl(new window.maplibregl.NavigationControl({ visualizePitch: true }), 'top-right');
+    var styleTimer = setTimeout(function () { if (!loc.ready) locFallback(); }, 12000);
+    m.on('error', function () { if (!loc.ready) { clearTimeout(styleTimer); locFallback(); } });
+    m.on('style.load', function () {
+      try { m.setProjection({ type: 'globe' }); } catch (e) {}
+      themeMap(loc.preset);
+      addOverlays();
+      loc.ready = true; clearTimeout(styleTimer);
+      locEl.classList.add('loc-ready');
+      renderLocPanel();
+      // cinematic arrival: globe → Istanbul → tilted street level, then a slow orbit
+      m.flyTo({ center: LOC_HOTEL, zoom: 15.7, pitch: 62, bearing: -28, duration: reduceMotion ? 0 : 6500, curve: 1.5, essential: true });
+      m.once('moveend', startOrbit);
+    });
+    ['mousedown', 'touchstart', 'wheel', 'dragstart'].forEach(function (ev) { m.on(ev, function () { loc.orbit = false; if (loc.touring) stopTour(); }); });
+  }
+  function webglOKForMap() { try { var c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); } catch (e) { return false; } }
+
+  $$('.loc-cats button').forEach(function (b) { b.addEventListener('click', function () { loc.cat = b.dataset.cat; Sound.click(); renderLocPanel(); }); });
+  $$('.loc-light button').forEach(function (b) { b.addEventListener('click', function () { loc.preset = b.dataset.preset; themeMap(loc.preset); renderLocPanel(); Sound.click(); }); });
+  $('#locTour').addEventListener('click', function () {
+    if (loc.touring) return stopTour();
+    loc.touring = true; loc.orbit = false; renderLocPanel(); runTour(0);
+  });
+  locList.addEventListener('click', function (e) { var b = e.target.closest('[data-poi]'); if (b) { stopTour(); selectPoi(b.dataset.poi); } });
+  $('#locRecenter').addEventListener('click', function () {
+    stopTour(); loc.sel = null; loc.routeAnim++; renderLocPanel();
+    if (loc.map && loc.ready) { if (loc.map.getSource('axon-route')) loc.map.getSource('axon-route').setData({ type: 'FeatureCollection', features: [] }); loc.map.flyTo({ center: LOC_HOTEL, zoom: 15.7, pitch: 62, bearing: -28, duration: 1800 }); }
+  });
+  // the map (and its tiles) load only when the section comes near the viewport
+  // wait for the deferred map library, then start when the section comes near
+  window.addEventListener('load', function () {
+    if (!('IntersectionObserver' in window)) return initLocMap();
+    var locIO = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { locIO.disconnect(); initLocMap(); } }, { rootMargin: '300px 0px' });
+    locIO.observe(locEl);
+  });
+  langListeners.push(function () { renderLocPanel(); if (loc.ready) themeMap(loc.preset); });
 
   /* ================= Contact terminal ================= */
   var CONTACT_EMAIL = 'gulcanyesilbudak@icloud.com';
