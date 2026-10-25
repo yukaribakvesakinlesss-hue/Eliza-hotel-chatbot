@@ -671,6 +671,17 @@ html.past-hero #scene, html.past-hero .vignette { opacity: 0; }
 .fd-list li::before { content: "✓"; color: var(--synapse); font-weight: 600; }
 .fd-ctas { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: var(--space-3); }
 @media (max-width: 860px) { .fd { grid-template-columns: minmax(0, 1fr); } }
+
+.ab-facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-4); margin-bottom: var(--space-6); }
+.ab-facts div { padding: var(--space-4) 0; border-top: 1px solid var(--hairline-strong); display: grid; gap: 6px; }
+.ab-facts b { font: 500 clamp(36px, 4vw, 52px)/1 var(--font-display); color: var(--chrome-50); }
+.ab-facts span { color: var(--chrome-400); font-size: 14px; }
+.ab-why { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
+.ab-card { padding: clamp(20px, 2.6vw, 30px); }
+.ab-card h3 { margin: 0 0 var(--space-2); font: 500 20px/1.25 var(--font-display); color: var(--chrome-50); }
+.ab-card p { margin: 0; color: var(--chrome-200); line-height: 1.6; }
+#about .about-meta { margin-top: var(--space-6); }
+@media (max-width: 860px) { .ab-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); } .ab-why { grid-template-columns: minmax(0, 1fr); } }
 </style>
 </head>
 <body>
@@ -1199,18 +1210,26 @@ html.past-hero #scene, html.past-hero .vignette { opacity: 0; }
 <!-- ===== About ===== -->
 <section class="section" id="about" aria-labelledby="aboutTitle">
   <div class="wrap">
-    <div class="about glass reveal">
-      <div class="about-photo" aria-hidden="true"><span>GG</span></div>
-      <div class="about-text">
-        <div class="eyebrow" data-i18n="ab_eyebrow">About</div>
-        <h2 class="section-title" id="aboutTitle" data-i18n="ab_title">The team behind AXON.</h2>
-        <p class="section-lead" data-i18n="ab_p">AXON was founded in Istanbul by Gülcan Genç.</p>
-        <div class="about-meta">
-          <span class="pill"><b>Gülcan Genç</b>&nbsp;·&nbsp;<span data-i18n="ab_role">Founder</span></span>
-          <a class="pill wa-link" target="_blank" rel="noopener">WhatsApp</a>
-          <span class="pill">gulcanyesilbudak@icloud.com</span>
-        </div>
-      </div>
+    <div class="section-head reveal">
+      <div class="eyebrow" data-i18n="ab_eyebrow">About</div>
+      <h2 class="section-title" id="aboutTitle" data-i18n="ab_title">Why AXON?</h2>
+      <p class="section-lead" data-i18n="ab_p"></p>
+    </div>
+    <div class="ab-facts reveal">
+      <div><b data-i18n="abf1v">18</b><span data-i18n="abf1">businesses use our systems</span></div>
+      <div><b data-i18n="abf2v">3</b><span data-i18n="abf2">countries: Türkiye, UK, USA</span></div>
+      <div><b data-i18n="abf3v">4</b><span data-i18n="abf3">languages on every system</span></div>
+      <div><b data-i18n="abf4v">24/7</b><span data-i18n="abf4">monitoring after go-live</span></div>
+    </div>
+    <div class="ab-why">
+      <div class="ab-card glass reveal"><h3 data-i18n="why1_t"></h3><p data-i18n="why1_p"></p></div>
+      <div class="ab-card glass reveal"><h3 data-i18n="why2_t"></h3><p data-i18n="why2_p"></p></div>
+      <div class="ab-card glass reveal"><h3 data-i18n="why3_t"></h3><p data-i18n="why3_p"></p></div>
+      <div class="ab-card glass reveal"><h3 data-i18n="why4_t"></h3><p data-i18n="why4_p"></p></div>
+    </div>
+    <div class="about-meta reveal">
+      <a href="#consultation" class="btn btn-primary" data-i18n="cta_deploy">Get a free demo</a>
+      <a class="btn btn-ghost wa-link" target="_blank" rel="noopener">WhatsApp</a>
     </div>
   </div>
 </section>
@@ -1258,7 +1277,7 @@ html.past-hero #scene, html.past-hero .vignette { opacity: 0; }
           <p class="section-lead" style="margin-top:var(--space-3);font-size:15px" data-i18n="sig_lead">Generate the founder's HTML email signature.</p>
         </div>
         <div class="sig-fields" id="sigFields">
-          <input class="input" data-k="name" aria-label="Name" value="Gülcan Genç">
+          <input class="input" data-k="name" aria-label="Name" value="AXON Systems">
           <input class="input" data-k="title" aria-label="Title" value="Founder">
           <input class="input" data-k="email" aria-label="Email" value="gulcanyesilbudak@icloud.com">
           <input class="input" data-k="phone" aria-label="Phone" value="+90 554 024 86 98">
@@ -1494,7 +1513,7 @@ html.past-hero #scene, html.past-hero .vignette { opacity: 0; }
       kb_lang: 'Sites and the AI concierge are multilingual, Turkish, English, German and French, with more languages on request.',
       kb_auto: 'Every reservation event triggers the right message: confirmation emails and SMS, WhatsApp updates, check-in instructions and post-stay review requests, no manual work for your team.',
       kb_ref: 'Our systems run in production with our clients, see the Partners section. Ask for a private walkthrough in the consultation form.',
-      kb_contact: 'You can reach the founder, Gülcan Genç, through the consultation form or directly on WhatsApp.',
+      kb_contact: '',
       kb_hi: 'Welcome to AXON. Ask me about our booking engine, AI concierge, payments or automations.',
       kb_fallback: 'I\'m the AXON demo assistant, I can explain our booking engine, AI assistant, payments, 3D maps and automations. For anything specific to your business, leave a brief in the consultation form.',
       kb_wa: 'Message us on WhatsApp'
@@ -1552,7 +1571,7 @@ html.past-hero #scene, html.past-hero .vignette { opacity: 0; }
       kb_lang: 'Siteler ve yapay zekâ konsiyerj çok dillidir, Türkçe, İngilizce, Almanca ve Fransızca; talebe göre başka diller de eklenir.',
       kb_auto: 'Her rezervasyon olayı doğru mesajı tetikler: onay e-postası ve SMS, WhatsApp bildirimleri, check-in bilgileri ve konaklama sonrası yorum talepleri, ekibinize manuel iş kalmaz.',
       kb_ref: 'Sistemlerimiz müşterilerimizde canlı çalışıyor, Partnerler bölümüne bakın. Özel bir tanıtım için danışmanlık formunu kullanın.',
-      kb_contact: 'Kurucumuz Gülcan Genç\'e danışmanlık formundan ya da doğrudan WhatsApp\'tan ulaşabilirsiniz.',
+      kb_contact: '',
       kb_hi: 'AXON\'a hoş geldiniz. Rezervasyon motoru, yapay zekâ konsiyerj, ödemeler veya otomasyonlar hakkında sorun.',
       kb_fallback: 'Ben AXON demo asistanıyım, rezervasyon motoru, yapay zekâ asistanı, ödemeler, 3D haritalar ve otomasyonları anlatabilirim. İşletmenize özel konular için danışmanlık formuna kısa bilgi bırakın.',
       kb_wa: 'WhatsApp\'tan yazın'
@@ -1610,7 +1629,7 @@ html.past-hero #scene, html.past-hero .vignette { opacity: 0; }
       kb_lang: 'Websites und KI-Concierge sind mehrsprachig, Türkisch, Englisch, Deutsch und Französisch, weitere Sprachen auf Anfrage.',
       kb_auto: 'Jedes Buchungsereignis löst die richtige Nachricht aus: Bestätigungs-E-Mails und SMS, WhatsApp-Updates, Check-in-Infos und Bewertungsanfragen, ohne Handarbeit für Ihr Team.',
       kb_ref: 'Unsere Systeme laufen live bei unseren Kunden, siehe Abschnitt Partner. Für eine private Vorführung nutzen Sie das Beratungsformular.',
-      kb_contact: 'Sie erreichen die Gründerin Gülcan Genç über das Beratungsformular oder direkt per WhatsApp.',
+      kb_contact: '',
       kb_hi: 'Willkommen bei AXON. Fragen Sie mich zu Buchungs-Engine, KI-Concierge, Zahlungen oder Automationen.',
       kb_fallback: 'Ich bin der AXON-Demo-Assistent, ich erkläre Buchungs-Engine, KI-Assistent, Zahlungen, 3D-Karten und Automationen. Für Fragen zu Ihrem Unternehmen hinterlassen Sie eine Kurzbeschreibung im Beratungsformular.',
       kb_wa: 'Auf WhatsApp schreiben'
@@ -1668,7 +1687,7 @@ html.past-hero #scene, html.past-hero .vignette { opacity: 0; }
       kb_lang: 'Les sites et le concierge IA sont multilingues, turc, anglais, allemand et français, d\'autres langues sur demande.',
       kb_auto: 'Chaque événement de réservation déclenche le bon message : e-mails et SMS de confirmation, mises à jour WhatsApp, infos de check-in et demandes d\'avis, sans travail manuel pour votre équipe.',
       kb_ref: 'Nos systèmes tournent en production chez nos clients, voir la section Partenaires. Demandez une présentation privée via le formulaire.',
-      kb_contact: 'Vous pouvez joindre la fondatrice, Gülcan Genç, via le formulaire de consultation ou directement sur WhatsApp.',
+      kb_contact: '',
       kb_hi: 'Bienvenue chez AXON. Posez-moi vos questions sur le moteur de réservation, le concierge IA, les paiements ou les automatisations.',
       kb_fallback: 'Je suis l\'assistant de démo AXON, je peux présenter le moteur de réservation, l\'assistant IA, les paiements, les cartes 3D et les automatisations. Pour votre entreprise, laissez un brief dans le formulaire.',
       kb_wa: 'Écrire sur WhatsApp'
@@ -1827,7 +1846,7 @@ html.past-hero #scene, html.past-hero .vignette { opacity: 0; }
       fq4_q: 'Is there a minimum contract?', fq4_a: 'Monthly packages renew every month and can be cancelled anytime.',
       fq5_q: 'Which languages does the AI speak?', fq5_a: 'Turkish, English, German and French out of the box; more languages on request.',
       ab_eyebrow: 'About', ab_title: 'The team behind AXON.', ab_role: 'Founder',
-      ab_p: 'AXON was founded in Istanbul by Gülcan Genç. We build and run AI systems for hotels, clinics and companies, from the first call to daily support.',
+      ab_p: '',
       store_note: 'This site stores your language choice in your browser. No tracking cookies.', store_ok: 'OK'
     },
     tr: {
@@ -1861,7 +1880,7 @@ html.past-hero #scene, html.past-hero .vignette { opacity: 0; }
       fq4_q: 'Taahhüt var mı?', fq4_a: 'Aylık paketler her ay yenilenir ve dilediğiniz zaman iptal edilebilir.',
       fq5_q: 'Yapay zekâ hangi dilleri konuşuyor?', fq5_a: 'Türkçe, İngilizce, Almanca ve Fransızca hazır; talebe göre başka diller de eklenir.',
       ab_eyebrow: 'Hakkımızda', ab_title: 'AXON\'un arkasındaki ekip.', ab_role: 'Kurucu',
-      ab_p: 'AXON, Gülcan Genç tarafından İstanbul\'da kuruldu. Oteller, klinikler ve şirketler için yapay zekâ sistemlerini kuruyor ve işletiyoruz, ilk görüşmeden günlük desteğe kadar.',
+      ab_p: '',
       store_note: 'Bu site dil tercihinizi tarayıcınızda saklar. Takip çerezi kullanılmaz.', store_ok: 'Tamam'
     },
     de: {
@@ -1895,7 +1914,7 @@ html.past-hero #scene, html.past-hero .vignette { opacity: 0; }
       fq4_q: 'Gibt es eine Mindestlaufzeit?', fq4_a: 'Monatspakete verlängern sich monatlich und sind jederzeit kündbar.',
       fq5_q: 'Welche Sprachen spricht die KI?', fq5_a: 'Türkisch, Englisch, Deutsch und Französisch; weitere Sprachen auf Anfrage.',
       ab_eyebrow: 'Über uns', ab_title: 'Das Team hinter AXON.', ab_role: 'Gründerin',
-      ab_p: 'AXON wurde von Gülcan Genç in Istanbul gegründet. Wir bauen und betreiben KI-Systeme für Hotels, Kliniken und Unternehmen, vom ersten Gespräch bis zum täglichen Support.',
+      ab_p: '',
       store_note: 'Diese Website speichert Ihre Sprachwahl in Ihrem Browser. Keine Tracking-Cookies.', store_ok: 'OK'
     },
     fr: {
@@ -1929,7 +1948,7 @@ html.past-hero #scene, html.past-hero .vignette { opacity: 0; }
       fq4_q: 'Y a-t-il un engagement ?', fq4_a: 'Les offres mensuelles se renouvellent chaque mois et sont résiliables à tout moment.',
       fq5_q: 'Quelles langues parle l\'IA ?', fq5_a: 'Turc, anglais, allemand et français ; d\'autres langues sur demande.',
       ab_eyebrow: 'À propos', ab_title: 'L\'équipe derrière AXON.', ab_role: 'Fondatrice',
-      ab_p: 'AXON a été fondée à Istanbul par Gülcan Genç. Nous construisons et opérons des systèmes IA pour hôtels, cliniques et entreprises, du premier appel au support quotidien.',
+      ab_p: '',
       store_note: 'Ce site enregistre votre choix de langue dans votre navigateur. Aucun cookie de suivi.', store_ok: 'OK'
     }
   };
@@ -1992,6 +2011,7 @@ html.past-hero #scene, html.past-hero .vignette { opacity: 0; }
   Object.keys(I18N_LOC).forEach(function (l) { Object.keys(I18N_LOC[l]).forEach(function (k) { I18N[l][k] = I18N_LOC[l][k]; }); });
   var I18N_CALM = {
     "en": {
+    "ab_eyebrow": 'About', "ab_title": 'Why AXON?', "ab_p": 'AXON is an AI studio founded in Istanbul. We set up and run systems for hotels, clinics and companies as one team, from the first call to daily support.', "abf1v": '18', "abf1": 'businesses use our systems', "abf2v": '3', "abf2": 'countries: Türkiye, UK, USA', "abf3v": '4', "abf3": 'languages on every system', "abf4v": '24/7', "abf4": 'monitoring after go-live', "why1_t": 'One team for everything', "why1_p": 'Website, booking, payments, chatbot and assistant come from the same team. You never chase three different companies.', "why2_t": 'Demo first, decide later', "why2_p": 'We build a free demo with your own information before you pay anything. No commitment.', "why3_t": 'Your data stays yours', "why3_p": 'Guest and patient data stays in your account and is never used for ads. If you leave, you get a full export.', "why4_t": 'We stay after launch', "why4_p": '24/7 monitoring, error response, updates and a monthly report. If something breaks, we see it before you do.', "kb_contact": 'You can reach the AXON team through the consultation form or directly on WhatsApp.',
     "pk1_1": 'One system of your choice', "pk1_2": '24/7 uptime monitoring and outage alerts', "pk1_3": 'Error response and repair', "pk1_4": 'Model, API and security updates applied', "pk1_5": 'Monthly performance report', "pk1_6": 'Email support, reply within 2 business days', "pk2_1": 'Everything in Start', "pk2_2": 'Reservation Management + AI Assistant', "pk2_3": 'Server, API and AI usage costs included', "pk2_4": 'A new scenario and improvement every month', "pk2_5": 'New channels and integrations added', "pk2_6": 'Weekly performance report', "pk2_7": 'WhatsApp support, same-day reply', "pk3_1": 'Everything in Pro', "pk3_2": 'All five systems', "pk3_3": 'Multiple locations and teams', "pk3_4": 'Custom development roadmap', "pk3_5": 'Guaranteed response times (SLA)', "pk3_6": 'Dedicated project manager and monthly review meeting', "pk4_1": 'An assistant created for you alone', "pk4_2": 'Calendar, email and WhatsApp connected', "pk4_3": 'Daily briefing and reminders', "pk4_4": 'Maintenance and updates included', "pk4_5": 'Personal WhatsApp support line',
     "part_more_b": '+11 more businesses', "part_more_p": 'Some of our clients prefer not to have their names published, so we keep them confidential.',
       "tagline": "AI systems for hotels, clinics and companies",
@@ -2059,6 +2079,7 @@ html.past-hero #scene, html.past-hero .vignette { opacity: 0; }
       "pk4_for": "For owners buried in messages and meetings."
     },
     "tr": {
+    "ab_eyebrow": 'Hakkımızda', "ab_title": 'Neden AXON?', "ab_p": 'AXON, İstanbul\'da kurulan bir yapay zekâ stüdyosu. Oteller, klinikler ve şirketler için sistemleri tek ekip olarak kuruyor ve işletiyoruz, ilk görüşmeden günlük desteğe kadar.', "abf1v": '18', "abf1": 'işletme sistemlerimizi kullanıyor', "abf2v": '3', "abf2": 'ülke: Türkiye, İngiltere, ABD', "abf3v": '4', "abf3": 'dil, her sistemde', "abf4v": '7/24', "abf4": 'yayından sonra takip', "why1_t": 'Her şey için tek ekip', "why1_p": 'Web sitesi, rezervasyon, ödeme, chatbot ve asistan aynı ekipten gelir. Üç ayrı firmanın peşinde koşmazsınız.', "why2_t": 'Önce demo, sonra karar', "why2_p": 'Hiçbir ödeme yapmadan önce sizin bilgilerinizle ücretsiz bir demo hazırlarız. Taahhüt yok.', "why3_t": 'Verileriniz sizin', "why3_p": 'Misafir ve hasta bilgileri sizin hesabınızda kalır, reklam için kullanılmaz. Ayrılırsanız tamamını dışa aktarıp size veririz.', "why4_t": 'Yayından sonra da yanınızdayız', "why4_p": '7/24 takip, hata müdahalesi, güncellemeler ve aylık rapor. Bir sorun olursa siz fark etmeden biz görürüz.', "kb_contact": 'AXON ekibine danışmanlık formundan ya da doğrudan WhatsApp\'tan ulaşabilirsiniz.',
     "pk1_1": 'Seçtiğiniz bir sistem', "pk1_2": '7/24 çalışma takibi ve kesinti bildirimi', "pk1_3": 'Hata müdahalesi ve onarım', "pk1_4": 'Model, API ve güvenlik güncellemeleri', "pk1_5": 'Aylık performans raporu', "pk1_6": 'E-posta destek, 2 iş günü içinde yanıt', "pk2_1": 'Start paketindeki her şey', "pk2_2": 'Rezervasyon Yönetimi + Yapay Zekâ Asistanı', "pk2_3": 'Sunucu, API ve yapay zekâ kullanım bedeli dahil', "pk2_4": 'Her ay yeni senaryo ve iyileştirme', "pk2_5": 'Yeni kanal ve entegrasyon ekleme', "pk2_6": 'Haftalık performans raporu', "pk2_7": 'WhatsApp destek, aynı gün yanıt', "pk3_1": 'Pro paketindeki her şey', "pk3_2": 'Beş sistemin tamamı', "pk3_3": 'Birden fazla lokasyon ve ekip', "pk3_4": 'Size özel geliştirme takvimi', "pk3_5": 'Garantili yanıt süresi (SLA)', "pk3_6": 'Proje yöneticisi ve aylık değerlendirme toplantısı', "pk4_1": 'Yalnızca size özel asistan', "pk4_2": 'Takvim, e-posta ve WhatsApp bağlantısı', "pk4_3": 'Günlük özet ve hatırlatmalar', "pk4_4": 'Bakım ve güncellemeler dahil', "pk4_5": 'Kişisel WhatsApp destek hattı',
     "part_more_b": '+11 işletme daha', "part_more_p": 'Bazı müşterilerimiz isimlerinin yayınlanmamasını tercih ediyor, bu yüzden onları gizli tutuyoruz.',
       "tagline": "Oteller, klinikler ve şirketler için yapay zekâ sistemleri",
@@ -2126,6 +2147,7 @@ html.past-hero #scene, html.past-hero .vignette { opacity: 0; }
       "pk4_for": "Mesaj ve toplantı yükü altında kalan işletme sahipleri için."
     },
     "de": {
+    "ab_eyebrow": 'Über uns', "ab_title": 'Warum AXON?', "ab_p": 'AXON ist ein in Istanbul gegründetes KI-Studio. Wir richten Systeme für Hotels, Kliniken und Unternehmen als ein Team ein und betreiben sie, vom ersten Gespräch bis zum täglichen Support.', "abf1v": '18', "abf1": 'Betriebe nutzen unsere Systeme', "abf2v": '3', "abf2": 'Länder: Türkei, Großbritannien, USA', "abf3v": '4', "abf3": 'Sprachen in jedem System', "abf4v": '24/7', "abf4": 'Überwachung nach dem Start', "why1_t": 'Ein Team für alles', "why1_p": 'Website, Buchung, Zahlung, Chatbot und Assistent kommen vom selben Team. Sie müssen nicht drei Firmen hinterherlaufen.', "why2_t": 'Erst die Demo, dann die Entscheidung', "why2_p": 'Bevor Sie etwas bezahlen, bauen wir eine kostenlose Demo mit Ihren eigenen Informationen. Unverbindlich.', "why3_t": 'Ihre Daten bleiben Ihre', "why3_p": 'Gäste- und Patientendaten bleiben in Ihrem Konto und werden nie für Werbung genutzt. Wenn Sie gehen, erhalten Sie einen vollständigen Export.', "why4_t": 'Wir bleiben nach dem Start', "why4_p": 'Überwachung rund um die Uhr, Fehlerbehebung, Updates und ein Monatsbericht. Wenn etwas ausfällt, sehen wir es vor Ihnen.', "kb_contact": 'Sie erreichen das AXON-Team über das Beratungsformular oder direkt per WhatsApp.',
     "pk1_1": 'Ein System Ihrer Wahl', "pk1_2": 'Betriebsüberwachung rund um die Uhr mit Ausfallmeldung', "pk1_3": 'Fehlerbehebung und Reparatur', "pk1_4": 'Modell-, API- und Sicherheitsupdates', "pk1_5": 'Monatlicher Leistungsbericht', "pk1_6": 'E-Mail-Support, Antwort in 2 Werktagen', "pk2_1": 'Alles aus Start', "pk2_2": 'Reservierungsmanagement + KI-Assistent', "pk2_3": 'Server-, API- und KI-Nutzungskosten inklusive', "pk2_4": 'Jeden Monat ein neues Szenario und Verbesserungen', "pk2_5": 'Neue Kanäle und Integrationen', "pk2_6": 'Wöchentlicher Leistungsbericht', "pk2_7": 'WhatsApp-Support, Antwort am selben Tag', "pk3_1": 'Alles aus Pro', "pk3_2": 'Alle fünf Systeme', "pk3_3": 'Mehrere Standorte und Teams', "pk3_4": 'Individueller Entwicklungsplan', "pk3_5": 'Garantierte Reaktionszeiten (SLA)', "pk3_6": 'Projektmanager und monatliches Review-Meeting', "pk4_1": 'Ein Assistent nur für Sie', "pk4_2": 'Kalender, E-Mail und WhatsApp verbunden', "pk4_3": 'Tägliches Briefing und Erinnerungen', "pk4_4": 'Wartung und Updates inklusive', "pk4_5": 'Persönliche WhatsApp-Supportlinie',
     "part_more_b": '+11 weitere Betriebe', "part_more_p": 'Einige unserer Kunden möchten nicht namentlich genannt werden, deshalb bleiben sie vertraulich.',
       "tagline": "KI-Systeme für Hotels, Kliniken und Unternehmen",
@@ -2193,6 +2215,7 @@ html.past-hero #scene, html.past-hero .vignette { opacity: 0; }
       "pk4_for": "Für Inhaber, die in Nachrichten und Meetings untergehen."
     },
     "fr": {
+    "ab_eyebrow": 'À propos', "ab_title": 'Pourquoi AXON ?', "ab_p": 'AXON est un studio IA fondé à Istanbul. Nous installons et opérons des systèmes pour hôtels, cliniques et entreprises en une seule équipe, du premier appel au support quotidien.', "abf1v": '18', "abf1": 'établissements utilisent nos systèmes', "abf2v": '3', "abf2": 'pays : Turquie, Royaume-Uni, États-Unis', "abf3v": '4', "abf3": 'langues dans chaque système', "abf4v": '24h/24', "abf4": 'de surveillance après la mise en ligne', "why1_t": 'Une seule équipe pour tout', "why1_p": 'Site, réservation, paiement, chatbot et assistant viennent de la même équipe. Vous ne courez pas après trois prestataires.', "why2_t": 'La démo d\'abord, la décision ensuite', "why2_p": 'Avant tout paiement, nous préparons une démo gratuite avec vos propres informations. Sans engagement.', "why3_t": 'Vos données restent à vous', "why3_p": 'Les données clients et patients restent dans votre compte et ne servent jamais à la publicité. Si vous partez, vous recevez un export complet.', "why4_t": 'Nous restons après le lancement', "why4_p": 'Surveillance 24h/24, intervention en cas d\'erreur, mises à jour et rapport mensuel. Si quelque chose tombe en panne, nous le voyons avant vous.', "kb_contact": 'Vous pouvez joindre l\'équipe AXON via le formulaire de consultation ou directement sur WhatsApp.',
     "pk1_1": 'Un système au choix', "pk1_2": 'Surveillance 24h/24 et alerte en cas de panne', "pk1_3": 'Intervention et réparation en cas d\'erreur', "pk1_4": 'Mises à jour des modèles, des API et de sécurité', "pk1_5": 'Rapport de performance mensuel', "pk1_6": 'Support e-mail, réponse sous 2 jours ouvrés', "pk2_1": 'Tout le contenu de Start', "pk2_2": 'Gestion des réservations + Assistant IA', "pk2_3": 'Coûts serveur, API et IA inclus', "pk2_4": 'Un nouveau scénario et des améliorations chaque mois', "pk2_5": 'Ajout de nouveaux canaux et intégrations', "pk2_6": 'Rapport de performance hebdomadaire', "pk2_7": 'Support WhatsApp, réponse le jour même', "pk3_1": 'Tout le contenu de Pro', "pk3_2": 'Les cinq systèmes', "pk3_3": 'Plusieurs sites et équipes', "pk3_4": 'Feuille de route sur mesure', "pk3_5": 'Délais de réponse garantis (SLA)', "pk3_6": 'Chef de projet et réunion de revue mensuelle', "pk4_1": 'Un assistant créé pour vous seul', "pk4_2": 'Agenda, e-mail et WhatsApp connectés', "pk4_3": 'Briefing quotidien et rappels', "pk4_4": 'Maintenance et mises à jour incluses', "pk4_5": 'Ligne de support WhatsApp personnelle',
     "part_more_b": '+11 autres établissements', "part_more_p": 'Certains de nos clients préfèrent ne pas voir leur nom publié, nous les gardons donc confidentiels.',
       "tagline": "Systèmes IA pour hôtels, cliniques et entreprises",
