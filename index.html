@@ -3,6 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Analytics 4: G-XXXXXXXXXX yerine kendi Ölçüm Kimliğinizi (Measurement ID) yazın -->
+  <script>
+    (function () {
+      var GA_ID = 'G-XXXXXXXXXX';
+      if (GA_ID.indexOf('XXXX') !== -1) return;
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+      document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function () { dataLayer.push(arguments); };
+      gtag('js', new Date());
+      gtag('config', GA_ID);
+    })();
+  </script>
   <title>Hotel Eliza Istanbul | Resmi Web Sitesi</title>
   <meta name="description" content="Eliza Hotel, Fatih / İstanbul. 4 oda tipi: Standard Twin, Standard Double, Quadruple ve Aile Odası. Resmi web sitesinden güvenli kartla ödeme ile doğrudan rezervasyon.">
   <link rel="preconnect" href="https://fonts.googleapis.com">

@@ -3,6 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Analytics 4: G-XXXXXXXXXX yerine kendi Ölçüm Kimliğinizi (Measurement ID) yazın -->
+  <script>
+    (function () {
+      var GA_ID = 'G-XXXXXXXXXX';
+      if (GA_ID.indexOf('XXXX') !== -1) return;
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+      document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function () { dataLayer.push(arguments); };
+      gtag('js', new Date());
+      gtag('config', GA_ID);
+    })();
+  </script>
   <title>Eliza Hotel Istanbul | Dijital Misafir Asistanı & Rezervasyon</title>
   <meta name="description" content="Eliza Hotel Istanbul - Tarihi Yarımada'da, Beyazıt ve Çemberlitaş'a birkaç adım mesafede butik konaklama deneyimi ve 7/24 Dijital Misafir Asistanı.">
   <link rel="preconnect" href="https://fonts.googleapis.com">

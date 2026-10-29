@@ -161,7 +161,7 @@ Yanıtını MUTLAKA şu formatta ver:
           <p style="font-size: 12px; color: #777;">
             <strong>Eliza Hotel Istanbul</strong><br/>
             Mimar Hayrettin Mah. Doğramacı Sk. No:19/5, Fatih / İstanbul<br/>
-            Tel: +90 212 520 81 00 | Web: <a href="https://www.elizahotelistanbul.com" style="color: #c5a059;">elizahotelistanbul.com</a>
+            Tel: +90 212 520 81 00 | Web: <a href="https://www.elizahotelistanbul.com/?utm_source=email&utm_medium=email&utm_campaign=email_auto_reply" style="color: #c5a059;">elizahotelistanbul.com</a>
           </p>
         </div>
       `;
