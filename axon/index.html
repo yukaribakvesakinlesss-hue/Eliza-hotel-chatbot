@@ -13,6 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>try{var q=new URLSearchParams(location.search).get('theme');if(q)localStorage.setItem('axonTheme',q);if((q||localStorage.getItem('axonTheme'))==='light')document.documentElement.classList.add('light');}catch(e){}</script>
 <style>
 /* ===== Tokens (AXON Systems design system) ===== */
 :root {
@@ -682,6 +683,46 @@ html.past-hero #scene, html.past-hero .vignette { opacity: 0; }
 .ab-card p { margin: 0; color: var(--chrome-200); line-height: 1.6; }
 #about .about-meta { margin-top: var(--space-6); }
 @media (max-width: 860px) { .ab-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); } .ab-why { grid-template-columns: minmax(0, 1fr); } }
+
+/* ===== Light theme (try with ?theme=light): white page, the 3D hero stays dark ===== */
+html.light {
+  --void-950: #FFFFFF; --void-900: #F6F7F9; --void-800: #EEF1F5;
+  --glass: rgba(255, 255, 255, .92); --glass-strong: #FFFFFF;
+  --hairline: rgba(15, 23, 42, .10); --hairline-strong: rgba(15, 23, 42, .22); --hairline-active: rgba(2, 132, 199, .45);
+  --chrome-50: #0B1220; --chrome-200: #334155; --chrome-400: #5B6475; --carbon: #6B7280;
+  --synapse: #0277BD; --violet: #4F46E5; --synapse-glow: rgba(2, 119, 189, .18);
+  --shadow-glass: 0 10px 30px rgba(15, 23, 42, .08); --shadow-synapse: 0 8px 30px rgba(2, 119, 189, .14);
+  --shadow-primary: 0 8px 24px rgba(11, 18, 32, .18);
+}
+html.light body { background: var(--void-900); color: var(--chrome-200); }
+html.light .section-head::before { display: none; }
+html.light .glass { box-shadow: 0 1px 2px rgba(15, 23, 42, .04), 0 8px 28px rgba(15, 23, 42, .06); }
+html.light .num-card { background: #FFFFFF; box-shadow: 0 8px 28px rgba(15, 23, 42, .05); }
+html.light main > section:not(.hero):nth-of-type(even) { background: #FFFFFF; }
+html.light .sys-num .big { -webkit-text-stroke: 1px rgba(15, 23, 42, .18); }
+/* the hero keeps the dark brand world */
+html.light .hero, html.light .proof {
+  --void-950: #020408; --void-900: #020408; --glass: rgba(10, 18, 36, .55); --hairline: rgba(255, 255, 255, .08); --hairline-strong: rgba(255, 255, 255, .3);
+  --chrome-50: #F8FAFC; --chrome-200: #CBD5E1; --chrome-400: #94A3B8; --synapse: #38BDF8; --violet: #818CF8;
+}
+html.light .hero { background: #020408; }
+html.light .proof { background: #020408; padding-bottom: 28px; }
+html.light:not(.past-hero) .nav-shell {
+  --glass: rgba(10, 18, 36, .55); --hairline: rgba(255, 255, 255, .08); --hairline-strong: rgba(255, 255, 255, .3);
+  --chrome-50: #F8FAFC; --chrome-200: #CBD5E1; --chrome-400: #94A3B8; --void-950: #020408; --synapse: #38BDF8;
+}
+html.light.past-hero #scene { opacity: 0; }
+html.light.past-hero .logo-mark { mix-blend-mode: multiply; filter: invert(1) hue-rotate(180deg) contrast(1.4); }
+html.light.past-hero .chrome-text { background: linear-gradient(180deg, #0B1220 0%, #334155 100%); -webkit-background-clip: text; background-clip: text; text-shadow: none; }
+html.light .nav.scrolled, html.light.past-hero .nav { background: rgba(255, 255, 255, .9); box-shadow: 0 6px 24px rgba(15, 23, 42, .08); }
+html.light .frame-bar, html.light .room-tabs, html.light .seg, html.light .chat-form, html.light .lang, html.light .stack div { background: #F1F4F8; }
+html.light .day { background: #F1F4F8; }
+html.light .fab-btn, html.light .wa-fab, html.light .store-note { background: rgba(255, 255, 255, .95); box-shadow: 0 8px 24px rgba(15, 23, 42, .12); }
+html.light .fab-panel .chat, html.light .pa, html.light .faq-col { background: #FFFFFF; }
+html.light .loc-panel { background: #FFFFFF; }
+html.light footer { background: #0B1220; --chrome-50: #F8FAFC; --chrome-200: #CBD5E1; --chrome-400: #94A3B8; --hairline: rgba(255, 255, 255, .1); --synapse: #38BDF8; }
+
+html.light ::selection { background: rgba(2, 119, 189, .2); color: #0B1220; }
 </style>
 </head>
 <body>
