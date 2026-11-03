@@ -127,19 +127,23 @@ main, footer { position: relative; z-index: 2; }
 .icon-btn:hover { border-color: var(--hairline-strong); color: var(--chrome-50); }
 .icon-btn svg { width: 18px; height: 18px; }
 .icon-btn[aria-pressed="true"] { color: var(--synapse); border-color: rgba(56, 189, 248, .5); }
-.menu-toggle { display: none; }
-.mobile-menu { display: none; }
 @media (max-width: 1240px) {
-  .nav-links { display: none; }
+  .nav { flex-wrap: wrap; row-gap: 6px; column-gap: var(--space-3); padding: 10px 10px 8px var(--space-5); }
   .brand .logo-mark { width: 56px; height: 17px; background-size: 155.3px 103.5px; background-position: -50px -31px; }
-  .menu-toggle { display: inline-grid; }
-  .nav .btn-primary { display: none; }
-  .mobile-menu { pointer-events: auto; max-width: 1240px; margin: 8px auto 0; padding: var(--space-4); display: grid; gap: var(--space-1); box-shadow: var(--shadow-glass); }
-  .mobile-menu[hidden] { display: none; }
-  .mobile-menu a:not(.btn) { padding: 12px var(--space-3); border-radius: var(--radius-md); text-decoration: none; color: var(--chrome-200); }
-  .mobile-menu a:not(.btn):hover { background: var(--glass-strong); }
-  .mobile-menu .btn { margin-top: var(--space-2); }
+  .nav-links { order: 3; width: 100%; justify-content: space-between; gap: 18px; overflow-x: auto; padding: 8px 4px 6px; border-top: 1px solid var(--hairline); scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .nav-links::-webkit-scrollbar { display: none; }
+  .nav-links a { display: inline-block; padding: 4px 0; }
 }
+@media (max-width: 600px) {
+  .nav { padding: 8px 8px 6px 14px; }
+  .nav .btn { padding: 10px 14px; font-size: 12px; }
+  .wordmark { font-size: 14px; letter-spacing: .28em; }
+  .nav-links { justify-content: space-between; gap: 6px; padding: 6px 2px 4px; }
+  .nav-links a { letter-spacing: 0; }
+  .nav-links a { font-size: 11.5px; letter-spacing: .02em; }
+  .hero { padding-top: 132px; }
+}
+@media (max-width: 420px) { .nav .btn-primary { display: none; } .nav-right { margin-left: auto; } }
 
 /* ===== Hero ===== */
 .hero { position: relative; min-height: 100svh; display: flex; align-items: center; padding: 120px 0 clamp(40px, 6vh, 72px); }
@@ -453,7 +457,6 @@ footer { border-top: 1px solid var(--hairline); background: rgba(3, 6, 12, .75);
 .lang button:hover { color: var(--chrome-50); }
 .lang button[aria-pressed="true"] { background: var(--chrome-50); color: var(--void-950); }
 .lang-mobile { justify-self: start; margin-top: var(--space-2); }
-@media (max-width: 1240px) { .nav .lang:not(.lang-mobile) { display: none; } }
 
 /* Partners */
 .partners { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: var(--space-4); }
@@ -724,26 +727,9 @@ html.past-hero #scene, html.past-hero .vignette { opacity: 0; }
       <div class="lang" role="group" aria-label="Language" data-i18n-aria="lang_label">
         <button type="button" data-lang="tr">TR</button><button type="button" data-lang="en">EN</button><button type="button" data-lang="de">DE</button><button type="button" data-lang="fr">FR</button>
       </div>
-      <button class="icon-btn" id="soundToggle" aria-pressed="false" aria-label="Sound" data-i18n-aria="sound">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path class="wave" d="M15.5 8.5a5 5 0 0 1 0 7"/><path class="wave" d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
-      </button>
       <a href="#consultation" class="btn btn-primary" data-i18n="cta_deploy">Schedule Deployment</a>
-      <button class="icon-btn menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Menu" data-i18n-aria="menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 8h16M4 16h16"/></svg>
-      </button>
     </div>
   </nav>
-  <div class="mobile-menu glass" id="mobileMenu" hidden>
-    <a href="#systems" data-i18n="nav_systems">Systems</a>
-    <a href="#packages" data-i18n="nav_packages">Packages</a>
-    <a href="#demo" data-i18n="nav_demo">Live Demo</a>
-    <a href="#location" data-i18n="nav_location">Location</a>
-    <a href="#consultation" data-i18n="nav_consult">Consultation</a>
-    <div class="lang lang-mobile" role="group" aria-label="Language" data-i18n-aria="lang_label">
-      <button type="button" data-lang="tr">TR</button><button type="button" data-lang="en">EN</button><button type="button" data-lang="de">DE</button><button type="button" data-lang="fr">FR</button>
-    </div>
-    <a href="#consultation" class="btn btn-primary" data-i18n="cta_deploy">Schedule Deployment</a>
-  </div>
 </header>
 
 <main id="top">
@@ -1398,22 +1384,10 @@ html.past-hero #scene, html.past-hero .vignette { opacity: 0; }
     chime: function () { this.tone(660, .5, .03); var s = this; setTimeout(function () { s.tone(990, .6, .022); }, 90); },
     click: function () { this.tone(420, .08, .03, 'triangle'); }
   };
-  $('#soundToggle').addEventListener('click', function () {
-    Sound.init(); Sound.on = !Sound.on; this.setAttribute('aria-pressed', String(Sound.on));
-    if (Sound.ctx && Sound.ctx.state === 'suspended') Sound.ctx.resume();
-    Sound.chime();
-  });
   document.addEventListener('pointerenter', function (e) { if (e.target.closest && e.target.matches && e.target.matches('.btn, .prompt-btn, .chip, .day, .room-tab')) Sound.tick(); }, true);
 
   /* ================= Nav ================= */
   var nav = $('.nav');
-  var menuToggle = $('#menuToggle'), mobileMenu = $('#mobileMenu');
-  menuToggle.addEventListener('click', function () {
-    var open = mobileMenu.hasAttribute('hidden');
-    if (open) mobileMenu.removeAttribute('hidden'); else mobileMenu.setAttribute('hidden', '');
-    menuToggle.setAttribute('aria-expanded', String(open));
-  });
-  $$('#mobileMenu a').forEach(function (a) { a.addEventListener('click', function () { mobileMenu.setAttribute('hidden', ''); menuToggle.setAttribute('aria-expanded', 'false'); }); });
   var navLinks = $$('.nav-links a');
   var sections = navLinks.map(function (a) { return $(a.getAttribute('href')); });
   function onScrollNav() {
@@ -3022,14 +2996,11 @@ html.past-hero #scene, html.past-hero .vignette { opacity: 0; }
         '  vec3 navy = vec3(0.035, 0.055, 0.13);',
         '  vec3 violet = vec3(0.085, 0.02, 0.16);',
         '  vec3 col = base + navy * exp(-r * r * 3.2) + violet * exp(-(r - 0.18) * (r - 0.18) * 9.0) * 0.55;',
-        '  vec2 g = abs(fract(vec2(vUv.x * uAspect, vUv.y) * 22.0) - 0.5);',
-        '  float grid = (1.0 - smoothstep(0.0, 0.035, min(g.x, g.y)));',
-        '  col += vec3(0.25, 0.45, 0.75) * grid * 0.025 * uGrid * exp(-r * r * 2.2);',
         '  gl_FragColor = vec4(col, 1.0);',
         '}'].join('\n')
     });
     var back = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), backMat);
-    back.frustumCulled = false; back.renderOrder = -1; scene.add(back);
+    back.frustumCulled = false; back.renderOrder = -1; // not added: the hero CSS draws the ambient glow (the quad blew out to white on some GPUs)
 
     /* --- environment: a dark studio with cool softboxes, for fine chrome reflections --- */
     var envC = document.createElement('canvas'); envC.width = 1024; envC.height = 512;
@@ -3056,7 +3027,7 @@ html.past-hero #scene, html.past-hero .vignette { opacity: 0; }
     fiberMat.onBeforeCompile = function (sh) {
       sh.fragmentShader = sh.fragmentShader.replace('#include <dithering_fragment>', [
         '#include <dithering_fragment>',
-        'float fr = pow(1.0 - abs(dot(normalize(vViewPosition), normal)), 2.6);',
+        'float fr = pow(clamp(1.0 - abs(dot(normalize(vViewPosition), normalize(normal))), 0.0, 1.0), 2.6);',
         'vec3 film = mix(vec3(0.0, 0.94, 1.0), vec3(0.44, 0.0, 1.0), smoothstep(0.25, 0.9, fr));',
         'gl_FragColor.rgb += film * fr * 0.32;'].join('\n'));
     };
