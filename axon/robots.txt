@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /drop
+
+Sitemap: https://axon-systems-three.vercel.app/sitemap.xml

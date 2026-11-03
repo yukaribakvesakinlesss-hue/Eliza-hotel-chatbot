@@ -1,728 +1,519 @@
 <!doctype html>
-<html lang="tr" class="scroll-smooth">
+<html lang="en" class="scroll-smooth bg-navy-950">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>AXON Systems, AI Assistants for Hotels & Clinics</title>
-<meta name="description" content="AXON builds 24/7 AI assistants for hotels and clinics: every WhatsApp, Instagram, email and website message answered in seconds, bookings and appointments taken automatically.">
-<meta name="theme-color" content="#FFFFFF">
-<meta property="og:title" content="AXON Systems">
-<meta property="og:description" content="24/7 AI assistants for hotels and clinics.">
-<meta property="og:image" content="images/synapse-light.png">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230F172A'/%3E%3Ccircle cx='10' cy='16' r='4' fill='%23fff'/%3E%3Ccircle cx='22' cy='16' r='4' fill='%23fff'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%2338BDF8'/%3E%3C/svg%3E">
+<title>AXON Systems | AI Automation for Hotels</title>
+<meta name="description" content="Automate hotel guest communication, capture more inquiries and streamline reservation workflows with intelligent AI systems from AXON.">
+<link rel="canonical" href="https://axon-systems-three.vercel.app/">
+<meta name="theme-color" content="#0B1423">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AXON Systems">
+<meta property="og:title" content="AXON Systems | AI Automation for Hotels">
+<meta property="og:description" content="Automate hotel guest communication, capture more inquiries and streamline reservation workflows with intelligent AI systems from AXON.">
+<meta property="og:url" content="https://axon-systems-three.vercel.app/">
+<meta property="og:image" content="https://axon-systems-three.vercel.app/images/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="AXON Systems, AI automation for hotels">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AXON Systems | AI Automation for Hotels">
+<meta name="twitter:description" content="Automate hotel guest communication, capture more inquiries and streamline reservation workflows with intelligent AI systems from AXON.">
+<meta name="twitter:image" content="https://axon-systems-three.vercel.app/images/og.png">
+<link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=5de6f8f2">
-<script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/" } }</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css?v=2a630c71">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://axon-systems-three.vercel.app/#org", "name": "AXON Systems", "url": "https://axon-systems-three.vercel.app/", "logo": "https://axon-systems-three.vercel.app/images/favicon.svg", "email": "gulcanyesilbudak@icloud.com", "telephone": "+905540248698", "address": {"@type": "PostalAddress", "addressLocality": "Istanbul", "addressCountry": "TR"}, "description": "AI automation for hotels: guest communication, reservation inquiries and multilingual support."}, {"@type": "WebSite", "@id": "https://axon-systems-three.vercel.app/#website", "url": "https://axon-systems-three.vercel.app/", "name": "AXON Systems", "publisher": {"@id": "https://axon-systems-three.vercel.app/#org"}, "inLanguage": ["en", "tr"]}, {"@type": "Service", "name": "AXON Hotel AI", "provider": {"@id": "https://axon-systems-three.vercel.app/#org"}, "serviceType": "AI guest communication for hotels", "areaServed": "Worldwide", "offers": {"@type": "Offer", "name": "Start", "priceSpecification": {"@type": "UnitPriceSpecification", "price": 300, "priceCurrency": "USD", "unitText": "MONTH", "description": "Starting price per month. Setup fee and third-party costs are quoted separately."}}}]}</script>
 </head>
-<body class="bg-white font-sans text-slate-600 antialiased selection:bg-blue-100 selection:text-slate-900">
+<body class="bg-navy-950 font-sans text-mist antialiased selection:bg-gold/30 selection:text-ink">
+<a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-gold focus:px-4 focus:py-2 focus:text-navy-950" data-tr="İçeriğe geç">Skip to content</a>
 
-<!-- ===== Header: every link visible, no hamburger ===== -->
-<header class="fixed inset-x-0 top-3 z-50 px-3 sm:top-4 sm:px-6">
-  <nav class="mx-auto flex max-w-6xl flex-wrap items-center gap-x-4 gap-y-1 rounded-2xl border border-slate-200/80 bg-white/75 px-4 py-2.5 shadow-sm backdrop-blur-md sm:px-5" data-i18n-aria="menu_label" aria-label="Main menu">
-    <a href="#top" class="flex items-center gap-2.5 text-slate-900" aria-label="AXON">
-      <svg class="h-7 w-7" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#0F172A"/><circle cx="10" cy="16" r="4" fill="#fff"/><circle cx="22" cy="16" r="4" fill="#fff"/><circle cx="16" cy="16" r="1.6" fill="#38BDF8"/></svg>
-      <span class="text-[15px] font-semibold tracking-[0.22em]">AXON</span>
+<!-- ===================== Header ===================== -->
+<header class="fixed inset-x-0 top-0 z-50 border-b border-white/[0.06] bg-navy-950/80 backdrop-blur-md">
+  <nav class="mx-auto flex max-w-7xl flex-wrap items-center gap-x-6 gap-y-1 px-5 py-3 sm:px-8" aria-label="Main" data-tr-aria="Ana menü">
+    <a href="#top" class="flex items-center gap-2.5 text-ink" aria-label="AXON Systems, home">
+      <svg class="h-8 w-8" viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke-linecap="round"><path d="M12 16 6 9.5M8.4 12.2 4.5 12.6M12 16 3.5 17.5M12 16 6 23.5M8.6 20.2 5 21" stroke="#C3C9D2" stroke-width="1.3"/><path d="M15.4 16H26" stroke="#C3C9D2" stroke-width="2.6" stroke-dasharray="3 1.4"/><path d="M26 16l3-2.6M26 16l3 2.6M26 16h3.4" stroke="#D5BD8A" stroke-width="1.3"/></g><circle cx="12.5" cy="16" r="3.4" fill="#C3C9D2"/><circle cx="12.5" cy="16" r="1.2" fill="#0B1423"/></svg>
+      <span class="font-display text-[15px] font-semibold tracking-[0.18em]">AXON <span class="font-medium text-mist">SYSTEMS</span></span>
     </a>
-    <ul class="order-3 flex w-full items-center justify-center gap-6 overflow-x-auto border-t border-slate-200/70 pt-1.5 text-[13px] font-medium text-slate-600 [scrollbar-width:none] sm:gap-8 lg:order-none lg:w-auto lg:flex-1 lg:border-0 lg:pt-0">
-      <li><a class="nav-a whitespace-nowrap py-1.5 transition hover:text-slate-900" href="#proof" data-i18n="nav_proof">Why AXON</a></li>
-      <li><a class="nav-a whitespace-nowrap py-1.5 transition hover:text-slate-900" href="#demo" data-i18n="nav_demo">Live Demo</a></li>
-      <li><a class="nav-a whitespace-nowrap py-1.5 transition hover:text-slate-900" href="#packages" data-i18n="nav_packages">Packages</a></li>
-      <li><a class="nav-a whitespace-nowrap py-1.5 transition hover:text-slate-900" href="#contact" data-i18n="nav_contact">Contact</a></li>
+    <ul class="noscroll order-3 -mx-1 flex w-full items-center gap-6 overflow-x-auto px-1 pb-1 pt-1 text-[13.5px] font-medium [scrollbar-width:none] lg:order-none lg:w-auto lg:flex-1 lg:justify-center lg:gap-8 lg:p-0">
+      <li><a class="nav-a whitespace-nowrap py-2 text-mist transition hover:text-ink" href="#solutions" data-tr="Çözümler">Solutions</a></li>
+      <li><a class="nav-a whitespace-nowrap py-2 text-mist transition hover:text-ink" href="#how" data-tr="Nasıl çalışır">How it works</a></li>
+      <li><a class="nav-a whitespace-nowrap py-2 text-mist transition hover:text-ink" href="#demo" data-tr="Canlı demo">Live demo</a></li>
+      <li><a class="nav-a whitespace-nowrap py-2 text-mist transition hover:text-ink" href="#projects" data-tr="Projeler">Projects</a></li>
+      <li><a class="nav-a whitespace-nowrap py-2 text-mist transition hover:text-ink" href="#pricing" data-tr="Fiyatlar">Pricing</a></li>
+      <li><a class="nav-a whitespace-nowrap py-2 text-mist transition hover:text-ink" href="#faq" data-tr="SSS">FAQ</a></li>
     </ul>
     <div class="ml-auto flex items-center gap-2 lg:ml-0">
-      <div class="lang flex rounded-full border border-slate-200 bg-slate-50 p-0.5 text-[11px] font-semibold tracking-wide" role="group" aria-label="Language" data-i18n-aria="lang_label">
-        <button type="button" data-lang="tr" class="rounded-full px-2.5 py-1.5 text-slate-500 transition hover:text-slate-900 aria-pressed:bg-white aria-pressed:text-slate-900 aria-pressed:shadow-sm">TR</button>
-        <button type="button" data-lang="en" class="rounded-full px-2.5 py-1.5 text-slate-500 transition hover:text-slate-900 aria-pressed:bg-white aria-pressed:text-slate-900 aria-pressed:shadow-sm">EN</button>
-        <button type="button" data-lang="de" class="rounded-full px-2.5 py-1.5 text-slate-500 transition hover:text-slate-900 aria-pressed:bg-white aria-pressed:text-slate-900 aria-pressed:shadow-sm">DE</button>
-        <button type="button" data-lang="fr" class="rounded-full px-2.5 py-1.5 text-slate-500 transition hover:text-slate-900 aria-pressed:bg-white aria-pressed:text-slate-900 aria-pressed:shadow-sm">FR</button>
+      <div class="flex rounded-full border border-white/10 p-0.5 text-[11.5px] font-semibold tracking-wide" role="group" aria-label="Language" data-tr-aria="Dil">
+        <button type="button" data-lang="en" class="lang-b rounded-full px-3 py-2 text-mist transition hover:text-ink aria-pressed:bg-white/10 aria-pressed:text-ink">EN</button>
+        <button type="button" data-lang="tr" class="lang-b rounded-full px-3 py-2 text-mist transition hover:text-ink aria-pressed:bg-white/10 aria-pressed:text-ink">TR</button>
       </div>
-      <a href="#contact" class="hidden rounded-full bg-slate-900 px-4 py-2 text-[13px] font-medium text-white shadow-sm transition hover:bg-slate-800 min-[440px]:inline-flex" data-i18n="cta_demo2">Get a free demo</a>
+      <a href="#contact" data-cta="demo" data-cta-loc="nav" class="hidden rounded-full bg-gold px-4 py-2 text-[13px] font-semibold text-navy-950 transition hover:bg-gold-soft min-[420px]:inline-flex" data-tr="Ücretsiz demo alın">Book a Free Demo</a>
     </div>
   </nav>
 </header>
 
-<main id="top">
+<main id="main">
+<!-- ===================== 01 Hero ===================== -->
+<section id="top" class="relative overflow-hidden pt-32 sm:pt-36 lg:pt-32" aria-labelledby="heroTitle">
+  <svg class="pointer-events-none absolute -right-40 top-10 hidden w-[1150px] opacity-60 md:block" viewBox="0 0 1200 700" fill="none" aria-hidden="true">
+    <g stroke="#C3C9D2" stroke-linecap="round" opacity=".22" stroke-width="1.4">
+      <path d="M260 300C220 250 190 222 140 200M190 225C172 200 162 180 152 150M260 300C210 310 170 330 110 340M150 335C130 360 112 372 82 382M260 300C240 350 222 392 202 452M215 410C192 420 172 440 160 470M260 300C272 240 290 200 302 140M292 182C312 162 332 152 362 146"/>
+    </g>
+    <path id="axonPath" d="M288 304C450 332 600 262 760 300S1000 402 1080 380" stroke="#C3C9D2" stroke-opacity=".14" stroke-width="10" stroke-dasharray="44 9"/>
+    <path d="M288 304C450 332 600 262 760 300S1000 402 1080 380" stroke="#C3C9D2" stroke-opacity=".35" stroke-width="1.2"/>
+    <g stroke="#D5BD8A" stroke-opacity=".55" stroke-width="1.3" stroke-linecap="round"><path d="M1080 380c20-20 40-30 60-35M1080 380c25 0 45 10 60 25M1080 380c15 20 25 40 30 62"/></g>
+    <g fill="#D5BD8A" fill-opacity=".8"><circle cx="1140" cy="345" r="4"/><circle cx="1140" cy="405" r="4"/><circle cx="1110" cy="442" r="4"/></g>
+    <circle cx="260" cy="300" r="28" fill="#C3C9D2" fill-opacity=".07" stroke="#C3C9D2" stroke-opacity=".35"/>
+    <circle cx="260" cy="300" r="9" fill="#C3C9D2" fill-opacity=".25"/>
+    <circle class="smil" r="4" fill="#D5BD8A"><animateMotion dur="7s" repeatCount="indefinite"><mpath href="#axonPath"/></animateMotion></circle>
+  </svg>
+  <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(55%_55%_at_70%_35%,rgba(46,64,98,0.45),rgba(11,20,35,0)_70%)]"></div>
 
-<!-- ===== Hero ===== -->
-<section class="relative overflow-hidden pt-32 sm:pt-36 lg:pt-28" aria-labelledby="heroTitle">
-  <div class="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(60%_50%_at_75%_40%,#EFF6FF_0%,rgba(255,255,255,0)_70%)]"></div>
-  <div class="mx-auto grid max-w-6xl items-center gap-6 px-5 sm:px-6 lg:min-h-[calc(100svh-9rem)] lg:grid-cols-[1.05fr_1fr] lg:gap-4">
-    <div class="max-w-xl">
-      <p class="mb-5 inline-flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/70 px-3 py-1 text-[13px] font-medium text-slate-600 shadow-sm backdrop-blur-sm"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span><span data-i18n="tagline">AI systems for hotels, clinics and companies</span></p>
-      <h1 id="heroTitle" class="text-[2.6rem] font-semibold leading-[1.05] tracking-tight text-slate-900 sm:text-6xl lg:text-[4.1rem]">
-        <span class="block" data-i18n="hero1">Stop losing</span>
-        <span class="block text-blue-600" data-i18n="hero2">customers.</span>
+  <div class="relative mx-auto grid max-w-7xl items-center gap-12 px-5 pb-20 sm:px-8 lg:min-h-[calc(100svh-8rem)] lg:grid-cols-[1.05fr_1fr] lg:gap-10 lg:pb-24">
+    <div>
+      <p class="eyebrow" data-tr="AXON Hotel AI · oteller için">AXON Hotel AI · for hotels</p>
+      <h1 id="heroTitle" class="mt-5 font-display text-[2.55rem] font-semibold leading-[1.06] tracking-tight text-ink sm:text-6xl lg:text-[4.1rem]">
+        <span class="block" data-tr="Her misafir önemli.">Every Guest Matters.</span>
+        <span class="block text-silver" data-tr="Her talep değerli.">Every Inquiry Counts.</span>
       </h1>
-      <p class="mt-6 max-w-lg text-[17px] leading-relaxed text-slate-600 sm:text-lg" data-i18n="hero_sub2"></p>
-      <div class="mt-8 flex flex-wrap gap-3">
-        <a href="#contact" class="inline-flex items-center gap-2 rounded-full bg-blue-600 px-6 py-3.5 text-[15px] font-medium text-white shadow-sm shadow-blue-600/20 transition hover:-translate-y-px hover:bg-blue-700 hover:shadow-md" data-i18n="cta_demo2">Get a free demo</a>
-        <a class="wa-link inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-6 py-3.5 text-[15px] font-medium text-slate-900 shadow-sm transition hover:-translate-y-px hover:border-slate-300 hover:shadow-md" target="_blank" rel="noopener">
-          <svg class="h-[18px] w-[18px] text-emerald-500" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.2.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg>
-          <span data-i18n="cta_wa">Start on WhatsApp</span>
-        </a>
+      <p class="mt-6 max-w-xl text-[17px] leading-relaxed text-mist sm:text-[18px]" data-tr="Otel misafir iletişimini otomatikleştiren, rezervasyon taleplerini düzenleyen ve ekibinizin daha iyi bir misafir deneyimi sunmasına yardım eden akıllı yapay zekâ sistemleri. 7/24.">Intelligent AI systems that automate hotel guest communication, streamline reservation inquiries and help your team deliver a better guest experience, 24/7.</p>
+      <div class="mt-9 flex flex-wrap gap-3">
+        <a href="#contact" class="btn-gold" data-cta="demo" data-cta-loc="hero" data-tr="Ücretsiz demo alın">Book a Free Demo</a>
+        <a href="#solutions" class="btn-line" data-tr="Çözümleri inceleyin">Explore Solutions</a>
       </div>
-      <ul class="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-[13px] text-slate-500">
-        <li class="flex items-center gap-1.5"><svg class="h-4 w-4 text-blue-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.7 5.3a1 1 0 0 1 0 1.4l-8 8a1 1 0 0 1-1.4 0l-4-4a1 1 0 1 1 1.4-1.4L8 12.6l7.3-7.3a1 1 0 0 1 1.4 0z" clip-rule="evenodd"/></svg><span data-i18n="trust1">Free demo</span></li>
-        <li class="flex items-center gap-1.5"><svg class="h-4 w-4 text-blue-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.7 5.3a1 1 0 0 1 0 1.4l-8 8a1 1 0 0 1-1.4 0l-4-4a1 1 0 1 1 1.4-1.4L8 12.6l7.3-7.3a1 1 0 0 1 1.4 0z" clip-rule="evenodd"/></svg><span data-i18n="trust2">No commitment</span></li>
-        <li class="flex items-center gap-1.5"><svg class="h-4 w-4 text-blue-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.7 5.3a1 1 0 0 1 0 1.4l-8 8a1 1 0 0 1-1.4 0l-4-4a1 1 0 1 1 1.4-1.4L8 12.6l7.3-7.3a1 1 0 0 1 1.4 0z" clip-rule="evenodd"/></svg><span data-i18n="trust3">Replies in 4 languages</span></li>
+      <ul class="mt-9 grid max-w-xl gap-2.5 text-[14px] text-mist sm:grid-cols-3">
+        <li class="flex items-center gap-2"><span class="h-1 w-1 rounded-full bg-gold"></span><span data-tr="Web sitesi ve WhatsApp">Website &amp; WhatsApp</span></li>
+        <li class="flex items-center gap-2"><span class="h-1 w-1 rounded-full bg-gold"></span><span data-tr="Misafirin dilinde cevap">Replies in the guest's language</span></li>
+        <li class="flex items-center gap-2"><span class="h-1 w-1 rounded-full bg-gold"></span><span data-tr="Ekibinize devreder">Hands over to your team</span></li>
       </ul>
     </div>
-    <!-- 3D stage: right of the copy on desktop, below it on phones -->
-    <div id="stage" class="relative -mx-5 -mt-4 h-[280px] sm:mx-0 sm:h-[420px] lg:mt-0 lg:h-[560px]" aria-hidden="true">
-      <img id="stageStill" src="images/synapse-light.png" alt="" class="absolute inset-0 h-full w-full object-contain transition-opacity duration-700 [mask-image:radial-gradient(farthest-side,#000_82%,transparent)]">
-      <canvas id="axon3d" class="absolute inset-0 h-full w-full opacity-0 transition-opacity duration-700 [mask-image:radial-gradient(farthest-side,#000_82%,transparent)]"></canvas>
-    </div>
-  </div>
-</section>
 
-<!-- ===== Social proof & numbers ===== -->
-<section id="proof" class="scroll-mt-24 pb-20 pt-8 sm:pb-24 lg:pt-4" aria-labelledby="numTitle">
-  <div class="mx-auto max-w-6xl px-5 sm:px-6">
-    <p class="text-center text-[13px] font-medium text-slate-500" data-i18n="clients_label">Some of the businesses we work with</p>
-    <ul class="mt-5 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-[15px] font-semibold tracking-tight text-slate-400">
-      <li>Hotel Eliza</li><li>art'otel London Hoxton</li><li>The Resident Covent Garden</li><li>Rosewood London</li><li>Mediwell Clinic</li><li>Mayo Clinic</li><li>Aeterna Serpenti</li>
-      <li class="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[13px] font-medium text-slate-500" data-i18n="part_more_b" title="">+11 more</li>
-    </ul>
-
-    <div class="reveal mx-auto mt-20 max-w-2xl text-center">
-      <p class="text-[13px] font-semibold uppercase tracking-[0.16em] text-blue-600" data-i18n="stats_eyebrow">The numbers</p>
-      <h2 id="numTitle" class="mt-3 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl" data-i18n="num_title"></h2>
-      <p class="mt-4 text-slate-600" data-i18n="num_lead"></p>
-    </div>
-    <div class="mt-12 grid gap-4 md:grid-cols-3">
-      <figure class="reveal rounded-2xl border border-slate-200/80 bg-white p-7 shadow-sm transition hover:shadow-md">
-        <b class="block text-5xl font-semibold tracking-tight text-slate-900" data-i18n="n2v">7×</b>
-        <p class="mt-4 leading-relaxed text-slate-600" data-i18n="n2t"></p>
-        <a class="mt-6 inline-block text-[13px] font-medium text-slate-400 underline decoration-slate-200 underline-offset-4 transition hover:text-blue-600" href="https://hbr.org/2011/03/the-short-life-of-online-sales-leads" target="_blank" rel="noopener" data-i18n="n2s"></a>
-      </figure>
-      <figure class="reveal rounded-2xl border border-slate-200/80 bg-white p-7 shadow-sm transition hover:shadow-md">
-        <b class="block text-5xl font-semibold tracking-tight text-slate-900" data-i18n="n4v">43%</b>
-        <p class="mt-4 leading-relaxed text-slate-600" data-i18n="n4t"></p>
-        <a class="mt-6 inline-block text-[13px] font-medium text-slate-400 underline decoration-slate-200 underline-offset-4 transition hover:text-blue-600" href="https://connectingtravel.com/news/hoteliers-accuse-booking.com-of-unfair-business-practices" target="_blank" rel="noopener" data-i18n="n4s"></a>
-      </figure>
-      <figure class="reveal rounded-2xl border border-slate-200/80 bg-white p-7 shadow-sm transition hover:shadow-md">
-        <b class="block text-5xl font-semibold tracking-tight text-slate-900" data-i18n="n5v">23%</b>
-        <p class="mt-4 leading-relaxed text-slate-600" data-i18n="n5t"></p>
-        <a class="mt-6 inline-block text-[13px] font-medium text-slate-400 underline decoration-slate-200 underline-offset-4 transition hover:text-blue-600" href="https://doi.org/10.1016/j.healthpol.2018.02.002" target="_blank" rel="noopener" data-i18n="n5s"></a>
-      </figure>
-    </div>
-    <p class="reveal mx-auto mt-10 max-w-2xl text-center text-[17px] font-medium text-slate-900" data-i18n="num_close"></p>
-  </div>
-</section>
-
-<!-- ===== Live booking engine ===== -->
-<section id="demo" class="scroll-mt-24 bg-slate-50 py-20 sm:py-24" aria-labelledby="demoTitle">
-  <div class="mx-auto max-w-6xl px-5 sm:px-6">
-    <div class="reveal mx-auto max-w-2xl text-center">
-      <p class="text-[13px] font-semibold uppercase tracking-[0.16em] text-blue-600" data-i18n="demo_eyebrow">Live demo</p>
-      <h2 id="demoTitle" class="mt-3 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl" data-i18n="demo_title"></h2>
-      <p class="mt-4 text-slate-600" data-i18n="demo_try"></p>
-      <div class="mt-5 flex flex-wrap justify-center gap-2 text-[12px] font-medium text-slate-600">
-        <span class="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span><span data-i18n="demo_m1"></span></span>
-        <span class="rounded-full border border-slate-200 bg-white px-3 py-1" data-i18n="demo_m2"></span>
-        <span class="rounded-full border border-slate-200 bg-white px-3 py-1">TRY · EUR · USD</span>
-      </div>
-    </div>
-
-    <div class="reveal mt-10 overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm">
-      <div class="flex flex-wrap items-center gap-3 border-b border-slate-200/80 px-4 py-3">
-        <div class="flex gap-1.5" aria-hidden="true"><i class="h-2.5 w-2.5 rounded-full bg-slate-200"></i><i class="h-2.5 w-2.5 rounded-full bg-slate-200"></i><i class="h-2.5 w-2.5 rounded-full bg-slate-200"></i></div>
-        <div class="min-w-0 flex-1 truncate rounded-lg bg-slate-50 px-3 py-1.5 text-[12px] text-slate-500"><span class="text-emerald-500">●</span> <span data-i18n="frame_url"></span></div>
-        <div class="flex rounded-full border border-slate-200 bg-slate-50 p-0.5 text-[12px] font-semibold" role="group" aria-label="Currency" id="currencySeg">
-          <button type="button" data-cur="EUR" aria-pressed="true" class="rounded-full px-3 py-1 text-slate-500 aria-pressed:bg-white aria-pressed:text-slate-900 aria-pressed:shadow-sm">EUR</button>
-          <button type="button" data-cur="USD" aria-pressed="false" class="rounded-full px-3 py-1 text-slate-500 aria-pressed:bg-white aria-pressed:text-slate-900 aria-pressed:shadow-sm">USD</button>
-          <button type="button" data-cur="TRY" aria-pressed="false" class="rounded-full px-3 py-1 text-slate-500 aria-pressed:bg-white aria-pressed:text-slate-900 aria-pressed:shadow-sm">TRY</button>
+    <!-- Illustrative assistant interface -->
+    <div class="relative mx-auto mb-10 w-full max-w-[520px] lg:mb-0" aria-label="Illustration of the AXON hotel assistant interface" data-tr-aria="AXON otel asistanı arayüz görseli" role="img">
+      <div class="card overflow-hidden bg-navy-900/90 shadow-[0_40px_120px_-40px_rgba(0,0,0,0.8)]">
+        <div class="flex items-center gap-3 border-b border-white/[0.07] px-5 py-3.5">
+          <span class="grid h-9 w-9 place-items-center rounded-full bg-navy-700 ring-1 ring-gold/40"><svg class="h-5 w-5" viewBox="0 0 32 32" aria-hidden="true"><path d="M15.4 16H26" stroke="#C3C9D2" stroke-width="2.6" stroke-dasharray="3 1.4"/><circle cx="12.5" cy="16" r="3.4" fill="#C3C9D2"/><path d="M26 16l3-2.6M26 16l3 2.6" stroke="#D5BD8A" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+          <div class="min-w-0 flex-1"><p class="text-[14px] font-semibold text-ink" data-tr="Misafir Asistanı">Guest Assistant</p><p class="text-[12px] text-mist"><span class="mr-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-400 align-middle"></span><span data-tr="Çevrim içi · gece 02:14">Online · 02:14 at night</span></p></div>
+          <span class="tag border-gold/30 text-gold" data-tr="Örnek arayüz">Illustrative</span>
+        </div>
+        <div class="grid min-h-[300px] content-start gap-3 px-5 py-5 text-[14px] leading-relaxed" id="heroChat"></div>
+        <div class="grid grid-cols-[1fr_1.35fr_1fr] gap-px border-t border-white/[0.07] bg-white/[0.05] text-[11.5px]">
+          <div class="bg-navy-900 px-3 py-3"><p class="text-mist/80" data-tr="Dil">Language</p><p class="mt-0.5 font-semibold text-ink" id="hsLang">–</p></div>
+          <div class="bg-navy-900 px-3 py-3"><p class="text-mist/80" data-tr="Talep">Request</p><p class="mt-0.5 font-semibold text-ink" id="hsReq">–</p></div>
+          <div class="bg-navy-900 px-3 py-3"><p class="text-mist/80" data-tr="Durum">Lead</p><p class="mt-0.5 font-semibold text-ink" id="hsLead">–</p></div>
         </div>
       </div>
-      <div class="grid lg:grid-cols-[1.55fr_1fr]">
-        <div class="min-w-0 border-b border-slate-200/80 p-4 sm:p-6 lg:border-b-0 lg:border-r">
-          <div class="grid grid-cols-2 gap-1 rounded-xl bg-slate-100 p-1 sm:grid-cols-4" role="tablist" id="roomTabs"></div>
-          <div class="mt-5 flex flex-wrap items-center justify-between gap-3">
-            <div class="text-[13px] font-semibold text-slate-900" id="calLabel"></div>
-            <div class="flex gap-4 text-[12px] text-slate-500" aria-hidden="true">
-              <span class="flex items-center gap-1.5"><i class="h-2 w-2 rounded-full bg-emerald-500"></i><span data-i18n="leg_best"></span></span>
-              <span class="flex items-center gap-1.5"><i class="h-2 w-2 rounded-full bg-amber-500"></i><span data-i18n="leg_peak"></span></span>
-              <span class="flex items-center gap-1.5"><i class="h-2 w-2 rounded-full bg-rose-400"></i><span data-i18n="leg_sold"></span></span>
+      <div id="hsToast" class="absolute -bottom-14 right-3 flex translate-y-2 items-center gap-2 rounded-xl border border-gold/30 bg-navy-800 px-3.5 py-2.5 text-[12.5px] text-ink opacity-0 shadow-xl transition duration-500 sm:-right-6">
+        <svg class="h-4 w-4 text-gold" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.7 5.3a1 1 0 0 1 0 1.4l-8 8a1 1 0 0 1-1.4 0l-4-4a1 1 0 1 1 1.4-1.4L8 12.6l7.3-7.3a1 1 0 0 1 1.4 0z" clip-rule="evenodd"/></svg>
+        <span data-tr="Talep resepsiyona iletildi">Inquiry sent to front desk</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 02 Problem ===================== -->
+<section id="problem" class="scroll-mt-28 border-t border-white/[0.05] bg-navy-900 py-24 sm:py-28" aria-labelledby="probTitle">
+  <div class="mx-auto max-w-7xl px-5 sm:px-8">
+    <div class="reveal max-w-2xl">
+      <p class="eyebrow" data-tr="Sorun">The problem</p>
+      <h2 id="probTitle" class="h2 mt-4" data-tr="Kaç misafir talebini kaçırıyorsunuz?">How Many Guest Inquiries Are You Missing?</h2>
+      <p class="lead mt-5" data-tr="Misafirler ekibiniz müsait olduğunda değil, kendilerine uygun olduğunda yazar. Cevap geciktiğinde rezervasyon çoğu zaman başka bir otele ya da komisyonlu bir kanala gider.">Guests write when it suits them, not when your team is free. When a reply comes late, the booking often goes to another hotel or through a commission-based channel.</p>
+    </div>
+    <div class="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <article class="reveal card p-7">
+        <span class="font-display text-[13px] font-semibold text-gold">01</span>
+        <h3 class="mt-4 font-display text-[18px] font-semibold text-ink" data-tr="Mesai dışında kaçan talepler">Missed inquiries after hours</h3>
+        <p class="mt-3 text-[15px] leading-relaxed" data-tr="Gece yazan bir misafir genellikle birkaç otele birden yazar. İlk net cevabı veren otel, rezervasyonu alma şansını da yakalar.">A guest writing at night usually contacts several hotels at once. The property that gives the first clear answer is the one most likely to win the booking.</p>
+      </article>
+      <article class="reveal card p-7">
+        <span class="font-display text-[13px] font-semibold text-gold">02</span>
+        <h3 class="mt-4 font-display text-[18px] font-semibold text-ink" data-tr="Yavaş cevaplar">Slow responses</h3>
+        <p class="mt-3 text-[15px] leading-relaxed" data-tr="Misafir beklerken seçenekleri karşılaştırır. Cevapsız geçen her saat, başka yerden, çoğu zaman bir online acente üzerinden rezervasyon yapması için zaman demektir.">Potential guests compare options while they wait. Every hour without a reply is time to book somewhere else, often through an online travel agency.</p>
+      </article>
+      <article class="reveal card p-7">
+        <span class="font-display text-[13px] font-semibold text-gold">03</span>
+        <h3 class="mt-4 font-display text-[18px] font-semibold text-ink" data-tr="Resepsiyonu yoran tekrar soruları">Repetitive questions</h3>
+        <p class="mt-3 text-[15px] leading-relaxed" data-tr="Giriş saati, otopark, kahvaltı, transfer. Ekip vardiyasını aynı mesajları cevaplayarak geçirir, karşısındaki misafire ayıracak zamanı azalır.">Check-in times, parking, breakfast, transfers. Your reception team spends the shift answering the same messages instead of looking after the guests in front of them.</p>
+      </article>
+      <article class="reveal card p-7">
+        <span class="font-display text-[13px] font-semibold text-gold">04</span>
+        <h3 class="mt-4 font-display text-[18px] font-semibold text-ink" data-tr="Dil engeli">Language barriers</h3>
+        <p class="mt-3 text-[15px] leading-relaxed" data-tr="Vardiyadaki kimsenin konuşmadığı bir dildeki mesaj, doğru kişiyi bekler ya da kısa bir cevapla geçiştirilir. Misafirin güveni konaklama başlamadan sarsılır.">A message in a language nobody on shift speaks waits for the right colleague, or gets a short reply. The guest's confidence drops before the stay has even started.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 03 Solutions ===================== -->
+<section id="solutions" class="scroll-mt-28 py-24 sm:py-28" aria-labelledby="solTitle">
+  <div class="mx-auto max-w-7xl px-5 sm:px-8">
+    <div class="reveal flex flex-wrap items-end justify-between gap-6">
+      <div class="max-w-2xl">
+        <p class="eyebrow" data-tr="Çözümler">Our solutions</p>
+        <h2 id="solTitle" class="h2 mt-4" data-tr="Tek akıllı sistem. Daha iyi otel operasyonu.">One Intelligent System. Better Hotel Operations.</h2>
+        <p class="lead mt-5" data-tr="AXON Hotel AI birlikte çalışan modüllerden oluşur. Bugün ihtiyacınız olanla başlar, otel büyüdükçe diğerlerini eklersiniz.">AXON Hotel AI is built from modules that work together. Start with what you need today and add the rest as your hotel grows.</p>
+      </div>
+      <a href="#contact" class="btn-line" data-cta="demo" data-cta-loc="solutions" data-tr="Ücretsiz demo alın">Book a Free Demo</a>
+    </div>
+    <div class="mt-14 grid gap-4 md:grid-cols-2 xl:grid-cols-4" id="solGrid"></div>
+  </div>
+</section>
+
+<!-- ===================== 04 How it works ===================== -->
+<section id="how" class="scroll-mt-28 border-y border-white/[0.05] bg-navy-900 py-24 sm:py-28" aria-labelledby="howTitle">
+  <div class="mx-auto max-w-7xl px-5 sm:px-8">
+    <div class="reveal mx-auto max-w-2xl text-center">
+      <p class="eyebrow" data-tr="Nasıl çalışır">How it works</p>
+      <h2 id="howTitle" class="h2 mt-4" data-tr="Misafirin mesajından ekibinizin ekranına.">From a Guest's Message to Your Team's Screen.</h2>
+      <p class="lead mt-5" data-tr="Bilgi sistemin içinde tek ve net bir yönde akar. Ekibiniz her adımı görür ve istediği an devralır.">Information moves through the system in one clear direction. Your team can see every step and take over at any point.</p>
+    </div>
+    <ol class="reveal relative mx-auto mt-16 grid max-w-6xl gap-0 lg:grid-cols-5" id="flow"></ol>
+  </div>
+</section>
+
+<!-- ===================== 05 Live demo ===================== -->
+<section id="demo" class="scroll-mt-28 py-24 sm:py-28" aria-labelledby="demoTitle">
+  <div class="mx-auto max-w-7xl px-5 sm:px-8">
+    <div class="reveal mx-auto max-w-2xl text-center">
+      <p class="eyebrow" data-tr="Etkileşimli canlı demo">Interactive live demo</p>
+      <h2 id="demoTitle" class="h2 mt-4" data-tr="Yapay zekâ otel asistanınızla tanışın.">Meet Your AI Hotel Assistant.</h2>
+      <p class="lead mt-5" data-tr="Bir misafir gibi yazın: tarih, kahvaltı veya otopark sorun, Türkçe, Almanca ya da İspanyolca yazın. Sağdaki panel, ekibinize gidecek talebin nasıl oluştuğunu gösterir.">Write like a guest would: ask about dates, breakfast or parking, or write in Turkish, German or Spanish. The panel on the right shows how a structured inquiry is built for your team.</p>
+    </div>
+
+    <div class="reveal mt-12 grid gap-4 lg:grid-cols-[1.6fr_1fr]">
+      <div class="card flex h-[600px] flex-col overflow-hidden bg-navy-900 sm:h-[620px]">
+        <div class="flex flex-wrap items-center gap-3 border-b border-white/[0.07] px-5 py-3.5">
+          <span class="grid h-9 w-9 place-items-center rounded-full bg-navy-700 font-display text-[13px] font-semibold text-gold ring-1 ring-gold/40">A</span>
+          <div class="min-w-0 flex-1"><p class="text-[14px] font-semibold text-ink">Aurelia Boutique Hotel</p><p class="text-[12px] text-mist" data-tr="Demo otel · kurgusal">Demo hotel · fictional</p></div>
+          <span class="tag border-amber-300/30 text-amber-200" id="demoMode">Simulated demo</span>
+        </div>
+        <div id="chatLog" class="noscroll flex-1 space-y-3 overflow-y-auto px-5 py-5 text-[14.5px] leading-relaxed" role="log" aria-live="polite" aria-label="Demo conversation" data-tr-aria="Demo sohbeti"></div>
+        <div class="border-t border-white/[0.07] px-4 pb-4 pt-3">
+          <div class="noscroll -mx-1 mb-3 flex gap-2 overflow-x-auto px-1 pb-1 [scrollbar-width:none]" id="chips"></div>
+          <form id="chatForm" class="flex gap-2" autocomplete="off">
+            <label for="chatInput" class="sr-only" data-tr="Mesajınız">Your message</label>
+            <input id="chatInput" maxlength="400" class="field flex-1 !rounded-full" placeholder="Write as a guest…" data-tr-ph="Misafir gibi yazın…">
+            <button class="grid h-12 w-12 flex-none place-items-center rounded-full bg-gold text-navy-950 transition hover:bg-gold-soft" aria-label="Send" data-tr-aria="Gönder"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          </form>
+        </div>
+      </div>
+
+      <aside class="grid content-start gap-4">
+        <div class="card p-6">
+          <div class="flex items-center justify-between"><p class="font-display text-[15px] font-semibold text-ink" data-tr="Talep özeti">Inquiry summary</p><span class="tag border-white/10 text-mist" id="leadStatus">Collecting</span></div>
+          <dl class="mt-5 grid gap-3 text-[14px]" id="leadPanel"></dl>
+          <button type="button" id="chatReset" class="mt-3 py-2 text-[13px] font-medium text-mist underline decoration-white/20 underline-offset-4 hover:text-ink" data-tr="Demoyu sıfırla">Reset demo</button>
+        </div>
+        <div class="card border-gold/20 bg-gradient-to-b from-navy-800 to-navy-900 p-6">
+          <p class="font-display text-[17px] font-semibold text-ink" data-tr="Bunu otelinize mi istiyorsunuz?">Want This for Your Hotel?</p>
+          <p class="mt-2 text-[14px] leading-relaxed" data-tr="Demoyu sizin odalarınız, kurallarınız ve sık sorulan sorularınızla hazırlıyoruz.">We prepare the demo with your own rooms, policies and frequent questions.</p>
+          <a href="#contact" class="btn-gold mt-5 w-full" data-cta="demo" data-cta-loc="live_demo" data-tr="Demo alın">Book a Demo</a>
+        </div>
+        <p class="px-1 text-[12.5px] leading-relaxed text-mist/80" id="demoNote"></p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 06 Use cases ===================== -->
+<section id="use-cases" class="scroll-mt-28 border-y border-white/[0.05] bg-navy-900 py-24 sm:py-28" aria-labelledby="ucTitle">
+  <div class="mx-auto max-w-7xl px-5 sm:px-8">
+    <div class="reveal max-w-2xl">
+      <p class="eyebrow" data-tr="Kullanım alanları">Use cases</p>
+      <h2 id="ucTitle" class="h2 mt-4" data-tr="Gerçek otel operasyonuna göre tasarlandı.">Designed Around Real Hotel Operations.</h2>
+      <p class="lead mt-5" data-tr="AXON ekibinizin yerini almaz. Tekrarlanan işi üstlenir; ekibiniz misafire, satışa ve kişisel ilgi isteyen taleplere odaklanır.">AXON does not replace your staff. It takes on the repetitive work so your team can focus on guests, sales and the requests that need a personal touch.</p>
+    </div>
+    <div class="mt-14 grid gap-4 md:grid-cols-2">
+      <article class="reveal card p-8">
+        <h3 class="font-display text-[20px] font-semibold text-ink" data-tr="Resepsiyon desteği">Front Desk Support</h3>
+        <p class="mt-3 text-[15px] leading-relaxed" data-tr="Asistan giriş saati, otopark, kahvaltı ve yol tarifi gibi soruları anında cevaplar. Resepsiyon, karşısındaki misafire tüm dikkatini verebilir.">The assistant answers questions about check-in, parking, breakfast and directions immediately. Your reception team can give full attention to the guest standing at the desk.</p>
+        <p class="mt-5 text-[13px] font-medium text-gold" data-tr="Ekibiniz: misafirle yüz yüze ilgilenir">Your team: focuses on guests in person</p>
+      </article>
+      <article class="reveal card p-8">
+        <h3 class="font-display text-[20px] font-semibold text-ink" data-tr="Rezervasyon talepleri">Reservation Inquiries</h3>
+        <p class="mt-3 text-[15px] leading-relaxed" data-tr="Tarih, kişi sayısı, oda tipi ve iletişim bilgisi sohbet içinde toplanır. Ekibinize fiyat vermeye ve onaylamaya hazır, eksiksiz bir talep ulaşır.">Dates, number of guests, room type and contact details are collected in the conversation. Your team receives a complete request that is ready to price and confirm.</p>
+        <p class="mt-5 text-[13px] font-medium text-gold" data-tr="Ekibiniz: fiyat verir ve onaylar">Your team: quotes and confirms</p>
+      </article>
+      <article class="reveal card p-8">
+        <h3 class="font-display text-[20px] font-semibold text-ink" data-tr="Uluslararası misafir iletişimi">International Guest Communication</h3>
+        <p class="mt-3 text-[15px] leading-relaxed" data-tr="Misafir kendi dilinde yazar, kendi dilinde cevap alır. Ekibiniz konuşmayı kendi dilinde takip eder; o dili bilen tek arkadaşı beklemek gerekmez.">Guests write in their own language and receive replies in it. Your team can follow the conversation in theirs, without waiting for the one colleague who speaks it.</p>
+        <p class="mt-5 text-[13px] font-medium text-gold" data-tr="Ekibiniz: her konuşmayı takip eder">Your team: follows every conversation</p>
+      </article>
+      <article class="reveal card p-8">
+        <h3 class="font-display text-[20px] font-semibold text-ink" data-tr="Konaklama sırasındaki istekler">Guest Service Requests</h3>
+        <p class="mt-3 text-[15px] leading-relaxed" data-tr="Ekstra havlu, geç çıkış, taksi. Konaklayan misafirin isteği kaydedilir ve doğru departmana iletilir; vardiya değişiminde unutulmaz.">Extra towels, a late checkout, a taxi. Requests from staying guests are recorded and passed to the right department, so nothing is forgotten between shifts.</p>
+        <p class="mt-5 text-[13px] font-medium text-gold" data-tr="Ekibiniz: isteği yerine getirir">Your team: delivers the service</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 07 Projects ===================== -->
+<section id="projects" class="scroll-mt-28 py-24 sm:py-28" aria-labelledby="projTitle">
+  <div class="mx-auto max-w-7xl px-5 sm:px-8">
+    <div class="reveal max-w-2xl">
+      <p class="eyebrow" data-tr="Projeler ve demolar">Projects &amp; demonstrations</p>
+      <h2 id="projTitle" class="h2 mt-4" data-tr="Gerçek iş ihtiyaçlarına göre kurulan teknoloji.">Technology Built Around Real Business Needs.</h2>
+      <p class="lead mt-5" data-tr="Her proje gerçek durumuyla etiketlidir: canlı, demo veya konsept.">Every project is labelled with its actual status: live, demo or concept.</p>
+    </div>
+    <div class="mt-14 grid gap-4 lg:grid-cols-2">
+      <article class="reveal card flex flex-col p-8">
+        <span class="tag w-fit border-emerald-400/30 text-emerald-300"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span><span data-tr="Canlı proje">Live project</span></span>
+        <h3 class="mt-5 font-display text-[22px] font-semibold text-ink">Hotel Eliza · Istanbul</h3>
+        <p class="mt-3 text-[15px] leading-relaxed" data-tr="İstanbul Tarihi Yarımada'daki 27 odalı bir butik otel için hazırlanan web sitesi. Altı dilde cevap veren bir yapay zekâ misafir asistanı ve rezervasyon talep akışı içerir.">A website built for a 27-room boutique hotel in Istanbul's historic peninsula, with an AI guest concierge that answers in six languages and a reservation request flow.</p>
+        <ul class="mt-5 flex flex-wrap gap-2 text-[12.5px]">
+          <li class="rounded-full border border-white/10 px-3 py-1" data-tr="Otel web sitesi">Hotel website</li>
+          <li class="rounded-full border border-white/10 px-3 py-1" data-tr="Yapay zekâ asistanı · 6 dil">AI concierge · 6 languages</li>
+          <li class="rounded-full border border-white/10 px-3 py-1" data-tr="Rezervasyon talep formu">Reservation request form</li>
+        </ul>
+        <a href="https://eliza-hotel-chatbot.vercel.app/" target="_blank" rel="noopener" class="mt-7 inline-flex w-fit items-center gap-2 py-2 text-[14px] font-semibold text-gold hover:text-gold-soft lg:mt-auto lg:pt-7"><span data-tr="Projeyi açın">Open the project</span><span aria-hidden="true">↗</span></a>
+      </article>
+      <article class="reveal card flex flex-col p-8">
+        <span class="tag w-fit border-sky-300/30 text-sky-200"><span data-tr="Demo proje">Demo project</span></span>
+        <h3 class="mt-5 font-display text-[22px] font-semibold text-ink">AXON Hotel AI · Guest Assistant</h3>
+        <p class="mt-3 text-[15px] leading-relaxed" data-tr="Bu sayfadaki etkileşimli asistan. Kurgusal bir otel üzerinden soru cevaplamayı, çok dilli iletişimi ve rezervasyon talebi toplamayı gösterir.">The interactive assistant on this page. It uses a fictional hotel to show question answering, multilingual conversation and reservation inquiry collection.</p>
+        <ul class="mt-5 flex flex-wrap gap-2 text-[12.5px]">
+          <li class="rounded-full border border-white/10 px-3 py-1" data-tr="Çok dilli sohbet">Multilingual chat</li>
+          <li class="rounded-full border border-white/10 px-3 py-1" data-tr="Talep toplama">Lead capture</li>
+          <li class="rounded-full border border-white/10 px-3 py-1" data-tr="Ekibe devir">Human handover</li>
+        </ul>
+        <a href="#demo" class="mt-7 inline-flex w-fit items-center gap-2 py-2 text-[14px] font-semibold text-gold hover:text-gold-soft lg:mt-auto lg:pt-7"><span data-tr="Demoyu deneyin">Try the demo</span><span aria-hidden="true">→</span></a>
+      </article>
+      <article class="reveal card flex flex-col p-8 lg:col-span-2">
+        <div class="flex flex-wrap items-start justify-between gap-4">
+          <div class="max-w-2xl">
+            <span class="tag w-fit border-sky-300/30 text-sky-200"><span data-tr="Demo proje">Demo project</span></span>
+            <h3 class="mt-5 font-display text-[22px] font-semibold text-ink" data-tr="Doğrudan rezervasyon motoru">Direct Booking Engine</h3>
+            <p class="mt-3 text-[15px] leading-relaxed" data-tr="Otel siteleri için rezervasyon takvimi: oda tipleri, gecelik fiyatlar, dolu günler, para birimi ve anlık toplam. Burada örnek envanter ve temsili fiyatlarla çalışır.">A booking calendar for hotel websites: room types, nightly rates, sold-out days, currencies and an instant total. Here it runs with demo inventory and illustrative prices.</p>
+          </div>
+          <button type="button" id="engineToggle" aria-expanded="false" aria-controls="enginePanel" class="btn-line"><span data-tr="Motoru deneyin">Try the engine</span></button>
+        </div>
+        <div id="enginePanel" hidden class="mt-8 overflow-hidden rounded-2xl border border-white/[0.07] bg-navy-950/60">
+          <div class="flex flex-wrap items-center gap-3 border-b border-white/[0.07] px-4 py-3">
+            <div class="min-w-0 flex-1 truncate text-[12px] text-mist"><span class="text-emerald-400">●</span> <span id="frameUrl"></span></div>
+            <div class="flex rounded-full border border-white/10 p-0.5 text-[12px] font-semibold" role="group" aria-label="Currency" id="currencySeg">
+              <button type="button" data-cur="EUR" aria-pressed="true" class="rounded-full px-3 py-1 text-mist aria-pressed:bg-white/10 aria-pressed:text-ink">EUR</button>
+              <button type="button" data-cur="USD" aria-pressed="false" class="rounded-full px-3 py-1 text-mist aria-pressed:bg-white/10 aria-pressed:text-ink">USD</button>
+              <button type="button" data-cur="TRY" aria-pressed="false" class="rounded-full px-3 py-1 text-mist aria-pressed:bg-white/10 aria-pressed:text-ink">TRY</button>
             </div>
           </div>
-          <div class="mt-4 grid gap-6 md:grid-cols-2" id="months"></div>
-          <p class="mt-4 text-[12px] text-slate-400" data-i18n="cal_hint"></p>
-        </div>
-        <aside class="grid content-start gap-5 p-4 sm:p-6" aria-live="polite">
-          <div id="roomCard"></div>
-          <div class="flex items-center justify-between">
-            <span class="text-[13px] font-medium text-slate-900" data-i18n="adults">Adults</span>
-            <div class="flex items-center gap-1 rounded-full border border-slate-200 p-0.5">
-              <button type="button" id="adMinus" class="grid h-8 w-8 place-items-center rounded-full text-slate-700 hover:bg-slate-100 disabled:opacity-30" aria-label="−">−</button>
-              <output id="adults" class="w-6 text-center text-[14px] font-semibold text-slate-900">2</output>
-              <button type="button" id="adPlus" class="grid h-8 w-8 place-items-center rounded-full text-slate-700 hover:bg-slate-100 disabled:opacity-30" aria-label="+">+</button>
+          <div class="grid lg:grid-cols-[1.55fr_1fr]">
+            <div class="min-w-0 border-b border-white/[0.07] p-4 sm:p-6 lg:border-b-0 lg:border-r">
+              <div class="grid grid-cols-2 gap-1 rounded-xl bg-white/[0.04] p-1 sm:grid-cols-4" role="tablist" id="roomTabs"></div>
+              <div class="mt-5 flex flex-wrap items-center justify-between gap-3">
+                <div class="text-[13px] font-semibold text-ink" id="calLabel"></div>
+                <div class="flex gap-4 text-[12px]" aria-hidden="true">
+                  <span class="flex items-center gap-1.5"><i class="h-2 w-2 rounded-full bg-emerald-400"></i><span id="legBest"></span></span>
+                  <span class="flex items-center gap-1.5"><i class="h-2 w-2 rounded-full bg-gold"></i><span id="legPeak"></span></span>
+                  <span class="flex items-center gap-1.5"><i class="h-2 w-2 rounded-full bg-rose-400"></i><span id="legSold"></span></span>
+                </div>
+              </div>
+              <div class="mt-4 grid gap-6 md:grid-cols-2" id="months"></div>
+              <p class="mt-4 text-[12px] text-mist/70" id="calHint"></p>
             </div>
+            <aside class="grid content-start gap-5 p-4 sm:p-6" aria-live="polite">
+              <div id="roomCard"></div>
+              <div class="flex items-center justify-between">
+                <span class="text-[13px] font-medium text-ink" id="adultsLabel"></span>
+                <div class="flex items-center gap-1 rounded-full border border-white/10 p-0.5">
+                  <button type="button" id="adMinus" class="grid h-9 w-9 place-items-center rounded-full text-ink hover:bg-white/10 disabled:opacity-30" aria-label="−">−</button>
+                  <output id="adults" class="w-6 text-center text-[14px] font-semibold text-ink">2</output>
+                  <button type="button" id="adPlus" class="grid h-9 w-9 place-items-center rounded-full text-ink hover:bg-white/10 disabled:opacity-30" aria-label="+">+</button>
+                </div>
+              </div>
+              <div class="grid gap-2 border-t border-white/[0.07] pt-4 text-[14px]" id="basket"></div>
+              <button type="button" id="reserveBtn" class="btn-gold disabled:cursor-not-allowed disabled:opacity-40"></button>
+              <div class="min-h-[1.25rem] text-[13px] font-medium" id="engineToast" role="status"></div>
+            </aside>
           </div>
-          <div class="grid gap-2 border-t border-slate-200/80 pt-4 text-[14px]" id="basket"></div>
-          <div class="flex items-center gap-2 text-[12px] text-slate-500"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span data-i18n="pay_row"></span></div>
-          <button type="button" id="reserveBtn" class="rounded-full bg-blue-600 px-6 py-3 text-[15px] font-medium text-white shadow-sm transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-300" data-i18n="reserve">Reserve</button>
-          <div class="min-h-[1.25rem] text-[13px] font-medium" id="engineToast" role="status"></div>
-        </aside>
-      </div>
+        </div>
+      </article>
+      <article class="reveal card flex flex-col p-8 lg:col-span-2 lg:flex-row lg:items-center lg:justify-between lg:gap-10">
+        <div class="max-w-2xl">
+          <span class="tag w-fit border-violet-300/30 text-violet-200"><span data-tr="Konsept proje">Concept project</span></span>
+          <h3 class="mt-5 font-display text-[22px] font-semibold text-ink">AXON Drop</h3>
+          <p class="mt-3 text-[15px] leading-relaxed" data-tr="Kaydırdıkça ilerleyen, kodla üretilmiş bir videoya dayalı sinematik tanıtım sayfası konsepti. Otellerin lansman ve kampanya sayfaları için bir yön önerisi.">A cinematic scroll-driven landing page concept, built around a code-rendered video. An exploration for hotel launch and campaign pages.</p>
+        </div>
+        <a href="/drop" class="mt-7 inline-flex w-fit flex-none items-center gap-2 py-2 text-[14px] font-semibold text-gold hover:text-gold-soft lg:mt-0"><span data-tr="Konsepti açın">Open the concept</span><span aria-hidden="true">→</span></a>
+      </article>
     </div>
   </div>
 </section>
 
-<!-- ===== Packages ===== -->
-<section id="packages" class="scroll-mt-24 py-20 sm:py-24" aria-labelledby="pkgTitle">
-  <div class="mx-auto max-w-6xl px-5 sm:px-6">
+<!-- ===================== 08 Pricing ===================== -->
+<section id="pricing" class="scroll-mt-28 border-y border-white/[0.05] bg-navy-900 py-24 sm:py-28" aria-labelledby="priceTitle">
+  <div class="mx-auto max-w-7xl px-5 sm:px-8">
     <div class="reveal mx-auto max-w-2xl text-center">
-      <p class="text-[13px] font-semibold uppercase tracking-[0.16em] text-blue-600" data-i18n="pkg_eyebrow">Packages</p>
-      <h2 id="pkgTitle" class="mt-3 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl" data-i18n="pkg_title"></h2>
-      <p class="mt-4 text-slate-600" data-i18n="pkg_lead"></p>
+      <p class="eyebrow" data-tr="Fiyatlar">Pricing</p>
+      <h2 id="priceTitle" class="h2 mt-4" data-tr="Doğru otomasyon seviyesini seçin.">Choose the Right Level of Automation.</h2>
+      <p class="lead mt-5" data-tr="Şeffaf yapı: tek seferlik kurulum, aylık abonelik ve kullanıma bağlı üçüncü taraf maliyetleri ayrı ayrı gösterilir.">A transparent structure: one-time setup, a monthly subscription and usage-based third-party costs, each shown separately.</p>
     </div>
-    <div class="reveal mt-8 flex justify-center">
-      <div class="pkg-sector inline-flex rounded-full border border-slate-200 bg-slate-50 p-1 text-[14px] font-medium" role="tablist" aria-label="Sector">
-        <button type="button" role="tab" data-sector="hotel" aria-selected="true" class="rounded-full px-5 py-2 text-slate-500 transition hover:text-slate-900 aria-selected:bg-white aria-selected:text-slate-900 aria-selected:shadow-sm" data-i18n="sec_hotel_b">Hotel</button>
-        <button type="button" role="tab" data-sector="clinic" aria-selected="false" class="rounded-full px-5 py-2 text-slate-500 transition hover:text-slate-900 aria-selected:bg-white aria-selected:text-slate-900 aria-selected:shadow-sm" data-i18n="sec_clinic_b">Clinic</button>
-        <button type="button" role="tab" data-sector="company" aria-selected="false" class="rounded-full px-5 py-2 text-slate-500 transition hover:text-slate-900 aria-selected:bg-white aria-selected:text-slate-900 aria-selected:shadow-sm" data-i18n="sec_company_b">Company</button>
-      </div>
-    </div>
-    <div class="mt-4 flex flex-wrap justify-center gap-x-5 gap-y-1 text-[12px] text-slate-500">
-      <span data-i18n="pkg_pill1"></span><span aria-hidden="true">·</span><span data-i18n="pkg_pill2"></span><span aria-hidden="true">·</span><span data-i18n="pkg_pill3"></span>
-    </div>
-
-    <div class="mt-10 grid items-start gap-4 lg:grid-cols-3">
-      <article class="reveal flex h-full flex-col rounded-2xl border border-slate-200/80 bg-white p-7 shadow-sm transition hover:shadow-md">
-        <span class="text-[12px] font-semibold uppercase tracking-[0.16em] text-slate-400">Start</span>
-        <h3 class="pkn mt-2 text-xl font-semibold tracking-tight text-slate-900" data-pk="1"></h3>
-        <p class="mt-2 text-[14px] leading-relaxed text-slate-600" data-i18n="pk1_for"></p>
-        <p class="mt-5 text-[15px] font-semibold text-slate-900" data-i18n="pkg_price"></p>
-        <ul class="pk-list mt-5 grid gap-2.5 text-[14px] text-slate-600" data-list="pk1_" data-n="6"></ul>
-        <a href="#contact" class="mt-7 inline-flex justify-center rounded-full border border-slate-200 px-5 py-2.5 text-[14px] font-medium text-slate-900 transition hover:border-slate-300 hover:bg-slate-50 lg:mt-auto lg:translate-y-0" data-i18n="pkg_cta">Get a quote</a>
+    <div class="mt-14 grid items-stretch gap-4 lg:grid-cols-3">
+      <article class="reveal card flex flex-col p-8">
+        <p class="font-display text-[13px] font-semibold uppercase tracking-[0.2em] text-silver">Start</p>
+        <p class="mt-5 flex items-baseline gap-2 text-ink"><span class="text-[14px] text-mist" data-tr="başlayan fiyat">From</span><span class="font-display text-[2.6rem] font-semibold leading-none">$300</span><span class="text-[14px] text-mist" data-tr="/ ay">/ month</span></p>
+        <p class="mt-3 text-[14.5px] leading-relaxed" data-tr="Web sitesinde yapay zekâ asistanıyla başlamak isteyen oteller için.">For hotels starting with an AI assistant on their website.</p>
+        <ul class="mt-7 grid gap-3 text-[14.5px] text-ink/90">
+          <li class="flex gap-3"><span class="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-gold"></span><span data-tr="Web sitesi yapay zekâ asistanı">Website AI assistant</span></li>
+          <li class="flex gap-3"><span class="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-gold"></span><span data-tr="Temel SSS otomasyonu">Basic FAQ automation</span></li>
+          <li class="flex gap-3"><span class="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-gold"></span><span data-tr="Misafir talebi toplama">Guest inquiry collection</span></li>
+          <li class="flex gap-3"><span class="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-gold"></span><span data-tr="Temel raporlama">Basic reporting</span></li>
+        </ul>
+        <a href="#contact" data-pkg="Start" class="pkg-cta btn-line mt-8 lg:mt-auto" data-tr="Start ile başlayın">Get started with Start</a>
       </article>
-      <article class="reveal relative flex h-full flex-col rounded-2xl border border-blue-600/30 bg-white p-7 shadow-md ring-1 ring-blue-600/20">
-        <span class="absolute -top-3 left-7 rounded-full bg-blue-600 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-white" data-i18n="pkg_rec">Recommended</span>
-        <span class="text-[12px] font-semibold uppercase tracking-[0.16em] text-blue-600">Pro</span>
-        <h3 class="pkn mt-2 text-xl font-semibold tracking-tight text-slate-900" data-pk="2"></h3>
-        <p class="mt-2 text-[14px] leading-relaxed text-slate-600" data-i18n="pk2_for"></p>
-        <p class="mt-5 text-[15px] font-semibold text-slate-900" data-i18n="pkg_price"></p>
-        <ul class="pk-list mt-5 grid gap-2.5 text-[14px] text-slate-600" data-list="pk2_" data-n="7"></ul>
-        <a href="#contact" class="mt-7 inline-flex justify-center rounded-full bg-blue-600 px-5 py-2.5 text-[14px] font-medium text-white shadow-sm transition hover:bg-blue-700 lg:mt-auto" data-i18n="pkg_cta">Get a quote</a>
+      <article class="reveal card relative flex flex-col border-gold/40 bg-navy-800 p-8 shadow-[0_30px_80px_-40px_rgba(213,189,138,0.35)]">
+        <span class="absolute -top-3 left-8 rounded-full bg-gold px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-navy-950" data-tr="Çoğu otel için">Best fit for most hotels</span>
+        <p class="font-display text-[13px] font-semibold uppercase tracking-[0.2em] text-gold">Pro</p>
+        <p class="mt-5 font-display text-[2.2rem] font-semibold leading-none text-ink" data-tr="Özel teklif">Custom Quote</p>
+        <p class="mt-3 text-[14.5px] leading-relaxed" data-tr="Misafir iletişimini web sitesi ve WhatsApp'ta tek sistemle yönetmek isteyen oteller için.">For hotels that want one system across website and WhatsApp.</p>
+        <ul class="mt-7 grid gap-3 text-[14.5px] text-ink/90">
+          <li class="flex gap-3"><span class="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-gold"></span><span data-tr="Start paketindeki her şey">Everything in Start</span></li>
+          <li class="flex gap-3"><span class="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-gold"></span><span data-tr="WhatsApp entegrasyonu">WhatsApp integration</span></li>
+          <li class="flex gap-3"><span class="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-gold"></span><span data-tr="Çok dilli iletişim">Multilingual communication</span></li>
+          <li class="flex gap-3"><span class="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-gold"></span><span data-tr="CRM entegrasyonu">CRM integration</span></li>
+          <li class="flex gap-3"><span class="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-gold"></span><span data-tr="Rezervasyon talep akışları">Reservation inquiry workflows</span></li>
+          <li class="flex gap-3"><span class="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-gold"></span><span data-tr="Gelişmiş raporlama">Advanced reporting</span></li>
+        </ul>
+        <a href="#contact" data-pkg="Pro" class="pkg-cta btn-gold mt-8 lg:mt-auto" data-tr="Pro için teklif alın">Get a Pro quote</a>
       </article>
-      <article class="reveal flex h-full flex-col rounded-2xl border border-slate-200/80 bg-white p-7 shadow-sm transition hover:shadow-md">
-        <span class="text-[12px] font-semibold uppercase tracking-[0.16em] text-slate-400" data-i18n="pk3_name">Enterprise</span>
-        <h3 class="pkn mt-2 text-xl font-semibold tracking-tight text-slate-900" data-pk="3"></h3>
-        <p class="mt-2 text-[14px] leading-relaxed text-slate-600" data-i18n="pk3_for"></p>
-        <p class="mt-5 text-[15px] font-semibold text-slate-900" data-i18n="pkg_price"></p>
-        <ul class="pk-list mt-5 grid gap-2.5 text-[14px] text-slate-600" data-list="pk3_" data-n="6"></ul>
-        <a href="#contact" class="mt-7 inline-flex justify-center rounded-full border border-slate-200 px-5 py-2.5 text-[14px] font-medium text-slate-900 transition hover:border-slate-300 hover:bg-slate-50 lg:mt-auto" data-i18n="pkg_cta">Get a quote</a>
+      <article class="reveal card flex flex-col p-8">
+        <p class="font-display text-[13px] font-semibold uppercase tracking-[0.2em] text-silver">Enterprise</p>
+        <p class="mt-5 font-display text-[2.2rem] font-semibold leading-none text-ink" data-tr="Özel teklif">Custom Quote</p>
+        <p class="mt-3 text-[14.5px] leading-relaxed" data-tr="Birden fazla tesisi ve özel iş akışları olan otel grupları için.">For hotel groups with several properties and custom workflows.</p>
+        <ul class="mt-7 grid gap-3 text-[14.5px] text-ink/90">
+          <li class="flex gap-3"><span class="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-gold"></span><span data-tr="Pro paketindeki her şey">Everything in Pro</span></li>
+          <li class="flex gap-3"><span class="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-gold"></span><span data-tr="Çoklu tesis desteği">Multi-property support</span></li>
+          <li class="flex gap-3"><span class="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-gold"></span><span data-tr="Özel entegrasyonlar">Custom integrations</span></li>
+          <li class="flex gap-3"><span class="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-gold"></span><span data-tr="Gelişmiş iş akışları">Advanced workflows</span></li>
+          <li class="flex gap-3"><span class="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-gold"></span><span data-tr="Size ayrılmış destek">Dedicated support</span></li>
+          <li class="flex gap-3"><span class="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-gold"></span><span data-tr="Size özel kurulum">Custom implementation</span></li>
+        </ul>
+        <a href="#contact" data-pkg="Enterprise" class="pkg-cta btn-line mt-8 lg:mt-auto" data-tr="Kurumsal teklif alın">Get an Enterprise quote</a>
       </article>
     </div>
-    <p class="mx-auto mt-6 max-w-2xl text-center text-[13px] text-slate-500" data-i18n="pkg_setup"></p>
-
-    <div class="reveal mx-auto mt-16 max-w-3xl">
-      <h3 class="text-center text-xl font-semibold tracking-tight text-slate-900" data-i18n="faq_h"></h3>
-      <div class="mt-6 divide-y divide-slate-200/80 rounded-2xl border border-slate-200/80 bg-white shadow-sm">
-        <details class="group px-6 py-4"><summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-medium text-slate-900"><span data-i18n="fq1_q"></span><span class="text-slate-400 transition group-open:rotate-45">+</span></summary><p class="mt-3 text-[15px] leading-relaxed text-slate-600" data-i18n="fq1_a"></p></details>
-        <details class="group px-6 py-4"><summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-medium text-slate-900"><span data-i18n="fq2_q"></span><span class="text-slate-400 transition group-open:rotate-45">+</span></summary><p class="mt-3 text-[15px] leading-relaxed text-slate-600" data-i18n="fq2_a"></p></details>
-        <details class="group px-6 py-4"><summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-medium text-slate-900"><span data-i18n="fq3_q"></span><span class="text-slate-400 transition group-open:rotate-45">+</span></summary><p class="mt-3 text-[15px] leading-relaxed text-slate-600" data-i18n="fq3_a"></p></details>
-        <details class="group px-6 py-4"><summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-medium text-slate-900"><span data-i18n="fq4_q"></span><span class="text-slate-400 transition group-open:rotate-45">+</span></summary><p class="mt-3 text-[15px] leading-relaxed text-slate-600" data-i18n="fq4_a"></p></details>
-        <details class="group px-6 py-4"><summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-medium text-slate-900"><span data-i18n="fq5_q"></span><span class="text-slate-400 transition group-open:rotate-45">+</span></summary><p class="mt-3 text-[15px] leading-relaxed text-slate-600" data-i18n="fq5_a"></p></details>
-      </div>
+    <div class="reveal mt-10 grid gap-px overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.06] md:grid-cols-3">
+      <div class="bg-navy-900 p-7"><p class="font-display text-[15px] font-semibold text-ink" data-tr="1 · Tek seferlik kurulum bedeli">1 · One-time setup fee</p><p class="mt-2 text-[14px] leading-relaxed" data-tr="İş akışı analizinden sonra yazılı olarak teklif edilir. Yapılandırma, otel bilgi tabanı, entegrasyonlar, testler ve ekip eğitimini kapsar.">Quoted in writing after the workflow analysis. Covers configuration, your hotel knowledge base, integrations, testing and team training.</p></div>
+      <div class="bg-navy-900 p-7"><p class="font-display text-[15px] font-semibold text-ink" data-tr="2 · Aylık abonelik">2 · Monthly subscription</p><p class="mt-2 text-[14px] leading-relaxed" data-tr="Barındırma, izleme, bakım, güncellemeler ve destek. Start paketi aylık $300'dan başlar.">Hosting, monitoring, maintenance, updates and support. Start begins at $300 per month.</p></div>
+      <div class="bg-navy-900 p-7"><p class="font-display text-[15px] font-semibold text-ink" data-tr="3 · Üçüncü taraf maliyetleri">3 · Third-party costs</p><p class="mt-2 text-[14px] leading-relaxed" data-tr="Yapay zekâ model kullanımı, Meta'nın WhatsApp Business mesaj ücretleri ve SMS ücretleri mesaj hacminize bağlıdır. Teklifte tahmini olarak gösterilir ve ayrı faturalanır.">AI model usage, WhatsApp Business messaging fees charged by Meta and SMS fees depend on your message volume. They are estimated in your proposal and billed separately.</p></div>
     </div>
   </div>
 </section>
 
-<!-- ===== Contact terminal + direct WhatsApp ===== -->
-<section id="contact" class="scroll-mt-24 bg-slate-50 py-20 sm:py-24" aria-labelledby="consTitle">
-  <div class="mx-auto max-w-6xl px-5 sm:px-6">
-    <div class="reveal mx-auto max-w-2xl text-center">
-      <p class="text-[13px] font-semibold uppercase tracking-[0.16em] text-blue-600" data-i18n="contact_eyebrow">Contact</p>
-      <h2 id="consTitle" class="mt-3 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl" data-i18n="cons_title2"></h2>
-      <p class="mt-4 text-slate-600" data-i18n="cons_lead2"></p>
+<!-- ===================== 09 Implementation ===================== -->
+<section id="process" class="scroll-mt-28 py-24 sm:py-28" aria-labelledby="procTitle">
+  <div class="mx-auto max-w-7xl px-5 sm:px-8">
+    <div class="reveal max-w-2xl">
+      <p class="eyebrow" data-tr="Kurulum süreci">Implementation</p>
+      <h2 id="procTitle" class="h2 mt-4" data-tr="İlk görüşmeden akıllı otomasyona.">From First Conversation to Intelligent Automation.</h2>
     </div>
-    <div class="mt-10 grid gap-4 lg:grid-cols-[1.5fr_1fr]">
-      <form class="reveal rounded-2xl border border-slate-200/80 bg-white/80 p-6 shadow-sm backdrop-blur-sm sm:p-8" id="contactForm" novalidate>
-        <div class="grid gap-4 sm:grid-cols-2">
-          <label class="grid gap-1.5 text-[13px] font-medium text-slate-900"><span data-i18n="f_name">Full name</span><input class="field" name="name" autocomplete="name" required data-i18n-ph="ph_name"></label>
-          <label class="grid gap-1.5 text-[13px] font-medium text-slate-900"><span data-i18n="f_email">Work email</span><input class="field" name="email" type="email" autocomplete="email" required placeholder="gm@yourhotel.com"></label>
-          <label class="grid gap-1.5 text-[13px] font-medium text-slate-900"><span data-i18n="f_hotel">Business</span><input class="field" name="hotel" autocomplete="organization" data-i18n-ph="ph_hotel"></label>
-          <label class="grid gap-1.5 text-[13px] font-medium text-slate-900"><span data-i18n="f_keys">Size</span><select class="field" name="rooms"><option>1 – 20</option><option>21 – 60</option><option>61 – 150</option><option>150+</option></select></label>
-          <fieldset class="sm:col-span-2"><legend class="mb-2 text-[13px] font-medium text-slate-900" data-i18n="f_sys">Systems of interest</legend>
-            <div class="flex flex-wrap gap-2">
-              <label class="chip"><input type="checkbox" name="sys" value="AI assistant" class="peer sr-only" checked><span data-i18n="chk4">AI assistant</span></label>
-              <label class="chip"><input type="checkbox" name="sys" value="Reservation management" class="peer sr-only" checked><span data-i18n="chk1">Reservation management</span></label>
-              <label class="chip"><input type="checkbox" name="sys" value="AI chatbot" class="peer sr-only"><span data-i18n="chk3">AI chatbot</span></label>
-              <label class="chip"><input type="checkbox" name="sys" value="Website design" class="peer sr-only"><span data-i18n="chk2">Website design</span></label>
-            </div>
-          </fieldset>
-          <label class="grid gap-1.5 text-[13px] font-medium text-slate-900 sm:col-span-2"><span data-i18n="f_brief">Brief</span><textarea class="field min-h-[110px]" name="message" data-i18n-ph="ph_brief"></textarea></label>
+    <ol class="mt-14 grid gap-4 md:grid-cols-2 lg:grid-cols-5">
+      <li class="reveal card p-7"><span class="font-display text-[13px] font-semibold text-gold">01</span><h3 class="mt-4 font-display text-[17px] font-semibold text-ink" data-tr="Tanışma görüşmesi">Discovery Call</h3><p class="mt-3 text-[14.5px] leading-relaxed" data-tr="Otelinizi, misafirlerinizi ve talepleri bugün nasıl karşıladığınızı konuşuruz. Ücretsizdir.">We learn about your hotel, your guests and how inquiries are handled today. Free of charge.</p></li>
+      <li class="reveal card p-7"><span class="font-display text-[13px] font-semibold text-gold">02</span><h3 class="mt-4 font-display text-[17px] font-semibold text-ink" data-tr="İş akışı analizi">Business Workflow Analysis</h3><p class="mt-3 text-[14.5px] leading-relaxed" data-tr="Kanallarınızı, sık soruları ve kullandığınız sistemleri inceler; neyin otomatikleşeceğini ve neyin ekibinizde kalacağını yazılı bir planla sunarız.">We map your channels, frequent questions and systems, then present a written plan of what will be automated and what stays with your team.</p></li>
+      <li class="reveal card p-7"><span class="font-display text-[13px] font-semibold text-gold">03</span><h3 class="mt-4 font-display text-[17px] font-semibold text-ink" data-tr="Size özel geliştirme">Custom System Development</h3><p class="mt-3 text-[14.5px] leading-relaxed" data-tr="Asistanı otelinizin bilgileri, üslubu ve kurallarıyla kurarız. Devir kurallarını ve talep formatını birlikte belirleriz.">We build the assistant with your hotel's information, tone of voice and policies, and agree on handover rules and the inquiry format.</p></li>
+      <li class="reveal card p-7"><span class="font-display text-[13px] font-semibold text-gold">04</span><h3 class="mt-4 font-display text-[17px] font-semibold text-ink" data-tr="Entegrasyon ve test">Integration &amp; Testing</h3><p class="mt-3 text-[14.5px] leading-relaxed" data-tr="Web sitesi, WhatsApp ve seçtiğiniz sistemlere bağlarız. Ekibinizle gerçek senaryolar üzerinden test ederiz.">We connect the website, WhatsApp and your chosen systems, then test real scenarios together with your team.</p></li>
+      <li class="reveal card p-7"><span class="font-display text-[13px] font-semibold text-gold">05</span><h3 class="mt-4 font-display text-[17px] font-semibold text-ink" data-tr="Yayın ve sürekli iyileştirme">Launch &amp; Continuous Optimization</h3><p class="mt-3 text-[14.5px] leading-relaxed" data-tr="Yayından sonra konuşmaları izler, cevapları iyileştirir ve düzenli rapor paylaşırız.">After launch we monitor conversations, refine answers and share regular reports.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ===================== 10 FAQ ===================== -->
+<section id="faq" class="scroll-mt-28 border-y border-white/[0.05] bg-navy-900 py-24 sm:py-28" aria-labelledby="faqTitle">
+  <div class="mx-auto grid max-w-7xl gap-12 px-5 sm:px-8 lg:grid-cols-[1fr_1.6fr]">
+    <div class="reveal">
+      <p class="eyebrow" data-tr="SSS">FAQ</p>
+      <h2 id="faqTitle" class="h2 mt-4" data-tr="Açık sorular, dürüst cevaplar.">Clear Questions, Honest Answers.</h2>
+      <p class="lead mt-5" data-tr="Burada olmayan bir sorunuz varsa ücretsiz görüşmede cevaplayalım.">If your question is not here, we are happy to answer it in a free call.</p>
+      <a href="#contact" class="btn-gold mt-8" data-cta="demo" data-cta-loc="faq" data-tr="Ücretsiz demo alın">Book a Free Demo</a>
+    </div>
+    <div class="reveal divide-y divide-white/[0.07] rounded-2xl border border-white/[0.07] bg-navy-800/50" id="faqList"></div>
+  </div>
+</section>
+
+<!-- ===================== 11 Final CTA + contact ===================== -->
+<section id="contact" class="scroll-mt-24 py-24 sm:py-28" aria-labelledby="ctaTitle">
+  <div class="mx-auto max-w-7xl px-5 sm:px-8">
+    <div class="reveal mx-auto max-w-3xl text-center">
+      <h2 id="ctaTitle" class="h2" data-tr="Misafirleriniz zaten soruyor. Cevap vermenize yapay zekâ yardım etsin.">Your Guests Are Already Asking. Let AI Help You Respond.</h2>
+      <p class="lead mx-auto mt-5 max-w-xl" data-tr="Akıllı otomasyonun otelinizin operasyonunda nerede fark yaratacağını birlikte belirleyelim.">Let's identify where intelligent automation can improve your hotel's operations.</p>
+    </div>
+
+    <div class="mt-14 grid gap-4 lg:grid-cols-[1.6fr_1fr]">
+      <form id="leadForm" class="reveal card relative p-6 sm:p-9" novalidate>
+        <p class="font-display text-[19px] font-semibold text-ink" data-tr="Ücretsiz görüşmenizi planlayın">Book Your Free Consultation</p>
+        <p class="mt-1.5 text-[14px]" data-tr="Bir iş günü içinde dönüş yaparız.">We reply within one business day.</p>
+        <div class="mt-7 grid gap-5 sm:grid-cols-2">
+          <div><label for="fName" class="mb-1.5 block text-[13px] font-medium text-ink" data-tr="Ad soyad">Full name</label><input id="fName" name="name" class="field" autocomplete="name" required maxlength="100" aria-describedby="eName"><p id="eName" class="err" data-tr="Lütfen adınızı ve soyadınızı yazın.">Please enter your full name.</p></div>
+          <div><label for="fEmail" class="mb-1.5 block text-[13px] font-medium text-ink" data-tr="İş e-postası">Business email</label><input id="fEmail" name="email" type="email" class="field" autocomplete="email" required maxlength="200" aria-describedby="eEmail" placeholder="name@yourhotel.com"><p id="eEmail" class="err" data-tr="Lütfen geçerli bir e-posta adresi yazın.">Please enter a valid email address.</p></div>
+          <div><label for="fHotel" class="mb-1.5 block text-[13px] font-medium text-ink" data-tr="Otel adı">Hotel name</label><input id="fHotel" name="hotel" class="field" autocomplete="organization" required maxlength="150" aria-describedby="eHotel"><p id="eHotel" class="err" data-tr="Lütfen otelin adını yazın.">Please enter your hotel's name.</p></div>
+          <div><label for="fRooms" class="mb-1.5 block text-[13px] font-medium text-ink" data-tr="Oda sayısı">Number of rooms</label>
+            <select id="fRooms" name="rooms" class="field" required aria-describedby="eRooms"><option value="" data-tr="Seçin">Select</option><option>1-20</option><option>21-50</option><option>51-100</option><option>101-200</option><option>200+</option></select><p id="eRooms" class="err" data-tr="Lütfen oda sayısını seçin.">Please select the number of rooms.</p></div>
+          <div class="sm:col-span-2"><label for="fChallenge" class="mb-1.5 block text-[13px] font-medium text-ink" data-tr="En büyük zorluğunuz">Main business challenge</label>
+            <select id="fChallenge" name="challenge" class="field" required aria-describedby="eChallenge">
+              <option value="" data-tr="Seçin">Select</option>
+              <option value="Missed Guest Inquiries" data-tr="Kaçırılan misafir talepleri">Missed Guest Inquiries</option>
+              <option value="Slow Response Times" data-tr="Yavaş cevap süreleri">Slow Response Times</option>
+              <option value="Manual Reservation Management" data-tr="Elle yürütülen rezervasyon yönetimi">Manual Reservation Management</option>
+              <option value="Multilingual Communication" data-tr="Çok dilli iletişim">Multilingual Communication</option>
+              <option value="High Staff Workload" data-tr="Ekibin yüksek iş yükü">High Staff Workload</option>
+              <option value="Other" data-tr="Diğer">Other</option>
+            </select><p id="eChallenge" class="err" data-tr="Lütfen bir seçenek seçin.">Please choose an option.</p></div>
+          <div><label for="fWa" class="mb-1.5 block text-[13px] font-medium text-ink"><span data-tr="WhatsApp numarası">WhatsApp number</span> <span class="font-normal text-mist" data-tr="(isteğe bağlı)">(optional)</span></label><input id="fWa" name="whatsapp" type="tel" class="field" autocomplete="tel" maxlength="20" aria-describedby="eWa" placeholder="+44 7700 900000"><p id="eWa" class="err" data-tr="Lütfen numarayı ülke koduyla yazın.">Please enter the number with country code.</p></div>
+          <div><label for="fPkg" class="mb-1.5 block text-[13px] font-medium text-ink"><span data-tr="İlgilendiğiniz paket">Package of interest</span> <span class="font-normal text-mist" data-tr="(isteğe bağlı)">(optional)</span></label><select id="fPkg" name="package" class="field"><option value="" data-tr="Henüz emin değilim">Not sure yet</option><option>Start</option><option>Pro</option><option>Enterprise</option></select></div>
+          <div class="sm:col-span-2"><label for="fMsg" class="mb-1.5 block text-[13px] font-medium text-ink"><span data-tr="Eklemek istedikleriniz">Anything else</span> <span class="font-normal text-mist" data-tr="(isteğe bağlı)">(optional)</span></label><textarea id="fMsg" name="message" class="field min-h-[110px]" maxlength="2000"></textarea></div>
+          <div class="absolute -left-[9999px] h-px w-px overflow-hidden" aria-hidden="true"><label for="fWebsite">Website</label><input id="fWebsite" name="website" tabindex="-1" autocomplete="off"></div>
         </div>
-        <div class="mt-6 flex flex-wrap items-center justify-between gap-4">
-          <span class="text-[13px] text-slate-500" id="formStatus" role="status" data-i18n="form_note"></span>
-          <button class="rounded-full bg-blue-600 px-6 py-3 text-[15px] font-medium text-white shadow-sm transition hover:bg-blue-700" type="submit" data-i18n="cta_demo2">Get a free demo</button>
+        <div class="mt-7 flex flex-wrap items-center justify-between gap-4">
+          <p class="max-w-sm text-[12.5px] leading-relaxed text-mist/80"><span data-tr="Bilgilerinizi yalnızca talebinize cevap vermek için kullanırız.">We use your details only to reply to your request.</span> <a href="/privacy" class="underline decoration-white/25 underline-offset-2 hover:text-ink" data-tr="Gizlilik">Privacy</a></p>
+          <button type="submit" id="leadSubmit" class="btn-gold min-w-[230px] disabled:opacity-60">Book Your Free Consultation</button>
         </div>
+        <div id="formResult" class="mt-6 hidden rounded-xl border p-5 text-[14.5px] leading-relaxed" role="status" tabindex="-1"></div>
       </form>
-      <div class="reveal grid content-start gap-4">
-        <div class="rounded-2xl border border-slate-200/80 bg-white p-7 shadow-sm">
-          <div class="grid h-11 w-11 place-items-center rounded-xl bg-emerald-50 text-emerald-600"><svg class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.2.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg></div>
-          <h3 class="mt-5 text-lg font-semibold tracking-tight text-slate-900" data-i18n="wa_card_t"></h3>
-          <p class="mt-1.5 text-[15px] text-slate-600" data-i18n="wa_card_p"></p>
-          <a class="wa-link mt-5 inline-flex w-full justify-center rounded-full bg-emerald-500 px-5 py-3 text-[15px] font-medium text-white shadow-sm transition hover:bg-emerald-600" target="_blank" rel="noopener" data-i18n="wa_card_btn">Message on WhatsApp</a>
-          <p class="mt-3 text-center text-[13px] text-slate-500">+90 554 024 86 98</p>
+
+      <aside class="reveal grid content-start gap-4">
+        <div class="card p-7">
+          <p class="font-display text-[17px] font-semibold text-ink" data-tr="Hemen konuşmak ister misiniz?">Prefer to talk now?</p>
+          <p class="mt-2 text-[14.5px]" data-tr="WhatsApp'tan yazın, aynı iş günü içinde dönelim.">Message us on WhatsApp and we reply the same business day.</p>
+          <a class="wa-link btn-line mt-5 w-full" target="_blank" rel="noopener"><svg class="h-[18px] w-[18px] text-emerald-400" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.2.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg><span data-tr="WhatsApp'tan yazın">Message on WhatsApp</span></a>
+          <p class="mt-3 text-center text-[13px]">+90 554 024 86 98</p>
         </div>
-        <div class="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm">
-          <p class="text-[13px] font-medium text-slate-500" data-i18n="mail_label">Email</p>
-          <a class="mt-1 block break-all font-medium text-slate-900 transition hover:text-blue-600" href="mailto:gulcanyesilbudak@icloud.com">gulcanyesilbudak@icloud.com</a>
+        <div class="card p-7">
+          <p class="text-[13px]" data-tr="E-posta">Email</p>
+          <a href="mailto:gulcanyesilbudak@icloud.com" class="mt-1 block break-all font-medium text-ink hover:text-gold">gulcanyesilbudak@icloud.com</a>
+          <p class="mt-5 text-[13px]" data-tr="Merkez">Based in</p>
+          <p class="mt-1 font-medium text-ink" data-tr="İstanbul, Türkiye · dünyanın her yerindeki otellerle çalışıyoruz">Istanbul, Türkiye · working with hotels internationally</p>
         </div>
-      </div>
+      </aside>
     </div>
   </div>
 </section>
 </main>
 
-<footer class="border-t border-slate-200/80 bg-white">
-  <div class="mx-auto flex max-w-6xl flex-col gap-6 px-5 py-10 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+<footer class="border-t border-white/[0.06] bg-navy-950">
+  <div class="mx-auto grid max-w-7xl gap-10 px-5 py-14 sm:px-8 md:grid-cols-[1.4fr_1fr_1fr]">
     <div>
-      <a href="#top" class="flex items-center gap-2.5 text-slate-900" aria-label="AXON"><svg class="h-6 w-6" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#0F172A"/><circle cx="10" cy="16" r="4" fill="#fff"/><circle cx="22" cy="16" r="4" fill="#fff"/><circle cx="16" cy="16" r="1.6" fill="#38BDF8"/></svg><span class="text-[14px] font-semibold tracking-[0.22em]">AXON</span></a>
-      <p class="mt-3 max-w-sm text-[13px] text-slate-500" data-i18n="foot_tag"></p>
+      <p class="font-display text-[15px] font-semibold tracking-[0.18em] text-ink">AXON <span class="font-medium text-mist">SYSTEMS</span></p>
+      <p class="mt-3 max-w-sm text-[14px] leading-relaxed" data-tr="Otel misafir iletişimi için akıllı yapay zekâ sistemleri. İstanbul, Türkiye.">Intelligent AI systems for hotel guest communication. Istanbul, Türkiye.</p>
     </div>
-    <p class="text-[13px] text-slate-400">© <span id="yr"></span> AXON Systems · <span data-i18n="foot_rights"></span></p>
+    <nav aria-label="Footer" class="grid content-start gap-2.5 text-[14px]">
+      <a href="#solutions" class="hover:text-ink" data-tr="Çözümler">Solutions</a><a href="#demo" class="hover:text-ink" data-tr="Canlı demo">Live demo</a><a href="#pricing" class="hover:text-ink" data-tr="Fiyatlar">Pricing</a><a href="#faq" class="hover:text-ink" data-tr="SSS">FAQ</a>
+    </nav>
+    <div class="grid content-start gap-2.5 text-[14px]">
+      <a href="mailto:gulcanyesilbudak@icloud.com" class="break-all hover:text-ink">gulcanyesilbudak@icloud.com</a>
+      <a class="wa-link hover:text-ink" target="_blank" rel="noopener">WhatsApp · +90 554 024 86 98</a>
+      <a href="/privacy" class="hover:text-ink" data-tr="Gizlilik politikası">Privacy policy</a>
+    </div>
   </div>
+  <div class="border-t border-white/[0.06]"><p class="mx-auto max-w-7xl px-5 py-6 text-[12.5px] text-mist/70 sm:px-8">© <span id="yr"></span> AXON Systems. <span data-tr="Demo ve konsept olarak etiketlenen projeler örnek amaçlıdır.">Projects labelled demo or concept are demonstrations.</span></p></div>
 </footer>
 
-<script>
-(function () {
-  'use strict';
-  var $ = function (s, r) { return (r || document).querySelector(s); };
-  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
-  var LANGS = ['tr', 'en', 'de', 'fr'];
-  var LOCALE = { tr: 'tr-TR', en: 'en-GB', de: 'de-DE', fr: 'fr-FR' };
-  var WHATSAPP = '905540248698', CONTACT_EMAIL = 'gulcanyesilbudak@icloud.com';
-  var I18N = {"tr": {"tagline": "Oteller, klinikler ve şirketler için yapay zekâ sistemleri", "hero1": "Hiçbir müşteriyi", "hero2": "kaybetmeyin.", "wa_text": "Merhaba AXON, işletmem için sistemleriniz hakkında bilgi almak istiyorum.", "n2v": "7 kat", "n2t": "İlk bir saat içinde dönen işletmenin müşteriyi kazanma ihtimali, bir saat sonra dönene göre.", "n2s": "Harvard Business Review, 2011", "n4v": "%43", "n4t": "Acentelerin odalarını kendilerinden ucuza sattığını söyleyen Avrupa otellerinin oranı.", "n4s": "HOTREC araştırması, 2024", "n5v": "%23", "n5t": "Randevusuna gelmeyen hasta oranının ortalaması (105 araştırma).", "n5s": "Dantas ve ark., Health Policy, 2018", "num_title": "Talep geliyor. Cevap gecikiyor.", "num_lead": "Bu rakamlar bizim değil, araştırmaların. Her birinin kaynağı altında.", "num_close": "AXON tam bu boşluğu kapatır: her talep gece gündüz saniyeler içinde cevaplanır.", "part_more_b": "+11 işletme daha", "part_more_p": "Bazı müşterilerimiz isimlerinin yayınlanmamasını tercih ediyor, bu yüzden onları gizli tutuyoruz.", "loc_london": "Londra", "loc_usa": "ABD", "loc_tr": "Türkiye", "sec_hotel": "Otel", "sec_clinic": "Özel klinik", "sec_jewel": "Mücevher", "demo_title": "Doğrudan Rezervasyon Motoru", "demo_lead": "Kurduğumuz motorlardan biri, bu sayfada demo verilerle canlı çalışıyor, burada otel rezervasyon motoru olarak; aynı altyapı klinikler için randevu sistemine dönüşüyor. Bir oda seçin, tarihlerinizi belirleyin, para birimini değiştirin ve toplamın anında hesaplandığını görün.", "demo_m1": "Müşterilerimizde canlı", "demo_m2": "Beyaz etiket · kendi alan adınız", "frame_url": "otelinizin-sitesi.com/rezervasyon · güvenli rezervasyon motoru, AXON altyapısı", "leg_best": "En iyi fiyat", "leg_peak": "Yoğun", "leg_sold": "Dolu", "cal_hint": "Oda başı gecelik fiyatlar · demo envanter, örnek fiyatlar", "adults": "Yetişkin", "pay_row": "iyzico 3D Secure · anında e-fatura", "reserve": "Doğrudan Rezervasyon", "rooms": [["Deluxe King", "King yatak", "Odalarınız, fotoğraflarınız ve kurallarınız kurulumda tanımlanır."], ["Superior Twin", "İki tek kişilik yatak", "Fiyat ve kontenjanlar envanterinizle anlık senkronize olur."], ["Junior Suite", "King + çekyat", "Ek kişi başına doluluk bazlı fiyatlama."], ["Aile Suiti", "King + iki tek yatak", "Aile kuralları ve çocuk politikaları hazır."]], "dows": "Pt,Sa,Ça,Pe,Cu,Ct,Pz", "cal_in": "Giriş tarihi seçin", "cal_out": "Çıkış tarihi seçin", "cal_n": "{n} gece seçildi", "up_to": "en fazla {n} kişi", "spec1": "Canlı kontenjan", "spec2": "Fiyat planları", "spec3": "Anında onay", "b_empty": "Toplamı görmek için giriş ve çıkış tarihlerini seçin.", "nights": "gece", "night": "gece", "b_room": "Oda · ort. {p}", "b_extra": "Ek kişi", "b_ota": "OTA komisyonu", "b_tax": "KDV ve konaklama vergisi dahil", "b_total": "Toplam", "t_sold": "Bu aralıkta dolu bir gece var, başka tarih seçin.", "t_max": "Bu demoda en fazla 21 gece.", "t_hold": "Demo rezervasyon · {room} · {total} → 3D Secure (simülasyon)", "sold": "DOLU", "pkg_title": "Sorununuzu seçin, paketi biz kuralım.", "pkg_lead": "Her paket net bir sorunu çözer. Bir kez kurulur, aylık paketle çalışır ve gelişir.", "sec_label": "İşletmeniz:", "sec_hotel_b": "Otel", "sec_clinic_b": "Klinik", "sec_company_b": "Şirket", "pkg_pill1": "Aylık faturalanır", "pkg_pill2": "iyzico ile güvenli ödeme", "pkg_pill3": "Dilediğiniz zaman iptal", "pkg_rec": "Önerilen", "pkg_price": "Aylık bedel teklife göre", "pk1_for": "Mesajlara geç cevap yüzünden müşteri kaçıyorsa. Tek sistemle başlarsınız: 7/24 cevap veren asistan.", "pk2_for": "Boş oda ya da boş randevu kalıyorsa ve acentelere komisyon ödüyorsanız. Direkt rezervasyon ve tüm kanallarda asistan.", "pk3_for": "Birden fazla şube, ekip ve kanalı tek yerden yönetmek için. Beş sistemin tamamı.", "pk3_name": "Kurumsal", "pkg_setup": "Tek seferlik kurulum bedeli seçtiğiniz sistemlere göre belirlenir. Her pakete kurulum desteği ve ekip eğitimi dahildir.", "pkg_cta": "Teklif al", "faq_h": "Sık sorulan sorular", "cons_lead": "İşletmenizi anlatın. Bir iş günü içinde plan ve takvimle dönüş yapıyoruz.", "f_name": "Ad soyad", "f_email": "İş e-postası", "f_hotel": "Şirket", "f_keys": "Büyüklük", "f_sys": "İlgilendiğiniz sistemler", "chk1": "Rezervasyon yönetimi", "chk2": "Web sitesi tasarımı", "chk3": "Yapay zekâ chatbot", "chk4": "Yapay zekâ asistanı", "f_brief": "Kısa bilgi", "ph_name": "Adınız", "ph_hotel": "Şirket, otel veya klinik · şehir", "ph_brief": "Mevcut rezervasyon altyapısı, OTA payı, hedef tarih…", "form_note": "Bu sayfada hiçbir veri saklanmaz", "form_btn": "Danışmanlık Talep Et", "err_name": "Zorunlu, lütfen adınızı yazın.", "err_email": "Zorunlu, lütfen geçerli bir e-posta yazın.", "form_ok": "Hazır, e-posta uygulamanız açılıyor…", "foot_tag": "Oteller, klinikler ve şirketler için yapay zekâ sistemleri. İstanbul'da geliştirildi.", "pk1_1": "Seçtiğiniz bir sistem", "pk1_2": "7/24 çalışma takibi ve kesinti bildirimi", "pk1_3": "Hata müdahalesi ve onarım", "pk1_4": "Model, API ve güvenlik güncellemeleri", "pk1_5": "Aylık performans raporu", "pk1_6": "E-posta destek, 2 iş günü içinde yanıt", "pk2_1": "Start paketindeki her şey", "pk2_2": "Rezervasyon Yönetimi + Yapay Zekâ Asistanı", "pk2_3": "Sunucu, API ve yapay zekâ kullanım bedeli dahil", "pk2_4": "Her ay yeni senaryo ve iyileştirme", "pk2_5": "Yeni kanal ve entegrasyon ekleme", "pk2_6": "Haftalık performans raporu", "pk2_7": "WhatsApp destek, aynı gün yanıt", "pk3_1": "Pro paketindeki her şey", "pk3_2": "Beş sistemin tamamı", "pk3_3": "Birden fazla lokasyon ve ekip", "pk3_4": "Size özel geliştirme takvimi", "pk3_5": "Garantili yanıt süresi (SLA)", "pk3_6": "Proje yöneticisi ve aylık değerlendirme toplantısı", "pk1_n_hotel": "Misafir Kaybetmeyin", "pk1_n_clinic": "Hasta Kaybetmeyin", "pk1_n_company": "Müşteri Kaybetmeyin", "pk2_n_hotel": "Odalarınızı Doldurun", "pk2_n_clinic": "Takviminizi Doldurun", "pk2_n_company": "Yeni Müşteri Bulun", "pk3_n_hotel": "Tüm Otelleriniz Tek Panelde", "pk3_n_clinic": "Tüm Şubeleriniz Tek Panelde", "pk3_n_company": "Tüm Ekipler Tek Panelde", "fq1_q": "Kurulum ne kadar sürer?", "fq1_a": "Sistemlere ve kanallara göre değişir. İlk görüşmeden sonra tarihli bir plan paylaşıyoruz.", "fq2_q": "Mevcut web sitemle çalışır mı?", "fq2_a": "Evet. Chatbot ve asistan mevcut sitenize eklenebilir; isterseniz siteyi de biz yeniliyoruz.", "fq3_q": "Hangi kanallar destekleniyor?", "fq3_a": "Web siteniz, WhatsApp, e-posta, SMS ve Instagram.", "fq4_q": "Taahhüt var mı?", "fq4_a": "Aylık paketler her ay yenilenir ve dilediğiniz zaman iptal edilebilir.", "fq5_q": "Yapay zekâ hangi dilleri konuşuyor?", "fq5_a": "Türkçe, İngilizce, Almanca ve Fransızca hazır; talebe göre başka diller de eklenir.", "nav_proof": "Neden AXON", "nav_demo": "Canlı Demo", "nav_packages": "Paketler", "nav_contact": "İletişim", "hero_sub2": "Otel ve klinikler için 7/24 çalışan yapay zekâ asistanı. WhatsApp, Instagram, e-posta ve web sitenizden gelen her soruya saniyeler içinde cevap verir; rezervasyonu ve randevuyu gece bile kendisi alır.", "cta_demo2": "Ücretsiz demo iste", "cta_wa": "WhatsApp ile başla", "trust1": "Ücretsiz demo", "trust2": "Taahhüt yok", "trust3": "4 dilde cevap", "clients_label": "Çalıştığımız işletmelerden bazıları", "stats_eyebrow": "Rakamlar", "demo_eyebrow": "Canlı demo", "demo_try": "Deneyin: bir oda ve tarih seçin, toplam anında hesaplansın.", "pkg_eyebrow": "Paketler", "contact_eyebrow": "İletişim", "cons_title2": "Ücretsiz demonuzu planlayalım.", "cons_lead2": "İşletmenizi anlatın. Bir iş günü içinde sizin bilgilerinizle hazırlanmış bir demo ve kurulum planıyla dönüyoruz.", "wa_card_t": "Hemen konuşmak mı istiyorsunuz?", "wa_card_p": "WhatsApp'tan yazın, aynı gün dönelim.", "wa_card_btn": "WhatsApp'ta yaz", "mail_label": "E-posta", "foot_rights": "Tüm hakları saklıdır.", "lang_label": "Dil", "menu_label": "Ana menü"}, "en": {"tagline": "AI systems for hotels, clinics and companies", "hero1": "Stop losing", "hero2": "customers.", "wa_text": "Hello AXON, I would like to learn about your systems for my business.", "n2v": "7×", "n2t": "more likely to win the customer when the reply comes within an hour instead of an hour later.", "n2s": "Harvard Business Review, 2011", "n4v": "43%", "n4t": "of European hotels say online agencies sell their rooms cheaper than the hotel itself.", "n4s": "HOTREC study, 2024", "n5v": "23%", "n5t": "average no-show rate for outpatient appointments, across 105 studies.", "n5s": "Dantas et al., Health Policy, 2018", "num_title": "The request arrives. The answer is late.", "num_lead": "These are not our numbers. They come from research, and every source is linked.", "num_close": "AXON closes exactly this gap: every request is answered in seconds, day and night.", "part_more_b": "+11 more businesses", "part_more_p": "Some of our clients prefer not to have their names published, so we keep them confidential.", "loc_london": "London", "loc_usa": "USA", "loc_tr": "Türkiye", "sec_hotel": "Hotel", "sec_clinic": "Private clinic", "sec_jewel": "Jewellery", "demo_title": "The Direct Booking Engine", "demo_lead": "One of the engines we build, running live on this page with demo data, here as a hotel booking engine; the same core powers appointment booking for clinics. Pick a room, choose your dates, switch currency and watch the total compute in real time.", "demo_m1": "Live with our clients", "demo_m2": "White-label · your domain", "frame_url": "yourhotel.com/book · secure booking engine, powered by AXON", "leg_best": "Best rate", "leg_peak": "Peak", "leg_sold": "Sold out", "cal_hint": "Nightly rates per room · demo inventory, illustrative pricing", "adults": "Adults", "pay_row": "iyzico 3D Secure · instant e-invoice", "reserve": "Reserve Direct", "rooms": [["Deluxe King", "King bed", "Your rooms, photos and rules are configured at deployment."], ["Superior Twin", "Two single beds", "Rates and quotas sync with your inventory in real time."], ["Junior Suite", "King + sofa bed", "Occupancy-based pricing per extra guest."], ["Family Suite", "King + two singles", "Family rules and child policies built in."]], "dows": "Mo,Tu,We,Th,Fr,Sa,Su", "cal_in": "Select check-in", "cal_out": "Select check-out", "cal_n": "{n} nights selected", "up_to": "up to {n} guests", "spec1": "Live quota", "spec2": "Rate plans", "spec3": "Instant confirm", "b_empty": "Choose check-in and check-out to see your total.", "nights": "nights", "night": "night", "b_room": "Room · avg {p}", "b_extra": "Extra guest", "b_ota": "OTA commission", "b_tax": "VAT & accommodation tax included", "b_total": "Total", "t_sold": "A night in that range is sold out, choose another stay.", "t_max": "Maximum 21 nights in this demo.", "t_hold": "Demo hold placed · {room} · {total} → 3D Secure (simulated)", "sold": "SOLD", "pkg_title": "Pick your problem. We set up the package.", "pkg_lead": "Every package solves one clear problem. Set up once, then a monthly plan keeps it running and improving.", "sec_label": "Your business:", "sec_hotel_b": "Hotel", "sec_clinic_b": "Clinic", "sec_company_b": "Company", "pkg_pill1": "Billed monthly", "pkg_pill2": "Secure payment with iyzico", "pkg_pill3": "Cancel anytime", "pkg_rec": "Recommended", "pkg_price": "Monthly fee by quote", "pk1_for": "If slow replies cost you customers. Start with one system: an assistant that answers 24/7.", "pk2_for": "If rooms or appointment slots stay empty and agencies take a commission. Direct booking plus an assistant on every channel.", "pk3_for": "To run several locations, teams and channels from one place. All five systems.", "pk3_name": "Enterprise", "pkg_setup": "A one-time setup fee depends on the systems you choose. Every package includes setup support and team training.", "pkg_cta": "Get a quote", "faq_h": "Frequently asked questions", "cons_lead": "Tell us about your business. We respond within one business day with a plan and timeline.", "f_name": "Full name", "f_email": "Work email", "f_hotel": "Company", "f_keys": "Size", "f_sys": "Systems of interest", "chk1": "Reservation management", "chk2": "Website design", "chk3": "AI chatbot", "chk4": "AI assistant", "f_brief": "Brief", "ph_name": "Your name", "ph_hotel": "Company, hotel or clinic · city", "ph_brief": "Current booking stack, OTA share, launch window…", "form_note": "No data is stored on this page", "form_btn": "Request Consultation", "err_name": "Required, please add your name.", "err_email": "Required, please add a valid work email.", "form_ok": "Ready, opening your mail client…", "foot_tag": "AI systems for hotels, clinics and companies. Built in Istanbul.", "pk1_1": "One system of your choice", "pk1_2": "24/7 uptime monitoring and outage alerts", "pk1_3": "Error response and repair", "pk1_4": "Model, API and security updates applied", "pk1_5": "Monthly performance report", "pk1_6": "Email support, reply within 2 business days", "pk2_1": "Everything in Start", "pk2_2": "Reservation Management + AI Assistant", "pk2_3": "Server, API and AI usage costs included", "pk2_4": "A new scenario and improvement every month", "pk2_5": "New channels and integrations added", "pk2_6": "Weekly performance report", "pk2_7": "WhatsApp support, same-day reply", "pk3_1": "Everything in Pro", "pk3_2": "All five systems", "pk3_3": "Multiple locations and teams", "pk3_4": "Custom development roadmap", "pk3_5": "Guaranteed response times (SLA)", "pk3_6": "Dedicated project manager and monthly review meeting", "pk1_n_hotel": "Never Lose a Guest", "pk1_n_clinic": "Never Lose a Patient", "pk1_n_company": "Never Lose a Customer", "pk2_n_hotel": "Fill Your Rooms", "pk2_n_clinic": "Fill Your Calendar", "pk2_n_company": "Win New Customers", "pk3_n_hotel": "All Your Hotels, One Panel", "pk3_n_clinic": "All Your Clinics, One Panel", "pk3_n_company": "All Your Teams, One Panel", "fq1_q": "How long does setup take?", "fq1_a": "It depends on the systems and channels. After the first call you get a plan with dates.", "fq2_q": "Does it work with my current website?", "fq2_a": "Yes. The chatbot and assistant can be added to your existing site, or we redesign the site for you.", "fq3_q": "Which channels are supported?", "fq3_a": "Your website, WhatsApp, email, SMS and Instagram.", "fq4_q": "Is there a minimum contract?", "fq4_a": "Monthly packages renew every month and can be cancelled anytime.", "fq5_q": "Which languages does the AI speak?", "fq5_a": "Turkish, English, German and French out of the box; more languages on request.", "nav_proof": "Why AXON", "nav_demo": "Live Demo", "nav_packages": "Packages", "nav_contact": "Contact", "hero_sub2": "A 24/7 AI assistant for hotels and clinics. It answers every message from WhatsApp, Instagram, email and your website in seconds, and takes the booking or appointment itself, even at night.", "cta_demo2": "Get a free demo", "cta_wa": "Start on WhatsApp", "trust1": "Free demo", "trust2": "No commitment", "trust3": "Replies in 4 languages", "clients_label": "Some of the businesses we work with", "stats_eyebrow": "The numbers", "demo_eyebrow": "Live demo", "demo_try": "Try it: pick a room and dates, and the total is calculated instantly.", "pkg_eyebrow": "Packages", "contact_eyebrow": "Contact", "cons_title2": "Let's plan your free demo.", "cons_lead2": "Tell us about your business. Within one business day we come back with a demo built on your own information and a setup plan.", "wa_card_t": "Prefer to talk now?", "wa_card_p": "Message us on WhatsApp and we reply the same day.", "wa_card_btn": "Message on WhatsApp", "mail_label": "Email", "foot_rights": "All rights reserved.", "lang_label": "Language", "menu_label": "Main menu"}, "de": {"tagline": "KI-Systeme für Hotels, Kliniken und Unternehmen", "hero1": "Verlieren Sie", "hero2": "keine Kunden mehr.", "wa_text": "Hallo AXON, ich möchte mehr über Ihre Systeme für mein Unternehmen erfahren.", "n2v": "7×", "n2t": "höher ist die Chance, den Kunden zu gewinnen, wenn die Antwort innerhalb einer Stunde kommt statt eine Stunde später.", "n2s": "Harvard Business Review, 2011", "n4v": "43 %", "n4t": "der europäischen Hotels sagen, dass Portale ihre Zimmer günstiger verkaufen als das Hotel selbst.", "n4s": "HOTREC-Studie, 2024", "n5v": "23 %", "n5t": "beträgt die durchschnittliche No-Show-Rate bei ambulanten Terminen (105 Studien).", "n5s": "Dantas et al., Health Policy, 2018", "num_title": "Die Anfrage kommt. Die Antwort kommt zu spät.", "num_lead": "Das sind nicht unsere Zahlen. Sie stammen aus Studien, jede Quelle ist verlinkt.", "num_close": "Genau diese Lücke schließt AXON: Jede Anfrage wird in Sekunden beantwortet, Tag und Nacht.", "part_more_b": "+11 weitere Betriebe", "part_more_p": "Einige unserer Kunden möchten nicht namentlich genannt werden, deshalb bleiben sie vertraulich.", "loc_london": "London", "loc_usa": "USA", "loc_tr": "Türkei", "sec_hotel": "Hotel", "sec_clinic": "Privatklinik", "sec_jewel": "Schmuck", "demo_title": "Die Direktbuchungs-Engine", "demo_lead": "Eine unserer Engines, live auf dieser Seite mit Demodaten, hier als Hotel-Buchungssystem; derselbe Kern steuert Terminbuchungen für Kliniken. Zimmer wählen, Daten festlegen, Währung wechseln und zusehen, wie der Gesamtpreis in Echtzeit entsteht.", "demo_m1": "Live bei unseren Kunden", "demo_m2": "White-Label · Ihre Domain", "frame_url": "ihrhotel.de/buchen · sichere Buchungs-Engine, powered by AXON", "leg_best": "Bester Preis", "leg_peak": "Hochsaison", "leg_sold": "Ausgebucht", "cal_hint": "Preise pro Zimmer und Nacht · Demo-Inventar, Beispielpreise", "adults": "Erwachsene", "pay_row": "iyzico 3D Secure · sofortige E-Rechnung", "reserve": "Direkt buchen", "rooms": [["Deluxe King", "Kingsize-Bett", "Ihre Zimmer, Fotos und Regeln werden bei der Einführung konfiguriert."], ["Superior Twin", "Zwei Einzelbetten", "Preise und Kontingente synchronisieren sich in Echtzeit."], ["Junior Suite", "Kingsize + Schlafsofa", "Belegungsabhängige Preise pro Zusatzgast."], ["Familiensuite", "Kingsize + zwei Einzelbetten", "Familienregeln und Kinderrichtlinien integriert."]], "dows": "Mo,Di,Mi,Do,Fr,Sa,So", "cal_in": "Anreise wählen", "cal_out": "Abreise wählen", "cal_n": "{n} Nächte gewählt", "up_to": "bis zu {n} Gäste", "spec1": "Live-Kontingent", "spec2": "Ratenpläne", "spec3": "Sofortbestätigung", "b_empty": "Wählen Sie An- und Abreise, um den Gesamtpreis zu sehen.", "nights": "Nächte", "night": "Nacht", "b_room": "Zimmer · Ø {p}", "b_extra": "Zusätzlicher Gast", "b_ota": "OTA-Provision", "b_tax": "MwSt. und Beherbergungssteuer inklusive", "b_total": "Gesamt", "t_sold": "Eine Nacht in diesem Zeitraum ist ausgebucht, bitte andere Daten wählen.", "t_max": "Maximal 21 Nächte in dieser Demo.", "t_hold": "Demo-Reservierung · {room} · {total} → 3D Secure (simuliert)", "sold": "BELEGT", "pkg_title": "Wählen Sie Ihr Problem. Wir richten das Paket ein.", "pkg_lead": "Jedes Paket löst ein klares Problem. Einmal eingerichtet, hält ein Monatsplan es am Laufen und entwickelt es weiter.", "sec_label": "Ihr Betrieb:", "sec_hotel_b": "Hotel", "sec_clinic_b": "Klinik", "sec_company_b": "Unternehmen", "pkg_pill1": "Monatliche Abrechnung", "pkg_pill2": "Sichere Zahlung mit iyzico", "pkg_pill3": "Jederzeit kündbar", "pkg_rec": "Empfohlen", "pkg_price": "Monatsgebühr nach Angebot", "pk1_for": "Wenn langsame Antworten Sie Kunden kosten. Starten Sie mit einem System: einem Assistenten, der rund um die Uhr antwortet.", "pk2_for": "Wenn Zimmer oder Termine leer bleiben und Portale Provision kassieren. Direktbuchung plus Assistent auf allen Kanälen.", "pk3_for": "Um mehrere Standorte, Teams und Kanäle zentral zu steuern. Alle fünf Systeme.", "pk3_name": "Enterprise", "pkg_setup": "Die einmalige Einrichtungsgebühr richtet sich nach den gewählten Systemen. Jedes Paket enthält Einrichtungssupport und Teamschulung.", "pkg_cta": "Angebot anfordern", "faq_h": "Häufige Fragen", "cons_lead": "Erzählen Sie uns von Ihrem Unternehmen. Wir melden uns innerhalb eines Werktags mit Plan und Zeitrahmen.", "f_name": "Vollständiger Name", "f_email": "Geschäftliche E-Mail", "f_hotel": "Unternehmen", "f_keys": "Größe", "f_sys": "Gewünschte Systeme", "chk1": "Reservierungsmanagement", "chk2": "Webdesign", "chk3": "KI-Chatbot", "chk4": "KI-Assistent", "f_brief": "Kurzbeschreibung", "ph_name": "Ihr Name", "ph_hotel": "Unternehmen, Hotel oder Klinik · Stadt", "ph_brief": "Aktuelles Buchungssystem, OTA-Anteil, Zeitplan…", "form_note": "Auf dieser Seite werden keine Daten gespeichert", "form_btn": "Beratung anfragen", "err_name": "Pflichtfeld, bitte Namen angeben.", "err_email": "Pflichtfeld, bitte gültige E-Mail angeben.", "form_ok": "Bereit, Ihr E-Mail-Programm wird geöffnet…", "foot_tag": "KI-Systeme für Hotels, Kliniken und Unternehmen. Entwickelt in Istanbul.", "pk1_1": "Ein System Ihrer Wahl", "pk1_2": "Betriebsüberwachung rund um die Uhr mit Ausfallmeldung", "pk1_3": "Fehlerbehebung und Reparatur", "pk1_4": "Modell-, API- und Sicherheitsupdates", "pk1_5": "Monatlicher Leistungsbericht", "pk1_6": "E-Mail-Support, Antwort in 2 Werktagen", "pk2_1": "Alles aus Start", "pk2_2": "Reservierungsmanagement + KI-Assistent", "pk2_3": "Server-, API- und KI-Nutzungskosten inklusive", "pk2_4": "Jeden Monat ein neues Szenario und Verbesserungen", "pk2_5": "Neue Kanäle und Integrationen", "pk2_6": "Wöchentlicher Leistungsbericht", "pk2_7": "WhatsApp-Support, Antwort am selben Tag", "pk3_1": "Alles aus Pro", "pk3_2": "Alle fünf Systeme", "pk3_3": "Mehrere Standorte und Teams", "pk3_4": "Individueller Entwicklungsplan", "pk3_5": "Garantierte Reaktionszeiten (SLA)", "pk3_6": "Projektmanager und monatliches Review-Meeting", "pk1_n_hotel": "Keinen Gast mehr verlieren", "pk1_n_clinic": "Keinen Patienten mehr verlieren", "pk1_n_company": "Keinen Kunden mehr verlieren", "pk2_n_hotel": "Zimmer füllen", "pk2_n_clinic": "Terminkalender füllen", "pk2_n_company": "Neue Kunden gewinnen", "pk3_n_hotel": "Alle Hotels in einem Panel", "pk3_n_clinic": "Alle Standorte in einem Panel", "pk3_n_company": "Alle Teams in einem Panel", "fq1_q": "Wie lange dauert die Einrichtung?", "fq1_a": "Das hängt von Systemen und Kanälen ab. Nach dem Erstgespräch erhalten Sie einen Plan mit Terminen.", "fq2_q": "Funktioniert es mit meiner bestehenden Website?", "fq2_a": "Ja. Chatbot und Assistent lassen sich in Ihre Website einbinden, oder wir gestalten sie neu.", "fq3_q": "Welche Kanäle werden unterstützt?", "fq3_a": "Ihre Website, WhatsApp, E-Mail, SMS und Instagram.", "fq4_q": "Gibt es eine Mindestlaufzeit?", "fq4_a": "Monatspakete verlängern sich monatlich und sind jederzeit kündbar.", "fq5_q": "Welche Sprachen spricht die KI?", "fq5_a": "Türkisch, Englisch, Deutsch und Französisch; weitere Sprachen auf Anfrage.", "nav_proof": "Warum AXON", "nav_demo": "Live-Demo", "nav_packages": "Pakete", "nav_contact": "Kontakt", "hero_sub2": "Ein KI-Assistent für Hotels und Kliniken, rund um die Uhr. Er beantwortet jede Nachricht über WhatsApp, Instagram, E-Mail und Ihre Website in Sekunden und nimmt Buchungen und Termine selbst an, auch nachts.", "cta_demo2": "Kostenlose Demo anfragen", "cta_wa": "Über WhatsApp starten", "trust1": "Kostenlose Demo", "trust2": "Keine Bindung", "trust3": "Antworten in 4 Sprachen", "clients_label": "Einige der Unternehmen, mit denen wir arbeiten", "stats_eyebrow": "Die Zahlen", "demo_eyebrow": "Live-Demo", "demo_try": "Probieren Sie es aus: Zimmer und Daten wählen, der Gesamtpreis erscheint sofort.", "pkg_eyebrow": "Pakete", "contact_eyebrow": "Kontakt", "cons_title2": "Planen wir Ihre kostenlose Demo.", "cons_lead2": "Erzählen Sie uns von Ihrem Betrieb. Innerhalb eines Werktags melden wir uns mit einer Demo auf Basis Ihrer eigenen Daten und einem Einrichtungsplan.", "wa_card_t": "Lieber gleich sprechen?", "wa_card_p": "Schreiben Sie uns auf WhatsApp, wir antworten noch am selben Tag.", "wa_card_btn": "Auf WhatsApp schreiben", "mail_label": "E-Mail", "foot_rights": "Alle Rechte vorbehalten.", "lang_label": "Sprache", "menu_label": "Hauptmenü"}, "fr": {"tagline": "Systèmes IA pour hôtels, cliniques et entreprises", "hero1": "Ne perdez plus", "hero2": "aucun client.", "wa_text": "Bonjour AXON, je souhaite en savoir plus sur vos systèmes pour mon entreprise.", "n2v": "7×", "n2t": "plus de chances de gagner le client quand la réponse arrive dans l'heure plutôt qu'une heure plus tard.", "n2s": "Harvard Business Review, 2011", "n4v": "43 %", "n4t": "des hôtels européens disent que les agences vendent leurs chambres moins cher que l'hôtel lui-même.", "n4s": "Étude HOTREC, 2024", "n5v": "23 %", "n5t": "taux moyen de rendez-vous non honorés en consultation externe (105 études).", "n5s": "Dantas et al., Health Policy, 2018", "num_title": "La demande arrive. La réponse tarde.", "num_lead": "Ce ne sont pas nos chiffres. Ils viennent d'études, chaque source est liée.", "num_close": "AXON comble exactement ce manque : chaque demande reçoit une réponse en quelques secondes, jour et nuit.", "part_more_b": "+11 autres établissements", "part_more_p": "Certains de nos clients préfèrent ne pas voir leur nom publié, nous les gardons donc confidentiels.", "loc_london": "Londres", "loc_usa": "États-Unis", "loc_tr": "Turquie", "sec_hotel": "Hôtel", "sec_clinic": "Clinique privée", "sec_jewel": "Joaillerie", "demo_title": "Le moteur de réservation directe", "demo_lead": "L'un des moteurs que nous construisons, en direct sur cette page avec des données de démo, ici en moteur de réservation hôtelière ; le même cœur gère la prise de rendez-vous des cliniques. Choisissez une chambre, vos dates, changez de devise et voyez le total se calculer en temps réel.", "demo_m1": "En production chez nos clients", "demo_m2": "Marque blanche · votre domaine", "frame_url": "votrehotel.fr/reserver · moteur de réservation sécurisé, propulsé par AXON", "leg_best": "Meilleur tarif", "leg_peak": "Haute saison", "leg_sold": "Complet", "cal_hint": "Tarifs par chambre et par nuit · inventaire de démo, prix indicatifs", "adults": "Adultes", "pay_row": "iyzico 3D Secure · facture électronique instantanée", "reserve": "Réserver en direct", "rooms": [["Deluxe King", "Lit king size", "Vos chambres, photos et règles sont configurées au déploiement."], ["Supérieure Twin", "Deux lits simples", "Tarifs et quotas synchronisés en temps réel avec votre inventaire."], ["Junior Suite", "King size + canapé-lit", "Tarification selon l'occupation par personne supplémentaire."], ["Suite Familiale", "King size + deux lits simples", "Règles familiales et politiques enfants intégrées."]], "dows": "Lu,Ma,Me,Je,Ve,Sa,Di", "cal_in": "Choisir l'arrivée", "cal_out": "Choisir le départ", "cal_n": "{n} nuits sélectionnées", "up_to": "jusqu'à {n} personnes", "spec1": "Quota en direct", "spec2": "Plans tarifaires", "spec3": "Confirmation instantanée", "b_empty": "Choisissez l'arrivée et le départ pour voir le total.", "nights": "nuits", "night": "nuit", "b_room": "Chambre · moy. {p}", "b_extra": "Personne supplémentaire", "b_ota": "Commission OTA", "b_tax": "TVA et taxe de séjour incluses", "b_total": "Total", "t_sold": "Une nuit de cette période est complète, choisissez d'autres dates.", "t_max": "21 nuits maximum dans cette démo.", "t_hold": "Réservation de démo · {room} · {total} → 3D Secure (simulé)", "sold": "COMPLET", "pkg_title": "Choisissez votre problème. Nous installons l'offre.", "pkg_lead": "Chaque offre résout un problème précis. Installée une fois, puis un abonnement mensuel la fait tourner et évoluer.", "sec_label": "Votre activité :", "sec_hotel_b": "Hôtel", "sec_clinic_b": "Clinique", "sec_company_b": "Entreprise", "pkg_pill1": "Facturation mensuelle", "pkg_pill2": "Paiement sécurisé avec iyzico", "pkg_pill3": "Résiliable à tout moment", "pkg_rec": "Recommandé", "pkg_price": "Tarif mensuel sur devis", "pk1_for": "Si des réponses tardives vous font perdre des clients. Commencez avec un système : un assistant qui répond 24h/24.", "pk2_for": "Si des chambres ou des créneaux restent vides et que les agences prennent une commission. Réservation directe et assistant sur tous les canaux.", "pk3_for": "Pour piloter plusieurs sites, équipes et canaux depuis un seul endroit. Les cinq systèmes.", "pk3_name": "Entreprise", "pkg_setup": "Les frais d'installation uniques dépendent des systèmes choisis. Chaque offre inclut l'accompagnement à l'installation et la formation de l'équipe.", "pkg_cta": "Demander un devis", "faq_h": "Questions fréquentes", "cons_lead": "Parlez-nous de votre entreprise. Nous répondons sous un jour ouvré avec un plan et un calendrier.", "f_name": "Nom complet", "f_email": "E-mail professionnel", "f_hotel": "Entreprise", "f_keys": "Taille", "f_sys": "Systèmes souhaités", "chk1": "Gestion des réservations", "chk2": "Création de site web", "chk3": "Chatbot IA", "chk4": "Assistant IA", "f_brief": "Brief", "ph_name": "Votre nom", "ph_hotel": "Entreprise, hôtel ou clinique · ville", "ph_brief": "Outils de réservation actuels, part OTA, calendrier…", "form_note": "Aucune donnée n'est enregistrée sur cette page", "form_btn": "Demander une consultation", "err_name": "Obligatoire, indiquez votre nom.", "err_email": "Obligatoire, indiquez un e-mail valide.", "form_ok": "Prêt, ouverture de votre messagerie…", "foot_tag": "Systèmes IA pour hôtels, cliniques et entreprises. Conçu à Istanbul.", "pk1_1": "Un système au choix", "pk1_2": "Surveillance 24h/24 et alerte en cas de panne", "pk1_3": "Intervention et réparation en cas d'erreur", "pk1_4": "Mises à jour des modèles, des API et de sécurité", "pk1_5": "Rapport de performance mensuel", "pk1_6": "Support e-mail, réponse sous 2 jours ouvrés", "pk2_1": "Tout le contenu de Start", "pk2_2": "Gestion des réservations + Assistant IA", "pk2_3": "Coûts serveur, API et IA inclus", "pk2_4": "Un nouveau scénario et des améliorations chaque mois", "pk2_5": "Ajout de nouveaux canaux et intégrations", "pk2_6": "Rapport de performance hebdomadaire", "pk2_7": "Support WhatsApp, réponse le jour même", "pk3_1": "Tout le contenu de Pro", "pk3_2": "Les cinq systèmes", "pk3_3": "Plusieurs sites et équipes", "pk3_4": "Feuille de route sur mesure", "pk3_5": "Délais de réponse garantis (SLA)", "pk3_6": "Chef de projet et réunion de revue mensuelle", "pk1_n_hotel": "Plus aucun client perdu", "pk1_n_clinic": "Plus aucun patient perdu", "pk1_n_company": "Plus aucun prospect perdu", "pk2_n_hotel": "Remplissez vos chambres", "pk2_n_clinic": "Remplissez votre agenda", "pk2_n_company": "Gagnez de nouveaux clients", "pk3_n_hotel": "Tous vos hôtels, un seul tableau", "pk3_n_clinic": "Toutes vos cliniques, un seul tableau", "pk3_n_company": "Toutes vos équipes, un seul tableau", "fq1_q": "Combien de temps dure l'installation ?", "fq1_a": "Cela dépend des systèmes et des canaux. Après le premier appel, vous recevez un plan daté.", "fq2_q": "Est-ce compatible avec mon site actuel ?", "fq2_a": "Oui. Le chatbot et l'assistant s'ajoutent à votre site, ou nous le refaisons pour vous.", "fq3_q": "Quels canaux sont pris en charge ?", "fq3_a": "Votre site, WhatsApp, e-mail, SMS et Instagram.", "fq4_q": "Y a-t-il un engagement ?", "fq4_a": "Les offres mensuelles se renouvellent chaque mois et sont résiliables à tout moment.", "fq5_q": "Quelles langues parle l'IA ?", "fq5_a": "Turc, anglais, allemand et français ; d'autres langues sur demande.", "nav_proof": "Pourquoi AXON", "nav_demo": "Démo live", "nav_packages": "Offres", "nav_contact": "Contact", "hero_sub2": "Un assistant IA 24h/24 pour hôtels et cliniques. Il répond en quelques secondes à chaque message reçu sur WhatsApp, Instagram, par e-mail et sur votre site, et prend lui-même la réservation ou le rendez-vous, même la nuit.", "cta_demo2": "Demander une démo gratuite", "cta_wa": "Démarrer sur WhatsApp", "trust1": "Démo gratuite", "trust2": "Sans engagement", "trust3": "Réponses en 4 langues", "clients_label": "Quelques entreprises avec qui nous travaillons", "stats_eyebrow": "Les chiffres", "demo_eyebrow": "Démo live", "demo_try": "Essayez : choisissez une chambre et des dates, le total se calcule aussitôt.", "pkg_eyebrow": "Offres", "contact_eyebrow": "Contact", "cons_title2": "Planifions votre démo gratuite.", "cons_lead2": "Parlez-nous de votre établissement. Sous un jour ouvré, nous revenons avec une démo construite sur vos propres informations et un plan de mise en place.", "wa_card_t": "Envie d'en parler maintenant ?", "wa_card_p": "Écrivez-nous sur WhatsApp, nous répondons le jour même.", "wa_card_btn": "Écrire sur WhatsApp", "mail_label": "E-mail", "foot_rights": "Tous droits réservés.", "lang_label": "Langue", "menu_label": "Menu principal"}};
+<div id="consent" hidden class="fixed inset-x-3 bottom-3 z-[60] mx-auto max-w-xl rounded-2xl border border-white/10 bg-navy-800 p-5 text-[14px] shadow-2xl">
+  <p data-tr="Siteyi geliştirmek için anonim kullanım istatistikleri (Google Analytics) kullanmak istiyoruz. Kişisel bilgileriniz gönderilmez.">We would like to use anonymous usage statistics (Google Analytics) to improve this site. No personal details are sent.</p>
+  <div class="mt-4 flex gap-2"><button type="button" id="consentYes" class="rounded-full bg-gold px-4 py-2 text-[13px] font-semibold text-navy-950" data-tr="Kabul et">Accept</button><button type="button" id="consentNo" class="rounded-full border border-white/15 px-4 py-2 text-[13px] text-ink" data-tr="Reddet">Decline</button></div>
+</div>
 
-  /* ---------- language ---------- */
-  var lang = 'tr';
-  var stored = null; try { stored = localStorage.getItem('axonLang'); } catch (e) {}
-  if (LANGS.indexOf(stored) > -1) lang = stored;
-  else { var nl = (navigator.language || 'tr').slice(0, 2).toLowerCase(); if (LANGS.indexOf(nl) > -1) lang = nl; }
-  function t(k, vars) {
-    var s = (I18N[lang] && I18N[lang][k] != null) ? I18N[lang][k] : I18N.en[k];
-    if (vars && typeof s === 'string') Object.keys(vars).forEach(function (v) { s = s.replace('{' + v + '}', vars[v]); });
-    return s == null ? '' : s;
-  }
-  var langListeners = [];
-  function applyLang(l) {
-    lang = l; document.documentElement.lang = l;
-    try { localStorage.setItem('axonLang', l); } catch (e) {}
-    $$('[data-i18n]').forEach(function (el) { el.textContent = t(el.getAttribute('data-i18n')); });
-    $$('[data-i18n-ph]').forEach(function (el) { el.setAttribute('placeholder', t(el.getAttribute('data-i18n-ph'))); });
-    $$('[data-i18n-aria]').forEach(function (el) { el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria'))); });
-    $$('.lang button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.lang === l)); });
-    $$('.wa-link').forEach(function (a) { a.href = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(t('wa_text')); });
-    langListeners.forEach(function (fn) { fn(); });
-  }
-  $$('.lang button').forEach(function (b) { b.addEventListener('click', function () { applyLang(b.dataset.lang); }); });
-
-  /* ---------- active nav link ---------- */
-  var navLinks = $$('.nav-a');
-  var io = 'IntersectionObserver' in window ? new IntersectionObserver(function (es) {
-    es.forEach(function (e) { if (e.isIntersecting) navLinks.forEach(function (a) { a.classList.toggle('text-slate-900', a.getAttribute('href') === '#' + e.target.id); }); });
-  }, { rootMargin: '-45% 0px -50% 0px' }) : null;
-  if (io) navLinks.forEach(function (a) { var s = $(a.getAttribute('href')); if (s) io.observe(s); });
-
-  /* ---------- reveal on scroll ---------- */
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if ('IntersectionObserver' in window && !reduce) {
-    document.documentElement.classList.add('js-reveal');
-    var ro = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); } }); }, { rootMargin: '0px 0px -8% 0px' });
-    $$('.reveal').forEach(function (el) { ro.observe(el); });
-  }
-
-  /* ---------- packages ---------- */
-  var CHECK = '<svg class="mt-0.5 h-4 w-4 flex-none text-blue-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.7 5.3a1 1 0 0 1 0 1.4l-8 8a1 1 0 0 1-1.4 0l-4-4a1 1 0 1 1 1.4-1.4L8 12.6l7.3-7.3a1 1 0 0 1 1.4 0z" clip-rule="evenodd"/></svg>';
-  var pkgSector = 'hotel';
-  try { pkgSector = localStorage.getItem('axonSector') || 'hotel'; } catch (e) {}
-  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
-  function renderPkgs() {
-    $$('.pkn').forEach(function (h) { h.textContent = t('pk' + h.getAttribute('data-pk') + '_n_' + pkgSector); });
-    $$('.pkg-sector button').forEach(function (b) { b.setAttribute('aria-selected', String(b.getAttribute('data-sector') === pkgSector)); });
-    $$('.pk-list').forEach(function (ul) {
-      var p = ul.getAttribute('data-list'), n = +ul.getAttribute('data-n'), h = '';
-      for (var i = 1; i <= n; i++) h += '<li class="flex gap-2.5">' + CHECK + '<span>' + esc(t(p + i)) + '</span></li>';
-      ul.innerHTML = h;
-    });
-  }
-  $$('.pkg-sector button').forEach(function (b) {
-    b.addEventListener('click', function () {
-      pkgSector = b.getAttribute('data-sector');
-      try { localStorage.setItem('axonSector', pkgSector); } catch (e) {}
-      renderPkgs();
-    });
-  });
-  langListeners.push(renderPkgs);
-
-  /* ---------- booking engine (demo inventory) ---------- */
-  var ROOMS = [
-    { size: 32, maxAdults: 2, base: 92 },
-    { size: 30, maxAdults: 2, base: 96 },
-    { size: 42, maxAdults: 3, base: 158 },
-    { size: 48, maxAdults: 5, base: 178 }
-  ];
-  function roomT(i) { var r = t('rooms')[i]; return { name: r[0], beds: r[1], desc: r[2] }; }
-  var FX = { EUR: { rate: 1, sym: '€' }, USD: { rate: 1.09, sym: '$' }, TRY: { rate: 44.5, sym: '₺' } };
-  var state = { room: 0, cur: 'EUR', inD: null, outD: null, adults: 2 };
-  var today = new Date(); today.setHours(0, 0, 0, 0);
-  function hash(n) { var x = Math.sin(n * 12.9898 + 78.233) * 43758.5453; return x - Math.floor(x); }
-  function dayKey(d) { return d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate(); }
-  function nightly(d, ri) {
-    var r = ROOMS[ri], k = dayKey(d), dow = d.getDay(), f = 1 + (hash(k) - .5) * .16;
-    if (dow === 5 || dow === 6) f *= 1.18;
-    var m = d.getMonth(); if (m >= 3 && m <= 9) f *= 1.08;
-    return Math.round(r.base * f);
-  }
-  function soldOut(d, ri) { return hash(dayKey(d) * 7 + ri * 131) < .07; }
-  function fmt(eur) { var v = eur * FX[state.cur].rate; return FX[state.cur].sym + ' ' + Math.round(v).toLocaleString(LOCALE[lang]); }
-  function short(eur) {
-    var v = eur * FX[state.cur].rate;
-    if (state.cur === 'TRY') return (v >= 10000 ? (v / 1000).toFixed(1) + 'k' : Math.round(v / 10) * 10 + '');
-    return FX[state.cur].sym + Math.round(v);
-  }
-  function sameDay(a, b) { return a && b && a.getTime() === b.getTime(); }
-  function addDays(d, n) { var x = new Date(d); x.setDate(x.getDate() + n); return x; }
-  function nightsBetween(a, b) { return Math.round((b - a) / 864e5); }
-  function rangeHasSold(a, b, ri) { for (var d = new Date(a); d < b; d = addDays(d, 1)) if (soldOut(d, ri)) return true; return false; }
-  function pickDefault() {
-    for (var s = 7; s < 50; s++) { var a = addDays(today, s), b = addDays(a, 3); if (!rangeHasSold(a, b, state.room)) { state.inD = a; state.outD = b; return; } }
-  }
-  var tabs = $('#roomTabs');
-  var TAB = 'rounded-lg px-3 py-2 text-[13px] font-medium text-slate-500 transition hover:text-slate-900 aria-selected:bg-white aria-selected:text-slate-900 aria-selected:shadow-sm';
-  ROOMS.forEach(function (r, i) {
-    var b = document.createElement('button');
-    b.type = 'button'; b.className = TAB; b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', String(i === state.room));
-    b.addEventListener('click', function () {
-      state.room = i; state.adults = Math.min(state.adults, r.maxAdults);
-      if (state.inD && state.outD && rangeHasSold(state.inD, state.outD, i)) { state.inD = null; state.outD = null; }
-      $$('[role=tab]', tabs).forEach(function (tb, j) { tb.setAttribute('aria-selected', String(j === i)); });
-      render();
-    });
-    tabs.appendChild(b);
-  });
-  $$('#currencySeg button').forEach(function (b) {
-    b.addEventListener('click', function () {
-      state.cur = b.dataset.cur;
-      $$('#currencySeg button').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
-      render();
-    });
-  });
-  $('#adMinus').addEventListener('click', function () { if (state.adults > 1) { state.adults--; render(); } });
-  $('#adPlus').addEventListener('click', function () { if (state.adults < ROOMS[state.room].maxAdults) { state.adults++; render(); } });
-  var monthsEl = $('#months');
-  monthsEl.addEventListener('click', function (e) {
-    var btn = e.target.closest('button[data-t]'); if (!btn || btn.disabled) return;
-    var d = new Date(+btn.dataset.t);
-    if (!state.inD || state.outD || d <= state.inD) { state.inD = d; state.outD = null; }
-    else if (rangeHasSold(state.inD, d, state.room)) { toast(t('t_sold'), true); state.inD = d; state.outD = null; }
-    else if (nightsBetween(state.inD, d) > 21) { toast(t('t_max'), true); return; }
-    else state.outD = d;
-    render();
-  });
-  var DAY = 'grid h-12 place-content-center gap-0.5 rounded-lg text-center transition disabled:cursor-not-allowed ';
-  function renderCalendar() {
-    var html = '', dows = t('dows').split(','), loc = LOCALE[lang];
-    for (var m = 0; m < 2; m++) {
-      var first = new Date(today.getFullYear(), today.getMonth() + m, 1);
-      html += '<div><h4 class="mb-2 text-[13px] font-semibold capitalize text-slate-900">' + first.toLocaleDateString(loc, { month: 'long', year: 'numeric' }) + '</h4>' +
-        '<div class="grid grid-cols-7 gap-1 pb-1 text-center text-[11px] font-medium text-slate-400">' + dows.map(function (x) { return '<span>' + x + '</span>'; }).join('') + '</div><div class="grid grid-cols-7 gap-1">';
-      var offset = (first.getDay() + 6) % 7;
-      for (var e = 0; e < offset; e++) html += '<span></span>';
-      var dim = new Date(first.getFullYear(), first.getMonth() + 1, 0).getDate(), avg = ROOMS[state.room].base;
-      for (var dd = 1; dd <= dim; dd++) {
-        var d = new Date(first.getFullYear(), first.getMonth(), dd), past = d < today, so = !past && soldOut(d, state.room);
-        var p = nightly(d, state.room), edge = sameDay(d, state.inD) || sameDay(d, state.outD);
-        var inRange = state.inD && state.outD && d > state.inD && d < state.outD;
-        var canCheckout = so && state.inD && !state.outD && d > state.inD;
-        var cls = DAY + (edge ? 'bg-blue-600 text-white shadow-sm' : inRange ? 'bg-blue-50 text-slate-900' : past ? 'text-slate-300' : so ? 'bg-slate-50 text-slate-300' : 'text-slate-700 hover:bg-slate-100');
-        var pc = edge ? 'text-blue-100' : so ? 'text-rose-400' : p < avg * .98 ? 'text-emerald-600' : p > avg * 1.15 ? 'text-amber-600' : 'text-slate-400';
-        var label = d.toLocaleDateString(loc, { weekday: 'long', day: 'numeric', month: 'long' }) + (past ? '' : so ? ' · ' + t('leg_sold') : ' · ' + fmt(p));
-        html += '<button type="button" class="' + cls + '" data-t="' + d.getTime() + '"' + ((past || (so && !canCheckout)) ? ' disabled' : '') + ' aria-label="' + label + '"><span class="text-[13px] font-medium leading-none">' + dd + '</span><span class="text-[10px] leading-none ' + pc + '">' + (past ? '&nbsp;' : so ? t('sold') : short(p)) + '</span></button>';
-      }
-      html += '</div></div>';
-    }
-    monthsEl.innerHTML = html;
-    $('#calLabel').textContent = !state.inD ? t('cal_in') : !state.outD ? t('cal_out') : t('cal_n', { n: nightsBetween(state.inD, state.outD) });
-  }
-  function quote() {
-    if (!state.inD || !state.outD) return null;
-    var n = 0, sub = 0;
-    for (var d = new Date(state.inD); d < state.outD; d = addDays(d, 1)) { sub += nightly(d, state.room); n++; }
-    var extra = Math.max(0, state.adults - 2) * 18 * n;
-    return { nights: n, sub: sub, extra: extra, total: sub + extra };
-  }
-  function row(a, b, cls) { return '<div class="flex justify-between gap-3 ' + (cls || 'text-slate-600') + '"><span>' + a + '</span><span>' + b + '</span></div>'; }
-  function renderSide() {
-    var r = ROOMS[state.room], rt = roomT(state.room);
-    $('#roomCard').innerHTML = '<p class="text-[12px] font-medium text-slate-400">' + r.size + ' m² · ' + esc(t('up_to', { n: r.maxAdults })) + '</p><h3 class="mt-1 text-lg font-semibold tracking-tight text-slate-900">' + esc(rt.name) + '</h3><p class="mt-1 text-[14px] leading-relaxed text-slate-600">' + esc(rt.desc) + '</p>' +
-      '<div class="mt-3 flex flex-wrap gap-1.5 text-[12px] text-slate-600">' + [rt.beds, t('spec1'), t('spec2'), t('spec3')].map(function (s) { return '<span class="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1">' + esc(s) + '</span>'; }).join('') + '</div>';
-    $('#adults').textContent = state.adults;
-    $('#adMinus').disabled = state.adults <= 1; $('#adPlus').disabled = state.adults >= r.maxAdults;
-    var q = quote(), b = $('#basket');
-    var df = function (d) { return d.toLocaleDateString(LOCALE[lang], { day: 'numeric', month: 'short' }); };
-    if (!q) { b.innerHTML = '<p class="text-slate-400">' + esc(t('b_empty')) + '</p>'; $('#reserveBtn').disabled = true; return; }
-    $('#reserveBtn').disabled = false;
-    b.innerHTML = row(df(state.inD) + ' → ' + df(state.outD), q.nights + ' ' + (q.nights > 1 ? t('nights') : t('night'))) +
-      row(esc(t('b_room', { p: fmt(q.sub / q.nights) })), fmt(q.sub)) +
-      (q.extra ? row(esc(t('b_extra')), fmt(q.extra)) : '') +
-      row(esc(t('b_ota')), '<span class="text-emerald-600">' + fmt(0) + '</span>') +
-      row(esc(t('b_total')), fmt(q.total), 'mt-1 border-t border-slate-200/80 pt-3 text-[16px] font-semibold text-slate-900') +
-      '<p class="text-[12px] text-slate-400">' + esc(t('b_tax')) + '</p>';
-  }
-  var toastT;
-  function toast(msg, warn) {
-    var el = $('#engineToast'); el.textContent = msg; el.className = 'min-h-[1.25rem] text-[13px] font-medium ' + (warn ? 'text-rose-500' : 'text-emerald-600');
-    clearTimeout(toastT); toastT = setTimeout(function () { el.textContent = ''; }, 4200);
-  }
-  $('#reserveBtn').addEventListener('click', function () {
-    var q = quote(); if (!q) return;
-    toast(t('t_hold', { room: roomT(state.room).name, total: fmt(q.total) }));
-  });
-  function render() { $$('[role=tab]', tabs).forEach(function (b, i) { b.textContent = roomT(i).name; }); renderCalendar(); renderSide(); }
-  pickDefault();
-  langListeners.push(render);
-
-  /* ---------- contact form (opens the visitor's mail app) ---------- */
-  $('#contactForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-    var f = e.target, st = $('#formStatus');
-    var name = f.name.value.trim(), email = f.email.value.trim();
-    if (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      st.className = 'text-[13px] font-medium text-rose-500'; st.textContent = !name ? t('err_name') : t('err_email');
-      (!name ? f.name : f.email).focus(); return;
-    }
-    var sys = $$('input[name="sys"]:checked', f).map(function (x) { return x.value; }).join(', ');
-    var body = 'Name: ' + name + '\nEmail: ' + email + '\nBusiness: ' + f.hotel.value + '\nSize: ' + f.rooms.value + '\nSystems: ' + sys + '\nLanguage: ' + lang.toUpperCase() + '\n\n' + f.message.value;
-    st.className = 'text-[13px] font-medium text-emerald-600'; st.textContent = t('form_ok');
-    window.location.href = 'mailto:' + CONTACT_EMAIL + '?subject=' + encodeURIComponent('AXON demo, ' + (f.hotel.value || name)) + '&body=' + encodeURIComponent(body);
-  });
-
-  $('#yr').textContent = new Date().getFullYear();
-  applyLang(lang);
-})();
-</script>
-
-<script type="module">
-/* ===== AXON synapse: a light studio object (frosted glass axons, titanium details, sapphire pulse) ===== */
-import * as THREE from 'three';
-import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-
-const stage = document.getElementById('stage');
-const canvas = document.getElementById('axon3d');
-const still = document.getElementById('stageStill');
-const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const mobile = matchMedia('(max-width: 767px), (pointer: coarse)').matches;
-const lowEnd = (navigator.hardwareConcurrency || 8) <= 2;
-
-function start() {
-  let renderer;
-  try { renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' }); }
-  catch (e) { return; }
-  if (!renderer.getContext()) return;
-  const dpr = Math.min(window.devicePixelRatio || 1, mobile ? 1.5 : 2);
-  renderer.setPixelRatio(dpr);
-  renderer.setClearColor(0xffffff, 0);
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.0;
-
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 60);
-  const pmrem = new THREE.PMREMGenerator(renderer);
-  scene.environment = pmrem.fromScene(new RoomEnvironment(renderer), 0.04).texture;
-
-  // soft photo-studio lighting
-  scene.add(new THREE.AmbientLight(0xffffff, 0.55));
-  const key = new THREE.DirectionalLight(0xffffff, 1.5); key.position.set(3, 5, 4); scene.add(key);
-  const fill = new THREE.DirectionalLight(0xdbeafe, 0.55); fill.position.set(-4, 1, 3); scene.add(fill);
-
-  const SAPPHIRE = new THREE.Color('#2563EB'), SKY = new THREE.Color('#38BDF8');
-
-  const glass = new THREE.MeshPhysicalMaterial({
-    color: 0xf1f5fb, metalness: 0, roughness: 0.15, transmission: 0.9, ior: 1.5, thickness: 0.9,
-    attenuationColor: new THREE.Color('#bfdbfe'), attenuationDistance: 1.4, clearcoat: 1, clearcoatRoughness: 0.06,
-    specularIntensity: 1, specularColor: new THREE.Color('#ffffff'), envMapIntensity: 1.7
-  });
-  const titanium = new THREE.MeshPhysicalMaterial({ color: 0xc3cad4, metalness: 1, roughness: 0.3, anisotropy: 0.7, envMapIntensity: 1.25 });
-  const coreWire = new THREE.MeshStandardMaterial({ color: 0x64748b, metalness: 0.85, roughness: 0.3 });
-
-  const rig = new THREE.Group(); scene.add(rig);
-  const obj = new THREE.Group(); obj.scale.setScalar(1.15); rig.add(obj);
-
-  // a tube whose radius tapers along its length
-  function taperTube(curve, seg, rad, r0, r1) {
-    const frames = curve.computeFrenetFrames(seg, false), pos = [], nor = [], idx = [];
-    for (let i = 0; i <= seg; i++) {
-      const u = i / seg, P = curve.getPointAt(u), N = frames.normals[i], B = frames.binormals[i], r = r0 + (r1 - r0) * Math.pow(u, 1.3);
-      for (let j = 0; j <= rad; j++) {
-        const v = j / rad * Math.PI * 2, s = Math.sin(v), c = -Math.cos(v);
-        const nx = c * N.x + s * B.x, ny = c * N.y + s * B.y, nz = c * N.z + s * B.z;
-        nor.push(nx, ny, nz); pos.push(P.x + r * nx, P.y + r * ny, P.z + r * nz);
-      }
-    }
-    for (let i = 0; i < seg; i++) for (let j = 0; j < rad; j++) {
-      const a = i * (rad + 1) + j, b = (i + 1) * (rad + 1) + j;
-      idx.push(a, b, a + 1, b, b + 1, a + 1);
-    }
-    const g = new THREE.BufferGeometry();
-    g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
-    g.setAttribute('normal', new THREE.Float32BufferAttribute(nor, 3));
-    g.setIndex(idx); return g;
-  }
-
-  // two axons meeting across a small synaptic gap
-  const GAP = 0.62, BULB = 0.26;
-  const curveA = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(-2.55, 0.95, -0.35), new THREE.Vector3(-1.95, 0.72, -0.1), new THREE.Vector3(-1.25, 0.18, 0.12), new THREE.Vector3(-GAP - BULB * 0.7, 0.02, 0)
-  ]);
-  const curveB = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(2.55, -0.85, -0.3), new THREE.Vector3(1.95, -0.66, -0.05), new THREE.Vector3(1.25, -0.16, 0.12), new THREE.Vector3(GAP + BULB * 0.7, -0.02, 0)
-  ]);
-  const curves = [curveA, curveB];
-  const SEG = mobile ? 90 : 140, RAD = mobile ? 20 : 32;
-  curves.forEach((c, k) => {
-    obj.add(new THREE.Mesh(taperTube(c, SEG, RAD, 0.15, 0.1), glass));               // frosted glass sheath
-    obj.add(new THREE.Mesh(new THREE.TubeGeometry(c, SEG, 0.03, 10, false), coreWire)); // fine metal core seen through the glass
-    // rounded glass cap and titanium collars
-    const p0 = c.getPointAt(0), t0 = c.getTangentAt(0);
-    const cap = new THREE.Mesh(new THREE.SphereGeometry(0.15, 24, 16), glass); cap.position.copy(p0); obj.add(cap);
-    [0.04, 0.5, 0.86].forEach((u) => {
-      const ring = new THREE.Mesh(new THREE.TorusGeometry(u < 0.1 ? 0.158 : 0.152 - u * 0.045, 0.02, 12, 56), titanium);
-      ring.position.copy(c.getPointAt(u)); ring.lookAt(ring.position.clone().add(c.getTangentAt(u))); obj.add(ring);
-    });
-    // synaptic bouton
-    const tip = c.getPointAt(1).clone().add(c.getTangentAt(1).multiplyScalar(BULB * 0.55));
-    const bulb = new THREE.Mesh(new THREE.SphereGeometry(BULB, 48, 32), glass); bulb.position.copy(tip); obj.add(bulb);
-    const inner = new THREE.Mesh(new THREE.SphereGeometry(BULB * 0.34, 24, 16), new THREE.MeshBasicMaterial({ color: SAPPHIRE }));
-    inner.position.copy(tip); obj.add(inner); c.userData = { tip, inner };
-  });
-
-  // soft round sprite texture
-  function dotTexture(inner, outer) {
-    const cv = document.createElement('canvas'); cv.width = cv.height = 64;
-    const g = cv.getContext('2d'), gr = g.createRadialGradient(32, 32, 0, 32, 32, 32);
-    gr.addColorStop(0, inner); gr.addColorStop(0.45, outer); gr.addColorStop(1, 'rgba(255,255,255,0)');
-    g.fillStyle = gr; g.fillRect(0, 0, 64, 64);
-    const tx = new THREE.CanvasTexture(cv); tx.colorSpace = THREE.SRGBColorSpace; return tx;
-  }
-  const haloTex = dotTexture('rgba(56,189,248,0.95)', 'rgba(37,99,235,0.28)');
-  const dotTex = dotTexture('rgba(37,99,235,1)', 'rgba(37,99,235,0.35)');
-
-  // the synapse: a calm sapphire heartbeat
-  const coreMat = new THREE.SpriteMaterial({ map: haloTex, transparent: true, depthWrite: false, opacity: 0.55 });
-  const core = new THREE.Sprite(coreMat); core.scale.setScalar(0.7); obj.add(core);
-  const heart = new THREE.Mesh(new THREE.SphereGeometry(0.05, 20, 14), new THREE.MeshBasicMaterial({ color: SKY })); obj.add(heart);
-  // a fine current bridging the two boutons
-  const current = new THREE.Mesh(new THREE.CylinderGeometry(0.011, 0.011, (GAP - BULB * 0.95) * 2, 12, 1, true), new THREE.MeshBasicMaterial({ color: SAPPHIRE, transparent: true, opacity: 0.3, depthWrite: false }));
-  current.rotation.z = Math.PI / 2; obj.add(current);
-  const waves = [0, 1].map(() => {
-    const m = new THREE.Mesh(new THREE.TorusGeometry(0.16, 0.006, 8, 96), new THREE.MeshBasicMaterial({ color: SAPPHIRE, transparent: true, opacity: 0, depthWrite: false }));
-    obj.add(m); return { m, t: 1 };
-  });
-
-  // impulses travelling inside the glass towards the gap
-  const pulses = [];
-  curves.forEach((c, ci) => {
-    for (let i = 0; i < 3; i++) {
-      const m = new THREE.Mesh(new THREE.SphereGeometry(0.036, 14, 10), new THREE.MeshBasicMaterial({ color: i % 2 ? SKY : SAPPHIRE, transparent: true, depthTest: false }));
-      const halo = new THREE.Sprite(new THREE.SpriteMaterial({ map: haloTex, transparent: true, depthWrite: false, depthTest: false, opacity: 0.55 }));
-      halo.scale.setScalar(0.34); m.add(halo); m.renderOrder = halo.renderOrder = 10; obj.add(m);
-      pulses.push({ m, c, off: i / 3 + ci * 0.17, last: 0 });
-    }
-  });
-
-  // photons crossing the gap
-  const NPH = mobile ? 18 : 30, phGeo = new THREE.BufferGeometry(), phPos = new Float32Array(NPH * 3), phSeed = [];
-  for (let i = 0; i < NPH; i++) phSeed.push([Math.random(), (Math.random() - 0.5) * 0.24, (Math.random() - 0.5) * 0.24, 0.25 + Math.random() * 0.5, Math.random() < 0.5 ? 1 : -1]);
-  phGeo.setAttribute('position', new THREE.BufferAttribute(phPos, 3));
-  obj.add(new THREE.Points(phGeo, new THREE.PointsMaterial({ map: dotTex, size: 0.045, transparent: true, opacity: 0.85, depthWrite: false })));
-
-  // a few floating particles around the object
-  const NF = mobile ? 24 : 42, fGeo = new THREE.BufferGeometry(), fPos = new Float32Array(NF * 3), fSeed = [];
-  for (let i = 0; i < NF; i++) fSeed.push([(Math.random() - 0.5) * 6, (Math.random() - 0.5) * 3.2, -Math.random() * 2 - 0.2, Math.random() * 6.28, 0.15 + Math.random() * 0.35]);
-  fGeo.setAttribute('position', new THREE.BufferAttribute(fPos, 3));
-  rig.add(new THREE.Points(fGeo, new THREE.PointsMaterial({ map: dotTex, size: 0.035, transparent: true, opacity: 0.35, depthWrite: false })));
-
-  // soft contact shadow on an invisible floor
-  const sc = document.createElement('canvas'); sc.width = 256; sc.height = 64;
-  const sg = sc.getContext('2d'); sg.setTransform(4, 0, 0, 1, 0, 0);
-  const sgr = sg.createRadialGradient(32, 32, 0, 32, 32, 31);
-  sgr.addColorStop(0, 'rgba(15,23,42,0.26)'); sgr.addColorStop(0.45, 'rgba(15,23,42,0.09)'); sgr.addColorStop(1, 'rgba(15,23,42,0)');
-  sg.fillStyle = sgr; sg.fillRect(0, 0, 64, 64);
-  const shadowTex = new THREE.CanvasTexture(sc);
-  const shadow = new THREE.Mesh(new THREE.PlaneGeometry(6.4, 2.4), new THREE.MeshBasicMaterial({ map: shadowTex, transparent: true, depthWrite: false, opacity: 0.8 }));
-  shadow.rotation.x = -Math.PI / 2; shadow.position.y = -1.55; rig.add(shadow);
-
-  // layout: frame the object to the stage
-  function resize() {
-    const w = stage.clientWidth, h = stage.clientHeight; if (!w || !h) return;
-    renderer.setSize(w, h, false);
-    camera.aspect = w / h;
-    const fit = 5.3 / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * Math.min(camera.aspect, 1.3));
-    const z = Math.max(5.8, fit); camera.position.set(0, z * 0.2, z); camera.lookAt(0, -0.25, 0);
-    camera.updateProjectionMatrix();
-  }
-  new ResizeObserver(resize).observe(stage); resize();
-
-  // damped pointer parallax
-  const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
-  window.addEventListener('pointermove', (e) => { mouse.tx = e.clientX / innerWidth * 2 - 1; mouse.ty = -(e.clientY / innerHeight) * 2 + 1; }, { passive: true });
-
-  const clock = new THREE.Clock(); let T = 0, beat = 0, visible = true, running = false, shown = false;
-  function frame(dt) {
-    T += dt;
-    mouse.x += (mouse.tx - mouse.x) * Math.min(1, dt * 3); mouse.y += (mouse.ty - mouse.y) * Math.min(1, dt * 3);
-    rig.rotation.y = Math.sin(T * 0.25) * 0.12 + mouse.x * 0.22;
-    rig.rotation.x = mouse.y * -0.1;
-    const bob = Math.sin(T * 0.9) * 0.05; obj.position.y = bob;
-    shadow.scale.setScalar(1 - bob * 0.6); shadow.material.opacity = 0.8 - bob * 2;
-
-    pulses.forEach((p) => {
-      const u = (T * 0.22 + p.off) % 1, e = u * u * (3 - 2 * u);
-      p.m.position.copy(p.c.getPointAt(Math.min(e, 0.999)));
-      p.m.material.opacity = 1;
-      p.m.visible = u < 0.985;
-      if (u < p.last) { beat = 1; const w = waves.find((x) => x.t >= 1) || waves[0]; w.t = 0; }
-      p.last = u;
-    });
-    beat = Math.max(0, beat - dt * 1.6);
-    const breathe = 0.5 + 0.5 * Math.sin(T * 2.2);
-    core.scale.setScalar(0.62 + breathe * 0.1 + beat * 0.3); coreMat.opacity = 0.5 + breathe * 0.12 + beat * 0.35;
-    heart.scale.setScalar(1 + beat * 0.6);
-    curves.forEach((c) => { c.userData.inner.scale.setScalar(1 + beat * 0.35); c.userData.inner.material.color.copy(SAPPHIRE).lerp(SKY, beat); });
-    current.material.opacity = 0.18 + breathe * 0.12 + beat * 0.6; current.scale.y = current.scale.z = 1 + beat * 1.5;
-    waves.forEach((w) => { w.t = Math.min(1, w.t + dt * 0.9); w.m.scale.setScalar(0.5 + w.t * 1.6); w.m.material.opacity = (1 - w.t) * 0.7; });
-
-    for (let i = 0; i < NPH; i++) {
-      const s = phSeed[i]; s[0] += dt * s[3]; if (s[0] > 1) { s[0] = 0; s[4] = Math.random() < 0.5 ? 1 : -1; }
-      const x = (s[0] * 2 - 1) * (GAP - 0.05) * s[4];
-      phPos[i * 3] = x; phPos[i * 3 + 1] = s[1] * Math.sin(s[0] * Math.PI); phPos[i * 3 + 2] = s[2] * Math.sin(s[0] * Math.PI);
-    }
-    phGeo.attributes.position.needsUpdate = true;
-    for (let i = 0; i < NF; i++) {
-      const s = fSeed[i];
-      fPos[i * 3] = s[0] + Math.sin(T * s[4] + s[3]) * 0.12; fPos[i * 3 + 1] = s[1] + Math.cos(T * s[4] * 0.8 + s[3]) * 0.1; fPos[i * 3 + 2] = s[2];
-    }
-    fGeo.attributes.position.needsUpdate = true;
-    renderer.render(scene, camera);
-    if (!shown) { shown = true; canvas.classList.remove('opacity-0'); still.classList.add('opacity-0'); }
-  }
-  function loop() {
-    if (!visible || document.hidden) { running = false; return; }
-    running = true; frame(Math.min(clock.getDelta(), 0.05)); requestAnimationFrame(loop);
-  }
-  function kick() { if (!running && !reduced) { clock.getDelta(); loop(); } }
-  new IntersectionObserver((es) => { visible = es[0].isIntersecting; kick(); }).observe(stage);
-  document.addEventListener('visibilitychange', kick);
-  if (reduced) { T = 2.4; frame(0); } else kick();
-  window.__axon3d = { renderer, scene, camera };
-}
-if (!lowEnd) { try { start(); } catch (e) { /* keep the still image */ } }
-</script>
+<script src="assets/app.js?v=477d9a12" defer></script>
 </body>
 </html>

@@ -3,16 +3,43 @@
 @tailwind utilities;
 
 @layer base {
+  html { -webkit-text-size-adjust: 100%; }
   h1, h2, h3 { text-wrap: balance; }
   summary::-webkit-details-marker { display: none; }
-  ul::-webkit-scrollbar { display: none; }
+  .noscroll::-webkit-scrollbar { display: none; }
+  :focus-visible { outline: 2px solid #D5BD8A; outline-offset: 3px; border-radius: 6px; }
 }
 @layer components {
-  .field { @apply w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-[15px] font-normal text-slate-900 shadow-sm outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10; }
-  .chip { @apply cursor-pointer select-none; }
-  .chip span { @apply inline-flex rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-600 transition hover:border-slate-300; }
-  .chip input:checked + span { @apply border-blue-600 bg-blue-50 text-blue-700; }
-  .chip input:focus-visible + span { @apply ring-4 ring-blue-500/20; }
-  .js-reveal .reveal { opacity: 0; transform: translateY(16px); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
+  .card { @apply rounded-2xl border border-white/[0.07] bg-navy-800/70; }
+  .eyebrow { @apply font-display text-[12px] font-semibold uppercase tracking-[0.2em] text-gold; }
+  .h2 { @apply font-display text-[1.9rem] font-semibold leading-tight tracking-tight text-ink sm:text-[2.6rem]; }
+  .lead { @apply text-[16px] leading-relaxed text-mist sm:text-[17px]; }
+  .btn-gold { @apply inline-flex items-center justify-center gap-2 rounded-full bg-gold px-6 py-3.5 text-[15px] font-semibold text-navy-950 shadow-[0_8px_30px_-12px_rgba(213,189,138,0.6)] transition hover:bg-gold-soft; }
+  .btn-line { @apply inline-flex items-center justify-center gap-2 rounded-full border border-silver/25 px-6 py-3.5 text-[15px] font-medium text-ink transition hover:border-silver/50 hover:bg-white/[0.04]; }
+  .field { @apply w-full rounded-xl border border-white/10 bg-navy-950/60 px-3.5 py-3 text-[15px] text-ink outline-none transition placeholder:text-mist/50 focus:border-gold/60 focus:ring-4 focus:ring-gold/10; }
+  .field[aria-invalid="true"] { @apply border-rose-400/70; }
+  .err { @apply mt-1 hidden text-[13px] text-rose-300; }
+  .err.show { @apply block; }
+  .tag { @apply inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider; }
+  .js-reveal .reveal { opacity: 0; transform: translateY(14px); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
   .js-reveal .reveal.in { opacity: 1; transform: none; }
+  .bubble-in { animation: bubbleIn .45s cubic-bezier(.2,.7,.2,1) both; }
+  @keyframes bubbleIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  .typing i { @apply inline-block h-1.5 w-1.5 rounded-full bg-mist/70; animation: blink 1.2s infinite; }
+  .typing i:nth-child(2) { animation-delay: .15s; } .typing i:nth-child(3) { animation-delay: .3s; }
+  @keyframes blink { 0%, 80%, 100% { opacity: .25; } 40% { opacity: 1; } }
+  .flow-dot { offset-path: var(--p); animation: flow 4.5s linear infinite; }
+  @keyframes flow { from { offset-distance: 0%; } to { offset-distance: 100%; } }
+  @media (prefers-reduced-motion: reduce) { .bubble-in, .typing i, .flow-dot { animation: none !important; } .js-reveal .reveal { opacity: 1; transform: none; transition: none; } }
 }
+
+/* workflow connectors with a travelling pulse (vertical on mobile, horizontal on desktop) */
+.conn { position: absolute; left: 27.5px; top: 56px; bottom: 0; width: 1px; background: linear-gradient(to bottom, rgba(195,201,210,.28), rgba(213,189,138,.35)); }
+.conn::after { content: ""; position: absolute; left: -2.5px; top: 0; width: 6px; height: 6px; border-radius: 9999px; background: #D5BD8A; box-shadow: 0 0 12px rgba(213,189,138,.9); animation: flowY 3.5s linear infinite; animation-delay: var(--d, 0s); opacity: 0; }
+@keyframes flowY { 0% { top: 0; opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+@keyframes flowX { 0% { left: 0; opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { left: 100%; opacity: 0; } }
+@media (min-width: 1024px) {
+  .conn { left: calc(50% + 28px); right: calc(-50% + 28px); top: 27.5px; bottom: auto; width: auto; height: 1px; background: linear-gradient(to right, rgba(195,201,210,.28), rgba(213,189,138,.35)); }
+  .conn::after { top: -2.5px; left: 0; animation-name: flowX; }
+}
+@media (prefers-reduced-motion: reduce) { .conn::after { animation: none; opacity: 0; } }
