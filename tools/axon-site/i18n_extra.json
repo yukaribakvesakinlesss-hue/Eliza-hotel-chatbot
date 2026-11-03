@@ -1,0 +1,62 @@
+{
+  "tr": {
+    "nav_proof": "Neden AXON", "nav_demo": "Canlı Demo", "nav_packages": "Paketler", "nav_contact": "İletişim",
+    "hero_sub2": "Otel ve klinikler için 7/24 çalışan yapay zekâ asistanı. WhatsApp, Instagram, e-posta ve web sitenizden gelen her soruya saniyeler içinde cevap verir; rezervasyonu ve randevuyu gece bile kendisi alır.",
+    "cta_demo2": "Ücretsiz demo iste", "cta_wa": "WhatsApp ile başla",
+    "trust1": "Ücretsiz demo", "trust2": "Taahhüt yok", "trust3": "4 dilde cevap",
+    "clients_label": "Çalıştığımız işletmelerden bazıları",
+    "stats_eyebrow": "Rakamlar",
+    "demo_eyebrow": "Canlı demo", "demo_try": "Deneyin: bir oda ve tarih seçin, toplam anında hesaplansın.",
+    "pkg_eyebrow": "Paketler",
+    "contact_eyebrow": "İletişim",
+    "cons_title2": "Ücretsiz demonuzu planlayalım.",
+    "cons_lead2": "İşletmenizi anlatın. Bir iş günü içinde sizin bilgilerinizle hazırlanmış bir demo ve kurulum planıyla dönüyoruz.",
+    "wa_card_t": "Hemen konuşmak mı istiyorsunuz?", "wa_card_p": "WhatsApp'tan yazın, aynı gün dönelim.", "wa_card_btn": "WhatsApp'ta yaz",
+    "mail_label": "E-posta", "foot_rights": "Tüm hakları saklıdır.", "lang_label": "Dil", "menu_label": "Ana menü"
+  },
+  "en": {
+    "nav_proof": "Why AXON", "nav_demo": "Live Demo", "nav_packages": "Packages", "nav_contact": "Contact",
+    "hero_sub2": "A 24/7 AI assistant for hotels and clinics. It answers every message from WhatsApp, Instagram, email and your website in seconds, and takes the booking or appointment itself, even at night.",
+    "cta_demo2": "Get a free demo", "cta_wa": "Start on WhatsApp",
+    "trust1": "Free demo", "trust2": "No commitment", "trust3": "Replies in 4 languages",
+    "clients_label": "Some of the businesses we work with",
+    "stats_eyebrow": "The numbers",
+    "demo_eyebrow": "Live demo", "demo_try": "Try it: pick a room and dates, and the total is calculated instantly.",
+    "pkg_eyebrow": "Packages",
+    "contact_eyebrow": "Contact",
+    "cons_title2": "Let's plan your free demo.",
+    "cons_lead2": "Tell us about your business. Within one business day we come back with a demo built on your own information and a setup plan.",
+    "wa_card_t": "Prefer to talk now?", "wa_card_p": "Message us on WhatsApp and we reply the same day.", "wa_card_btn": "Message on WhatsApp",
+    "mail_label": "Email", "foot_rights": "All rights reserved.", "lang_label": "Language", "menu_label": "Main menu"
+  },
+  "de": {
+    "nav_proof": "Warum AXON", "nav_demo": "Live-Demo", "nav_packages": "Pakete", "nav_contact": "Kontakt",
+    "hero_sub2": "Ein KI-Assistent für Hotels und Kliniken, rund um die Uhr. Er beantwortet jede Nachricht über WhatsApp, Instagram, E-Mail und Ihre Website in Sekunden und nimmt Buchungen und Termine selbst an, auch nachts.",
+    "cta_demo2": "Kostenlose Demo anfragen", "cta_wa": "Über WhatsApp starten",
+    "trust1": "Kostenlose Demo", "trust2": "Keine Bindung", "trust3": "Antworten in 4 Sprachen",
+    "clients_label": "Einige der Unternehmen, mit denen wir arbeiten",
+    "stats_eyebrow": "Die Zahlen",
+    "demo_eyebrow": "Live-Demo", "demo_try": "Probieren Sie es aus: Zimmer und Daten wählen, der Gesamtpreis erscheint sofort.",
+    "pkg_eyebrow": "Pakete",
+    "contact_eyebrow": "Kontakt",
+    "cons_title2": "Planen wir Ihre kostenlose Demo.",
+    "cons_lead2": "Erzählen Sie uns von Ihrem Betrieb. Innerhalb eines Werktags melden wir uns mit einer Demo auf Basis Ihrer eigenen Daten und einem Einrichtungsplan.",
+    "wa_card_t": "Lieber gleich sprechen?", "wa_card_p": "Schreiben Sie uns auf WhatsApp, wir antworten noch am selben Tag.", "wa_card_btn": "Auf WhatsApp schreiben",
+    "mail_label": "E-Mail", "foot_rights": "Alle Rechte vorbehalten.", "lang_label": "Sprache", "menu_label": "Hauptmenü"
+  },
+  "fr": {
+    "nav_proof": "Pourquoi AXON", "nav_demo": "Démo live", "nav_packages": "Offres", "nav_contact": "Contact",
+    "hero_sub2": "Un assistant IA 24h/24 pour hôtels et cliniques. Il répond en quelques secondes à chaque message reçu sur WhatsApp, Instagram, par e-mail et sur votre site, et prend lui-même la réservation ou le rendez-vous, même la nuit.",
+    "cta_demo2": "Demander une démo gratuite", "cta_wa": "Démarrer sur WhatsApp",
+    "trust1": "Démo gratuite", "trust2": "Sans engagement", "trust3": "Réponses en 4 langues",
+    "clients_label": "Quelques entreprises avec qui nous travaillons",
+    "stats_eyebrow": "Les chiffres",
+    "demo_eyebrow": "Démo live", "demo_try": "Essayez : choisissez une chambre et des dates, le total se calcule aussitôt.",
+    "pkg_eyebrow": "Offres",
+    "contact_eyebrow": "Contact",
+    "cons_title2": "Planifions votre démo gratuite.",
+    "cons_lead2": "Parlez-nous de votre établissement. Sous un jour ouvré, nous revenons avec une démo construite sur vos propres informations et un plan de mise en place.",
+    "wa_card_t": "Envie d'en parler maintenant ?", "wa_card_p": "Écrivez-nous sur WhatsApp, nous répondons le jour même.", "wa_card_btn": "Écrire sur WhatsApp",
+    "mail_label": "E-mail", "foot_rights": "Tous droits réservés.", "lang_label": "Langue", "menu_label": "Menu principal"
+  }
+}

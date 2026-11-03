@@ -1,0 +1,728 @@
+<!doctype html>
+<html lang="tr" class="scroll-smooth">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AXON Systems, AI Assistants for Hotels & Clinics</title>
+<meta name="description" content="AXON builds 24/7 AI assistants for hotels and clinics: every WhatsApp, Instagram, email and website message answered in seconds, bookings and appointments taken automatically.">
+<meta name="theme-color" content="#FFFFFF">
+<meta property="og:title" content="AXON Systems">
+<meta property="og:description" content="24/7 AI assistants for hotels and clinics.">
+<meta property="og:image" content="images/synapse-light.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230F172A'/%3E%3Ccircle cx='10' cy='16' r='4' fill='%23fff'/%3E%3Ccircle cx='22' cy='16' r='4' fill='%23fff'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%2338BDF8'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css?v=__VER__">
+<script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/" } }</script>
+</head>
+<body class="bg-white font-sans text-slate-600 antialiased selection:bg-blue-100 selection:text-slate-900">
+
+<!-- ===== Header: every link visible, no hamburger ===== -->
+<header class="fixed inset-x-0 top-3 z-50 px-3 sm:top-4 sm:px-6">
+  <nav class="mx-auto flex max-w-6xl flex-wrap items-center gap-x-4 gap-y-1 rounded-2xl border border-slate-200/80 bg-white/75 px-4 py-2.5 shadow-sm backdrop-blur-md sm:px-5" data-i18n-aria="menu_label" aria-label="Main menu">
+    <a href="#top" class="flex items-center gap-2.5 text-slate-900" aria-label="AXON">
+      <svg class="h-7 w-7" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#0F172A"/><circle cx="10" cy="16" r="4" fill="#fff"/><circle cx="22" cy="16" r="4" fill="#fff"/><circle cx="16" cy="16" r="1.6" fill="#38BDF8"/></svg>
+      <span class="text-[15px] font-semibold tracking-[0.22em]">AXON</span>
+    </a>
+    <ul class="order-3 flex w-full items-center justify-center gap-6 overflow-x-auto border-t border-slate-200/70 pt-1.5 text-[13px] font-medium text-slate-600 [scrollbar-width:none] sm:gap-8 lg:order-none lg:w-auto lg:flex-1 lg:border-0 lg:pt-0">
+      <li><a class="nav-a whitespace-nowrap py-1.5 transition hover:text-slate-900" href="#proof" data-i18n="nav_proof">Why AXON</a></li>
+      <li><a class="nav-a whitespace-nowrap py-1.5 transition hover:text-slate-900" href="#demo" data-i18n="nav_demo">Live Demo</a></li>
+      <li><a class="nav-a whitespace-nowrap py-1.5 transition hover:text-slate-900" href="#packages" data-i18n="nav_packages">Packages</a></li>
+      <li><a class="nav-a whitespace-nowrap py-1.5 transition hover:text-slate-900" href="#contact" data-i18n="nav_contact">Contact</a></li>
+    </ul>
+    <div class="ml-auto flex items-center gap-2 lg:ml-0">
+      <div class="lang flex rounded-full border border-slate-200 bg-slate-50 p-0.5 text-[11px] font-semibold tracking-wide" role="group" aria-label="Language" data-i18n-aria="lang_label">
+        <button type="button" data-lang="tr" class="rounded-full px-2.5 py-1.5 text-slate-500 transition hover:text-slate-900 aria-pressed:bg-white aria-pressed:text-slate-900 aria-pressed:shadow-sm">TR</button>
+        <button type="button" data-lang="en" class="rounded-full px-2.5 py-1.5 text-slate-500 transition hover:text-slate-900 aria-pressed:bg-white aria-pressed:text-slate-900 aria-pressed:shadow-sm">EN</button>
+        <button type="button" data-lang="de" class="rounded-full px-2.5 py-1.5 text-slate-500 transition hover:text-slate-900 aria-pressed:bg-white aria-pressed:text-slate-900 aria-pressed:shadow-sm">DE</button>
+        <button type="button" data-lang="fr" class="rounded-full px-2.5 py-1.5 text-slate-500 transition hover:text-slate-900 aria-pressed:bg-white aria-pressed:text-slate-900 aria-pressed:shadow-sm">FR</button>
+      </div>
+      <a href="#contact" class="hidden rounded-full bg-slate-900 px-4 py-2 text-[13px] font-medium text-white shadow-sm transition hover:bg-slate-800 min-[440px]:inline-flex" data-i18n="cta_demo2">Get a free demo</a>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+
+<!-- ===== Hero ===== -->
+<section class="relative overflow-hidden pt-32 sm:pt-36 lg:pt-28" aria-labelledby="heroTitle">
+  <div class="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(60%_50%_at_75%_40%,#EFF6FF_0%,rgba(255,255,255,0)_70%)]"></div>
+  <div class="mx-auto grid max-w-6xl items-center gap-6 px-5 sm:px-6 lg:min-h-[calc(100svh-9rem)] lg:grid-cols-[1.05fr_1fr] lg:gap-4">
+    <div class="max-w-xl">
+      <p class="mb-5 inline-flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/70 px-3 py-1 text-[13px] font-medium text-slate-600 shadow-sm backdrop-blur-sm"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span><span data-i18n="tagline">AI systems for hotels, clinics and companies</span></p>
+      <h1 id="heroTitle" class="text-[2.6rem] font-semibold leading-[1.05] tracking-tight text-slate-900 sm:text-6xl lg:text-[4.1rem]">
+        <span class="block" data-i18n="hero1">Stop losing</span>
+        <span class="block text-blue-600" data-i18n="hero2">customers.</span>
+      </h1>
+      <p class="mt-6 max-w-lg text-[17px] leading-relaxed text-slate-600 sm:text-lg" data-i18n="hero_sub2"></p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="#contact" class="inline-flex items-center gap-2 rounded-full bg-blue-600 px-6 py-3.5 text-[15px] font-medium text-white shadow-sm shadow-blue-600/20 transition hover:-translate-y-px hover:bg-blue-700 hover:shadow-md" data-i18n="cta_demo2">Get a free demo</a>
+        <a class="wa-link inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-6 py-3.5 text-[15px] font-medium text-slate-900 shadow-sm transition hover:-translate-y-px hover:border-slate-300 hover:shadow-md" target="_blank" rel="noopener">
+          <svg class="h-[18px] w-[18px] text-emerald-500" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.2.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg>
+          <span data-i18n="cta_wa">Start on WhatsApp</span>
+        </a>
+      </div>
+      <ul class="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-[13px] text-slate-500">
+        <li class="flex items-center gap-1.5"><svg class="h-4 w-4 text-blue-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.7 5.3a1 1 0 0 1 0 1.4l-8 8a1 1 0 0 1-1.4 0l-4-4a1 1 0 1 1 1.4-1.4L8 12.6l7.3-7.3a1 1 0 0 1 1.4 0z" clip-rule="evenodd"/></svg><span data-i18n="trust1">Free demo</span></li>
+        <li class="flex items-center gap-1.5"><svg class="h-4 w-4 text-blue-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.7 5.3a1 1 0 0 1 0 1.4l-8 8a1 1 0 0 1-1.4 0l-4-4a1 1 0 1 1 1.4-1.4L8 12.6l7.3-7.3a1 1 0 0 1 1.4 0z" clip-rule="evenodd"/></svg><span data-i18n="trust2">No commitment</span></li>
+        <li class="flex items-center gap-1.5"><svg class="h-4 w-4 text-blue-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.7 5.3a1 1 0 0 1 0 1.4l-8 8a1 1 0 0 1-1.4 0l-4-4a1 1 0 1 1 1.4-1.4L8 12.6l7.3-7.3a1 1 0 0 1 1.4 0z" clip-rule="evenodd"/></svg><span data-i18n="trust3">Replies in 4 languages</span></li>
+      </ul>
+    </div>
+    <!-- 3D stage: right of the copy on desktop, below it on phones -->
+    <div id="stage" class="relative -mx-5 -mt-4 h-[280px] sm:mx-0 sm:h-[420px] lg:mt-0 lg:h-[560px]" aria-hidden="true">
+      <img id="stageStill" src="images/synapse-light.png" alt="" class="absolute inset-0 h-full w-full object-contain transition-opacity duration-700 [mask-image:radial-gradient(farthest-side,#000_82%,transparent)]">
+      <canvas id="axon3d" class="absolute inset-0 h-full w-full opacity-0 transition-opacity duration-700 [mask-image:radial-gradient(farthest-side,#000_82%,transparent)]"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Social proof & numbers ===== -->
+<section id="proof" class="scroll-mt-24 pb-20 pt-8 sm:pb-24 lg:pt-4" aria-labelledby="numTitle">
+  <div class="mx-auto max-w-6xl px-5 sm:px-6">
+    <p class="text-center text-[13px] font-medium text-slate-500" data-i18n="clients_label">Some of the businesses we work with</p>
+    <ul class="mt-5 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-[15px] font-semibold tracking-tight text-slate-400">
+      <li>Hotel Eliza</li><li>art'otel London Hoxton</li><li>The Resident Covent Garden</li><li>Rosewood London</li><li>Mediwell Clinic</li><li>Mayo Clinic</li><li>Aeterna Serpenti</li>
+      <li class="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[13px] font-medium text-slate-500" data-i18n="part_more_b" title="">+11 more</li>
+    </ul>
+
+    <div class="reveal mx-auto mt-20 max-w-2xl text-center">
+      <p class="text-[13px] font-semibold uppercase tracking-[0.16em] text-blue-600" data-i18n="stats_eyebrow">The numbers</p>
+      <h2 id="numTitle" class="mt-3 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl" data-i18n="num_title"></h2>
+      <p class="mt-4 text-slate-600" data-i18n="num_lead"></p>
+    </div>
+    <div class="mt-12 grid gap-4 md:grid-cols-3">
+      <figure class="reveal rounded-2xl border border-slate-200/80 bg-white p-7 shadow-sm transition hover:shadow-md">
+        <b class="block text-5xl font-semibold tracking-tight text-slate-900" data-i18n="n2v">7×</b>
+        <p class="mt-4 leading-relaxed text-slate-600" data-i18n="n2t"></p>
+        <a class="mt-6 inline-block text-[13px] font-medium text-slate-400 underline decoration-slate-200 underline-offset-4 transition hover:text-blue-600" href="https://hbr.org/2011/03/the-short-life-of-online-sales-leads" target="_blank" rel="noopener" data-i18n="n2s"></a>
+      </figure>
+      <figure class="reveal rounded-2xl border border-slate-200/80 bg-white p-7 shadow-sm transition hover:shadow-md">
+        <b class="block text-5xl font-semibold tracking-tight text-slate-900" data-i18n="n4v">43%</b>
+        <p class="mt-4 leading-relaxed text-slate-600" data-i18n="n4t"></p>
+        <a class="mt-6 inline-block text-[13px] font-medium text-slate-400 underline decoration-slate-200 underline-offset-4 transition hover:text-blue-600" href="https://connectingtravel.com/news/hoteliers-accuse-booking.com-of-unfair-business-practices" target="_blank" rel="noopener" data-i18n="n4s"></a>
+      </figure>
+      <figure class="reveal rounded-2xl border border-slate-200/80 bg-white p-7 shadow-sm transition hover:shadow-md">
+        <b class="block text-5xl font-semibold tracking-tight text-slate-900" data-i18n="n5v">23%</b>
+        <p class="mt-4 leading-relaxed text-slate-600" data-i18n="n5t"></p>
+        <a class="mt-6 inline-block text-[13px] font-medium text-slate-400 underline decoration-slate-200 underline-offset-4 transition hover:text-blue-600" href="https://doi.org/10.1016/j.healthpol.2018.02.002" target="_blank" rel="noopener" data-i18n="n5s"></a>
+      </figure>
+    </div>
+    <p class="reveal mx-auto mt-10 max-w-2xl text-center text-[17px] font-medium text-slate-900" data-i18n="num_close"></p>
+  </div>
+</section>
+
+<!-- ===== Live booking engine ===== -->
+<section id="demo" class="scroll-mt-24 bg-slate-50 py-20 sm:py-24" aria-labelledby="demoTitle">
+  <div class="mx-auto max-w-6xl px-5 sm:px-6">
+    <div class="reveal mx-auto max-w-2xl text-center">
+      <p class="text-[13px] font-semibold uppercase tracking-[0.16em] text-blue-600" data-i18n="demo_eyebrow">Live demo</p>
+      <h2 id="demoTitle" class="mt-3 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl" data-i18n="demo_title"></h2>
+      <p class="mt-4 text-slate-600" data-i18n="demo_try"></p>
+      <div class="mt-5 flex flex-wrap justify-center gap-2 text-[12px] font-medium text-slate-600">
+        <span class="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span><span data-i18n="demo_m1"></span></span>
+        <span class="rounded-full border border-slate-200 bg-white px-3 py-1" data-i18n="demo_m2"></span>
+        <span class="rounded-full border border-slate-200 bg-white px-3 py-1">TRY · EUR · USD</span>
+      </div>
+    </div>
+
+    <div class="reveal mt-10 overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm">
+      <div class="flex flex-wrap items-center gap-3 border-b border-slate-200/80 px-4 py-3">
+        <div class="flex gap-1.5" aria-hidden="true"><i class="h-2.5 w-2.5 rounded-full bg-slate-200"></i><i class="h-2.5 w-2.5 rounded-full bg-slate-200"></i><i class="h-2.5 w-2.5 rounded-full bg-slate-200"></i></div>
+        <div class="min-w-0 flex-1 truncate rounded-lg bg-slate-50 px-3 py-1.5 text-[12px] text-slate-500"><span class="text-emerald-500">●</span> <span data-i18n="frame_url"></span></div>
+        <div class="flex rounded-full border border-slate-200 bg-slate-50 p-0.5 text-[12px] font-semibold" role="group" aria-label="Currency" id="currencySeg">
+          <button type="button" data-cur="EUR" aria-pressed="true" class="rounded-full px-3 py-1 text-slate-500 aria-pressed:bg-white aria-pressed:text-slate-900 aria-pressed:shadow-sm">EUR</button>
+          <button type="button" data-cur="USD" aria-pressed="false" class="rounded-full px-3 py-1 text-slate-500 aria-pressed:bg-white aria-pressed:text-slate-900 aria-pressed:shadow-sm">USD</button>
+          <button type="button" data-cur="TRY" aria-pressed="false" class="rounded-full px-3 py-1 text-slate-500 aria-pressed:bg-white aria-pressed:text-slate-900 aria-pressed:shadow-sm">TRY</button>
+        </div>
+      </div>
+      <div class="grid lg:grid-cols-[1.55fr_1fr]">
+        <div class="min-w-0 border-b border-slate-200/80 p-4 sm:p-6 lg:border-b-0 lg:border-r">
+          <div class="grid grid-cols-2 gap-1 rounded-xl bg-slate-100 p-1 sm:grid-cols-4" role="tablist" id="roomTabs"></div>
+          <div class="mt-5 flex flex-wrap items-center justify-between gap-3">
+            <div class="text-[13px] font-semibold text-slate-900" id="calLabel"></div>
+            <div class="flex gap-4 text-[12px] text-slate-500" aria-hidden="true">
+              <span class="flex items-center gap-1.5"><i class="h-2 w-2 rounded-full bg-emerald-500"></i><span data-i18n="leg_best"></span></span>
+              <span class="flex items-center gap-1.5"><i class="h-2 w-2 rounded-full bg-amber-500"></i><span data-i18n="leg_peak"></span></span>
+              <span class="flex items-center gap-1.5"><i class="h-2 w-2 rounded-full bg-rose-400"></i><span data-i18n="leg_sold"></span></span>
+            </div>
+          </div>
+          <div class="mt-4 grid gap-6 md:grid-cols-2" id="months"></div>
+          <p class="mt-4 text-[12px] text-slate-400" data-i18n="cal_hint"></p>
+        </div>
+        <aside class="grid content-start gap-5 p-4 sm:p-6" aria-live="polite">
+          <div id="roomCard"></div>
+          <div class="flex items-center justify-between">
+            <span class="text-[13px] font-medium text-slate-900" data-i18n="adults">Adults</span>
+            <div class="flex items-center gap-1 rounded-full border border-slate-200 p-0.5">
+              <button type="button" id="adMinus" class="grid h-8 w-8 place-items-center rounded-full text-slate-700 hover:bg-slate-100 disabled:opacity-30" aria-label="−">−</button>
+              <output id="adults" class="w-6 text-center text-[14px] font-semibold text-slate-900">2</output>
+              <button type="button" id="adPlus" class="grid h-8 w-8 place-items-center rounded-full text-slate-700 hover:bg-slate-100 disabled:opacity-30" aria-label="+">+</button>
+            </div>
+          </div>
+          <div class="grid gap-2 border-t border-slate-200/80 pt-4 text-[14px]" id="basket"></div>
+          <div class="flex items-center gap-2 text-[12px] text-slate-500"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span data-i18n="pay_row"></span></div>
+          <button type="button" id="reserveBtn" class="rounded-full bg-blue-600 px-6 py-3 text-[15px] font-medium text-white shadow-sm transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-300" data-i18n="reserve">Reserve</button>
+          <div class="min-h-[1.25rem] text-[13px] font-medium" id="engineToast" role="status"></div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Packages ===== -->
+<section id="packages" class="scroll-mt-24 py-20 sm:py-24" aria-labelledby="pkgTitle">
+  <div class="mx-auto max-w-6xl px-5 sm:px-6">
+    <div class="reveal mx-auto max-w-2xl text-center">
+      <p class="text-[13px] font-semibold uppercase tracking-[0.16em] text-blue-600" data-i18n="pkg_eyebrow">Packages</p>
+      <h2 id="pkgTitle" class="mt-3 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl" data-i18n="pkg_title"></h2>
+      <p class="mt-4 text-slate-600" data-i18n="pkg_lead"></p>
+    </div>
+    <div class="reveal mt-8 flex justify-center">
+      <div class="pkg-sector inline-flex rounded-full border border-slate-200 bg-slate-50 p-1 text-[14px] font-medium" role="tablist" aria-label="Sector">
+        <button type="button" role="tab" data-sector="hotel" aria-selected="true" class="rounded-full px-5 py-2 text-slate-500 transition hover:text-slate-900 aria-selected:bg-white aria-selected:text-slate-900 aria-selected:shadow-sm" data-i18n="sec_hotel_b">Hotel</button>
+        <button type="button" role="tab" data-sector="clinic" aria-selected="false" class="rounded-full px-5 py-2 text-slate-500 transition hover:text-slate-900 aria-selected:bg-white aria-selected:text-slate-900 aria-selected:shadow-sm" data-i18n="sec_clinic_b">Clinic</button>
+        <button type="button" role="tab" data-sector="company" aria-selected="false" class="rounded-full px-5 py-2 text-slate-500 transition hover:text-slate-900 aria-selected:bg-white aria-selected:text-slate-900 aria-selected:shadow-sm" data-i18n="sec_company_b">Company</button>
+      </div>
+    </div>
+    <div class="mt-4 flex flex-wrap justify-center gap-x-5 gap-y-1 text-[12px] text-slate-500">
+      <span data-i18n="pkg_pill1"></span><span aria-hidden="true">·</span><span data-i18n="pkg_pill2"></span><span aria-hidden="true">·</span><span data-i18n="pkg_pill3"></span>
+    </div>
+
+    <div class="mt-10 grid items-start gap-4 lg:grid-cols-3">
+      <article class="reveal flex h-full flex-col rounded-2xl border border-slate-200/80 bg-white p-7 shadow-sm transition hover:shadow-md">
+        <span class="text-[12px] font-semibold uppercase tracking-[0.16em] text-slate-400">Start</span>
+        <h3 class="pkn mt-2 text-xl font-semibold tracking-tight text-slate-900" data-pk="1"></h3>
+        <p class="mt-2 text-[14px] leading-relaxed text-slate-600" data-i18n="pk1_for"></p>
+        <p class="mt-5 text-[15px] font-semibold text-slate-900" data-i18n="pkg_price"></p>
+        <ul class="pk-list mt-5 grid gap-2.5 text-[14px] text-slate-600" data-list="pk1_" data-n="6"></ul>
+        <a href="#contact" class="mt-7 inline-flex justify-center rounded-full border border-slate-200 px-5 py-2.5 text-[14px] font-medium text-slate-900 transition hover:border-slate-300 hover:bg-slate-50 lg:mt-auto lg:translate-y-0" data-i18n="pkg_cta">Get a quote</a>
+      </article>
+      <article class="reveal relative flex h-full flex-col rounded-2xl border border-blue-600/30 bg-white p-7 shadow-md ring-1 ring-blue-600/20">
+        <span class="absolute -top-3 left-7 rounded-full bg-blue-600 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-white" data-i18n="pkg_rec">Recommended</span>
+        <span class="text-[12px] font-semibold uppercase tracking-[0.16em] text-blue-600">Pro</span>
+        <h3 class="pkn mt-2 text-xl font-semibold tracking-tight text-slate-900" data-pk="2"></h3>
+        <p class="mt-2 text-[14px] leading-relaxed text-slate-600" data-i18n="pk2_for"></p>
+        <p class="mt-5 text-[15px] font-semibold text-slate-900" data-i18n="pkg_price"></p>
+        <ul class="pk-list mt-5 grid gap-2.5 text-[14px] text-slate-600" data-list="pk2_" data-n="7"></ul>
+        <a href="#contact" class="mt-7 inline-flex justify-center rounded-full bg-blue-600 px-5 py-2.5 text-[14px] font-medium text-white shadow-sm transition hover:bg-blue-700 lg:mt-auto" data-i18n="pkg_cta">Get a quote</a>
+      </article>
+      <article class="reveal flex h-full flex-col rounded-2xl border border-slate-200/80 bg-white p-7 shadow-sm transition hover:shadow-md">
+        <span class="text-[12px] font-semibold uppercase tracking-[0.16em] text-slate-400" data-i18n="pk3_name">Enterprise</span>
+        <h3 class="pkn mt-2 text-xl font-semibold tracking-tight text-slate-900" data-pk="3"></h3>
+        <p class="mt-2 text-[14px] leading-relaxed text-slate-600" data-i18n="pk3_for"></p>
+        <p class="mt-5 text-[15px] font-semibold text-slate-900" data-i18n="pkg_price"></p>
+        <ul class="pk-list mt-5 grid gap-2.5 text-[14px] text-slate-600" data-list="pk3_" data-n="6"></ul>
+        <a href="#contact" class="mt-7 inline-flex justify-center rounded-full border border-slate-200 px-5 py-2.5 text-[14px] font-medium text-slate-900 transition hover:border-slate-300 hover:bg-slate-50 lg:mt-auto" data-i18n="pkg_cta">Get a quote</a>
+      </article>
+    </div>
+    <p class="mx-auto mt-6 max-w-2xl text-center text-[13px] text-slate-500" data-i18n="pkg_setup"></p>
+
+    <div class="reveal mx-auto mt-16 max-w-3xl">
+      <h3 class="text-center text-xl font-semibold tracking-tight text-slate-900" data-i18n="faq_h"></h3>
+      <div class="mt-6 divide-y divide-slate-200/80 rounded-2xl border border-slate-200/80 bg-white shadow-sm">
+        <details class="group px-6 py-4"><summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-medium text-slate-900"><span data-i18n="fq1_q"></span><span class="text-slate-400 transition group-open:rotate-45">+</span></summary><p class="mt-3 text-[15px] leading-relaxed text-slate-600" data-i18n="fq1_a"></p></details>
+        <details class="group px-6 py-4"><summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-medium text-slate-900"><span data-i18n="fq2_q"></span><span class="text-slate-400 transition group-open:rotate-45">+</span></summary><p class="mt-3 text-[15px] leading-relaxed text-slate-600" data-i18n="fq2_a"></p></details>
+        <details class="group px-6 py-4"><summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-medium text-slate-900"><span data-i18n="fq3_q"></span><span class="text-slate-400 transition group-open:rotate-45">+</span></summary><p class="mt-3 text-[15px] leading-relaxed text-slate-600" data-i18n="fq3_a"></p></details>
+        <details class="group px-6 py-4"><summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-medium text-slate-900"><span data-i18n="fq4_q"></span><span class="text-slate-400 transition group-open:rotate-45">+</span></summary><p class="mt-3 text-[15px] leading-relaxed text-slate-600" data-i18n="fq4_a"></p></details>
+        <details class="group px-6 py-4"><summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-medium text-slate-900"><span data-i18n="fq5_q"></span><span class="text-slate-400 transition group-open:rotate-45">+</span></summary><p class="mt-3 text-[15px] leading-relaxed text-slate-600" data-i18n="fq5_a"></p></details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Contact terminal + direct WhatsApp ===== -->
+<section id="contact" class="scroll-mt-24 bg-slate-50 py-20 sm:py-24" aria-labelledby="consTitle">
+  <div class="mx-auto max-w-6xl px-5 sm:px-6">
+    <div class="reveal mx-auto max-w-2xl text-center">
+      <p class="text-[13px] font-semibold uppercase tracking-[0.16em] text-blue-600" data-i18n="contact_eyebrow">Contact</p>
+      <h2 id="consTitle" class="mt-3 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl" data-i18n="cons_title2"></h2>
+      <p class="mt-4 text-slate-600" data-i18n="cons_lead2"></p>
+    </div>
+    <div class="mt-10 grid gap-4 lg:grid-cols-[1.5fr_1fr]">
+      <form class="reveal rounded-2xl border border-slate-200/80 bg-white/80 p-6 shadow-sm backdrop-blur-sm sm:p-8" id="contactForm" novalidate>
+        <div class="grid gap-4 sm:grid-cols-2">
+          <label class="grid gap-1.5 text-[13px] font-medium text-slate-900"><span data-i18n="f_name">Full name</span><input class="field" name="name" autocomplete="name" required data-i18n-ph="ph_name"></label>
+          <label class="grid gap-1.5 text-[13px] font-medium text-slate-900"><span data-i18n="f_email">Work email</span><input class="field" name="email" type="email" autocomplete="email" required placeholder="gm@yourhotel.com"></label>
+          <label class="grid gap-1.5 text-[13px] font-medium text-slate-900"><span data-i18n="f_hotel">Business</span><input class="field" name="hotel" autocomplete="organization" data-i18n-ph="ph_hotel"></label>
+          <label class="grid gap-1.5 text-[13px] font-medium text-slate-900"><span data-i18n="f_keys">Size</span><select class="field" name="rooms"><option>1 – 20</option><option>21 – 60</option><option>61 – 150</option><option>150+</option></select></label>
+          <fieldset class="sm:col-span-2"><legend class="mb-2 text-[13px] font-medium text-slate-900" data-i18n="f_sys">Systems of interest</legend>
+            <div class="flex flex-wrap gap-2">
+              <label class="chip"><input type="checkbox" name="sys" value="AI assistant" class="peer sr-only" checked><span data-i18n="chk4">AI assistant</span></label>
+              <label class="chip"><input type="checkbox" name="sys" value="Reservation management" class="peer sr-only" checked><span data-i18n="chk1">Reservation management</span></label>
+              <label class="chip"><input type="checkbox" name="sys" value="AI chatbot" class="peer sr-only"><span data-i18n="chk3">AI chatbot</span></label>
+              <label class="chip"><input type="checkbox" name="sys" value="Website design" class="peer sr-only"><span data-i18n="chk2">Website design</span></label>
+            </div>
+          </fieldset>
+          <label class="grid gap-1.5 text-[13px] font-medium text-slate-900 sm:col-span-2"><span data-i18n="f_brief">Brief</span><textarea class="field min-h-[110px]" name="message" data-i18n-ph="ph_brief"></textarea></label>
+        </div>
+        <div class="mt-6 flex flex-wrap items-center justify-between gap-4">
+          <span class="text-[13px] text-slate-500" id="formStatus" role="status" data-i18n="form_note"></span>
+          <button class="rounded-full bg-blue-600 px-6 py-3 text-[15px] font-medium text-white shadow-sm transition hover:bg-blue-700" type="submit" data-i18n="cta_demo2">Get a free demo</button>
+        </div>
+      </form>
+      <div class="reveal grid content-start gap-4">
+        <div class="rounded-2xl border border-slate-200/80 bg-white p-7 shadow-sm">
+          <div class="grid h-11 w-11 place-items-center rounded-xl bg-emerald-50 text-emerald-600"><svg class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.2.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg></div>
+          <h3 class="mt-5 text-lg font-semibold tracking-tight text-slate-900" data-i18n="wa_card_t"></h3>
+          <p class="mt-1.5 text-[15px] text-slate-600" data-i18n="wa_card_p"></p>
+          <a class="wa-link mt-5 inline-flex w-full justify-center rounded-full bg-emerald-500 px-5 py-3 text-[15px] font-medium text-white shadow-sm transition hover:bg-emerald-600" target="_blank" rel="noopener" data-i18n="wa_card_btn">Message on WhatsApp</a>
+          <p class="mt-3 text-center text-[13px] text-slate-500">+90 554 024 86 98</p>
+        </div>
+        <div class="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm">
+          <p class="text-[13px] font-medium text-slate-500" data-i18n="mail_label">Email</p>
+          <a class="mt-1 block break-all font-medium text-slate-900 transition hover:text-blue-600" href="mailto:gulcanyesilbudak@icloud.com">gulcanyesilbudak@icloud.com</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="border-t border-slate-200/80 bg-white">
+  <div class="mx-auto flex max-w-6xl flex-col gap-6 px-5 py-10 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+    <div>
+      <a href="#top" class="flex items-center gap-2.5 text-slate-900" aria-label="AXON"><svg class="h-6 w-6" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#0F172A"/><circle cx="10" cy="16" r="4" fill="#fff"/><circle cx="22" cy="16" r="4" fill="#fff"/><circle cx="16" cy="16" r="1.6" fill="#38BDF8"/></svg><span class="text-[14px] font-semibold tracking-[0.22em]">AXON</span></a>
+      <p class="mt-3 max-w-sm text-[13px] text-slate-500" data-i18n="foot_tag"></p>
+    </div>
+    <p class="text-[13px] text-slate-400">© <span id="yr"></span> AXON Systems · <span data-i18n="foot_rights"></span></p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var LANGS = ['tr', 'en', 'de', 'fr'];
+  var LOCALE = { tr: 'tr-TR', en: 'en-GB', de: 'de-DE', fr: 'fr-FR' };
+  var WHATSAPP = '905540248698', CONTACT_EMAIL = 'gulcanyesilbudak@icloud.com';
+  var I18N = __I18N__;
+
+  /* ---------- language ---------- */
+  var lang = 'tr';
+  var stored = null; try { stored = localStorage.getItem('axonLang'); } catch (e) {}
+  if (LANGS.indexOf(stored) > -1) lang = stored;
+  else { var nl = (navigator.language || 'tr').slice(0, 2).toLowerCase(); if (LANGS.indexOf(nl) > -1) lang = nl; }
+  function t(k, vars) {
+    var s = (I18N[lang] && I18N[lang][k] != null) ? I18N[lang][k] : I18N.en[k];
+    if (vars && typeof s === 'string') Object.keys(vars).forEach(function (v) { s = s.replace('{' + v + '}', vars[v]); });
+    return s == null ? '' : s;
+  }
+  var langListeners = [];
+  function applyLang(l) {
+    lang = l; document.documentElement.lang = l;
+    try { localStorage.setItem('axonLang', l); } catch (e) {}
+    $$('[data-i18n]').forEach(function (el) { el.textContent = t(el.getAttribute('data-i18n')); });
+    $$('[data-i18n-ph]').forEach(function (el) { el.setAttribute('placeholder', t(el.getAttribute('data-i18n-ph'))); });
+    $$('[data-i18n-aria]').forEach(function (el) { el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria'))); });
+    $$('.lang button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.lang === l)); });
+    $$('.wa-link').forEach(function (a) { a.href = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(t('wa_text')); });
+    langListeners.forEach(function (fn) { fn(); });
+  }
+  $$('.lang button').forEach(function (b) { b.addEventListener('click', function () { applyLang(b.dataset.lang); }); });
+
+  /* ---------- active nav link ---------- */
+  var navLinks = $$('.nav-a');
+  var io = 'IntersectionObserver' in window ? new IntersectionObserver(function (es) {
+    es.forEach(function (e) { if (e.isIntersecting) navLinks.forEach(function (a) { a.classList.toggle('text-slate-900', a.getAttribute('href') === '#' + e.target.id); }); });
+  }, { rootMargin: '-45% 0px -50% 0px' }) : null;
+  if (io) navLinks.forEach(function (a) { var s = $(a.getAttribute('href')); if (s) io.observe(s); });
+
+  /* ---------- reveal on scroll ---------- */
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if ('IntersectionObserver' in window && !reduce) {
+    document.documentElement.classList.add('js-reveal');
+    var ro = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); } }); }, { rootMargin: '0px 0px -8% 0px' });
+    $$('.reveal').forEach(function (el) { ro.observe(el); });
+  }
+
+  /* ---------- packages ---------- */
+  var CHECK = '<svg class="mt-0.5 h-4 w-4 flex-none text-blue-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.7 5.3a1 1 0 0 1 0 1.4l-8 8a1 1 0 0 1-1.4 0l-4-4a1 1 0 1 1 1.4-1.4L8 12.6l7.3-7.3a1 1 0 0 1 1.4 0z" clip-rule="evenodd"/></svg>';
+  var pkgSector = 'hotel';
+  try { pkgSector = localStorage.getItem('axonSector') || 'hotel'; } catch (e) {}
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function renderPkgs() {
+    $$('.pkn').forEach(function (h) { h.textContent = t('pk' + h.getAttribute('data-pk') + '_n_' + pkgSector); });
+    $$('.pkg-sector button').forEach(function (b) { b.setAttribute('aria-selected', String(b.getAttribute('data-sector') === pkgSector)); });
+    $$('.pk-list').forEach(function (ul) {
+      var p = ul.getAttribute('data-list'), n = +ul.getAttribute('data-n'), h = '';
+      for (var i = 1; i <= n; i++) h += '<li class="flex gap-2.5">' + CHECK + '<span>' + esc(t(p + i)) + '</span></li>';
+      ul.innerHTML = h;
+    });
+  }
+  $$('.pkg-sector button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      pkgSector = b.getAttribute('data-sector');
+      try { localStorage.setItem('axonSector', pkgSector); } catch (e) {}
+      renderPkgs();
+    });
+  });
+  langListeners.push(renderPkgs);
+
+  /* ---------- booking engine (demo inventory) ---------- */
+  var ROOMS = [
+    { size: 32, maxAdults: 2, base: 92 },
+    { size: 30, maxAdults: 2, base: 96 },
+    { size: 42, maxAdults: 3, base: 158 },
+    { size: 48, maxAdults: 5, base: 178 }
+  ];
+  function roomT(i) { var r = t('rooms')[i]; return { name: r[0], beds: r[1], desc: r[2] }; }
+  var FX = { EUR: { rate: 1, sym: '€' }, USD: { rate: 1.09, sym: '$' }, TRY: { rate: 44.5, sym: '₺' } };
+  var state = { room: 0, cur: 'EUR', inD: null, outD: null, adults: 2 };
+  var today = new Date(); today.setHours(0, 0, 0, 0);
+  function hash(n) { var x = Math.sin(n * 12.9898 + 78.233) * 43758.5453; return x - Math.floor(x); }
+  function dayKey(d) { return d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate(); }
+  function nightly(d, ri) {
+    var r = ROOMS[ri], k = dayKey(d), dow = d.getDay(), f = 1 + (hash(k) - .5) * .16;
+    if (dow === 5 || dow === 6) f *= 1.18;
+    var m = d.getMonth(); if (m >= 3 && m <= 9) f *= 1.08;
+    return Math.round(r.base * f);
+  }
+  function soldOut(d, ri) { return hash(dayKey(d) * 7 + ri * 131) < .07; }
+  function fmt(eur) { var v = eur * FX[state.cur].rate; return FX[state.cur].sym + ' ' + Math.round(v).toLocaleString(LOCALE[lang]); }
+  function short(eur) {
+    var v = eur * FX[state.cur].rate;
+    if (state.cur === 'TRY') return (v >= 10000 ? (v / 1000).toFixed(1) + 'k' : Math.round(v / 10) * 10 + '');
+    return FX[state.cur].sym + Math.round(v);
+  }
+  function sameDay(a, b) { return a && b && a.getTime() === b.getTime(); }
+  function addDays(d, n) { var x = new Date(d); x.setDate(x.getDate() + n); return x; }
+  function nightsBetween(a, b) { return Math.round((b - a) / 864e5); }
+  function rangeHasSold(a, b, ri) { for (var d = new Date(a); d < b; d = addDays(d, 1)) if (soldOut(d, ri)) return true; return false; }
+  function pickDefault() {
+    for (var s = 7; s < 50; s++) { var a = addDays(today, s), b = addDays(a, 3); if (!rangeHasSold(a, b, state.room)) { state.inD = a; state.outD = b; return; } }
+  }
+  var tabs = $('#roomTabs');
+  var TAB = 'rounded-lg px-3 py-2 text-[13px] font-medium text-slate-500 transition hover:text-slate-900 aria-selected:bg-white aria-selected:text-slate-900 aria-selected:shadow-sm';
+  ROOMS.forEach(function (r, i) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = TAB; b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', String(i === state.room));
+    b.addEventListener('click', function () {
+      state.room = i; state.adults = Math.min(state.adults, r.maxAdults);
+      if (state.inD && state.outD && rangeHasSold(state.inD, state.outD, i)) { state.inD = null; state.outD = null; }
+      $$('[role=tab]', tabs).forEach(function (tb, j) { tb.setAttribute('aria-selected', String(j === i)); });
+      render();
+    });
+    tabs.appendChild(b);
+  });
+  $$('#currencySeg button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      state.cur = b.dataset.cur;
+      $$('#currencySeg button').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      render();
+    });
+  });
+  $('#adMinus').addEventListener('click', function () { if (state.adults > 1) { state.adults--; render(); } });
+  $('#adPlus').addEventListener('click', function () { if (state.adults < ROOMS[state.room].maxAdults) { state.adults++; render(); } });
+  var monthsEl = $('#months');
+  monthsEl.addEventListener('click', function (e) {
+    var btn = e.target.closest('button[data-t]'); if (!btn || btn.disabled) return;
+    var d = new Date(+btn.dataset.t);
+    if (!state.inD || state.outD || d <= state.inD) { state.inD = d; state.outD = null; }
+    else if (rangeHasSold(state.inD, d, state.room)) { toast(t('t_sold'), true); state.inD = d; state.outD = null; }
+    else if (nightsBetween(state.inD, d) > 21) { toast(t('t_max'), true); return; }
+    else state.outD = d;
+    render();
+  });
+  var DAY = 'grid h-12 place-content-center gap-0.5 rounded-lg text-center transition disabled:cursor-not-allowed ';
+  function renderCalendar() {
+    var html = '', dows = t('dows').split(','), loc = LOCALE[lang];
+    for (var m = 0; m < 2; m++) {
+      var first = new Date(today.getFullYear(), today.getMonth() + m, 1);
+      html += '<div><h4 class="mb-2 text-[13px] font-semibold capitalize text-slate-900">' + first.toLocaleDateString(loc, { month: 'long', year: 'numeric' }) + '</h4>' +
+        '<div class="grid grid-cols-7 gap-1 pb-1 text-center text-[11px] font-medium text-slate-400">' + dows.map(function (x) { return '<span>' + x + '</span>'; }).join('') + '</div><div class="grid grid-cols-7 gap-1">';
+      var offset = (first.getDay() + 6) % 7;
+      for (var e = 0; e < offset; e++) html += '<span></span>';
+      var dim = new Date(first.getFullYear(), first.getMonth() + 1, 0).getDate(), avg = ROOMS[state.room].base;
+      for (var dd = 1; dd <= dim; dd++) {
+        var d = new Date(first.getFullYear(), first.getMonth(), dd), past = d < today, so = !past && soldOut(d, state.room);
+        var p = nightly(d, state.room), edge = sameDay(d, state.inD) || sameDay(d, state.outD);
+        var inRange = state.inD && state.outD && d > state.inD && d < state.outD;
+        var canCheckout = so && state.inD && !state.outD && d > state.inD;
+        var cls = DAY + (edge ? 'bg-blue-600 text-white shadow-sm' : inRange ? 'bg-blue-50 text-slate-900' : past ? 'text-slate-300' : so ? 'bg-slate-50 text-slate-300' : 'text-slate-700 hover:bg-slate-100');
+        var pc = edge ? 'text-blue-100' : so ? 'text-rose-400' : p < avg * .98 ? 'text-emerald-600' : p > avg * 1.15 ? 'text-amber-600' : 'text-slate-400';
+        var label = d.toLocaleDateString(loc, { weekday: 'long', day: 'numeric', month: 'long' }) + (past ? '' : so ? ' · ' + t('leg_sold') : ' · ' + fmt(p));
+        html += '<button type="button" class="' + cls + '" data-t="' + d.getTime() + '"' + ((past || (so && !canCheckout)) ? ' disabled' : '') + ' aria-label="' + label + '"><span class="text-[13px] font-medium leading-none">' + dd + '</span><span class="text-[10px] leading-none ' + pc + '">' + (past ? '&nbsp;' : so ? t('sold') : short(p)) + '</span></button>';
+      }
+      html += '</div></div>';
+    }
+    monthsEl.innerHTML = html;
+    $('#calLabel').textContent = !state.inD ? t('cal_in') : !state.outD ? t('cal_out') : t('cal_n', { n: nightsBetween(state.inD, state.outD) });
+  }
+  function quote() {
+    if (!state.inD || !state.outD) return null;
+    var n = 0, sub = 0;
+    for (var d = new Date(state.inD); d < state.outD; d = addDays(d, 1)) { sub += nightly(d, state.room); n++; }
+    var extra = Math.max(0, state.adults - 2) * 18 * n;
+    return { nights: n, sub: sub, extra: extra, total: sub + extra };
+  }
+  function row(a, b, cls) { return '<div class="flex justify-between gap-3 ' + (cls || 'text-slate-600') + '"><span>' + a + '</span><span>' + b + '</span></div>'; }
+  function renderSide() {
+    var r = ROOMS[state.room], rt = roomT(state.room);
+    $('#roomCard').innerHTML = '<p class="text-[12px] font-medium text-slate-400">' + r.size + ' m² · ' + esc(t('up_to', { n: r.maxAdults })) + '</p><h3 class="mt-1 text-lg font-semibold tracking-tight text-slate-900">' + esc(rt.name) + '</h3><p class="mt-1 text-[14px] leading-relaxed text-slate-600">' + esc(rt.desc) + '</p>' +
+      '<div class="mt-3 flex flex-wrap gap-1.5 text-[12px] text-slate-600">' + [rt.beds, t('spec1'), t('spec2'), t('spec3')].map(function (s) { return '<span class="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1">' + esc(s) + '</span>'; }).join('') + '</div>';
+    $('#adults').textContent = state.adults;
+    $('#adMinus').disabled = state.adults <= 1; $('#adPlus').disabled = state.adults >= r.maxAdults;
+    var q = quote(), b = $('#basket');
+    var df = function (d) { return d.toLocaleDateString(LOCALE[lang], { day: 'numeric', month: 'short' }); };
+    if (!q) { b.innerHTML = '<p class="text-slate-400">' + esc(t('b_empty')) + '</p>'; $('#reserveBtn').disabled = true; return; }
+    $('#reserveBtn').disabled = false;
+    b.innerHTML = row(df(state.inD) + ' → ' + df(state.outD), q.nights + ' ' + (q.nights > 1 ? t('nights') : t('night'))) +
+      row(esc(t('b_room', { p: fmt(q.sub / q.nights) })), fmt(q.sub)) +
+      (q.extra ? row(esc(t('b_extra')), fmt(q.extra)) : '') +
+      row(esc(t('b_ota')), '<span class="text-emerald-600">' + fmt(0) + '</span>') +
+      row(esc(t('b_total')), fmt(q.total), 'mt-1 border-t border-slate-200/80 pt-3 text-[16px] font-semibold text-slate-900') +
+      '<p class="text-[12px] text-slate-400">' + esc(t('b_tax')) + '</p>';
+  }
+  var toastT;
+  function toast(msg, warn) {
+    var el = $('#engineToast'); el.textContent = msg; el.className = 'min-h-[1.25rem] text-[13px] font-medium ' + (warn ? 'text-rose-500' : 'text-emerald-600');
+    clearTimeout(toastT); toastT = setTimeout(function () { el.textContent = ''; }, 4200);
+  }
+  $('#reserveBtn').addEventListener('click', function () {
+    var q = quote(); if (!q) return;
+    toast(t('t_hold', { room: roomT(state.room).name, total: fmt(q.total) }));
+  });
+  function render() { $$('[role=tab]', tabs).forEach(function (b, i) { b.textContent = roomT(i).name; }); renderCalendar(); renderSide(); }
+  pickDefault();
+  langListeners.push(render);
+
+  /* ---------- contact form (opens the visitor's mail app) ---------- */
+  $('#contactForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var f = e.target, st = $('#formStatus');
+    var name = f.name.value.trim(), email = f.email.value.trim();
+    if (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      st.className = 'text-[13px] font-medium text-rose-500'; st.textContent = !name ? t('err_name') : t('err_email');
+      (!name ? f.name : f.email).focus(); return;
+    }
+    var sys = $$('input[name="sys"]:checked', f).map(function (x) { return x.value; }).join(', ');
+    var body = 'Name: ' + name + '\nEmail: ' + email + '\nBusiness: ' + f.hotel.value + '\nSize: ' + f.rooms.value + '\nSystems: ' + sys + '\nLanguage: ' + lang.toUpperCase() + '\n\n' + f.message.value;
+    st.className = 'text-[13px] font-medium text-emerald-600'; st.textContent = t('form_ok');
+    window.location.href = 'mailto:' + CONTACT_EMAIL + '?subject=' + encodeURIComponent('AXON demo, ' + (f.hotel.value || name)) + '&body=' + encodeURIComponent(body);
+  });
+
+  $('#yr').textContent = new Date().getFullYear();
+  applyLang(lang);
+})();
+</script>
+
+<script type="module">
+/* ===== AXON synapse: a light studio object (frosted glass axons, titanium details, sapphire pulse) ===== */
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+const stage = document.getElementById('stage');
+const canvas = document.getElementById('axon3d');
+const still = document.getElementById('stageStill');
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const mobile = matchMedia('(max-width: 767px), (pointer: coarse)').matches;
+const lowEnd = (navigator.hardwareConcurrency || 8) <= 2;
+
+function start() {
+  let renderer;
+  try { renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' }); }
+  catch (e) { return; }
+  if (!renderer.getContext()) return;
+  const dpr = Math.min(window.devicePixelRatio || 1, mobile ? 1.5 : 2);
+  renderer.setPixelRatio(dpr);
+  renderer.setClearColor(0xffffff, 0);
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.0;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 60);
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromScene(new RoomEnvironment(renderer), 0.04).texture;
+
+  // soft photo-studio lighting
+  scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+  const key = new THREE.DirectionalLight(0xffffff, 1.5); key.position.set(3, 5, 4); scene.add(key);
+  const fill = new THREE.DirectionalLight(0xdbeafe, 0.55); fill.position.set(-4, 1, 3); scene.add(fill);
+
+  const SAPPHIRE = new THREE.Color('#2563EB'), SKY = new THREE.Color('#38BDF8');
+
+  const glass = new THREE.MeshPhysicalMaterial({
+    color: 0xf1f5fb, metalness: 0, roughness: 0.15, transmission: 0.9, ior: 1.5, thickness: 0.9,
+    attenuationColor: new THREE.Color('#bfdbfe'), attenuationDistance: 1.4, clearcoat: 1, clearcoatRoughness: 0.06,
+    specularIntensity: 1, specularColor: new THREE.Color('#ffffff'), envMapIntensity: 1.7
+  });
+  const titanium = new THREE.MeshPhysicalMaterial({ color: 0xc3cad4, metalness: 1, roughness: 0.3, anisotropy: 0.7, envMapIntensity: 1.25 });
+  const coreWire = new THREE.MeshStandardMaterial({ color: 0x64748b, metalness: 0.85, roughness: 0.3 });
+
+  const rig = new THREE.Group(); scene.add(rig);
+  const obj = new THREE.Group(); obj.scale.setScalar(1.15); rig.add(obj);
+
+  // a tube whose radius tapers along its length
+  function taperTube(curve, seg, rad, r0, r1) {
+    const frames = curve.computeFrenetFrames(seg, false), pos = [], nor = [], idx = [];
+    for (let i = 0; i <= seg; i++) {
+      const u = i / seg, P = curve.getPointAt(u), N = frames.normals[i], B = frames.binormals[i], r = r0 + (r1 - r0) * Math.pow(u, 1.3);
+      for (let j = 0; j <= rad; j++) {
+        const v = j / rad * Math.PI * 2, s = Math.sin(v), c = -Math.cos(v);
+        const nx = c * N.x + s * B.x, ny = c * N.y + s * B.y, nz = c * N.z + s * B.z;
+        nor.push(nx, ny, nz); pos.push(P.x + r * nx, P.y + r * ny, P.z + r * nz);
+      }
+    }
+    for (let i = 0; i < seg; i++) for (let j = 0; j < rad; j++) {
+      const a = i * (rad + 1) + j, b = (i + 1) * (rad + 1) + j;
+      idx.push(a, b, a + 1, b, b + 1, a + 1);
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+    g.setAttribute('normal', new THREE.Float32BufferAttribute(nor, 3));
+    g.setIndex(idx); return g;
+  }
+
+  // two axons meeting across a small synaptic gap
+  const GAP = 0.62, BULB = 0.26;
+  const curveA = new THREE.CatmullRomCurve3([
+    new THREE.Vector3(-2.55, 0.95, -0.35), new THREE.Vector3(-1.95, 0.72, -0.1), new THREE.Vector3(-1.25, 0.18, 0.12), new THREE.Vector3(-GAP - BULB * 0.7, 0.02, 0)
+  ]);
+  const curveB = new THREE.CatmullRomCurve3([
+    new THREE.Vector3(2.55, -0.85, -0.3), new THREE.Vector3(1.95, -0.66, -0.05), new THREE.Vector3(1.25, -0.16, 0.12), new THREE.Vector3(GAP + BULB * 0.7, -0.02, 0)
+  ]);
+  const curves = [curveA, curveB];
+  const SEG = mobile ? 90 : 140, RAD = mobile ? 20 : 32;
+  curves.forEach((c, k) => {
+    obj.add(new THREE.Mesh(taperTube(c, SEG, RAD, 0.15, 0.1), glass));               // frosted glass sheath
+    obj.add(new THREE.Mesh(new THREE.TubeGeometry(c, SEG, 0.03, 10, false), coreWire)); // fine metal core seen through the glass
+    // rounded glass cap and titanium collars
+    const p0 = c.getPointAt(0), t0 = c.getTangentAt(0);
+    const cap = new THREE.Mesh(new THREE.SphereGeometry(0.15, 24, 16), glass); cap.position.copy(p0); obj.add(cap);
+    [0.04, 0.5, 0.86].forEach((u) => {
+      const ring = new THREE.Mesh(new THREE.TorusGeometry(u < 0.1 ? 0.158 : 0.152 - u * 0.045, 0.02, 12, 56), titanium);
+      ring.position.copy(c.getPointAt(u)); ring.lookAt(ring.position.clone().add(c.getTangentAt(u))); obj.add(ring);
+    });
+    // synaptic bouton
+    const tip = c.getPointAt(1).clone().add(c.getTangentAt(1).multiplyScalar(BULB * 0.55));
+    const bulb = new THREE.Mesh(new THREE.SphereGeometry(BULB, 48, 32), glass); bulb.position.copy(tip); obj.add(bulb);
+    const inner = new THREE.Mesh(new THREE.SphereGeometry(BULB * 0.34, 24, 16), new THREE.MeshBasicMaterial({ color: SAPPHIRE }));
+    inner.position.copy(tip); obj.add(inner); c.userData = { tip, inner };
+  });
+
+  // soft round sprite texture
+  function dotTexture(inner, outer) {
+    const cv = document.createElement('canvas'); cv.width = cv.height = 64;
+    const g = cv.getContext('2d'), gr = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+    gr.addColorStop(0, inner); gr.addColorStop(0.45, outer); gr.addColorStop(1, 'rgba(255,255,255,0)');
+    g.fillStyle = gr; g.fillRect(0, 0, 64, 64);
+    const tx = new THREE.CanvasTexture(cv); tx.colorSpace = THREE.SRGBColorSpace; return tx;
+  }
+  const haloTex = dotTexture('rgba(56,189,248,0.95)', 'rgba(37,99,235,0.28)');
+  const dotTex = dotTexture('rgba(37,99,235,1)', 'rgba(37,99,235,0.35)');
+
+  // the synapse: a calm sapphire heartbeat
+  const coreMat = new THREE.SpriteMaterial({ map: haloTex, transparent: true, depthWrite: false, opacity: 0.55 });
+  const core = new THREE.Sprite(coreMat); core.scale.setScalar(0.7); obj.add(core);
+  const heart = new THREE.Mesh(new THREE.SphereGeometry(0.05, 20, 14), new THREE.MeshBasicMaterial({ color: SKY })); obj.add(heart);
+  // a fine current bridging the two boutons
+  const current = new THREE.Mesh(new THREE.CylinderGeometry(0.011, 0.011, (GAP - BULB * 0.95) * 2, 12, 1, true), new THREE.MeshBasicMaterial({ color: SAPPHIRE, transparent: true, opacity: 0.3, depthWrite: false }));
+  current.rotation.z = Math.PI / 2; obj.add(current);
+  const waves = [0, 1].map(() => {
+    const m = new THREE.Mesh(new THREE.TorusGeometry(0.16, 0.006, 8, 96), new THREE.MeshBasicMaterial({ color: SAPPHIRE, transparent: true, opacity: 0, depthWrite: false }));
+    obj.add(m); return { m, t: 1 };
+  });
+
+  // impulses travelling inside the glass towards the gap
+  const pulses = [];
+  curves.forEach((c, ci) => {
+    for (let i = 0; i < 3; i++) {
+      const m = new THREE.Mesh(new THREE.SphereGeometry(0.036, 14, 10), new THREE.MeshBasicMaterial({ color: i % 2 ? SKY : SAPPHIRE, transparent: true, depthTest: false }));
+      const halo = new THREE.Sprite(new THREE.SpriteMaterial({ map: haloTex, transparent: true, depthWrite: false, depthTest: false, opacity: 0.55 }));
+      halo.scale.setScalar(0.34); m.add(halo); m.renderOrder = halo.renderOrder = 10; obj.add(m);
+      pulses.push({ m, c, off: i / 3 + ci * 0.17, last: 0 });
+    }
+  });
+
+  // photons crossing the gap
+  const NPH = mobile ? 18 : 30, phGeo = new THREE.BufferGeometry(), phPos = new Float32Array(NPH * 3), phSeed = [];
+  for (let i = 0; i < NPH; i++) phSeed.push([Math.random(), (Math.random() - 0.5) * 0.24, (Math.random() - 0.5) * 0.24, 0.25 + Math.random() * 0.5, Math.random() < 0.5 ? 1 : -1]);
+  phGeo.setAttribute('position', new THREE.BufferAttribute(phPos, 3));
+  obj.add(new THREE.Points(phGeo, new THREE.PointsMaterial({ map: dotTex, size: 0.045, transparent: true, opacity: 0.85, depthWrite: false })));
+
+  // a few floating particles around the object
+  const NF = mobile ? 24 : 42, fGeo = new THREE.BufferGeometry(), fPos = new Float32Array(NF * 3), fSeed = [];
+  for (let i = 0; i < NF; i++) fSeed.push([(Math.random() - 0.5) * 6, (Math.random() - 0.5) * 3.2, -Math.random() * 2 - 0.2, Math.random() * 6.28, 0.15 + Math.random() * 0.35]);
+  fGeo.setAttribute('position', new THREE.BufferAttribute(fPos, 3));
+  rig.add(new THREE.Points(fGeo, new THREE.PointsMaterial({ map: dotTex, size: 0.035, transparent: true, opacity: 0.35, depthWrite: false })));
+
+  // soft contact shadow on an invisible floor
+  const sc = document.createElement('canvas'); sc.width = 256; sc.height = 64;
+  const sg = sc.getContext('2d'); sg.setTransform(4, 0, 0, 1, 0, 0);
+  const sgr = sg.createRadialGradient(32, 32, 0, 32, 32, 31);
+  sgr.addColorStop(0, 'rgba(15,23,42,0.26)'); sgr.addColorStop(0.45, 'rgba(15,23,42,0.09)'); sgr.addColorStop(1, 'rgba(15,23,42,0)');
+  sg.fillStyle = sgr; sg.fillRect(0, 0, 64, 64);
+  const shadowTex = new THREE.CanvasTexture(sc);
+  const shadow = new THREE.Mesh(new THREE.PlaneGeometry(6.4, 2.4), new THREE.MeshBasicMaterial({ map: shadowTex, transparent: true, depthWrite: false, opacity: 0.8 }));
+  shadow.rotation.x = -Math.PI / 2; shadow.position.y = -1.55; rig.add(shadow);
+
+  // layout: frame the object to the stage
+  function resize() {
+    const w = stage.clientWidth, h = stage.clientHeight; if (!w || !h) return;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    const fit = 5.3 / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * Math.min(camera.aspect, 1.3));
+    const z = Math.max(5.8, fit); camera.position.set(0, z * 0.2, z); camera.lookAt(0, -0.25, 0);
+    camera.updateProjectionMatrix();
+  }
+  new ResizeObserver(resize).observe(stage); resize();
+
+  // damped pointer parallax
+  const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
+  window.addEventListener('pointermove', (e) => { mouse.tx = e.clientX / innerWidth * 2 - 1; mouse.ty = -(e.clientY / innerHeight) * 2 + 1; }, { passive: true });
+
+  const clock = new THREE.Clock(); let T = 0, beat = 0, visible = true, running = false, shown = false;
+  function frame(dt) {
+    T += dt;
+    mouse.x += (mouse.tx - mouse.x) * Math.min(1, dt * 3); mouse.y += (mouse.ty - mouse.y) * Math.min(1, dt * 3);
+    rig.rotation.y = Math.sin(T * 0.25) * 0.12 + mouse.x * 0.22;
+    rig.rotation.x = mouse.y * -0.1;
+    const bob = Math.sin(T * 0.9) * 0.05; obj.position.y = bob;
+    shadow.scale.setScalar(1 - bob * 0.6); shadow.material.opacity = 0.8 - bob * 2;
+
+    pulses.forEach((p) => {
+      const u = (T * 0.22 + p.off) % 1, e = u * u * (3 - 2 * u);
+      p.m.position.copy(p.c.getPointAt(Math.min(e, 0.999)));
+      p.m.material.opacity = 1;
+      p.m.visible = u < 0.985;
+      if (u < p.last) { beat = 1; const w = waves.find((x) => x.t >= 1) || waves[0]; w.t = 0; }
+      p.last = u;
+    });
+    beat = Math.max(0, beat - dt * 1.6);
+    const breathe = 0.5 + 0.5 * Math.sin(T * 2.2);
+    core.scale.setScalar(0.62 + breathe * 0.1 + beat * 0.3); coreMat.opacity = 0.5 + breathe * 0.12 + beat * 0.35;
+    heart.scale.setScalar(1 + beat * 0.6);
+    curves.forEach((c) => { c.userData.inner.scale.setScalar(1 + beat * 0.35); c.userData.inner.material.color.copy(SAPPHIRE).lerp(SKY, beat); });
+    current.material.opacity = 0.18 + breathe * 0.12 + beat * 0.6; current.scale.y = current.scale.z = 1 + beat * 1.5;
+    waves.forEach((w) => { w.t = Math.min(1, w.t + dt * 0.9); w.m.scale.setScalar(0.5 + w.t * 1.6); w.m.material.opacity = (1 - w.t) * 0.7; });
+
+    for (let i = 0; i < NPH; i++) {
+      const s = phSeed[i]; s[0] += dt * s[3]; if (s[0] > 1) { s[0] = 0; s[4] = Math.random() < 0.5 ? 1 : -1; }
+      const x = (s[0] * 2 - 1) * (GAP - 0.05) * s[4];
+      phPos[i * 3] = x; phPos[i * 3 + 1] = s[1] * Math.sin(s[0] * Math.PI); phPos[i * 3 + 2] = s[2] * Math.sin(s[0] * Math.PI);
+    }
+    phGeo.attributes.position.needsUpdate = true;
+    for (let i = 0; i < NF; i++) {
+      const s = fSeed[i];
+      fPos[i * 3] = s[0] + Math.sin(T * s[4] + s[3]) * 0.12; fPos[i * 3 + 1] = s[1] + Math.cos(T * s[4] * 0.8 + s[3]) * 0.1; fPos[i * 3 + 2] = s[2];
+    }
+    fGeo.attributes.position.needsUpdate = true;
+    renderer.render(scene, camera);
+    if (!shown) { shown = true; canvas.classList.remove('opacity-0'); still.classList.add('opacity-0'); }
+  }
+  function loop() {
+    if (!visible || document.hidden) { running = false; return; }
+    running = true; frame(Math.min(clock.getDelta(), 0.05)); requestAnimationFrame(loop);
+  }
+  function kick() { if (!running && !reduced) { clock.getDelta(); loop(); } }
+  new IntersectionObserver((es) => { visible = es[0].isIntersecting; kick(); }).observe(stage);
+  document.addEventListener('visibilitychange', kick);
+  if (reduced) { T = 2.4; frame(0); } else kick();
+  window.__axon3d = { renderer, scene, camera };
+}
+if (!lowEnd) { try { start(); } catch (e) { /* keep the still image */ } }
+</script>
+</body>
+</html>

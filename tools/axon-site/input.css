@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  h1, h2, h3 { text-wrap: balance; }
+  summary::-webkit-details-marker { display: none; }
+  ul::-webkit-scrollbar { display: none; }
+}
+@layer components {
+  .field { @apply w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-[15px] font-normal text-slate-900 shadow-sm outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10; }
+  .chip { @apply cursor-pointer select-none; }
+  .chip span { @apply inline-flex rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-600 transition hover:border-slate-300; }
+  .chip input:checked + span { @apply border-blue-600 bg-blue-50 text-blue-700; }
+  .chip input:focus-visible + span { @apply ring-4 ring-blue-500/20; }
+  .js-reveal .reveal { opacity: 0; transform: translateY(16px); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
+  .js-reveal .reveal.in { opacity: 1; transform: none; }
+}
