@@ -700,21 +700,17 @@ html.light .glass { box-shadow: 0 1px 2px rgba(15, 23, 42, .04), 0 8px 28px rgba
 html.light .num-card { background: #FFFFFF; box-shadow: 0 8px 28px rgba(15, 23, 42, .05); }
 html.light main > section:not(.hero):nth-of-type(even) { background: #FFFFFF; }
 html.light .sys-num .big { -webkit-text-stroke: 1px rgba(15, 23, 42, .18); }
-/* the hero keeps the dark brand world */
-html.light .hero, html.light .proof {
-  --void-950: #020408; --void-900: #020408; --glass: rgba(10, 18, 36, .55); --hairline: rgba(255, 255, 255, .08); --hairline-strong: rgba(255, 255, 255, .3);
-  --chrome-50: #F8FAFC; --chrome-200: #CBD5E1; --chrome-400: #94A3B8; --synapse: #38BDF8; --violet: #818CF8;
-}
-html.light .hero { background: #020408; }
-html.light .proof { background: #020408; padding-bottom: 28px; }
-html.light:not(.past-hero) .nav-shell {
-  --glass: rgba(10, 18, 36, .55); --hairline: rgba(255, 255, 255, .08); --hairline-strong: rgba(255, 255, 255, .3);
-  --chrome-50: #F8FAFC; --chrome-200: #CBD5E1; --chrome-400: #94A3B8; --void-950: #020408; --synapse: #38BDF8;
-}
+/* light hero: the 3D scene renders on a soft platinum backdrop */
+html.light .hero::before { background: linear-gradient(90deg, rgba(233, 238, 245, .96) 0%, rgba(233, 238, 245, .86) 34%, rgba(233, 238, 245, .3) 58%, rgba(233, 238, 245, 0) 72%); }
+@media (max-width: 760px) { html.light .hero::before { background: linear-gradient(180deg, rgba(233, 238, 245, 0) 0%, rgba(233, 238, 245, .2) 30%, rgba(233, 238, 245, .9) 52%, rgba(233, 238, 245, .97) 100%); } }
+html.light .vignette { display: none; }
+html.light .proof { background: rgba(255, 255, 255, .7); }
+html.light .scene-fallback { background: radial-gradient(800px 420px at 50% 30%, rgba(2, 119, 189, .10), transparent 70%), #E9EEF5; }
+html.light .logo-mark { mix-blend-mode: multiply; filter: invert(1) hue-rotate(180deg) contrast(1.4); }
+html.light .chrome-text { background: linear-gradient(180deg, #0B1220 0%, #334155 100%); -webkit-background-clip: text; background-clip: text; text-shadow: none; }
 html.light.past-hero #scene { opacity: 0; }
-html.light.past-hero .logo-mark { mix-blend-mode: multiply; filter: invert(1) hue-rotate(180deg) contrast(1.4); }
-html.light.past-hero .chrome-text { background: linear-gradient(180deg, #0B1220 0%, #334155 100%); -webkit-background-clip: text; background-clip: text; text-shadow: none; }
-html.light .nav.scrolled, html.light.past-hero .nav { background: rgba(255, 255, 255, .9); box-shadow: 0 6px 24px rgba(15, 23, 42, .08); }
+
+html.light .nav, html.light .nav.scrolled { background: rgba(255, 255, 255, .9); box-shadow: 0 6px 24px rgba(15, 23, 42, .08); }
 html.light .frame-bar, html.light .room-tabs, html.light .seg, html.light .chat-form, html.light .lang, html.light .stack div { background: #F1F4F8; }
 html.light .day { background: #F1F4F8; }
 html.light .fab-btn, html.light .wa-fab, html.light .store-note { background: rgba(255, 255, 255, .95); box-shadow: 0 8px 24px rgba(15, 23, 42, .12); }
@@ -3023,13 +3019,16 @@ html.light ::selection { background: rgba(2, 119, 189, .2); color: #0B1220; }
     renderer.setPixelRatio(dpr);
     var usePost = !!(THREE.EffectComposer && THREE.RenderPass && THREE.UnrealBloomPass && THREE.ShaderPass);
     // shaders work in linear and encode to sRGB on output, so the fog colour is given in linear
-    var VOID_LIN = new THREE.Color(0x020408).convertSRGBToLinear();
-    renderer.setClearColor(0x020408, 1);
+    // light theme: the same scene on a soft platinum backdrop
+    var LIGHT = document.documentElement.classList.contains('light');
+    var BG_HEX = LIGHT ? 0xE9EEF5 : 0x020408;
+    var VOID_LIN = new THREE.Color(BG_HEX).convertSRGBToLinear();
+    renderer.setClearColor(BG_HEX, 1);
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.05;
+    renderer.toneMappingExposure = LIGHT ? 1.0 : 1.05;
 
     var scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(VOID_LIN.getHex(), 0.04);
+    scene.fog = new THREE.FogExp2(VOID_LIN.getHex(), LIGHT ? 0.03 : 0.04);
     var camera = new THREE.PerspectiveCamera(45, 1, 0.05, 120);
     camera.position.set(0, 0, 7);
 
@@ -3232,8 +3231,10 @@ html.light ::selection { background: rgba(2, 119, 189, .2); color: #0B1220; }
         '  float tw = 0.7 + 0.3 * sin(uTime * 2.0 + position.x * 3.0 + position.y * 5.0);',
         '  gl_PointSize = size * (tw + near * 1.4) * uPR * (46.0 / max(-mv.z, 0.2));',
         '  vA = clamp(1.5 - (-mv.z) / 26.0, 0.15, 1.0) * (0.9 + near * 0.8) * smoothstep(0.1, 0.8, -mv.z); }'].join('\n'),
-      fragmentShader: 'varying vec3 vC; varying float vA; void main(){ float d = length(gl_PointCoord - 0.5); float a = pow(smoothstep(0.5, 0.0, d), 1.7); gl_FragColor = vec4(vC * (0.9 + a * 0.8), a * vA); }',
-      vertexColors: true, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending
+      fragmentShader: LIGHT
+        ? 'varying vec3 vC; varying float vA; void main(){ float d = length(gl_PointCoord - 0.5); float a = pow(smoothstep(0.5, 0.0, d), 1.7); gl_FragColor = vec4(vC * 0.62, a * vA * 0.85); }'
+        : 'varying vec3 vC; varying float vA; void main(){ float d = length(gl_PointCoord - 0.5); float a = pow(smoothstep(0.5, 0.0, d), 1.7); gl_FragColor = vec4(vC * (0.9 + a * 0.8), a * vA); }',
+      vertexColors: true, transparent: true, depthWrite: false, blending: LIGHT ? THREE.NormalBlending : THREE.AdditiveBlending
     });
     var points = new THREE.Points(pGeo, pMat); scene.add(points);
 
@@ -3254,7 +3255,9 @@ html.light ::selection { background: rgba(2, 119, 189, .2); color: #0B1220; }
     var aGeo = new THREE.BufferGeometry();
     aGeo.setAttribute('position', new THREE.BufferAttribute(aPos, 3).setUsage(THREE.DynamicDrawUsage));
     aGeo.setAttribute('color', new THREE.BufferAttribute(aCol, 3));
-    var lineMat = new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false });
+    var lineMat = LIGHT
+      ? new THREE.LineBasicMaterial({ color: 0x5B7BA6, transparent: true, opacity: 0.22, depthWrite: false })
+      : new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false });
     var ambient = new THREE.LineSegments(aGeo, lineMat); scene.add(ambient);
 
     // pointer web: bright threads woven between nodes near the cursor
@@ -3273,10 +3276,10 @@ html.light ::selection { background: rgba(2, 119, 189, .2); color: #0B1220; }
         // encode to sRGB as the scene renders, so bloom and grain run on display values (no 8-bit banding in the darks)
         composer.renderTarget1.texture.encoding = composer.renderTarget2.texture.encoding = THREE.sRGBEncoding;
         composer.addPass(new THREE.RenderPass(scene, camera));
-        bloom = new THREE.UnrealBloomPass(new THREE.Vector2(256, 256), 0.75, 0.6, 0.88);
+        bloom = new THREE.UnrealBloomPass(new THREE.Vector2(256, 256), LIGHT ? 0.18 : 0.75, 0.6, LIGHT ? 0.97 : 0.88);
         composer.addPass(bloom);
         finalPass = new THREE.ShaderPass({
-          uniforms: { tDiffuse: { value: null }, uTime: { value: 0 }, uGrain: { value: .055 }, uVig: { value: .85 } },
+          uniforms: { tDiffuse: { value: null }, uTime: { value: 0 }, uGrain: { value: LIGHT ? .025 : .055 }, uVig: { value: LIGHT ? .12 : .85 } },
           vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }',
           fragmentShader: [
             'uniform sampler2D tDiffuse; uniform float uTime; uniform float uGrain; uniform float uVig; varying vec2 vUv;',
