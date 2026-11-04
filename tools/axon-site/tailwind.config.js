@@ -4,7 +4,7 @@ module.exports = {
     extend: {
       colors: {
         navy: { 950: '#0B1423', 900: '#101C30', 800: '#17243A', 700: '#22324D', 600: '#2E4062' },
-        silver: '#C3C9D2', gold: { DEFAULT: '#D5BD8A', soft: '#E6D5AE', deep: '#B89C62' },
+        silver: '#C3C9D2', gold: { DEFAULT: '#F2C14E', soft: '#FFE08A', deep: '#D9A033', light: '#FFF1C2' },
         ink: '#F4F6F9', mist: '#AAB6C8'
       },
       fontFamily: {

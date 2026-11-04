@@ -42,9 +42,12 @@ js = open(os.path.join(H, 'app.js')).read()
 js = js.replace('__EMAIL__', EMAIL).replace('__GA4__', GA4).replace('__ENGINE__', json.dumps(engine, ensure_ascii=False))
 open(os.path.join(OUT, 'assets', 'app.js'), 'w').write(js)
 jsver = hashlib.sha1(js.encode()).hexdigest()[:8]
+syn = open(os.path.join(H, 'synapse.js')).read()
+open(os.path.join(OUT, 'assets', 'synapse.js'), 'w').write(syn)
+synver = hashlib.sha1(syn.encode()).hexdigest()[:8]
 
 def fill(s):
-    return (s.replace('__SITE__', SITE).replace('__EMAIL__', EMAIL).replace('__VER__', ver).replace('__JSVER__', jsver)
+    return (s.replace('__SITE__', SITE).replace('__EMAIL__', EMAIL).replace('__VER__', ver).replace('__JSVER__', jsver).replace('__SYNVER__', synver)
              .replace('__DATE__', datetime.date.today().strftime('%d %B %Y')).replace('__JSONLD__', json.dumps(jsonld, ensure_ascii=False)))
 
 for name in ('page.html', 'privacy.html'):

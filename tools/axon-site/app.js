@@ -102,7 +102,46 @@
         '<div><dt class="font-semibold text-silver">' + L('Why it matters', 'Neden önemli') + '</dt><dd class="mt-0.5">' + esc(L(s[6], s[7])) + '</dd></div></dl></article>';
     }).join('');
   }
-  listeners.push(renderSol);
+  void renderSol; // systems are now static markup in page.html
+
+  /* ================= Packages (Dolunay-style item lists) ================= */
+  var CHK = '<svg class="mt-0.5 h-5 w-5 flex-none text-gold" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.7 5.3a1 1 0 0 1 0 1.4l-8 8a1 1 0 0 1-1.4 0l-4-4a1 1 0 1 1 1.4-1.4L8 12.6l7.3-7.3a1 1 0 0 1 1.4 0z" clip-rule="evenodd"/></svg>';
+  var PKG = {
+    start: [['Website AI assistant', 'Web sitesi yapay zekâ asistanı'], ['Basic FAQ automation', 'Temel SSS otomasyonu'], ['Guest inquiry collection', 'Misafir talebi toplama'], ['24/7 monitoring and outage alerts', '7/24 çalışma takibi ve kesinti bildirimi'], ['Bug fixes and repairs', 'Hata müdahalesi ve onarım'], ['Model and API updates applied', 'Model ve API güncellemelerinin uygulanması'], ['Monthly performance report', 'Aylık performans raporu'], ['Email support, reply within 2 business days', 'E-posta destek, iki iş günü içinde dönüş']],
+    pro: [['Everything in Start', 'Start paketindeki her şey'], ['WhatsApp integration', 'WhatsApp entegrasyonu'], ['Multilingual communication', 'Çok dilli iletişim'], ['CRM integration and reservation inquiry workflows', 'CRM entegrasyonu ve rezervasyon talep akışları'], ['Server, API and AI usage included', 'Sunucu, API ve yapay zekâ kullanım bedeli dahil'], ['New scenarios and improvements every month', 'Her ay yeni senaryo ve iyileştirme'], ['Weekly performance report', 'Haftalık performans raporu'], ['WhatsApp support line, same-day reply', 'WhatsApp destek hattı, aynı gün dönüş']],
+    ent: [['Everything in Pro', 'Pro paketindeki her şey'], ['Multiple properties and teams', 'Birden fazla tesis ve ekip'], ['Custom integrations and workflows', 'Özel entegrasyonlar ve iş akışları'], ['Your own development roadmap', 'Size özel geliştirme takvimi'], ['Defined response-time commitment (SLA)', 'Tanımlı yanıt süresi taahhüdü (SLA)'], ['Dedicated project manager', 'Adanmış proje yöneticisi'], ['Monthly review meeting', 'Aylık değerlendirme toplantısı']]
+  };
+  function renderPkg() {
+    $$('[data-pkg-list]').forEach(function (ul) {
+      ul.innerHTML = PKG[ul.getAttribute('data-pkg-list')].map(function (x) { return '<li class="flex gap-3">' + CHK + '<span>' + esc(L(x[0], x[1])) + '</span></li>'; }).join('');
+    });
+  }
+  listeners.push(renderPkg);
+
+  /* ================= Loss calculator (visitor's own numbers) ================= */
+  var calcIn = ['c1', 'c2', 'c3', 'c4'].map(function (id) { return $('#' + id); });
+  function nf(v) { return Math.round(v).toLocaleString(lang === 'tr' ? 'tr-TR' : 'en-US'); }
+  function money(v) { return '$' + nf(v); }
+  var calcTouched = false;
+  function renderCalc() {
+    var q = calcIn.map(function (i) { return +i.value; });
+    calcIn.forEach(function (i) { i.style.setProperty('--p', ((i.value - i.min) / (i.max - i.min) * 100) + '%'); });
+    $('#cv1').textContent = nf(q[0]);
+    $('#cv2').textContent = L(q[1] + '%', '%' + q[1]);
+    $('#cv3').textContent = L(q[2] + '%', '%' + q[2]);
+    $('#cv4').textContent = money(q[3]);
+    var lost = q[0] * q[1] / 100 * q[2] / 100;
+    $('#cLost').textContent = lost < 10 ? String(Math.round(lost * 10) / 10).replace('.', lang === 'tr' ? ',' : '.') : nf(lost);
+    $('#cMonth').textContent = money(lost * q[3]);
+    $('#cYear').textContent = money(lost * q[3] * 12);
+  }
+  calcIn.forEach(function (i) {
+    i.addEventListener('input', function () {
+      renderCalc();
+      if (!calcTouched) { calcTouched = true; track('live_demo_interaction', { first_action: 'loss_calculator' }); }
+    });
+  });
+  listeners.push(renderCalc);
 
   /* ================= 04 Workflow ================= */
   var FLOW = [
@@ -135,7 +174,7 @@
     ['How long does implementation take?', 'Kurulum ne kadar sürer?', 'It depends on the channels and integrations you choose. After the workflow analysis you receive a written plan with dates. A website assistant is usually the quickest place to start.', 'Seçtiğiniz kanallara ve entegrasyonlara bağlıdır. İş akışı analizinden sonra tarihli, yazılı bir plan alırsınız. Web sitesi asistanı genellikle en hızlı başlangıçtır.'],
     ['What happens when the AI cannot answer?', 'Yapay zekâ cevap veremezse ne olur?', 'It says so instead of guessing. It records the guest\'s question and contact details and hands the conversation to your team, who reply directly.', 'Tahmin yürütmek yerine bunu açıkça söyler. Misafirin sorusunu ve iletişim bilgisini kaydeder, konuşmayı ekibinize devreder; ekibiniz doğrudan cevap verir.'],
     ['Is customer data secure?', 'Misafir verileri güvende mi?', 'Data is sent over encrypted connections, access is limited to your team and ours for support, and it is kept only as long as needed. Before launch we document together how guest data is handled, taking GDPR and KVKK into account.', 'Veriler şifreli bağlantılarla iletilir, erişim yalnızca sizin ekibinizle ve destek için bizim ekibimizle sınırlıdır ve yalnızca gerektiği süre saklanır. Yayından önce misafir verisinin nasıl işleneceğini KVKK ve GDPR\'ı dikkate alarak birlikte yazılı hale getiririz.'],
-    ['How much does AXON cost?', 'AXON ne kadar?', 'Start begins at $300 per month. Pro and Enterprise are quoted after a short analysis. A one-time setup fee and usage-based third-party costs, such as AI usage and WhatsApp messaging fees, are listed separately in every proposal.', 'Start paketi aylık $300\'dan başlar. Pro ve Kurumsal kısa bir analizden sonra teklif edilir. Tek seferlik kurulum bedeli ve yapay zekâ kullanımı, WhatsApp mesaj ücretleri gibi kullanıma bağlı üçüncü taraf maliyetleri her teklifte ayrıca yazılır.']
+    ['How much does AXON cost?', 'AXON ne kadar?', 'Start begins at $300 per month. Pro and Enterprise are quoted after a short analysis. The one-time setup fee and usage-based costs, such as WhatsApp messaging fees charged by Meta, are listed separately in every proposal.', 'Start paketi aylık $300\'dan başlar. Pro ve Kurumsal kısa bir analizden sonra teklif edilir. Tek seferlik kurulum bedeli ve Meta\'nın WhatsApp mesaj ücretleri gibi kullanıma bağlı maliyetler her teklifte ayrıca yazılır.']
   ];
   function renderFaq() {
     $('#faqList').innerHTML = FAQ.map(function (q) {
@@ -150,7 +189,7 @@
     ['g', 'Hello, do you have a double room available for December 15–18?', 'Merhaba, 15–18 Aralık için çift kişilik odanız var mı?'],
     ['a', 'Welcome! I\'d be happy to help. How many guests will be staying?', 'Hoş geldiniz! Memnuniyetle yardımcı olurum. Kaç kişi konaklayacaksınız?'],
     ['g', 'Two adults.', 'İki yetişkin.'],
-    ['a', 'Wonderful. I\'ve prepared your reservation inquiry for a double room, Dec 15–18, 2 adults. Our team will confirm the rate shortly.', 'Harika. 15–18 Aralık, 2 yetişkin, çift kişilik oda için talebinizi hazırladım. Ekibimiz fiyatı kısa süre içinde onaylayacak.']
+    ['a', 'Wonderful. Your inquiry for Dec 15–18, 2 adults is ready. Our team will confirm the rate.', 'Harika. 15–18 Aralık, 2 yetişkin için talebiniz hazır. Ekibimiz fiyatı onaylayacak.']
   ];
   var heroTimer = [];
   function bubble(who, text, anim) {
