@@ -45,9 +45,12 @@ jsver = hashlib.sha1(js.encode()).hexdigest()[:8]
 syn = open(os.path.join(H, 'synapse.js')).read()
 open(os.path.join(OUT, 'assets', 'synapse.js'), 'w').write(syn)
 synver = hashlib.sha1(syn.encode()).hexdigest()[:8]
+sysjs = open(os.path.join(H, 'systems.js')).read()
+open(os.path.join(OUT, 'assets', 'systems.js'), 'w').write(sysjs)
+sysver = hashlib.sha1(sysjs.encode()).hexdigest()[:8]
 
 def fill(s):
-    return (s.replace('__SITE__', SITE).replace('__EMAIL__', EMAIL).replace('__VER__', ver).replace('__JSVER__', jsver).replace('__SYNVER__', synver)
+    return (s.replace('__SITE__', SITE).replace('__EMAIL__', EMAIL).replace('__VER__', ver).replace('__JSVER__', jsver).replace('__SYNVER__', synver).replace('__SYSVER__', sysver)
              .replace('__DATE__', datetime.date.today().strftime('%d %B %Y')).replace('__JSONLD__', json.dumps(jsonld, ensure_ascii=False)))
 
 for name in ('page.html', 'privacy.html'):

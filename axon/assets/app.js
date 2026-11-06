@@ -548,6 +548,8 @@
   });
   listeners.push(function () { if (!$('#leadSubmit').disabled) $('#leadSubmit').textContent = L('Book Your Free Consultation', 'Ücretsiz görüşme planlayın'); });
 
+  window.AXON_LANG = function () { return lang; };
+  listeners.push(function () { if (window.AXON_SYS_REPLAY) window.AXON_SYS_REPLAY(); });
   $('#yr').textContent = new Date().getFullYear();
   applyLang(lang);
 })();
