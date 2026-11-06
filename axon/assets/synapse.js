@@ -141,6 +141,19 @@ function start() {
   const composer = null;
   const outer = new THREE.Sprite(add({ opacity: 0.35 })); outer.scale.setScalar(2.4); obj.add(outer);
 
+  // light / dark theme: dark chrome + additive gold glow on navy, light chrome + normal-blended gold on white
+  const glowMats = [], basicMats = [];
+  scene.traverse((o) => { const m = o.material; if (!m) return; if (m.blending === THREE.AdditiveBlending) glowMats.push([m, m.color.clone()]); else if (m.isMeshBasicMaterial) basicMats.push([m, m.color.clone()]); });
+  const LIGHT_GOLD = new THREE.Color('#C98F12');
+  function applyTheme(light) {
+    renderer.setClearColor(light ? 0xffffff : 0x0b1423, 1);
+    chrome.color.set(light ? 0xaeb8c6 : 0x232c3d); chrome.roughness = light ? 0.26 : 0.2;
+    bulbMat.color.set(light ? 0xc3cbd6 : 0x1a2232);
+    glowMats.forEach(([m, c]) => { m.blending = light ? THREE.NormalBlending : THREE.AdditiveBlending; m.color.copy(light ? LIGHT_GOLD : c); m.needsUpdate = true; });
+    basicMats.forEach(([m, c]) => { m.color.copy(light ? LIGHT_GOLD : c); });
+    if (!running) frame(0);
+  }
+  window.addEventListener('axon-theme', (e) => applyTheme(!!(e.detail && e.detail.light)));
   const desktop = () => stage.clientWidth >= 640;
   function resize() {
     const w = stage.clientWidth, h = stage.clientHeight; if (!w || !h) return;
@@ -196,6 +209,7 @@ function start() {
   function kick() { if (!running && !reduced) { clock.getDelta(); loop(); } }
   new IntersectionObserver((es) => { visible = es[0].isIntersecting; kick(); }).observe(stage);
   document.addEventListener('visibilitychange', kick);
+  applyTheme(document.documentElement.classList.contains('light'));
   if (reduced) { T = 2.5; frame(0); } else kick();
 }
 if (!lowEnd) { try { start(); } catch (e) { /* keep the still illustration */ } }

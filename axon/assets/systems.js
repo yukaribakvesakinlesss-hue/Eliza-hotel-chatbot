@@ -41,7 +41,7 @@
     var L = lang() === 'tr' ? 2 : 1, t = esc(m[L]), meta = m[3] ? '<span class="ml-2 text-[10px] opacity-60">' + m[3] + '</span>' : '';
     if (m[0] === 'n') return '<div class="bubble-in mx-auto mt-1 inline-flex items-center gap-1.5 rounded-full border border-gold/40 bg-gold/10 px-3 py-1 text-[11.5px] font-semibold text-gold-soft">✓ ' + t + '</div>';
     if (wa) {
-      var cls = m[0] === 'g' ? 'ml-auto rounded-br-sm bg-[#005c4b] text-white' : m[0] === 's' ? 'rounded-bl-sm border border-gold/40 bg-[#202c33] text-white' : 'rounded-bl-sm bg-[#202c33] text-white';
+      var cls = m[0] === 'g' ? 'ml-auto rounded-br-sm bg-[#005c4b] text-[#fff]' : m[0] === 's' ? 'rounded-bl-sm border border-gold/40 bg-[#202c33] text-[#fff]' : 'rounded-bl-sm bg-[#202c33] text-[#fff]';
       var who = m[0] === 'a' ? '<span class="mb-0.5 block text-[10px] font-semibold text-gold/80">' + (lang() === 'tr' ? 'AXON asistan' : 'AXON assistant') + '</span>' : m[0] === 's' ? '<span class="mb-0.5 block text-[10px] font-semibold text-gold">' + (lang() === 'tr' ? 'Ayşe · Resepsiyon' : 'Ayşe · Reception') + '</span>' : '';
       return '<div class="bubble-in max-w-[86%] rounded-xl px-2.5 py-1.5 ' + cls + '">' + who + t + meta + '</div>';
     }

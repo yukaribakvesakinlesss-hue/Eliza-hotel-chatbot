@@ -66,6 +66,18 @@
   $$('.lang-b').forEach(function (b) { b.addEventListener('click', function () { applyLang(b.dataset.lang); }); });
   function esc(s) { return String(s).replace(/[&<>"']/g, function (ch) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]; }); }
 
+  /* ================= Theme (dark default, light optional) ================= */
+  function setTheme(light, save) {
+    document.documentElement.classList.toggle('light', light);
+    if (save) { try { localStorage.setItem('axonTheme', light ? 'light' : 'dark'); } catch (e) {} }
+    var m = document.querySelector('meta[name="theme-color"]'); if (m) m.setAttribute('content', light ? '#FFFFFF' : '#0B1423');
+    var b = $('#themeToggle');
+    if (b) { b.setAttribute('aria-label', light ? L('Switch to dark mode', 'Koyu temaya geç') : L('Switch to light mode', 'Açık temaya geç')); b.dataset.enAria = b.getAttribute('aria-label'); b.dataset.trAria = b.getAttribute('aria-label'); }
+    window.dispatchEvent(new CustomEvent('axon-theme', { detail: { light: light } }));
+  }
+  $('#themeToggle').addEventListener('click', function () { setTheme(!document.documentElement.classList.contains('light'), true); });
+  listeners.push(function () { setTheme(document.documentElement.classList.contains('light'), false); });
+
   /* ================= Reveal + active nav ================= */
   if ('IntersectionObserver' in window && !reduce) {
     document.documentElement.classList.add('js-reveal');
