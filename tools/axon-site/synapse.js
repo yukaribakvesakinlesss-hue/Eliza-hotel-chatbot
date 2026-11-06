@@ -100,18 +100,68 @@ function start() {
     obj.add(m); return { m, t: 1 };
   });
 
-  // impulses travelling towards the gap
+  // the story: guest messages (cool) travel IN along axon A, AXON turns them into ready inquiries (gold) that travel OUT along axon B
+  const COOL = new THREE.Color('#BFD8FF'), COOL_HALO = new THREE.Color('#7FAEFF');
   const pulses = [];
-  axons.forEach((c, ci) => {
-    for (let i = 0; i < 3; i++) {
-      const s = new THREE.Sprite(add({ opacity: 1 })); s.scale.setScalar(0.6);
-      const m = new THREE.Mesh(new THREE.SphereGeometry(0.045, 14, 10), new THREE.MeshBasicMaterial({ color: WHITE_GOLD }));
-      m.add(s); obj.add(m); pulses.push({ m, c, off: i / 3 + ci * 0.16, last: 0 });
-    }
-  });
+  const NP = mobile ? 3 : 4;
+  for (let i = 0; i < NP; i++) {
+    const hIn = new THREE.Sprite(add({ opacity: 0.95, color: COOL_HALO })); hIn.material.userData.cool = true; hIn.scale.setScalar(0.62);
+    const mIn = new THREE.Mesh(new THREE.SphereGeometry(0.048, 14, 10), new THREE.MeshBasicMaterial({ color: COOL })); mIn.material.userData.cool = true;
+    mIn.add(hIn); obj.add(mIn);
+    const hOut = new THREE.Sprite(add({ opacity: 1 })); hOut.scale.setScalar(0.7);
+    const mOut = new THREE.Mesh(new THREE.SphereGeometry(0.052, 14, 10), new THREE.MeshBasicMaterial({ color: WHITE_GOLD }));
+    mOut.add(hOut); obj.add(mOut);
+    pulses.push({ mIn, mOut, off: i / NP, last: 0, label: i, chipIn: null, chipOut: null });
+  }
+
+  // floating labels drawn on canvas: channel chips on incoming messages, "inquiry ready" chips on outgoing ones
+  const isTR = () => (document.documentElement.lang || 'en').indexOf('tr') === 0;
+  const isLight = () => document.documentElement.classList.contains('light');
+  const CHANNELS = () => isTR() ? ['WhatsApp · 02:14', 'Web sitesi', 'E-posta', 'Instagram', 'WhatsApp · DE', 'Web · EN'] : ['WhatsApp · 02:14', 'Website', 'Email', 'Instagram', 'WhatsApp · DE', 'Web · FR'];
+  function chipTexture(text, kind) {
+    const cv = document.createElement('canvas'), g = cv.getContext('2d'), fs = 40, pad = 30;
+    g.font = '600 ' + fs + 'px Inter, system-ui, sans-serif';
+    const w = Math.ceil(g.measureText(text).width) + pad * 2 + (kind === 'in' ? 34 : 0), h = 76;
+    cv.width = w; cv.height = h; g.font = '600 ' + fs + 'px Inter, system-ui, sans-serif';
+    const r = h / 2, light = isLight();
+    g.beginPath(); g.moveTo(r, 2); g.lineTo(w - r, 2); g.arc(w - r, r, r - 2, -Math.PI / 2, Math.PI / 2); g.lineTo(r, h - 2); g.arc(r, r, r - 2, Math.PI / 2, Math.PI * 1.5); g.closePath();
+    if (kind === 'out') { const gr = g.createLinearGradient(0, 0, w, h); gr.addColorStop(0, '#FFF1C2'); gr.addColorStop(0.45, '#F2C14E'); gr.addColorStop(1, '#D9A033'); g.fillStyle = gr; g.fill(); }
+    else if (kind === 'tag') { g.fillStyle = light ? 'rgba(255,255,255,0.92)' : 'rgba(11,20,35,0.78)'; g.fill(); g.lineWidth = 3; g.strokeStyle = light ? 'rgba(168,121,10,0.55)' : 'rgba(242,193,78,0.55)'; g.stroke(); }
+    else { g.fillStyle = light ? 'rgba(255,255,255,0.95)' : 'rgba(23,36,58,0.92)'; g.fill(); g.lineWidth = 3; g.strokeStyle = light ? 'rgba(47,111,214,0.45)' : 'rgba(127,174,255,0.6)'; g.stroke(); }
+    let x = pad;
+    if (kind === 'in') { g.fillStyle = light ? '#2F6FD6' : '#9CC2FF'; g.beginPath(); g.arc(x + 9, h / 2, 9, 0, Math.PI * 2); g.fill(); x += 34; }
+    g.fillStyle = kind === 'out' ? '#0B1423' : kind === 'tag' ? (light ? '#8A6308' : '#FFE08A') : (light ? '#0F172A' : '#F4F6F9');
+    g.textBaseline = 'middle'; g.fillText(text, x, h / 2 + 2);
+    const t = new THREE.CanvasTexture(cv); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4;
+    return { t, aspect: w / h };
+  }
+  function chip(text, kind, height) {
+    const { t, aspect } = chipTexture(text, kind);
+    const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: t, transparent: true, depthTest: false, depthWrite: false, toneMapped: false }));
+    sp.renderOrder = 20; sp.scale.set(height * aspect, height, 1); sp.userData = { text, kind, height }; obj.add(sp); return sp;
+  }
+  function retext(sp, text) {
+    const { t, aspect } = chipTexture(text, sp.userData.kind);
+    sp.material.map.dispose(); sp.material.map = t; sp.material.needsUpdate = true;
+    sp.userData.text = text; sp.scale.set(sp.userData.height * aspect, sp.userData.height, 1);
+  }
+  const CH = mobile ? 0.19 : 0.175;
+  pulses.forEach((p, i) => { p.chipIn = chip(CHANNELS()[i % 6], 'in', CH); p.chipOut = chip(isTR() ? '✓ Talep hazır' : '✓ Inquiry ready', 'out', CH); });
+  const tagGuest = chip(isTR() ? 'Misafir mesajları' : 'Guest messages', 'tag', CH * 1.05);
+  const tagTeam = chip(isTR() ? 'Ekibiniz' : 'Your team', 'tag', CH * 1.05);
+  const tagAI = chip('AXON AI', 'tag', CH * 1.1);
+  tagGuest.position.set(-1.0, 1.02, 0);
+  tagTeam.position.set(1.15, -0.78, 0);
+  tagAI.position.set(0, 0.66, 0);
+  [tagGuest, tagTeam, tagAI].forEach((t) => { t.renderOrder = 30; });
+  function relabel() {
+    pulses.forEach((p, i) => { retext(p.chipIn, CHANNELS()[(p.label) % 6]); retext(p.chipOut, isTR() ? '✓ Talep hazır' : '✓ Inquiry ready'); });
+    retext(tagGuest, isTR() ? 'Misafir mesajları' : 'Guest messages'); retext(tagTeam, isTR() ? 'Ekibiniz' : 'Your team'); retext(tagAI, 'AXON AI');
+  }
+  window.addEventListener('axon-lang', () => { relabel(); if (!running) frame(0); });
 
   // electric arcs across the gap
-  const ARCS = mobile ? 3 : 5, ARC_PTS = 14, arcs = [];
+  const ARCS = mobile ? 4 : 7, ARC_PTS = 14, arcs = [];
   for (let a = 0; a < ARCS; a++) {
     const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(new Float32Array(ARC_PTS * 3), 3));
     const l = new THREE.Line(g, new THREE.LineBasicMaterial({ color: a % 2 ? GOLD_HI : WHITE_GOLD, transparent: true, opacity: 0.9, blending: THREE.AdditiveBlending, depthWrite: false }));
@@ -144,13 +194,14 @@ function start() {
   // light / dark theme: dark chrome + additive gold glow on navy, light chrome + normal-blended gold on white
   const glowMats = [], basicMats = [];
   scene.traverse((o) => { const m = o.material; if (!m) return; if (m.blending === THREE.AdditiveBlending) glowMats.push([m, m.color.clone()]); else if (m.isMeshBasicMaterial) basicMats.push([m, m.color.clone()]); });
-  const LIGHT_GOLD = new THREE.Color('#C98F12');
+  const LIGHT_GOLD = new THREE.Color('#C98F12'), LIGHT_COOL = new THREE.Color('#2F6FD6');
   function applyTheme(light) {
     renderer.setClearColor(light ? 0xffffff : 0x0b1423, 1);
     chrome.color.set(light ? 0xaeb8c6 : 0x232c3d); chrome.roughness = light ? 0.26 : 0.2;
     bulbMat.color.set(light ? 0xc3cbd6 : 0x1a2232);
-    glowMats.forEach(([m, c]) => { m.blending = light ? THREE.NormalBlending : THREE.AdditiveBlending; m.color.copy(light ? LIGHT_GOLD : c); m.needsUpdate = true; });
-    basicMats.forEach(([m, c]) => { m.color.copy(light ? LIGHT_GOLD : c); });
+    glowMats.forEach(([m, c]) => { m.blending = light ? THREE.NormalBlending : THREE.AdditiveBlending; m.color.copy(light ? (m.userData.cool ? LIGHT_COOL : LIGHT_GOLD) : c); m.needsUpdate = true; });
+    basicMats.forEach(([m, c]) => { m.color.copy(light ? (m.userData.cool ? LIGHT_COOL : LIGHT_GOLD) : c); });
+    relabel();
     if (!running) frame(0);
   }
   window.addEventListener('axon-theme', (e) => applyTheme(!!(e.detail && e.detail.light)));
@@ -180,15 +231,28 @@ function start() {
     obj.rotation.z = Math.sin(T * 0.3) * 0.03;
 
     pulses.forEach((p) => {
-      const u = (T * 0.2 + p.off) % 1, e = u * u * (3 - 2 * u);
-      p.m.position.copy(p.c.getPointAt(Math.min(e, 0.999)));
-      p.m.visible = u < 0.985;
-      if (u < p.last) { beat = 1; const w = waves.find((x) => x.t >= 1) || waves[0]; w.t = 0; }
+      const u = (T * 0.16 + p.off) % 1, e = u * u * (3 - 2 * u);
+      // incoming message rides axon A towards the synapse
+      p.mIn.position.copy(axA.getPointAt(Math.min(e, 0.999)));
+      p.mIn.visible = u < 0.985;
+      p.chipIn.position.copy(p.mIn.position).add(V(0, 0.24, 0.05));
+      p.chipIn.material.opacity = Math.min(1, u * 8) * (u > 0.86 ? Math.max(0, (0.97 - u) / 0.11) : 1);
+      // the qualified inquiry it became leaves along axon B (one cycle behind, so it starts as the message arrives)
+      const o = e; p.mOut.position.copy(axB.getPointAt(Math.max(0.001, 1 - o)));
+      p.mOut.visible = p.started && u > 0.02;
+      p.chipOut.position.copy(p.mOut.position).add(V(0, -0.24, 0.05));
+      p.chipOut.material.opacity = p.started ? Math.min(1, u * 6) * (u > 0.85 ? Math.max(0, (1 - u) / 0.15) : 1) : 0;
+      if (u < p.last) {
+        beat = 1; p.started = true;
+        const w = waves.find((x) => x.t >= 1) || waves[0]; w.t = 0;
+        p.label += NP; retext(p.chipIn, CHANNELS()[p.label % 6]);
+      }
       p.last = u;
     });
+    tagAI.material.opacity = 0.75 + beat * 0.25;
     beat = Math.max(0, beat - dt * 1.5);
     const breathe = 0.5 + 0.5 * Math.sin(T * 2.4);
-    core.scale.setScalar(1.1 + breathe * 0.15 + beat * 0.7); outer.scale.setScalar(2.2 + breathe * 0.3 + beat * 1.2); outer.material.opacity = 0.28 + beat * 0.3; core.material.opacity = 0.65 + breathe * 0.15 + beat * 0.2;
+    core.scale.setScalar(1.2 + breathe * 0.18 + beat * 0.9); outer.scale.setScalar(2.2 + breathe * 0.3 + beat * 1.2); outer.material.opacity = 0.28 + beat * 0.3; core.material.opacity = 0.65 + breathe * 0.15 + beat * 0.2;
     heart.scale.setScalar(1 + beat * 0.9 + breathe * 0.15);
     goldLight.intensity = 4 + breathe * 2 + beat * 10;
     waves.forEach((w) => { w.t = Math.min(1, w.t + dt * 0.85); w.m.scale.setScalar(0.4 + w.t * 2.4); w.m.material.opacity = (1 - w.t) * 0.85; w.m.rotation.y = mouse.x * 0.4; });

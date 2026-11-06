@@ -562,6 +562,7 @@
 
   window.AXON_LANG = function () { return lang; };
   listeners.push(function () { if (window.AXON_SYS_REPLAY) window.AXON_SYS_REPLAY(); });
+  listeners.push(function () { window.dispatchEvent(new CustomEvent('axon-lang', { detail: { lang: lang } })); });
   $('#yr').textContent = new Date().getFullYear();
   applyLang(lang);
 })();
