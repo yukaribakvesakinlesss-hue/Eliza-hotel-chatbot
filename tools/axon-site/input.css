@@ -56,3 +56,12 @@
   .conn::after { top: -2.5px; left: 0; animation-name: flowX; }
 }
 @media (prefers-reduced-motion: reduce) { .conn::after { animation: none; opacity: 0; } }
+
+/* systems showcase tabs */
+.sys-tab { color: #AAB6C8; }
+.sys-tab:hover { background: rgba(255,255,255,.03); color: #F4F6F9; }
+.sys-tab .sys-ic { background: rgba(255,255,255,.05); color: #C3C9D2; transition: all .3s; }
+.sys-tab[aria-selected="true"] { background: #17243A; color: #F4F6F9; box-shadow: inset 0 0 0 1px rgba(242,193,78,.45), 0 20px 50px -30px rgba(242,193,78,.5); }
+.sys-tab[aria-selected="true"] .sys-ic { background: linear-gradient(135deg, #FFE08A, #D9A033); color: #0B1423; }
+
+.sys-panel[hidden] { display: none !important; }
