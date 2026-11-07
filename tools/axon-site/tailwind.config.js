@@ -1,5 +1,5 @@
 module.exports = {
-  content: [__dirname + '/page.html', __dirname + '/privacy.html', __dirname + '/app.js', __dirname + '/systems.js'],
+  content: [__dirname + '/page.html', __dirname + '/privacy.html', __dirname + '/app.js', __dirname + '/systems.js', __dirname + '/personal.js'],
   theme: {
     extend: {
       colors: {

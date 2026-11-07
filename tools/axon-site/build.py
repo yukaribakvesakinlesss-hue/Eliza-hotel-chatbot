@@ -48,9 +48,12 @@ synver = hashlib.sha1(syn.encode()).hexdigest()[:8]
 sysjs = open(os.path.join(H, 'systems.js')).read()
 open(os.path.join(OUT, 'assets', 'systems.js'), 'w').write(sysjs)
 sysver = hashlib.sha1(sysjs.encode()).hexdigest()[:8]
+pajs = open(os.path.join(H, 'personal.js')).read()
+open(os.path.join(OUT, 'assets', 'personal.js'), 'w').write(pajs)
+paver = hashlib.sha1(pajs.encode()).hexdigest()[:8]
 
 def fill(s):
-    return (s.replace('__SITE__', SITE).replace('__EMAIL__', EMAIL).replace('__VER__', ver).replace('__JSVER__', jsver).replace('__SYNVER__', synver).replace('__SYSVER__', sysver)
+    return (s.replace('__SITE__', SITE).replace('__EMAIL__', EMAIL).replace('__VER__', ver).replace('__JSVER__', jsver).replace('__SYNVER__', synver).replace('__SYSVER__', sysver).replace('__PAVER__', paver)
              .replace('__DATE__', datetime.date.today().strftime('%d %B %Y')).replace('__JSONLD__', json.dumps(jsonld, ensure_ascii=False)))
 
 for name in ('page.html', 'privacy.html'):

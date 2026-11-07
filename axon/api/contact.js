@@ -11,7 +11,7 @@ const { rateLimited, clientIp, sameOrigin, readBody, send, escapeHtml } = requir
 
 const CHALLENGES = ['Missed Guest Inquiries', 'Slow Response Times', 'Manual Reservation Management', 'Multilingual Communication', 'High Staff Workload', 'Other'];
 const ROOMS = ['1-20', '21-50', '51-100', '101-200', '200+'];
-const PACKAGES = ['', 'Start', 'Pro', 'Enterprise'];
+const PACKAGES = ['', 'Start', 'Pro', 'Enterprise', 'Personal'];
 const EMAIL_RE = /^[^\s@]{1,64}@[^\s@]{1,190}\.[^\s@]{2,24}$/;
 
 function validate(b) {
