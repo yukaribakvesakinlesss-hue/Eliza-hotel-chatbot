@@ -24,15 +24,15 @@ function start() {
   const pmrem = new THREE.PMREMGenerator(renderer);
   scene.environment = pmrem.fromScene(new RoomEnvironment(renderer), 0.04).texture;
 
-  const GOLD = new THREE.Color('#B9C7DB'), GOLD_HI = new THREE.Color('#E3EAF4'), WHITE_GOLD = new THREE.Color('#F5F8FC');
+  const GOLD = new THREE.Color('#38BDF8'), GOLD_HI = new THREE.Color('#7DD3FC'), WHITE_GOLD = new THREE.Color('#E0F2FE');
 
   scene.add(new THREE.AmbientLight(0x8fa2c4, 0.35));
   const key = new THREE.DirectionalLight(0xdfe8ff, 1.3); key.position.set(-3, 4, 5); scene.add(key);
   const rim = new THREE.DirectionalLight(0x6aa0ff, 1.1); rim.position.set(4, -2, -3); scene.add(rim);
-  const goldLight = new THREE.PointLight(0xcfe0ff, 6, 5, 1.6); scene.add(goldLight);
+  const goldLight = new THREE.PointLight(0x5ec8ff, 6, 5, 1.6); scene.add(goldLight);
 
   const chrome = new THREE.MeshPhysicalMaterial({ color: 0x232c3d, metalness: 1, roughness: 0.2, clearcoat: 1, clearcoatRoughness: 0.08, envMapIntensity: 1.5 });
-  const goldMetal = new THREE.MeshPhysicalMaterial({ color: GOLD, metalness: 1, roughness: 0.22, clearcoat: 1, envMapIntensity: 1.6, emissive: new THREE.Color('#3D4F6B'), emissiveIntensity: 0.35 });
+  const goldMetal = new THREE.MeshPhysicalMaterial({ color: GOLD, metalness: 1, roughness: 0.22, clearcoat: 1, envMapIntensity: 1.6, emissive: new THREE.Color('#1E40AF'), emissiveIntensity: 0.35 });
   const bulbMat = new THREE.MeshPhysicalMaterial({ color: 0x1a2232, metalness: 0.85, roughness: 0.12, clearcoat: 1, envMapIntensity: 1.8 });
 
   const rig = new THREE.Group(); scene.add(rig);
@@ -88,8 +88,8 @@ function start() {
     stops.forEach(([o, c]) => gr.addColorStop(o, c)); g.fillStyle = gr; g.fillRect(0, 0, 128, 128);
     const t = new THREE.CanvasTexture(cv); t.colorSpace = THREE.SRGBColorSpace; return t;
   }
-  const haloTex = glowTex([[0, 'rgba(245,248,252,1)'], [0.25, 'rgba(227,234,244,0.75)'], [0.6, 'rgba(185,199,219,0.18)'], [1, 'rgba(185,199,219,0)']]);
-  const dotTex = glowTex([[0, 'rgba(245,248,252,1)'], [0.4, 'rgba(185,199,219,0.6)'], [1, 'rgba(185,199,219,0)']]);
+  const haloTex = glowTex([[0, 'rgba(224,242,254,1)'], [0.25, 'rgba(125,211,252,0.75)'], [0.6, 'rgba(56,189,248,0.18)'], [1, 'rgba(56,189,248,0)']]);
+  const dotTex = glowTex([[0, 'rgba(224,242,254,1)'], [0.4, 'rgba(56,189,248,0.6)'], [1, 'rgba(56,189,248,0)']]);
   const add = (opts) => new THREE.SpriteMaterial(Object.assign({ map: haloTex, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }, opts));
 
   // synaptic core
@@ -101,7 +101,7 @@ function start() {
   });
 
   // the story: guest messages (cool) travel IN along axon A, AXON turns them into ready inquiries (gold) that travel OUT along axon B
-  const COOL = new THREE.Color('#BFD8FF'), COOL_HALO = new THREE.Color('#7FAEFF');
+  const COOL = new THREE.Color('#E5E9F0'), COOL_HALO = new THREE.Color('#A9B4C6');
   const pulses = [];
   const NP = mobile ? 3 : 4;
   for (let i = 0; i < NP; i++) {
@@ -125,12 +125,12 @@ function start() {
     cv.width = w; cv.height = h; g.font = '600 ' + fs + 'px Inter, system-ui, sans-serif';
     const r = h / 2, light = isLight();
     g.beginPath(); g.moveTo(r, 2); g.lineTo(w - r, 2); g.arc(w - r, r, r - 2, -Math.PI / 2, Math.PI / 2); g.lineTo(r, h - 2); g.arc(r, r, r - 2, Math.PI / 2, Math.PI * 1.5); g.closePath();
-    if (kind === 'out') { const gr = g.createLinearGradient(0, 0, w, h); gr.addColorStop(0, '#F5F8FC'); gr.addColorStop(0.45, '#B9C7DB'); gr.addColorStop(1, '#8EA3C0'); g.fillStyle = gr; g.fill(); }
-    else if (kind === 'tag') { g.fillStyle = light ? 'rgba(255,255,255,0.92)' : 'rgba(11,20,35,0.78)'; g.fill(); g.lineWidth = 3; g.strokeStyle = light ? 'rgba(46,74,122,0.55)' : 'rgba(185,199,219,0.55)'; g.stroke(); }
+    if (kind === 'out') { const gr = g.createLinearGradient(0, 0, w, h); gr.addColorStop(0, '#E0F2FE'); gr.addColorStop(0.45, '#38BDF8'); gr.addColorStop(1, '#2563EB'); g.fillStyle = gr; g.fill(); }
+    else if (kind === 'tag') { g.fillStyle = light ? 'rgba(255,255,255,0.92)' : 'rgba(11,20,35,0.78)'; g.fill(); g.lineWidth = 3; g.strokeStyle = light ? 'rgba(37,99,235,0.55)' : 'rgba(56,189,248,0.55)'; g.stroke(); }
     else { g.fillStyle = light ? 'rgba(255,255,255,0.95)' : 'rgba(23,36,58,0.92)'; g.fill(); g.lineWidth = 3; g.strokeStyle = light ? 'rgba(47,111,214,0.45)' : 'rgba(127,174,255,0.6)'; g.stroke(); }
     let x = pad;
     if (kind === 'in') { g.fillStyle = light ? '#2F6FD6' : '#9CC2FF'; g.beginPath(); g.arc(x + 9, h / 2, 9, 0, Math.PI * 2); g.fill(); x += 34; }
-    g.fillStyle = kind === 'out' ? '#0B1423' : kind === 'tag' ? (light ? '#1E3A66' : '#E3EAF4') : (light ? '#0F172A' : '#F4F6F9');
+    g.fillStyle = kind === 'out' ? '#0B1423' : kind === 'tag' ? (light ? '#1D4ED8' : '#7DD3FC') : (light ? '#0F172A' : '#F4F6F9');
     g.textBaseline = 'middle'; g.fillText(text, x, h / 2 + 2);
     const t = new THREE.CanvasTexture(cv); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4;
     return { t, aspect: w / h };
@@ -194,7 +194,7 @@ function start() {
   // light / dark theme: dark chrome + additive gold glow on navy, light chrome + normal-blended gold on white
   const glowMats = [], basicMats = [];
   scene.traverse((o) => { const m = o.material; if (!m) return; if (m.blending === THREE.AdditiveBlending) glowMats.push([m, m.color.clone()]); else if (m.isMeshBasicMaterial) basicMats.push([m, m.color.clone()]); });
-  const LIGHT_GOLD = new THREE.Color('#3B5B8F'), LIGHT_COOL = new THREE.Color('#2F6FD6');
+  const LIGHT_GOLD = new THREE.Color('#2563EB'), LIGHT_COOL = new THREE.Color('#2F6FD6');
   function applyTheme(light) {
     renderer.setClearColor(light ? 0xffffff : 0x0b1423, 1);
     chrome.color.set(light ? 0xaeb8c6 : 0x232c3d); chrome.roughness = light ? 0.26 : 0.2;
