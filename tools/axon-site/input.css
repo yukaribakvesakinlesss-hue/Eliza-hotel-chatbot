@@ -98,3 +98,18 @@ html.light .bg-gold { background-color: #F2C14E; }
 html.light .hover\:bg-gold-soft:hover { background-color: #FFE08A; }
 html.light .hero-tint { opacity: 0; }
 html.light .hero-glow { opacity: .5; }
+
+/* Nova personal assistant demo */
+@layer components {
+  .nv-tab { @apply rounded-full border border-transparent px-4 py-1.5 text-[13.5px] font-medium text-mist transition hover:text-ink; }
+  .nv-tab[aria-selected="true"] { @apply border-gold/45 bg-gold/10 text-ink; }
+  .nv-row { @apply flex items-center gap-4 rounded-xl border border-white/[0.06] bg-navy-800/60 px-4 py-3; }
+  .nv-time { @apply w-14 flex-none font-mono text-[12.5px] text-gold; }
+  .nv-t { @apply text-[14.5px] font-medium text-ink; }
+  .nv-s { @apply text-[12.5px] text-mist; }
+  .nv-ok { @apply ml-auto text-emerald-300; }
+  .nv-warn { @apply ml-auto grid h-6 w-6 flex-none place-items-center rounded-full bg-rose-400/15 text-[12px] font-bold text-rose-300; }
+  .nv-av { @apply grid h-9 w-9 flex-none place-items-center rounded-full bg-navy-700 text-[12px] font-semibold text-gold; }
+  .nv-approve { @apply flex-none rounded-full border border-gold/40 px-3.5 py-1.5 text-[12.5px] font-semibold text-gold transition hover:bg-gold/10; }
+  .nv-approve.done { @apply border-emerald-400/40 text-emerald-300; }
+}
