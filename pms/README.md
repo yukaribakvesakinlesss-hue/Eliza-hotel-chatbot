@@ -45,6 +45,34 @@ How double bookings are prevented:
 
 The `[)` range means the check-out day is free, so a new guest can check in the same day. Clients cannot write to the reservation tables directly; all writes go through the functions.
 
+## Phase 3: financial engine and folio
+
+| Path | What |
+|---|---|
+| `supabase/migrations/20261108000400_financial_engine.sql` | folios, append-only `folio_transactions`, chart of accounts, channels and commission rates, dated out-of-order history, night audit |
+| `src/lib/finance/metrics.ts` | `calculatePMSMetrics`, the one place where ADR, RevPAR, occupancy, taxes and commissions are computed (in integer cents) |
+| `src/app/reports` | date-based KPI dashboard built from database rows |
+| `supabase/seed_finance.sql` / `cleanup_demo_finance.sql` | demo history for the demo hotel, and its removal (database owner only) |
+| `supabase/tests/40_finance.sql`, `tests/metrics.test.ts`, `tests/db-crosscheck.test.ts` | ledger rules, hand-computed KPIs, and a check of the TypeScript results against independent SQL |
+
+**Ledger rules**
+
+- Room charges, taxes, discounts, extras, payments and refunds are separate transaction types.
+- UPDATE, DELETE and TRUNCATE are refused, even for the database owner. Corrections are reversal rows.
+- Each account code maps to a USALI-style schedule. This is a mapping structure, not a claim of full USALI compliance.
+
+**KPI definitions**
+
+- ADR = net room revenue / room-nights sold.
+- RevPAR = net room revenue / available room-nights.
+- Occupancy = room-nights sold / available room-nights × 100.
+- Available room-nights exclude out-of-order rooms, using the dated OOO records.
+- Cancelled stays never count as revenue.
+- No-show and complimentary stays are reported separately and are outside ADR and RevPAR.
+- OTA commission = the reservation's net room revenue × the commission rate saved on the reservation at booking. It is reported as a distribution cost.
+
+Tax rates (VAT 10 % on rooms, lodging tax 2 %) are demo defaults stored per property. Confirm them with an accountant.
+
 ## Running it
 
 Demo mode needs no setup: leave the env vars empty and you get sample data. Changes stay in the browser.
