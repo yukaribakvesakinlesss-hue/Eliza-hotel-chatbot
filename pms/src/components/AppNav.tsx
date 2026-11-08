@@ -5,7 +5,8 @@ import { usePreferences } from './Preferences';
 
 const ITEMS = [
   { href: '/rooms', tr: 'Oda durumu', en: 'Room status' },
-  { href: '/reservations', tr: 'Rezervasyonlar', en: 'Reservations' }
+  { href: '/reservations', tr: 'Rezervasyonlar', en: 'Reservations' },
+  { href: '/reports', tr: 'Raporlar', en: 'Reports' }
 ];
 
 /** Section switcher shared by the PMS pages. */

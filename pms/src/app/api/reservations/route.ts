@@ -25,7 +25,10 @@ export async function POST(req: NextRequest) {
       p_notes: v.notes,
       p_source: v.source,
       p_status: v.status,
-      p_idempotency_key: key.value
+      p_idempotency_key: key.value,
+      p_nightly_rate: v.nightlyRate,
+      p_channel_code: v.channelCode,
+      p_is_complimentary: v.isComplimentary
     });
     return rpcResult(data, error, 201);
   });

@@ -10,6 +10,9 @@ export const HOUSEKEEPING_STATUSES = ['CLEAN', 'DIRTY', 'IN_PROGRESS', 'INSPECTI
 export const MAINTENANCE_STATUSES = ['OPERATIONAL', 'OUT_OF_ORDER'] as const;
 export const MEMBER_ROLES = ['owner', 'manager', 'front_desk', 'housekeeping'] as const;
 export const RESERVATION_STATUSES = ['PENDING', 'CONFIRMED', 'CHECKED_IN', 'CHECKED_OUT', 'CANCELLED', 'NO_SHOW'] as const;
+export const FOLIO_TXN_TYPES = ['ROOM_CHARGE', 'TAX', 'DISCOUNT', 'EXTRA', 'PAYMENT', 'REFUND'] as const;
+export const PAYMENT_METHODS = ['CASH', 'CARD', 'TRANSFER', 'OTA'] as const;
+export const EXTRA_ACCOUNTS = ['FB_FOOD', 'FB_BEVERAGE', 'OOD_OTHER', 'MISC_INCOME'] as const;
 export const RESERVATION_SOURCES = ['direct', 'phone', 'walk_in', 'email', 'website', 'ota'] as const;
 
 export type OccupancyStatus = (typeof OCCUPANCY_STATUSES)[number];
@@ -18,6 +21,9 @@ export type MaintenanceStatus = (typeof MAINTENANCE_STATUSES)[number];
 export type MemberRole = (typeof MEMBER_ROLES)[number];
 export type ReservationStatus = (typeof RESERVATION_STATUSES)[number];
 export type ReservationSource = (typeof RESERVATION_SOURCES)[number];
+export type FolioTxnType = (typeof FOLIO_TXN_TYPES)[number];
+export type PaymentMethod = (typeof PAYMENT_METHODS)[number];
+export type ExtraAccount = (typeof EXTRA_ACCOUNTS)[number];
 
 export type StatusDimension = 'occupancy' | 'housekeeping' | 'maintenance';
 export type StatusValue<D extends StatusDimension> = D extends 'occupancy'
@@ -41,6 +47,10 @@ export type Property = {
   code: string;
   timezone: string;
   currency: string;
+  /** demo defaults: KDV 10 % on rooms, konaklama vergisi 2 % */
+  vat_rate_rooms: number;
+  lodging_tax_rate: number;
+  no_show_charge_nights: number;
   created_at: string;
   updated_at: string;
 }
@@ -127,8 +137,80 @@ export type Reservation = {
   checked_out_at: string | null;
   cancelled_at: string | null;
   cancel_reason: string | null;
+  /** tax-exclusive nightly rate */
+  nightly_rate: number;
+  channel_code: string;
+  /** commission rate snapshotted from the channel at booking time (0..1) */
+  commission_rate: number;
+  is_complimentary: boolean;
   created_at: string;
   updated_at: string;
+};
+
+export type DistributionChannel = {
+  id: string;
+  organization_id: string;
+  code: string;
+  name: string;
+  commission_rate: number;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
+export type OutOfOrderPeriod = {
+  id: number;
+  organization_id: string;
+  property_id: string;
+  room_id: string;
+  start_date: string;
+  /** exclusive; null = still out of order */
+  end_date: string | null;
+  reason: string | null;
+  created_at: string;
+};
+
+export type UsaliAccount = {
+  code: string;
+  name_tr: string;
+  name_en: string;
+  kind: 'REVENUE' | 'ALLOWANCE' | 'TAX_LIABILITY' | 'SETTLEMENT' | 'EXPENSE';
+  usali_schedule: string;
+  sort_order: number;
+};
+
+export type Folio = {
+  id: string;
+  organization_id: string;
+  property_id: string;
+  reservation_id: string;
+  status: 'OPEN' | 'CLOSED';
+  currency: string;
+  closed_at: string | null;
+  closed_by: string | null;
+  created_at: string;
+};
+
+/** Append-only ledger row. Sign = effect on the guest balance (charges +, discounts/payments −). */
+export type FolioTransaction = {
+  id: number;
+  organization_id: string;
+  property_id: string;
+  folio_id: string;
+  reservation_id: string;
+  txn_type: FolioTxnType;
+  account_code: string;
+  description: string;
+  service_date: string;
+  amount: number;
+  tax_code: 'VAT' | 'LODGING' | null;
+  tax_rate: number | null;
+  parent_id: number | null;
+  reverses_id: number | null;
+  payment_method: PaymentMethod | null;
+  idempotency_key: string | null;
+  created_by: string | null;
+  created_at: string;
 };
 
 export type ReservationGuest = {
@@ -165,6 +247,11 @@ export type Database = {
       room_status_events: Table<RoomStatusEvent>;
       reservations: Table<Reservation>;
       reservation_guests: Table<ReservationGuest>;
+      distribution_channels: Table<DistributionChannel>;
+      room_out_of_order_periods: Table<OutOfOrderPeriod>;
+      usali_accounts: Table<UsaliAccount>;
+      folios: Table<Folio>;
+      folio_transactions: Table<FolioTransaction>;
     };
     Views: Record<string, never>;
     Functions: {
@@ -187,9 +274,30 @@ export type Database = {
           p_source?: ReservationSource;
           p_status?: ReservationStatus;
           p_idempotency_key?: string | null;
+          p_nightly_rate?: number;
+          p_channel_code?: string;
+          p_is_complimentary?: boolean;
         };
         Returns: Reservation;
       };
+      post_room_charges: { Args: { p_reservation_id: string; p_through?: string | null }; Returns: number };
+      run_night_audit: { Args: { p_property_id: string; p_business_date?: string | null }; Returns: number };
+      post_folio_transaction: {
+        Args: {
+          p_reservation_id: string;
+          p_type: FolioTxnType;
+          p_amount: number;
+          p_description?: string | null;
+          p_account_code?: string | null;
+          p_service_date?: string | null;
+          p_tax_rate?: number | null;
+          p_payment_method?: PaymentMethod | null;
+          p_idempotency_key?: string | null;
+        };
+        Returns: number;
+      };
+      reverse_folio_transaction: { Args: { p_transaction_id: number; p_reason?: string | null }; Returns: number };
+      close_folio: { Args: { p_reservation_id: string }; Returns: Folio };
       update_reservation: {
         Args: {
           p_reservation_id: string;
@@ -229,6 +337,7 @@ export type Database = {
       maintenance_status: MaintenanceStatus;
       member_role: MemberRole;
       reservation_status: ReservationStatus;
+      folio_txn_type: FolioTxnType;
     };
     CompositeTypes: Record<string, never>;
   };

@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 import { TapeChart } from '@/components/reservations/TapeChart';
 import { demoProperty, demoRole, demoRooms } from '@/lib/demo/data';
-import { demoReservations } from '@/lib/demo/reservations';
+import { DEMO_CHANNELS, demoReservations } from '@/lib/demo/reservations';
 import { todayIn } from '@/lib/reservations/dates';
 import { getServerClient } from '@/lib/supabase/server';
 import type { MemberRole, RoomWithType } from '@/types/database';
@@ -15,7 +15,7 @@ export default async function ReservationsPage() {
 
   if (!supabase) {
     const today = todayIn(demoProperty.timezone);
-    return <TapeChart demo property={demoProperty} role={demoRole} rooms={demoRooms().sort(byNumber)} today={today} initialReservations={demoReservations(today)} />;
+    return <TapeChart demo property={demoProperty} role={demoRole} rooms={demoRooms().sort(byNumber)} today={today} channels={DEMO_CHANNELS} initialReservations={demoReservations(today)} />;
   }
 
   const {
@@ -40,9 +40,10 @@ export default async function ReservationsPage() {
     memberships.find((m) => m.organization_id === membership.organization_id && m.property_id === null)?.role ??
     membership.role;
 
-  const [{ data: roomTypes, error: tErr }, { data: rooms, error: rErr }] = await Promise.all([
+  const [{ data: roomTypes, error: tErr }, { data: rooms, error: rErr }, { data: channels }] = await Promise.all([
     supabase.from('room_types').select('id, code, name, max_occupancy').eq('property_id', property.id),
-    supabase.from('rooms').select('*').eq('property_id', property.id)
+    supabase.from('rooms').select('*').eq('property_id', property.id),
+    supabase.from('distribution_channels').select('code, name, commission_rate').eq('organization_id', membership.organization_id).eq('is_active', true).order('commission_rate')
   ]);
   if (tErr) throw new Error(`room_types: ${tErr.message}`);
   if (rErr) throw new Error(`rooms: ${rErr.message}`);
@@ -50,5 +51,5 @@ export default async function ReservationsPage() {
   const withTypes: RoomWithType[] = (rooms ?? []).map((r) => ({ ...r, room_type: types.get(r.room_type_id) ?? null })).sort(byNumber);
 
   // reservations are loaded by the client for the visible window (and kept fresh via realtime)
-  return <TapeChart demo={false} property={property} role={role} rooms={withTypes} today={todayIn(property.timezone)} initialReservations={[]} />;
+  return <TapeChart demo={false} property={property} role={role} rooms={withTypes} today={todayIn(property.timezone)} channels={(channels ?? []).map((c) => ({ ...c, commission_rate: Number(c.commission_rate) }))} initialReservations={[]} />;
 }

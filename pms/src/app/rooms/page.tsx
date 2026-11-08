@@ -1,6 +1,8 @@
 import { redirect } from 'next/navigation';
 import { RoomBoard } from '@/components/RoomBoard';
 import { demoProperty, demoRole, demoRoomTypes, demoRooms } from '@/lib/demo/data';
+import { demoReservations } from '@/lib/demo/reservations';
+import { todayIn } from '@/lib/reservations/dates';
 import { getServerClient } from '@/lib/supabase/server';
 import type { MemberRole, RoomWithType } from '@/types/database';
 
@@ -10,7 +12,16 @@ export default async function RoomsPage() {
   const supabase = await getServerClient();
 
   if (!supabase) {
-    return <RoomBoard demo property={demoProperty} role={demoRole} userId={null} roomTypes={demoRoomTypes} initialRooms={demoRooms()} />;
+    // demo: occupancy follows the demo reservations (in-house → OCCUPIED, arriving today → RESERVED)
+    const today = todayIn(demoProperty.timezone);
+    const stays = demoReservations(today);
+    const rooms = demoRooms().map((room) => {
+      if (room.maintenance_status === 'OUT_OF_ORDER') return { ...room, occupancy_status: 'VACANT' as const };
+      const inHouse = stays.some((r) => r.room_id === room.id && r.status === 'CHECKED_IN');
+      const arriving = stays.some((r) => r.room_id === room.id && r.check_in === today && (r.status === 'CONFIRMED' || r.status === 'PENDING'));
+      return { ...room, occupancy_status: inHouse ? ('OCCUPIED' as const) : arriving ? ('RESERVED' as const) : ('VACANT' as const) };
+    });
+    return <RoomBoard demo property={demoProperty} role={demoRole} userId={null} roomTypes={demoRoomTypes} initialRooms={rooms} />;
   }
 
   const {

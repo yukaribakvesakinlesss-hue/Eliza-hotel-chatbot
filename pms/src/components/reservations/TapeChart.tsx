@@ -8,7 +8,7 @@ import { RES_STATUS_LABELS, RES_STATUS_TONES, RES_TEXT } from '@/lib/i18n/reserv
 import { LABELS } from '@/lib/i18n/labels';
 import { AppNav } from '@/components/AppNav';
 import { PreferenceToggles, usePreferences } from '@/components/Preferences';
-import { QuickBookingModal, type QuickBookingDefaults } from './QuickBookingModal';
+import { QuickBookingModal, type ChannelOption, type QuickBookingDefaults } from './QuickBookingModal';
 import { ReservationPanel } from './ReservationPanel';
 
 const DAYS = 14;
@@ -23,6 +23,7 @@ export function TapeChart({
   role,
   rooms,
   today,
+  channels,
   initialReservations
 }: {
   demo: boolean;
@@ -30,6 +31,7 @@ export function TapeChart({
   role: MemberRole | null;
   rooms: RoomWithType[];
   today: string;
+  channels: ChannelOption[];
   initialReservations: ReservationWithGuest[];
 }) {
   const { lang } = usePreferences();
@@ -257,6 +259,7 @@ export function TapeChart({
           existing={list}
           today={today}
           defaults={booking}
+          channels={channels}
           onClose={() => setBooking(null)}
           onCreated={(res, guestName) => {
             setBooking(null);

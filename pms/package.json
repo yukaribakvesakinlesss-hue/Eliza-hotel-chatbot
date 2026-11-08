@@ -8,7 +8,7 @@
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "db:test": "bash supabase/tests/run.sh"
+    "db:test": "CROSSCHECK_OUT=${TMPDIR:-/tmp}/axon-crosscheck.json bash supabase/tests/run.sh && PMS_CROSSCHECK_FILE=${TMPDIR:-/tmp}/axon-crosscheck.json vitest run tests/db-crosscheck.test.ts"
   },
   "dependencies": {
     "@supabase/ssr": "0.12.7",

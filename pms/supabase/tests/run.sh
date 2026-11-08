@@ -18,8 +18,9 @@ echo "▸ recreating database $TEST_DB"
 run() { PGOPTIONS="-c client_min_messages=warning" "${PSQL[@]}" -d "$TEST_DB" -f "$1" > /dev/null; }
 
 echo "▸ supabase shim";      run "$DIR/tests/00_supabase_shim.sql"
-for pass in 1 2; do
-  for f in "$DIR"/migrations/*.sql; do
+# every migration twice in a row: each file must be safe to re-run
+for f in "$DIR"/migrations/*.sql; do
+  for pass in 1 2; do
     echo "▸ migration (pass $pass) $(basename "$f")"; run "$f"
   done
 done
@@ -30,3 +31,11 @@ echo "▸ reservation tests"
 "${PSQL[@]}" -d "$TEST_DB" -f "$DIR/tests/20_reservations.sql"
 echo "▸ concurrency tests"
 TEST_DB="$TEST_DB" bash "$DIR/tests/30_concurrency.sh"
+echo "▸ finance tests"
+"${PSQL[@]}" -d "$TEST_DB" -f "$DIR/tests/40_finance.sql"
+echo "▸ demo finance seed (x2, second run must skip)"
+run "$DIR/seed_finance.sql"; run "$DIR/seed_finance.sql"
+if [ -n "${CROSSCHECK_OUT:-}" ]; then
+  echo "▸ cross-check fixture → $CROSSCHECK_OUT"
+  "${PSQL[@]}" -d "$TEST_DB" -f "$DIR/tests/50_crosscheck.sql" > "$CROSSCHECK_OUT"
+fi

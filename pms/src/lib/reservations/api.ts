@@ -29,6 +29,10 @@ export type CreateReservationInput = {
   notes: string | null;
   source: ReservationSource;
   status: 'PENDING' | 'CONFIRMED';
+  /** tax-exclusive nightly rate */
+  nightlyRate: number;
+  channelCode: string;
+  isComplimentary: boolean;
 };
 
 const str = (v: unknown, max: number): string | null => {
@@ -72,6 +76,12 @@ export function parseCreate(body: unknown): Parsed<CreateReservationInput> {
   if (!RESERVATION_SOURCES.includes(source as ReservationSource)) return bad('Geçersiz rezervasyon kaynağı.');
   const status = b.status === undefined ? 'CONFIRMED' : b.status;
   if (status !== 'PENDING' && status !== 'CONFIRMED') return bad('Yeni rezervasyon yalnızca Beklemede veya Onaylı olabilir.');
+  const isComplimentary = b.isComplimentary === true;
+  const nightlyRate = b.nightlyRate === undefined ? 0 : b.nightlyRate;
+  if (typeof nightlyRate !== 'number' || !Number.isFinite(nightlyRate) || nightlyRate < 0 || nightlyRate > 1_000_000 || Math.round(nightlyRate * 100) !== +(nightlyRate * 100).toFixed(6))
+    return bad('Gecelik fiyat 0 ile 1.000.000 arasında, en fazla 2 ondalık olmalı.', 'RES_INVALID_RATE');
+  const channelCode = b.channelCode === undefined ? 'DIRECT' : b.channelCode;
+  if (typeof channelCode !== 'string' || !/^[A-Z0-9_]{2,20}$/.test(channelCode)) return bad('Satış kanalı geçersiz.', 'RES_CHANNEL');
   return {
     ok: true,
     value: {
@@ -86,7 +96,10 @@ export function parseCreate(body: unknown): Parsed<CreateReservationInput> {
       guestPhone: str(b.guestPhone, 30),
       notes: str(b.notes, 1000),
       source: source as ReservationSource,
-      status
+      status,
+      nightlyRate: isComplimentary ? 0 : nightlyRate,
+      channelCode,
+      isComplimentary
     }
   };
 }
@@ -163,7 +176,13 @@ const STATUS_BY_CODE: Record<string, number> = {
   RES_STALE: 409,
   IDEMPOTENCY_MISMATCH: 409,
   IDEMPOTENCY_IN_PROGRESS: 409,
-  RES_ROOM_OCCUPIED: 409
+  RES_ROOM_OCCUPIED: 409,
+  FOLIO_NOT_FOUND: 404,
+  FOLIO_TXN_NOT_FOUND: 404,
+  FOLIO_CLOSED: 409,
+  FOLIO_ALREADY_REVERSED: 409,
+  FOLIO_IDEMPOTENCY_MISMATCH: 409,
+  FOLIO_IMMUTABLE: 403
 };
 
 /**
@@ -173,7 +192,7 @@ const STATUS_BY_CODE: Record<string, number> = {
 export function mapDbError(err: { message?: string | null; code?: string | null } | null | undefined): ApiError {
   const msg = err?.message ?? '';
   const m = /^([A-Z_]+):\s*(.+)$/s.exec(msg);
-  if (m && m[1] && m[2] && (m[1].startsWith('RES_') || m[1].startsWith('IDEMPOTENCY_') || m[1] === 'FORBIDDEN' || m[1] === 'AUTH_REQUIRED')) {
+  if (m && m[1] && m[2] && (m[1].startsWith('RES_') || m[1].startsWith('FOLIO_') || m[1].startsWith('IDEMPOTENCY_') || m[1] === 'FORBIDDEN' || m[1] === 'AUTH_REQUIRED')) {
     return { status: STATUS_BY_CODE[m[1]] ?? 422, code: m[1], message: m[2].trim() };
   }
   // the EXCLUDE constraint fired without the friendly pre-check (should not happen, but never show raw SQL)
@@ -181,4 +200,45 @@ export function mapDbError(err: { message?: string | null; code?: string | null 
     return { status: 409, code: 'RES_CONFLICT', message: 'Oda seçilen tarihlerde başka bir rezervasyonla çakışıyor.' };
   }
   return { status: 500, code: 'INTERNAL', message: 'Rezervasyon kaydedilemedi. Lütfen tekrar deneyin; sorun sürerse yöneticinize bildirin.' };
+}
+
+export type FolioAction =
+  | { action: 'post_charges' }
+  | { action: 'post'; type: 'EXTRA' | 'DISCOUNT' | 'PAYMENT' | 'REFUND'; amount: number; description: string | null; accountCode: string | null; taxRate: number | null; paymentMethod: string | null; idempotencyKey: string }
+  | { action: 'reverse'; transactionId: number; reason: string | null }
+  | { action: 'close' };
+
+const MONEY = (v: unknown) => typeof v === 'number' && Number.isFinite(v) && v > 0 && v <= 1_000_000 && Math.abs(Math.round(v * 100) - v * 100) < 1e-6;
+
+export function parseFolioAction(body: unknown): Parsed<FolioAction> {
+  if (!body || typeof body !== 'object') return bad('Geçersiz istek gövdesi.');
+  const b = body as Record<string, unknown>;
+  switch (b.action) {
+    case 'post_charges':
+    case 'close':
+      return { ok: true, value: { action: b.action } };
+    case 'reverse': {
+      if (typeof b.transactionId !== 'number' || !Number.isInteger(b.transactionId) || b.transactionId < 1) return bad('Hareket numarası geçersiz.');
+      return { ok: true, value: { action: 'reverse', transactionId: b.transactionId, reason: str(b.reason, 200) } };
+    }
+    case 'post': {
+      const type = b.type;
+      if (type !== 'EXTRA' && type !== 'DISCOUNT' && type !== 'PAYMENT' && type !== 'REFUND') return bad('Hareket türü geçersiz.', 'FOLIO_BAD_TYPE');
+      if (!MONEY(b.amount)) return bad('Tutar 0\'dan büyük, en fazla 1.000.000 ve en fazla 2 ondalık olmalı.', 'FOLIO_INVALID_AMOUNT');
+      if (typeof b.idempotencyKey !== 'string' || !IDEMPOTENCY_KEY.test(b.idempotencyKey)) return bad('İşlem anahtarı eksik.', 'IDEMPOTENCY_KEY_INVALID');
+      const taxRate = b.taxRate === undefined || b.taxRate === null ? null : b.taxRate;
+      if (taxRate !== null && (typeof taxRate !== 'number' || taxRate < 0 || taxRate > 0.5)) return bad('KDV oranı 0 ile %50 arasında olmalı.', 'FOLIO_BAD_TAX');
+      const method = b.paymentMethod === undefined || b.paymentMethod === null ? null : b.paymentMethod;
+      if ((type === 'PAYMENT' || type === 'REFUND') && !['CASH', 'CARD', 'TRANSFER', 'OTA'].includes(method as string))
+        return bad('Ödeme yöntemi seçilmeli.', 'FOLIO_BAD_METHOD');
+      const account = b.accountCode === undefined || b.accountCode === null ? null : b.accountCode;
+      if (account !== null && (typeof account !== 'string' || !/^[A-Z_]{2,40}$/.test(account))) return bad('Hesap kodu geçersiz.', 'FOLIO_BAD_ACCOUNT');
+      return {
+        ok: true,
+        value: { action: 'post', type, amount: b.amount as number, description: str(b.description, 200), accountCode: account as string | null, taxRate: taxRate as number | null, paymentMethod: method as string | null, idempotencyKey: b.idempotencyKey }
+      };
+    }
+    default:
+      return bad('Bilinmeyen folyo işlemi.');
+  }
 }

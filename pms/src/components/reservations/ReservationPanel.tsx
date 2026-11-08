@@ -6,6 +6,8 @@ import { reservationsApi, type ApiResult } from '@/lib/reservations/client';
 import { RES_STATUS_LABELS, RES_STATUS_TONES, RES_TEXT, SOURCE_LABELS } from '@/lib/i18n/reservations';
 import type { Lang } from '@/lib/i18n/labels';
 import { Modal } from './Modal';
+import { FolioPanel } from './FolioPanel';
+import { formatMoney, toCents } from '@/lib/finance/metrics';
 
 /** Reservation details + every backend action (extend, change, confirm, check-in/out, no-show, cancel). */
 export function ReservationPanel({
@@ -15,6 +17,7 @@ export function ReservationPanel({
   reservation,
   rooms,
   today,
+  currency = 'EUR',
   onClose,
   onChanged
 }: {
@@ -24,6 +27,7 @@ export function ReservationPanel({
   reservation: ReservationWithGuest;
   rooms: RoomWithType[];
   today: string;
+  currency?: string;
   onClose: () => void;
   onChanged: (reservation: Reservation, message: string) => void;
 }) {
@@ -38,6 +42,7 @@ export function ReservationPanel({
   const [roomId, setRoomId] = useState(r.room_id);
   const [cancelling, setCancelling] = useState(false);
   const [reason, setReason] = useState('');
+  const [tab, setTab] = useState<'details' | 'folio'>('details');
 
   const active = r.status === 'PENDING' || r.status === 'CONFIRMED' || r.status === 'CHECKED_IN';
   const writable = canEdit && !demo && active;
@@ -59,6 +64,20 @@ export function ReservationPanel({
 
   return (
     <Modal title={`${r.code} · ${r.guest_name ?? t.guest}`} onClose={onClose} wide>
+      {canEdit && (
+        <div className="mb-4 flex gap-1 rounded-full border border-silver/15 p-1 text-[12.5px] font-medium sm:w-fit">
+          {(['details', 'folio'] as const).map((k) => (
+            <button key={k} type="button" onClick={() => setTab(k)} aria-pressed={tab === k}
+              className={`flex-1 rounded-full px-4 py-1 transition sm:flex-none ${tab === k ? 'bg-gold/15 text-gold' : 'text-mist hover:text-ink'}`}>
+              {k === 'details' ? (lang === 'tr' ? 'Detay' : 'Details') : lang === 'tr' ? 'Folyo' : 'Folio'}
+            </button>
+          ))}
+        </div>
+      )}
+      {tab === 'folio' ? (
+        <FolioPanel lang={lang} demo={demo} canEdit={canEdit} reservation={r} today={today} currency={currency} />
+      ) : (
+      <>
       <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-[13.5px] sm:grid-cols-3">
         <div>
           <dt className="text-[11px] uppercase tracking-wider text-mist">{t.status}</dt>
@@ -81,6 +100,13 @@ export function ReservationPanel({
         <div>
           <dt className="text-[11px] uppercase tracking-wider text-mist">{t.source}</dt>
           <dd className="mt-0.5 text-ink">{SOURCE_LABELS[lang][r.source]}</dd>
+        </div>
+        <div>
+          <dt className="text-[11px] uppercase tracking-wider text-mist">{lang === 'tr' ? 'Gecelik fiyat · kanal' : 'Nightly rate · channel'}</dt>
+          <dd className="mt-0.5 text-ink">
+            {r.is_complimentary ? (lang === 'tr' ? 'Complimentary' : 'Complimentary') : formatMoney(toCents(r.nightly_rate), currency, lang)} · {r.channel_code}
+            {Number(r.commission_rate) > 0 ? ` (%${Math.round(Number(r.commission_rate) * 1000) / 10})` : ''}
+          </dd>
         </div>
         <div>
           <dt className="text-[11px] uppercase tracking-wider text-mist">{t.version}</dt>
@@ -171,6 +197,8 @@ export function ReservationPanel({
         <p role="alert" className="tone tone-rose mt-4 rounded-xl px-3 py-2 text-[13px] font-medium">
           {error}
         </p>
+      )}
+      </>
       )}
     </Modal>
   );

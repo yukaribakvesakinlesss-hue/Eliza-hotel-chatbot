@@ -8,6 +8,7 @@ import type { Lang } from '@/lib/i18n/labels';
 import { Modal } from './Modal';
 
 export type QuickBookingDefaults = { roomId: string; checkIn: string };
+export type ChannelOption = { code: string; name: string; commission_rate: number };
 
 export function QuickBookingModal({
   lang,
@@ -17,6 +18,7 @@ export function QuickBookingModal({
   existing,
   today,
   defaults,
+  channels,
   onClose,
   onCreated
 }: {
@@ -27,6 +29,7 @@ export function QuickBookingModal({
   existing: Pick<Reservation, 'id' | 'room_id' | 'check_in' | 'check_out' | 'status'>[];
   today: string;
   defaults: QuickBookingDefaults;
+  channels: ChannelOption[];
   onClose: () => void;
   onCreated: (reservation: Reservation, guestName: string) => void;
 }) {
@@ -38,6 +41,9 @@ export function QuickBookingModal({
   const [children, setChildren] = useState(0);
   const [status, setStatus] = useState<'CONFIRMED' | 'PENDING'>('CONFIRMED');
   const [source, setSource] = useState<ReservationSource>('phone');
+  const [rate, setRate] = useState('');
+  const [channelCode, setChannelCode] = useState(channels[0]?.code ?? 'DIRECT');
+  const [comp, setComp] = useState(false);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   // one key per opened form: retries after a lost response replay the same booking instead of creating a second one
@@ -62,6 +68,12 @@ export function QuickBookingModal({
     setPending(true);
     setError(null);
     const guestName = String(f.get('guestName') ?? '').trim();
+    const nightlyRate = comp ? 0 : Number(rate.replace(',', '.') || '0');
+    if (!Number.isFinite(nightlyRate) || nightlyRate < 0) {
+      setPending(false);
+      setError(lang === 'tr' ? 'Gecelik fiyat geçersiz.' : 'Invalid nightly rate.');
+      return;
+    }
     const res = await reservationsApi.create(
       {
         propertyId,
@@ -75,7 +87,10 @@ export function QuickBookingModal({
         guestPhone: String(f.get('guestPhone') ?? '').trim() || null,
         notes: String(f.get('notes') ?? '').trim() || null,
         source,
-        status
+        status,
+        nightlyRate: Math.round(nightlyRate * 100) / 100,
+        channelCode,
+        isComplimentary: comp
       },
       key.current
     );
@@ -159,6 +174,27 @@ export function QuickBookingModal({
             ))}
           </select>
         </label>
+        <label className={label}>
+          {lang === 'tr' ? 'Gecelik fiyat (vergi hariç)' : 'Nightly rate (excl. tax)'}
+          <input className="field mt-1" inputMode="decimal" value={comp ? '0' : rate} disabled={comp} placeholder="0,00" onChange={(e) => setRate(e.target.value)} />
+        </label>
+        <label className={label}>
+          {lang === 'tr' ? 'Satış kanalı' : 'Channel'}
+          <select className="field mt-1" value={channelCode} onChange={(e) => setChannelCode(e.target.value)}>
+            {channels.map((c) => (
+              <option key={c.code} value={c.code}>{c.name} · %{Math.round(c.commission_rate * 1000) / 10}</option>
+            ))}
+          </select>
+        </label>
+        <label className="col-span-2 flex items-center gap-2 text-[12.5px] text-mist">
+          <input type="checkbox" checked={comp} onChange={(e) => setComp(e.target.checked)} />
+          {lang === 'tr' ? 'Complimentary (ücretsiz konaklama; gelire ve ADR\'ye girmez, ayrı raporlanır)' : 'Complimentary (free stay; excluded from revenue and ADR, reported separately)'}
+        </label>
+        {nights > 0 && !comp && Number(rate.replace(',', '.')) > 0 && (
+          <p className="col-span-2 -mt-1 text-[12px] text-mist">
+            {lang === 'tr' ? 'Toplam (vergi hariç)' : 'Total (excl. tax)'}: {(Number(rate.replace(',', '.')) * nights).toLocaleString(lang === 'tr' ? 'tr-TR' : 'en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+          </p>
+        )}
         <label className={`${label} col-span-2`}>
           {t.notes}
           <textarea className="field mt-1 min-h-[64px]" name="notes" maxLength={1000} />
