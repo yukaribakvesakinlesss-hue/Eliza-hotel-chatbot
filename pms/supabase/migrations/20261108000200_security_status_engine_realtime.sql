@@ -134,8 +134,9 @@ create policy rse_select on public.room_status_events for select to authenticate
 -- ---------------------------------------------------------------------
 -- Grants. anon gets nothing; authenticated is filtered by RLS.
 -- ---------------------------------------------------------------------
+-- Supabase grants ALL (incl. TRUNCATE, which RLS does not cover) by default: start from zero.
 revoke all on public.organizations, public.properties, public.users, public.memberships,
-              public.room_types, public.rooms, public.room_status_events from anon;
+              public.room_types, public.rooms, public.room_status_events from anon, authenticated;
 grant select, update                    on public.organizations      to authenticated;
 grant select, insert, update, delete    on public.properties         to authenticated;
 grant select, update (full_name)        on public.users              to authenticated;
