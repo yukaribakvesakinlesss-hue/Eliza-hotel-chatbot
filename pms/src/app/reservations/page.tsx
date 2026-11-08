@@ -4,6 +4,7 @@ import { demoProperty, demoRole, demoRooms } from '@/lib/demo/data';
 import { DEMO_CHANNELS, demoReservations } from '@/lib/demo/reservations';
 import { todayIn } from '@/lib/reservations/dates';
 import { getServerClient } from '@/lib/supabase/server';
+import { isHousekeepingRole } from '@/lib/rooms/rules';
 import type { MemberRole, RoomWithType } from '@/types/database';
 
 export const dynamic = 'force-dynamic';
@@ -39,6 +40,7 @@ export default async function ReservationsPage() {
     memberships.find((m) => m.organization_id === membership.organization_id && m.property_id === property.id)?.role ??
     memberships.find((m) => m.organization_id === membership.organization_id && m.property_id === null)?.role ??
     membership.role;
+  if (isHousekeepingRole(role)) redirect('/housekeeping'); // housekeeping staff only see their operational screen
 
   const [{ data: roomTypes, error: tErr }, { data: rooms, error: rErr }, { data: channels }] = await Promise.all([
     supabase.from('room_types').select('id, code, name, max_occupancy').eq('property_id', property.id),

@@ -49,13 +49,22 @@ export function RoomBoard({
   const [query, setQuery] = useState('');
   const [busy, setBusy] = useState<ReadonlySet<string>>(new Set());
   const [toast, setToast] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
   const [live, setLive] = useState<Live>(demo ? 'demo' : 'connecting');
 
+  const langRef = useRef(lang);
+  langRef.current = lang;
   // the latest change per room; an older request finishing late must not overwrite a newer one
   const latest = useRef(new Map<string, number>());
   const seq = useRef(0);
   const types = useMemo(() => new Map(roomTypes.map((rt) => [rt.id, rt])), [roomTypes]);
   const withType = useCallback((r: Room): RoomWithType => ({ ...r, room_type: types.get(r.room_type_id) ?? null }), [types]);
+
+  useEffect(() => {
+    if (!notice) return;
+    const id = setTimeout(() => setNotice(null), 6000);
+    return () => clearTimeout(id);
+  }, [notice]);
 
   useEffect(() => {
     if (!toast) return;
@@ -79,6 +88,10 @@ export function RoomBoard({
         const row = withType(payload.new as Room);
         setRooms((list) => {
           const i = list.findIndex((r) => r.id === row.id);
+          // housekeeping finished a room on another device: tell the front desk
+          if (i !== -1 && list[i]!.housekeeping_status !== 'CLEAN' && row.housekeeping_status === 'CLEAN') {
+            setNotice(langRef.current === 'tr' ? `Oda ${row.number} temizlendi${isReady(row) ? ' · satışa hazır' : ''}` : `Room ${row.number} is clean${isReady(row) ? ' · ready to sell' : ''}`);
+          }
           if (i === -1) return [...list, row].sort(byNumber);
           const next = list.slice();
           next[i] = row;
@@ -203,7 +216,7 @@ export function RoomBoard({
           )}
         </div>
       </header>
-      <AppNav />
+      <AppNav role={role} />
 
       <div className="mb-4 grid grid-cols-2 gap-2 sm:grid-cols-5">
         {stats.map((s) => (
@@ -249,6 +262,11 @@ export function RoomBoard({
         </div>
       )}
 
+      {notice && (
+        <div role="status" className="tone tone-green fixed left-1/2 top-4 z-50 w-[min(92vw,460px)] -translate-x-1/2 rounded-xl px-4 py-3 text-[14px] font-semibold shadow-2xl backdrop-blur">
+          ✓ {notice}
+        </div>
+      )}
       {toast && (
         <div role="alert" className="tone tone-rose fixed bottom-5 left-1/2 z-50 w-[min(92vw,460px)] -translate-x-1/2 rounded-xl px-4 py-3 text-[13.5px] font-medium shadow-2xl backdrop-blur">
           {toast}

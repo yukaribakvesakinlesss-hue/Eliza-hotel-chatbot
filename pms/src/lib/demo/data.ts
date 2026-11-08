@@ -9,7 +9,7 @@ const PROP = '00000000-0000-4000-a000-000000000101';
 const T0 = '2026-11-08T08:00:00.000Z';
 
 export const demoOrganization: Organization = { id: ORG, name: 'AXON Demo Hotels', slug: 'axon-demo', created_at: T0, updated_at: T0 };
-export const demoProperty: Property = { id: PROP, organization_id: ORG, name: 'Aurelia Boutique Hotel', code: 'AUR', timezone: 'Europe/Istanbul', currency: 'EUR', vat_rate_rooms: 0.1, lodging_tax_rate: 0.02, no_show_charge_nights: 1, created_at: T0, updated_at: T0 };
+export const demoProperty: Property = { id: PROP, organization_id: ORG, name: 'Aurelia Boutique Hotel', code: 'AUR', timezone: 'Europe/Istanbul', currency: 'EUR', vat_rate_rooms: 0.1, lodging_tax_rate: 0.02, no_show_charge_nights: 1, require_inspection: true, created_at: T0, updated_at: T0 };
 export const demoRole: MemberRole = 'owner';
 
 export const demoRoomTypes: RoomType[] = [

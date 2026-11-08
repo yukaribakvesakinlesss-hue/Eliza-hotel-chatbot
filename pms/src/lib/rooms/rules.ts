@@ -5,7 +5,12 @@
  */
 import type { MemberRole, Room, StatusDimension } from '@/types/database';
 
-export type RuleError = 'FORBIDDEN' | 'RULE_OUT_OF_ORDER' | 'RULE_OCCUPIED';
+export type RuleError = 'FORBIDDEN' | 'RULE_OUT_OF_ORDER' | 'RULE_OCCUPIED' | 'RULE_INSPECTION';
+
+/** Housekeeping roles see only the housekeeping screens. */
+export function isHousekeepingRole(role: MemberRole | null): boolean {
+  return role === 'housekeeping' || role === 'hk_supervisor';
+}
 
 /** Which status dimensions a role may change. */
 export function canChange(role: MemberRole | null, dimension: StatusDimension): boolean {
@@ -25,9 +30,13 @@ export function applyStatusChange(
   role: MemberRole | null,
   note?: string | null,
   now: string = new Date().toISOString(),
-  userId: string | null = null
+  userId: string | null = null,
+  requireInspection = false
 ): { ok: true; room: Room } | { ok: false; error: RuleError } {
   if (!canChange(role, dimension)) return { ok: false, error: 'FORBIDDEN' };
+  // mirrors RULE_INSPECTION in the database: housekeeping staff never mark a room CLEAN when inspection is required
+  if (dimension === 'housekeeping' && value === 'CLEAN' && room.housekeeping_status !== 'CLEAN' && role === 'housekeeping' && requireInspection)
+    return { ok: false, error: 'RULE_INSPECTION' };
   const next: Room = { ...room };
 
   if (dimension === 'occupancy') {
@@ -56,7 +65,7 @@ export function applyStatusChange(
 /** Maps a Postgres/PostgREST error message to a rule code (or null). */
 export function ruleFromError(message: string | undefined | null): RuleError | 'NOT_FOUND' | null {
   if (!message) return null;
-  for (const code of ['RULE_OUT_OF_ORDER', 'RULE_OCCUPIED', 'FORBIDDEN', 'NOT_FOUND'] as const) {
+  for (const code of ['RULE_OUT_OF_ORDER', 'RULE_OCCUPIED', 'RULE_INSPECTION', 'FORBIDDEN', 'NOT_FOUND'] as const) {
     if (message.includes(code)) return code;
   }
   return null;

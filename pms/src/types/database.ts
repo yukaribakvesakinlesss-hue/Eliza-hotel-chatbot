@@ -8,7 +8,9 @@
 export const OCCUPANCY_STATUSES = ['VACANT', 'RESERVED', 'OCCUPIED'] as const;
 export const HOUSEKEEPING_STATUSES = ['CLEAN', 'DIRTY', 'IN_PROGRESS', 'INSPECTION_REQUIRED'] as const;
 export const MAINTENANCE_STATUSES = ['OPERATIONAL', 'OUT_OF_ORDER'] as const;
-export const MEMBER_ROLES = ['owner', 'manager', 'front_desk', 'housekeeping'] as const;
+export const MEMBER_ROLES = ['owner', 'manager', 'front_desk', 'housekeeping', 'hk_supervisor'] as const;
+export const HK_TASK_STATUSES = ['DIRTY', 'IN_PROGRESS', 'INSPECTION_REQUIRED', 'CLEAN', 'CANCELLED'] as const;
+export const HK_TASK_TYPES = ['CHECKOUT', 'STAYOVER', 'DEEP', 'TOUCH_UP'] as const;
 export const RESERVATION_STATUSES = ['PENDING', 'CONFIRMED', 'CHECKED_IN', 'CHECKED_OUT', 'CANCELLED', 'NO_SHOW'] as const;
 export const FOLIO_TXN_TYPES = ['ROOM_CHARGE', 'TAX', 'DISCOUNT', 'EXTRA', 'PAYMENT', 'REFUND'] as const;
 export const PAYMENT_METHODS = ['CASH', 'CARD', 'TRANSFER', 'OTA'] as const;
@@ -19,6 +21,8 @@ export type OccupancyStatus = (typeof OCCUPANCY_STATUSES)[number];
 export type HousekeepingStatus = (typeof HOUSEKEEPING_STATUSES)[number];
 export type MaintenanceStatus = (typeof MAINTENANCE_STATUSES)[number];
 export type MemberRole = (typeof MEMBER_ROLES)[number];
+export type HkTaskStatus = (typeof HK_TASK_STATUSES)[number];
+export type HkTaskType = (typeof HK_TASK_TYPES)[number];
 export type ReservationStatus = (typeof RESERVATION_STATUSES)[number];
 export type ReservationSource = (typeof RESERVATION_SOURCES)[number];
 export type FolioTxnType = (typeof FOLIO_TXN_TYPES)[number];
@@ -51,6 +55,8 @@ export type Property = {
   vat_rate_rooms: number;
   lodging_tax_rate: number;
   no_show_charge_nights: number;
+  /** housekeeping: supervisor inspection mandatory before a room is CLEAN */
+  require_inspection: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -227,6 +233,43 @@ export type ReservationGuest = {
   updated_at: string;
 };
 
+export type HkTask = {
+  id: string;
+  organization_id: string;
+  property_id: string;
+  room_id: string;
+  task_type: HkTaskType;
+  status: HkTaskStatus;
+  /** 1 = guest arriving today */
+  priority: number;
+  business_date: string;
+  assigned_to: string | null;
+  assigned_at: string | null;
+  started_at: string | null;
+  started_by: string | null;
+  finished_at: string | null;
+  finished_by: string | null;
+  inspected_at: string | null;
+  inspected_by: string | null;
+  completed_at: string | null;
+  rework_count: number;
+  created_by: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type HkTaskNote = {
+  id: number;
+  organization_id: string;
+  property_id: string;
+  task_id: string;
+  author_id: string | null;
+  body: string;
+  created_at: string;
+};
+
+export type HkStaff = { user_id: string; display_name: string; role: 'housekeeping' | 'hk_supervisor' };
+
 type Table<Row, Insert = Partial<Row>, Update = Partial<Row>> = {
   Row: Row;
   Insert: Insert;
@@ -252,6 +295,8 @@ export type Database = {
       usali_accounts: Table<UsaliAccount>;
       folios: Table<Folio>;
       folio_transactions: Table<FolioTransaction>;
+      hk_tasks: Table<HkTask>;
+      hk_task_notes: Table<HkTaskNote>;
     };
     Views: Record<string, never>;
     Functions: {
@@ -298,6 +343,15 @@ export type Database = {
       };
       reverse_folio_transaction: { Args: { p_transaction_id: number; p_reason?: string | null }; Returns: number };
       close_folio: { Args: { p_reservation_id: string }; Returns: Folio };
+      hk_create_task: { Args: { p_room_id: string; p_task_type?: HkTaskType; p_priority?: number; p_assigned_to?: string | null; p_note?: string | null }; Returns: HkTask };
+      hk_assign_task: { Args: { p_task_id: string; p_user_id: string | null }; Returns: HkTask };
+      hk_start_task: { Args: { p_task_id: string }; Returns: HkTask };
+      hk_finish_task: { Args: { p_task_id: string; p_note?: string | null }; Returns: HkTask };
+      hk_inspect_task: { Args: { p_task_id: string; p_passed: boolean; p_note?: string | null }; Returns: HkTask };
+      hk_cancel_task: { Args: { p_task_id: string }; Returns: HkTask };
+      hk_add_note: { Args: { p_task_id: string; p_body: string }; Returns: HkTaskNote };
+      hk_list_staff: { Args: { p_property_id: string }; Returns: HkStaff[] };
+      hk_set_require_inspection: { Args: { p_property_id: string; p_required: boolean }; Returns: boolean };
       update_reservation: {
         Args: {
           p_reservation_id: string;
@@ -338,6 +392,7 @@ export type Database = {
       member_role: MemberRole;
       reservation_status: ReservationStatus;
       folio_txn_type: FolioTxnType;
+      hk_task_status: HkTaskStatus;
     };
     CompositeTypes: Record<string, never>;
   };

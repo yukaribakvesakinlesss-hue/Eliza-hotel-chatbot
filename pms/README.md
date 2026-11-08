@@ -73,6 +73,31 @@ The `[)` range means the check-out day is free, so a new guest can check in the 
 
 Tax rates (VAT 10 % on rooms, lodging tax 2 %) are demo defaults stored per property. Confirm them with an accountant.
 
+## Phase 4: housekeeping operations
+
+| Path | What |
+|---|---|
+| `supabase/migrations/20261108000500_housekeeping.sql` | `hk_tasks`, notes and status history; new role `hk_supervisor` (kat şefi); `require_inspection` property setting; task RPCs |
+| `src/app/housekeeping` | mobile-first task screen with large buttons; realtime |
+| `supabase/tests/60_housekeeping.sql`, `tests/housekeeping.test.ts` | task flow, inspection rule, roles, tenants; client permission mirror and routes |
+
+**Task flow**
+
+- A task moves DIRTY → IN_PROGRESS → INSPECTION_REQUIRED → CLEAN (or CANCELLED). The room's housekeeping status follows it in the same transaction, so the front desk board updates through realtime.
+- A room that becomes dirty gets a task automatically: after a check-out, on the room board, or when a room is inserted dirty.
+- If a guest arrives in that room today, the task gets priority 1.
+
+**Inspection setting**
+
+- When `require_inspection` is on, the database refuses CLEAN from housekeeping staff (`RULE_INSPECTION`). Only a supervisor, manager or owner can approve.
+- A rejection needs a note and sends the room back to DIRTY.
+
+**Screens by role**
+
+- Housekeeping staff see only `/housekeeping`; the other screens redirect them there.
+- The front desk can create tasks and add notes.
+- Supervisors and managers assign, inspect and cancel tasks.
+
 ## Running it
 
 Demo mode needs no setup: leave the env vars empty and you get sample data. Changes stay in the browser.

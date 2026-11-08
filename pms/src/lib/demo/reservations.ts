@@ -175,3 +175,14 @@ export function demoFinance(today: string): DemoFinance {
 export function demoReservations(today: string): ReservationWithGuest[] {
   return demoFinance(today).reservations;
 }
+
+/** Demo rooms with occupancy that matches the demo stays (in house → OCCUPIED, arriving today → RESERVED). */
+export function demoRoomsForToday(today: string) {
+  const stays = demoReservations(today);
+  return demoRooms().map((room) => {
+    if (room.maintenance_status === 'OUT_OF_ORDER') return { ...room, occupancy_status: 'VACANT' as const };
+    const inHouse = stays.some((r) => r.room_id === room.id && r.status === 'CHECKED_IN');
+    const arriving = stays.some((r) => r.room_id === room.id && r.check_in === today && (r.status === 'CONFIRMED' || r.status === 'PENDING'));
+    return { ...room, occupancy_status: inHouse ? ('OCCUPIED' as const) : arriving ? ('RESERVED' as const) : ('VACANT' as const) };
+  });
+}

@@ -26,6 +26,7 @@ export const LABELS: Record<Lang, Dict> = {
       FORBIDDEN: 'Bu durumu değiştirme yetkiniz yok.',
       RULE_OUT_OF_ORDER: 'Arızalı odaya misafir yerleştirilemez.',
       RULE_OCCUPIED: 'Dolu oda arızalı olarak işaretlenemez. Önce misafiri taşıyın.',
+      RULE_INSPECTION: 'Kat şefi kontrolü zorunlu: oda kontrol edilmeden temiz işaretlenemez.',
       NOT_FOUND: 'Oda bulunamadı.',
       UNKNOWN: 'Değişiklik kaydedilemedi. Tekrar deneyin.'
     },
@@ -62,6 +63,7 @@ export const LABELS: Record<Lang, Dict> = {
       FORBIDDEN: 'You are not allowed to change this status.',
       RULE_OUT_OF_ORDER: 'A guest cannot be checked into an out-of-order room.',
       RULE_OCCUPIED: 'An occupied room cannot be set out of order. Move the guest first.',
+      RULE_INSPECTION: 'Supervisor inspection is required before the room can be marked clean.',
       NOT_FOUND: 'Room not found.',
       UNKNOWN: 'The change could not be saved. Please try again.'
     },
@@ -92,8 +94,8 @@ export const LABELS: Record<Lang, Dict> = {
 };
 
 export const ROLE_LABELS: Record<Lang, Record<string, string>> = {
-  tr: { owner: 'Sahip', manager: 'Müdür', front_desk: 'Ön büro', housekeeping: 'Kat hizmetleri' },
-  en: { owner: 'Owner', manager: 'Manager', front_desk: 'Front desk', housekeeping: 'Housekeeping' }
+  tr: { owner: 'Sahip', manager: 'Müdür', front_desk: 'Ön büro', housekeeping: 'Kat hizmetleri', hk_supervisor: 'Kat şefi' },
+  en: { owner: 'Owner', manager: 'Manager', front_desk: 'Front desk', housekeeping: 'Housekeeping', hk_supervisor: 'HK supervisor' }
 };
 
 export function statusLabel(lang: Lang, dimension: StatusDimension, value: string): string {

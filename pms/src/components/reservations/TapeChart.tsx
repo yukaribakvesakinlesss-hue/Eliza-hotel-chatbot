@@ -159,7 +159,7 @@ export function TapeChart({
         </div>
         <PreferenceToggles />
       </header>
-      <AppNav />
+      <AppNav role={role} />
 
       <div className="mb-3 flex flex-wrap items-center gap-2">
         <button type="button" className="btn-line px-3 py-1.5" onClick={() => setFrom((f) => addDays(f, -7))}>{t.prev}</button>

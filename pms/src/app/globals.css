@@ -12,6 +12,8 @@
     --c-gold: 29 78 216; --c-gold-soft: 30 64 175; --c-gold-deep: 30 58 138; --c-gold-light: 29 78 216; color-scheme: light; }
   html { -webkit-text-size-adjust: 100%; }
   body { @apply bg-navy-950 text-ink antialiased; }
+  .noscroll { scrollbar-width: none; }
+  .noscroll::-webkit-scrollbar { display: none; }
   :focus-visible { outline: 2px solid rgb(var(--c-gold)); outline-offset: 3px; border-radius: 6px; }
 }
 

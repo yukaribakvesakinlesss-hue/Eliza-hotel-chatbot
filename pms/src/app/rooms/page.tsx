@@ -1,9 +1,10 @@
 import { redirect } from 'next/navigation';
 import { RoomBoard } from '@/components/RoomBoard';
 import { demoProperty, demoRole, demoRoomTypes, demoRooms } from '@/lib/demo/data';
-import { demoReservations } from '@/lib/demo/reservations';
+import { demoRoomsForToday } from '@/lib/demo/reservations';
 import { todayIn } from '@/lib/reservations/dates';
 import { getServerClient } from '@/lib/supabase/server';
+import { isHousekeepingRole } from '@/lib/rooms/rules';
 import type { MemberRole, RoomWithType } from '@/types/database';
 
 export const dynamic = 'force-dynamic';
@@ -12,15 +13,7 @@ export default async function RoomsPage() {
   const supabase = await getServerClient();
 
   if (!supabase) {
-    // demo: occupancy follows the demo reservations (in-house → OCCUPIED, arriving today → RESERVED)
-    const today = todayIn(demoProperty.timezone);
-    const stays = demoReservations(today);
-    const rooms = demoRooms().map((room) => {
-      if (room.maintenance_status === 'OUT_OF_ORDER') return { ...room, occupancy_status: 'VACANT' as const };
-      const inHouse = stays.some((r) => r.room_id === room.id && r.status === 'CHECKED_IN');
-      const arriving = stays.some((r) => r.room_id === room.id && r.check_in === today && (r.status === 'CONFIRMED' || r.status === 'PENDING'));
-      return { ...room, occupancy_status: inHouse ? ('OCCUPIED' as const) : arriving ? ('RESERVED' as const) : ('VACANT' as const) };
-    });
+    const rooms = demoRoomsForToday(todayIn(demoProperty.timezone));
     return <RoomBoard demo property={demoProperty} role={demoRole} userId={null} roomTypes={demoRoomTypes} initialRooms={rooms} />;
   }
 
@@ -50,6 +43,7 @@ export default async function RoomsPage() {
     memberships.find((m) => m.organization_id === membership.organization_id && m.property_id === property.id)?.role ??
     memberships.find((m) => m.organization_id === membership.organization_id && m.property_id === null)?.role ??
     membership.role;
+  if (isHousekeepingRole(role)) redirect('/housekeeping'); // housekeeping staff only see their operational screen
 
   const [{ data: roomTypes, error: tErr }, { data: rooms, error: rErr }] = await Promise.all([
     supabase.from('room_types').select('id, code, name, max_occupancy').eq('property_id', property.id),

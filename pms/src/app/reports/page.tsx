@@ -7,6 +7,8 @@ import { parsePeriod } from '@/lib/finance/period';
 import { todayIn } from '@/lib/reservations/dates';
 import { getPropertyContext } from '@/lib/supabase/context';
 import { getServerClient } from '@/lib/supabase/server';
+import { isHousekeepingRole } from '@/lib/rooms/rules';
+import { redirect } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
 
@@ -34,6 +36,7 @@ export default async function ReportsPage({ searchParams }: { searchParams: Sear
   }
 
   const ctx = await getPropertyContext(supabase);
+  if (isHousekeepingRole(ctx.role)) redirect('/housekeeping');
   const today = todayIn(ctx.property.timezone);
   const period = parsePeriod(sp.from, sp.to, today);
   if (ctx.role !== 'owner' && ctx.role !== 'manager') {

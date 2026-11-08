@@ -127,7 +127,7 @@ export function ReportsView({
         </div>
         <PreferenceToggles />
       </header>
-      <AppNav />
+      <AppNav role={role} />
 
       {!metrics ? (
         <p className="tone tone-slate rounded-xl px-4 py-3 text-[13.5px]">{t.noAccess}</p>

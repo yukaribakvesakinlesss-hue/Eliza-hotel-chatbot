@@ -33,6 +33,8 @@ echo "▸ concurrency tests"
 TEST_DB="$TEST_DB" bash "$DIR/tests/30_concurrency.sh"
 echo "▸ finance tests"
 "${PSQL[@]}" -d "$TEST_DB" -f "$DIR/tests/40_finance.sql"
+echo "▸ housekeeping tests"
+"${PSQL[@]}" -d "$TEST_DB" -f "$DIR/tests/60_housekeeping.sql"
 echo "▸ demo finance seed (x2, second run must skip)"
 run "$DIR/seed_finance.sql"; run "$DIR/seed_finance.sql"
 if [ -n "${CROSSCHECK_OUT:-}" ]; then
