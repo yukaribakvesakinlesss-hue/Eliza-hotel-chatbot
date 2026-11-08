@@ -3,15 +3,21 @@
 
 const buckets = new Map();
 
-// Best-effort in-memory rate limit. It resets when the function instance is recycled,
-// so it slows down abuse but is not a hard guarantee.
+// In-memory rate limit, per function instance. Vercel may run several instances and recycle
+// them, so this slows abuse down rather than guaranteeing a global limit (that needs a shared
+// store such as Upstash Redis). The contact form also has a honeypot and a minimum fill time.
+const MAX_KEYS = 5000;
 function rateLimited(key, max, windowMs) {
   const now = Date.now();
-  const b = buckets.get(key) || { n: 0, t: now };
-  if (now - b.t > windowMs) { b.n = 0; b.t = now; }
+  let b = buckets.get(key);
+  if (!b || now - b.t > windowMs) b = { n: 0, t: now, w: windowMs };
   b.n += 1;
-  buckets.set(key, b);
-  if (buckets.size > 5000) buckets.clear();
+  buckets.delete(key); buckets.set(key, b); // keep insertion order = most recently used last
+  if (buckets.size > MAX_KEYS) {
+    // drop expired windows first, then the least recently used, never everyone at once
+    for (const [k, v] of buckets) { if (now - v.t > v.w) buckets.delete(k); }
+    while (buckets.size > MAX_KEYS) buckets.delete(buckets.keys().next().value);
+  }
   return b.n > max;
 }
 

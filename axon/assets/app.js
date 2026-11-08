@@ -378,7 +378,7 @@
       .then(function (j) { if (j && j.reply) { aiState = 'ai'; setMode('ai'); return j.reply; } return null; })
       .catch(function () { clearTimeout(to); if (aiState === 'unknown') aiState = 'off'; return null; });
   }
-  var busy = false, touched = false;
+  var busy = false, touched = false, chatGen = 0;
   function send(text) {
     text = String(text || '').trim().slice(0, 400); if (!text || busy) return;
     if (!touched) { touched = true; track('live_demo_interaction', { first_action: 'message' }); }
@@ -387,9 +387,14 @@
     var wasDone = chat.done, simReply = simulate(text);
     renderLead();
     busy = true;
+    var gen = chatGen;
     var log = $('#chatLog'); log.insertAdjacentHTML('beforeend', '<div class="typing flex gap-1 px-1 py-2" id="cTyping"><i></i><i></i><i></i></div>'); log.scrollTop = log.scrollHeight;
     tryAI(text).then(function (ai) {
+      if (gen !== chatGen) return; // chat was reset while the reply was on its way
       setTimeout(function () {
+        if (gen !== chatGen) return;
+        // 2. keep the badge honest: a failed AI call falls back to the simulation
+        if (!ai && mode === 'ai') setMode('sim');
         var ty = $('#cTyping'); if (ty) ty.remove();
         var reply = ai || simReply;
         addMsg('bot', reply); chat.history.push({ role: 'assistant', content: reply });
@@ -416,6 +421,7 @@
   $('#chips').addEventListener('click', function (e) { var b = e.target.closest('.chip-b'); if (b) send(b.getAttribute('data-t')); });
   $('#chatForm').addEventListener('submit', function (e) { e.preventDefault(); var i = $('#chatInput'); send(i.value); i.value = ''; });
   function resetChat() {
+    chatGen++;
     chat = { lang: lang === 'tr' ? 'tr' : 'en', langSeen: false, dates: null, guests: null, room: null, name: null, email: null, flow: false, done: false, expect: null, history: [] };
     busy = false;
     $('#chatLog').innerHTML = ''; addMsg('bot', say('greet')); renderLead();
@@ -542,7 +548,7 @@
       .then(function (res) {
         if (res.status === 200 && res.j.ok) {
           track('contact_form_submit', { package: d.package || 'none', challenge: d.challenge });
-          form.reset(); Object.keys(ERR).forEach(function (n) { $('#' + ERR[n]).classList.remove('show'); form.elements[n].removeAttribute('aria-invalid'); });
+          form.reset(); started = false; loadedAt = Date.now(); Object.keys(ERR).forEach(function (n) { $('#' + ERR[n]).classList.remove('show'); form.elements[n].removeAttribute('aria-invalid'); });
           result('ok', '<p class="font-semibold">' + L('Thank you, your request has been received.', 'Teşekkürler, talebiniz bize ulaştı.') + '</p><p class="mt-1 text-mist">' + L('We will reply to ' + esc(d.email) + ' within one business day.', esc(d.email) + ' adresine bir iş günü içinde dönüş yapacağız.') + '</p>');
         } else if (res.status === 400 && res.j.fields) {
           Object.keys(res.j.fields).forEach(function (n) { if (ERR[n]) { form.elements[n].setAttribute('aria-invalid', 'true'); $('#' + ERR[n]).classList.add('show'); } });

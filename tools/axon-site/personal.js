@@ -22,9 +22,9 @@
     return '<div class="flex h-full flex-1 items-end gap-1"><span class="w-1/2 rounded-t bg-gold" style="height:' + v + '%"></span><span class="w-1/2 rounded-t bg-silver/50" style="height:' + EXP[i] + '%"></span></div>';
   }).join('');
 
-  // approvals
+  // approvals (ignored while Nova is typing, so replies never overlap)
   root.addEventListener('click', function (e) {
-    var b = e.target.closest('.nv-approve'); if (!b || b.disabled) return;
+    var b = e.target.closest('.nv-approve'); if (!b || b.disabled || busy) return;
     b.disabled = true; b.textContent = L('Sent ✓', 'Gönderildi ✓'); b.classList.add('done');
     say(L('Done. I sent it in your name and will tell you as soon as they reply.', 'Tamam. Sizin adınıza gönderdim; cevap gelir gelmez size haber vereceğim.'));
   });
@@ -35,11 +35,16 @@
     chat.insertAdjacentHTML('beforeend', '<div class="bubble-in ' + (me ? 'ml-auto max-w-[85%] rounded-2xl rounded-br-md bg-silver/90 px-3.5 py-2 text-navy-950' : 'max-w-[92%] rounded-2xl rounded-bl-md border border-gold/25 bg-gold/[0.07] px-3.5 py-2 text-ink') + '">' + esc(text) + '</div>');
     chat.scrollTop = chat.scrollHeight;
   }
-  var busy = false;
+  var busy = false, gen = 0;
   function say(text) {
-    if (reduce) { bubble(text); return; }
+    if (reduce) { bubble(text); busy = false; return; }
+    busy = true;
+    var g = gen;
     chat.insertAdjacentHTML('beforeend', '<div class="typing flex gap-1 px-1 py-2" id="nvTyping"><i></i><i></i><i></i></div>'); chat.scrollTop = chat.scrollHeight;
-    setTimeout(function () { var t = document.getElementById('nvTyping'); if (t) t.remove(); bubble(text); busy = false; }, 900);
+    setTimeout(function () {
+      if (g !== gen) return; // Nova was reset (e.g. language change) while typing
+      var t = document.getElementById('nvTyping'); if (t) t.remove(); bubble(text); busy = false;
+    }, 900);
   }
   var CMDS = [
     { en: 'Plan my day tomorrow', tr: 'Yarınki günümü planla', tab: 0,
@@ -64,6 +69,7 @@
     if (window.AXON_TRACK) window.AXON_TRACK('live_demo_interaction', { first_action: 'personal_assistant' });
   });
   function reset() {
+    gen++; busy = false;
     chat.innerHTML = ''; renderChips();
     bubble(L('Good morning. You have 5 items today and 4 replies waiting for your approval. Where shall I start?', 'Günaydın. Bugün 5 maddeniz ve onayınızı bekleyen 4 yanıt var. Nereden başlayalım?'));
     var d = new Date(); document.getElementById('nvDate').textContent = d.toLocaleDateString(lang() === 'tr' ? 'tr-TR' : 'en-GB', { day: 'numeric', month: 'long', weekday: 'long' });
