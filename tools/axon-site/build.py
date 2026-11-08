@@ -56,7 +56,7 @@ def fill(s):
     return (s.replace('__SITE__', SITE).replace('__EMAIL__', EMAIL).replace('__VER__', ver).replace('__JSVER__', jsver).replace('__SYNVER__', synver).replace('__SYSVER__', sysver).replace('__PAVER__', paver)
              .replace('__DATE__', datetime.date.today().strftime('%d %B %Y')).replace('__JSONLD__', json.dumps(jsonld, ensure_ascii=False)))
 
-for name in ('page.html', 'privacy.html'):
+for name in ('page.html', 'privacy.html', 'panel.html'):
     page = fill(open(os.path.join(H, name)).read())
     for bad in ('—', '__'):
         assert bad not in page.replace('__', '') if bad == '__' else bad not in page, (name, bad)

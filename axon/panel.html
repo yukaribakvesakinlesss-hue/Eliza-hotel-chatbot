@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="tr" class="bg-navy-950">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AXON CRM · Talep Paneli</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0B1423">
+<link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600&display=swap" rel="stylesheet">
+<script>try{if(localStorage.getItem('axonTheme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+<link rel="stylesheet" href="assets/site.css?v=d39579f4">
+</head>
+<body class="min-h-screen bg-navy-950 font-sans text-mist antialiased">
+
+<header class="border-b border-white/[0.06] bg-navy-950/80 backdrop-blur-md">
+  <div class="mx-auto flex max-w-6xl items-center gap-4 px-5 py-4 sm:px-8">
+    <a href="/" class="font-display text-[15px] font-semibold tracking-[0.18em] text-ink">AXON <span class="font-medium text-gold">CRM</span></a>
+    <span class="hidden text-[13px] text-mist sm:inline">Talep paneli</span>
+    <div class="ml-auto flex items-center gap-2" id="topActions" hidden>
+      <button type="button" id="refresh" class="rounded-full border border-white/10 px-3.5 py-2 text-[13px] text-ink hover:border-gold/40">↻ Yenile</button>
+      <button type="button" id="logout" class="rounded-full border border-white/10 px-3.5 py-2 text-[13px] text-ink hover:border-gold/40">Çıkış</button>
+    </div>
+  </div>
+</header>
+
+<main class="mx-auto max-w-6xl px-5 py-8 sm:px-8">
+
+  <!-- login -->
+  <section id="login" class="mx-auto mt-10 max-w-sm" hidden>
+    <form id="loginForm" class="card p-7">
+      <p class="font-display text-[20px] font-semibold text-ink">Panele giriş</p>
+      <p class="mt-1.5 text-[14px]">Vercel'e eklediğin panel şifresiyle gir.</p>
+      <label for="pw" class="mt-6 block text-[13px] font-medium text-ink">Şifre</label>
+      <input id="pw" type="password" autocomplete="current-password" class="field mt-1.5" required>
+      <p id="loginErr" class="mt-2 min-h-[1.2rem] text-[13px] text-rose-300" role="alert"></p>
+      <button class="btn-gold mt-3 w-full">Giriş yap</button>
+    </form>
+  </section>
+
+  <!-- setup notice -->
+  <section id="setup" class="mx-auto mt-10 max-w-xl" hidden>
+    <div class="card p-7">
+      <p class="font-display text-[20px] font-semibold text-ink">Panel henüz hazır değil</p>
+      <p class="mt-2 text-[14.5px] leading-relaxed" id="setupText"></p>
+    </div>
+  </section>
+
+  <!-- app -->
+  <section id="app" hidden>
+    <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6" id="stats"></div>
+    <div class="mt-6 flex flex-wrap items-center gap-2" id="filters"></div>
+    <div class="mt-4 grid gap-4 lg:grid-cols-[1fr_1.15fr]">
+      <ul id="list" class="grid content-start gap-2"></ul>
+      <div id="detail" class="card min-h-[320px] p-6 lg:sticky lg:top-6 lg:self-start"></div>
+    </div>
+  </section>
+</main>
+
+<script>
+(function () {
+  'use strict';
+  var $ = function (s) { return document.querySelector(s); };
+  var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+  var ST = {
+    new: ['Yeni', 'border-sky-300/40 text-sky-200 bg-sky-400/10'],
+    contacted: ['İletişime geçildi', 'border-violet-300/40 text-violet-200 bg-violet-400/10'],
+    quoted: ['Teklif gönderildi', 'border-amber-300/40 text-amber-200 bg-amber-400/10'],
+    won: ['Onaylandı', 'border-emerald-400/40 text-emerald-300 bg-emerald-400/10'],
+    lost: ['Kaybedildi', 'border-rose-400/40 text-rose-300 bg-rose-400/10']
+  };
+  var token = null; try { token = sessionStorage.getItem('axonPanel'); } catch (e) {}
+  var items = [], filter = 'all', selected = null, gen = 0;
+
+  function show(id) { ['login', 'setup', 'app'].forEach(function (x) { $('#' + x).hidden = x !== id; }); $('#topActions').hidden = id !== 'app'; }
+  function api(method, body) {
+    return fetch('/api/panel', { method: method, headers: Object.assign({ 'Content-Type': 'application/json' }, token ? { Authorization: 'Bearer ' + token } : {}), body: body ? JSON.stringify(body) : undefined })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { status: r.status, j: j }; }); });
+  }
+  function fmt(iso) { return new Date(iso).toLocaleString('tr-TR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }); }
+  function ago(iso) {
+    var m = Math.round((Date.now() - new Date(iso)) / 60000);
+    return m < 1 ? 'şimdi' : m < 60 ? m + ' dk önce' : m < 1440 ? Math.round(m / 60) + ' sa önce' : Math.round(m / 1440) + ' gün önce';
+  }
+  var CH = { 'Missed Guest Inquiries': 'Kaçırılan misafir talepleri', 'Slow Response Times': 'Yavaş cevap süreleri', 'Manual Reservation Management': 'Elle yürütülen rezervasyon yönetimi', 'Multilingual Communication': 'Çok dilli iletişim', 'High Staff Workload': 'Ekibin yüksek iş yükü', 'Other': 'Diğer' };
+  function histText(h) {
+    if (h.type === 'status') return h.text.split(' → ').map(function (k) { return (ST[k] || [k])[0]; }).join(' → ');
+    if (h.type === 'created') return 'Web sitesi formundan talep geldi';
+    if (h.type === 'notify') return /fail/i.test(h.text) ? 'E-posta bildirimi gönderilemedi' : 'Ekibe e-posta bildirimi gitti';
+    return h.text;
+  }
+  function badge(s) { var x = ST[s] || [s, 'border-white/10 text-mist']; return '<span class="tag ' + x[1] + '">' + esc(x[0]) + '</span>'; }
+
+  function load() {
+    var g = ++gen;
+    return api('GET').then(function (r) {
+      if (g !== gen) return;
+      if (r.status === 401) { token = null; try { sessionStorage.removeItem('axonPanel'); } catch (e) {} return boot(); }
+      if (r.status === 503) return setup(r.j.error);
+      if (r.status !== 200) { $('#list').innerHTML = '<li class="card p-5 text-rose-300">Talepler yüklenemedi (' + esc(r.j.error || r.status) + ').</li>'; return; }
+      items = r.j.items || []; show('app'); render();
+      var h = location.hash.slice(1); if (h && !selected) select(h);
+    });
+  }
+  function setup(err) {
+    show('setup');
+    $('#setupText').innerHTML = err === 'panel_not_configured'
+      ? 'Vercel\'de <b class="text-ink">PANEL_PASSWORD</b> adlı gizli bir değişken ekle (Settings → Environment Variables → Secret, Production + Preview), sonra siteyi yeniden yayınla.'
+      : 'Talep deposu (Vercel Blob) projeye bağlı değil.';
+  }
+  function boot() {
+    if (!token) { show('login'); $('#pw').focus(); return; }
+    load();
+  }
+
+  function render() {
+    var counts = { all: items.length }; Object.keys(ST).forEach(function (k) { counts[k] = 0; });
+    items.forEach(function (i) { counts[i.status] = (counts[i.status] || 0) + 1; });
+    var won = counts.won || 0, closed = won + (counts.lost || 0);
+    $('#stats').innerHTML = [['Toplam talep', counts.all], ['Yeni', counts.new], ['İletişimde', counts.contacted], ['Teklifte', counts.quoted], ['Onaylandı', won], ['Kazanma oranı', closed ? Math.round(won / closed * 100) + '%' : '–']]
+      .map(function (s) { return '<div class="card p-4"><p class="text-[12px] text-mist">' + s[0] + '</p><p class="mt-1 font-display text-[24px] font-semibold text-ink">' + s[1] + '</p></div>'; }).join('');
+    $('#filters').innerHTML = [['all', 'Tümü']].concat(Object.keys(ST).map(function (k) { return [k, ST[k][0]]; })).map(function (f) {
+      return '<button type="button" data-f="' + f[0] + '" class="rounded-full border px-3.5 py-1.5 text-[13px] ' + (filter === f[0] ? 'border-gold/50 bg-gold/10 text-ink' : 'border-white/10 text-mist hover:text-ink') + '">' + esc(f[1]) + ' <span class="opacity-60">' + (counts[f[0]] || 0) + '</span></button>';
+    }).join('');
+    var list = items.filter(function (i) { return filter === 'all' || i.status === filter; });
+    $('#list').innerHTML = list.length ? list.map(function (i) {
+      return '<li><button type="button" data-id="' + i.id + '" class="card flex w-full items-start gap-3 p-4 text-left transition hover:border-gold/40 ' + (selected === i.id ? 'border-gold/50 bg-navy-800' : '') + '">' +
+        '<div class="min-w-0 flex-1"><p class="truncate font-semibold text-ink">' + esc(i.hotel) + '</p><p class="truncate text-[13px]">' + esc(i.contact.name) + ' · ' + esc(CH[i.challenge] || i.challenge) + '</p></div>' +
+        '<div class="flex flex-none flex-col items-end gap-1.5">' + badge(i.status) + '<span class="text-[11.5px] text-mist/70">' + ago(i.createdAt) + '</span></div></button></li>';
+    }).join('') : '<li class="card p-6 text-center text-[14px]">' + (items.length ? 'Bu filtrede talep yok.' : 'Henüz talep yok. Sitedeki formdan gelen talepler burada görünecek.') + '</li>';
+    renderDetail();
+  }
+
+  function renderDetail() {
+    var i = items.filter(function (x) { return x.id === selected; })[0];
+    if (!i) { $('#detail').innerHTML = '<p class="py-16 text-center text-[14px]">Ayrıntıları görmek için soldan bir talep seç.</p>'; return; }
+    var wa = (i.contact.whatsapp || '').replace(/[^0-9]/g, '');
+    var mail = 'mailto:' + encodeURIComponent(i.contact.email) + '?subject=' + encodeURIComponent('AXON · ' + i.hotel + ' demo talebiniz') + '&body=' + encodeURIComponent('Merhaba ' + i.contact.name + ',\n\nAXON Hotel AI için talebiniz bize ulaştı. ');
+    $('#detail').innerHTML =
+      '<div class="flex flex-wrap items-start justify-between gap-3"><div><p class="font-display text-[20px] font-semibold text-ink">' + esc(i.hotel) + '</p><p class="mt-0.5 text-[13px]">' + fmt(i.createdAt) + ' · ' + (i.source === 'website form' ? 'Web sitesi formu' : esc(i.source)) + ' · #' + esc(i.id) + '</p></div>' + badge(i.status) + '</div>' +
+      '<dl class="mt-5 grid grid-cols-2 gap-x-4 gap-y-3 text-[14px]">' +
+      [['Ad soyad', i.contact.name], ['E-posta', i.contact.email], ['WhatsApp', i.contact.whatsapp || '–'], ['Oda sayısı', i.rooms], ['En büyük zorluk', CH[i.challenge] || i.challenge], ['Paket', i.package || '–'], ['Sayfa dili', (i.lang || '–').toUpperCase()], ['Bildirim', i.notify === 'sent' ? 'E-posta gönderildi' : i.notify === 'failed' ? 'E-posta gönderilemedi' : '–']]
+        .map(function (r) { return '<div class="min-w-0"><dt class="text-[12px] text-mist/80">' + r[0] + '</dt><dd class="break-words font-medium text-ink">' + esc(r[1]) + '</dd></div>'; }).join('') + '</dl>' +
+      (i.message ? '<div class="mt-4 rounded-xl border border-white/[0.07] bg-navy-950/40 p-3.5 text-[14px] text-ink/90 whitespace-pre-wrap">' + esc(i.message) + '</div>' : '') +
+      '<div class="mt-5 flex flex-wrap gap-2"><a class="btn-gold !px-4 !py-2 text-[13.5px]" href="' + mail + '">E-postayla cevapla</a>' +
+      (wa ? '<a class="btn-line !px-4 !py-2 text-[13.5px]" target="_blank" rel="noopener" href="https://wa.me/' + wa + '?text=' + encodeURIComponent('Merhaba ' + i.contact.name + ', AXON\'dan yazıyorum. Demo talebiniz bize ulaştı.') + '">WhatsApp\'tan yaz</a>' : '') + '</div>' +
+      '<p class="mt-6 text-[12px] font-semibold uppercase tracking-[0.16em] text-gold">Durum</p><div class="mt-2 flex flex-wrap gap-2">' +
+      Object.keys(ST).map(function (k) { return '<button type="button" data-st="' + k + '" class="rounded-full border px-3 py-1.5 text-[12.5px] ' + (i.status === k ? 'border-gold/60 bg-gold/15 text-ink' : 'border-white/10 text-mist hover:text-ink') + '">' + ST[k][0] + '</button>'; }).join('') + '</div>' +
+      '<form id="noteForm" class="mt-5 flex gap-2"><label for="note" class="sr-only">Not</label><input id="note" class="field flex-1" maxlength="2000" placeholder="Not ekle (ör. 15:00\'te arandı, fiyat istedi)"><button class="btn-line !px-4 !py-2 text-[13.5px]">Ekle</button></form>' +
+      '<p class="mt-6 text-[12px] font-semibold uppercase tracking-[0.16em] text-gold">Geçmiş</p><ol class="mt-2 grid gap-2">' +
+      i.history.slice().reverse().map(function (h) { return '<li class="flex gap-3 text-[13.5px]"><span class="w-24 flex-none text-mist/70">' + fmt(h.at) + '</span><span class="text-ink/90">' + (h.type === 'note' ? '📝 ' : h.type === 'status' ? '↪ ' : h.type === 'notify' ? '✉ ' : '• ') + esc(histText(h)) + '</span></li>'; }).join('') + '</ol>' +
+      '<p id="saveMsg" class="mt-3 min-h-[1.2rem] text-[12.5px]" role="status"></p>';
+  }
+
+  function select(id) { selected = id; try { history.replaceState(null, '', '#' + id); } catch (e) {} render(); }
+  function update(patch) {
+    var msg = $('#saveMsg'); if (msg) { msg.className = 'mt-3 min-h-[1.2rem] text-[12.5px] text-mist'; msg.textContent = 'Kaydediliyor…'; }
+    return api('POST', Object.assign({ action: 'update', id: selected }, patch)).then(function (r) {
+      if (r.status === 401) return boot();
+      if (r.status !== 200) { if (msg) { msg.className = 'mt-3 text-[12.5px] text-rose-300'; msg.textContent = 'Kaydedilemedi (' + (r.j.error || r.status) + ')'; } return; }
+      items = items.map(function (x) { return x.id === r.j.item.id ? r.j.item : x; }); render();
+      var m2 = $('#saveMsg'); if (m2) { m2.className = 'mt-3 text-[12.5px] text-emerald-300'; m2.textContent = 'Kaydedildi ✓'; }
+    });
+  }
+
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest('[data-id],[data-f],[data-st]'); if (!t) return;
+    if (t.dataset.id) select(t.dataset.id);
+    else if (t.dataset.f) { filter = t.dataset.f; render(); }
+    else if (t.dataset.st) update({ status: t.dataset.st });
+  });
+  document.addEventListener('submit', function (e) {
+    if (e.target.id === 'noteForm') { e.preventDefault(); var v = $('#note').value.trim(); if (v) update({ note: v }); }
+  });
+  $('#loginForm').addEventListener('submit', function (e) {
+    e.preventDefault(); $('#loginErr').textContent = '';
+    api('POST', { action: 'login', password: $('#pw').value }).then(function (r) {
+      if (r.status === 200) { token = r.j.token; try { sessionStorage.setItem('axonPanel', token); } catch (e2) {} $('#pw').value = ''; load(); }
+      else if (r.status === 503) setup(r.j.error);
+      else $('#loginErr').textContent = r.status === 429 ? 'Çok fazla deneme. 15 dakika sonra tekrar dene.' : 'Şifre yanlış.';
+    });
+  });
+  $('#logout').addEventListener('click', function () { token = null; try { sessionStorage.removeItem('axonPanel'); } catch (e) {} selected = null; boot(); });
+  $('#refresh').addEventListener('click', load);
+  setInterval(function () { if (token && !$('#app').hidden && !document.hidden) load(); }, 60000);
+
+  // first check: is the panel configured at all?
+  api('GET').then(function (r) { if (r.status === 503) setup(r.j.error); else boot(); });
+})();
+</script>
+</body>
+</html>
