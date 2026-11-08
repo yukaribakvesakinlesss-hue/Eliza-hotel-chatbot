@@ -511,7 +511,7 @@
   $$('.pkg-cta').forEach(function (a) { a.addEventListener('click', function () { $('#fPkg').value = a.getAttribute('data-pkg'); }); });
   var RULES = {
     name: function (v) { return v.trim().length >= 2; },
-    email: function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()); },
+    email: function (v) { return /^[A-Za-z0-9._%+'-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(v.trim()); },
     hotel: function (v) { return v.trim().length >= 2; },
     rooms: function (v) { return !!v; },
     challenge: function (v) { return !!v; },

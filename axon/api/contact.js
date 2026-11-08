@@ -86,7 +86,7 @@ module.exports = async function handler(req, res) {
       body: JSON.stringify({
         from: process.env.CONTACT_FROM_EMAIL || 'AXON Systems <onboarding@resend.dev>',
         to: to.split(',').map((x) => x.trim()).filter(Boolean),
-        reply_to: d.email,
+        ...(/^[\x21-\x7e]+$/.test(d.email) ? { reply_to: d.email } : {}),
         subject: 'AXON demo request: ' + d.hotel,
         html, text
       })
