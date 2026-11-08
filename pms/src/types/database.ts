@@ -9,11 +9,15 @@ export const OCCUPANCY_STATUSES = ['VACANT', 'RESERVED', 'OCCUPIED'] as const;
 export const HOUSEKEEPING_STATUSES = ['CLEAN', 'DIRTY', 'IN_PROGRESS', 'INSPECTION_REQUIRED'] as const;
 export const MAINTENANCE_STATUSES = ['OPERATIONAL', 'OUT_OF_ORDER'] as const;
 export const MEMBER_ROLES = ['owner', 'manager', 'front_desk', 'housekeeping'] as const;
+export const RESERVATION_STATUSES = ['PENDING', 'CONFIRMED', 'CHECKED_IN', 'CHECKED_OUT', 'CANCELLED', 'NO_SHOW'] as const;
+export const RESERVATION_SOURCES = ['direct', 'phone', 'walk_in', 'email', 'website', 'ota'] as const;
 
 export type OccupancyStatus = (typeof OCCUPANCY_STATUSES)[number];
 export type HousekeepingStatus = (typeof HOUSEKEEPING_STATUSES)[number];
 export type MaintenanceStatus = (typeof MAINTENANCE_STATUSES)[number];
 export type MemberRole = (typeof MEMBER_ROLES)[number];
+export type ReservationStatus = (typeof RESERVATION_STATUSES)[number];
+export type ReservationSource = (typeof RESERVATION_SOURCES)[number];
 
 export type StatusDimension = 'occupancy' | 'housekeeping' | 'maintenance';
 export type StatusValue<D extends StatusDimension> = D extends 'occupancy'
@@ -101,6 +105,46 @@ export type RoomStatusEvent = {
   changed_at: string;
 }
 
+/** Dates are ISO 'YYYY-MM-DD'; the stay is the half-open range [check_in, check_out). */
+export type Reservation = {
+  id: string;
+  organization_id: string;
+  property_id: string;
+  room_id: string;
+  code: string;
+  status: ReservationStatus;
+  check_in: string;
+  check_out: string;
+  stay: string;
+  adults: number;
+  children: number;
+  source: ReservationSource;
+  notes: string | null;
+  version: number;
+  created_by: string | null;
+  updated_by: string | null;
+  checked_in_at: string | null;
+  checked_out_at: string | null;
+  cancelled_at: string | null;
+  cancel_reason: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type ReservationGuest = {
+  id: string;
+  organization_id: string;
+  property_id: string;
+  reservation_id: string;
+  full_name: string;
+  email: string | null;
+  phone: string | null;
+  nationality: string | null;
+  is_primary: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
 type Table<Row, Insert = Partial<Row>, Update = Partial<Row>> = {
   Row: Row;
   Insert: Insert;
@@ -119,12 +163,53 @@ export type Database = {
       room_types: Table<RoomType>;
       rooms: Table<Room>;
       room_status_events: Table<RoomStatusEvent>;
+      reservations: Table<Reservation>;
+      reservation_guests: Table<ReservationGuest>;
     };
     Views: Record<string, never>;
     Functions: {
       set_room_status: {
         Args: { p_room_id: string; p_dimension: StatusDimension; p_value: string; p_note?: string | null };
         Returns: Room;
+      };
+      create_reservation: {
+        Args: {
+          p_property_id: string;
+          p_room_id: string;
+          p_check_in: string;
+          p_check_out: string;
+          p_adults: number;
+          p_children?: number;
+          p_guest_name?: string | null;
+          p_guest_email?: string | null;
+          p_guest_phone?: string | null;
+          p_notes?: string | null;
+          p_source?: ReservationSource;
+          p_status?: ReservationStatus;
+          p_idempotency_key?: string | null;
+        };
+        Returns: Reservation;
+      };
+      update_reservation: {
+        Args: {
+          p_reservation_id: string;
+          p_room_id?: string | null;
+          p_check_in?: string | null;
+          p_check_out?: string | null;
+          p_adults?: number | null;
+          p_children?: number | null;
+          p_notes?: string | null;
+          p_expected_version?: number | null;
+        };
+        Returns: Reservation;
+      };
+      cancel_reservation: {
+        Args: { p_reservation_id: string; p_reason?: string | null };
+        Returns: Reservation;
+      };
+      set_reservation_status: {
+        Args: { p_reservation_id: string; p_status: ReservationStatus };
+        Returns: Reservation;
       };
       create_organization: {
         Args: {
@@ -143,6 +228,7 @@ export type Database = {
       housekeeping_status: HousekeepingStatus;
       maintenance_status: MaintenanceStatus;
       member_role: MemberRole;
+      reservation_status: ReservationStatus;
     };
     CompositeTypes: Record<string, never>;
   };
@@ -152,3 +238,6 @@ export type Database = {
 export type RoomWithType = Room & {
   room_type: Pick<RoomType, 'id' | 'code' | 'name' | 'max_occupancy'> | null;
 };
+
+/** Reservation with its primary guest's name, as used by the tape chart. */
+export type ReservationWithGuest = Reservation & { guest_name: string | null };

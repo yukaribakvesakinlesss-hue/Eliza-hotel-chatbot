@@ -27,6 +27,24 @@ Rules, enforced in the database by `app_private.room_status_guard()`:
 - Housekeeping staff can change only the housekeeping status (`FORBIDDEN`).
 - Every change is written to `room_status_events` (audit log) together with the user.
 
+## Phase 2: reservation engine and overbooking protection
+
+| Path | What |
+|---|---|
+| `supabase/migrations/20261108000300_reservation_engine.sql` | `reservations`, `reservation_guests`, idempotency keys, booking RPCs |
+| `supabase/tests/20_reservations.sql` | 61 checks: overlap, same-day turnover, cancel, extend, idempotency, roles, tenants |
+| `supabase/tests/30_concurrency.sh` | parallel database sessions: 2 and 10 simultaneous bookings, lock wait, parallel retries |
+| `src/app/api/reservations/**` | `POST /api/reservations` (needs an `Idempotency-Key` header), `PATCH /api/reservations/:id`, `POST /api/reservations/:id/cancel`, `POST /api/reservations/:id/status` |
+| `src/components/reservations/` | Tape chart, quick booking modal, reservation panel |
+
+How double bookings are prevented:
+
+1. **EXCLUDE constraint.** It uses `btree_gist` on `(room_id =, daterange(check_in, check_out, '[)') &&)` and ignores CANCELLED and NO_SHOW bookings. The database refuses an overlap, whatever wrote it.
+2. **Locked transactions.** Every write runs in a SECURITY DEFINER function, one transaction per call, and takes `SELECT … FOR UPDATE` on the room. Parallel requests for the same room queue up, and the one that loses gets a Turkish error: `RES_CONFLICT: Oda 101 seçilen tarihlerde dolu…`.
+3. **Idempotency keys.** A repeated request with the same `Idempotency-Key` returns the original reservation instead of creating a new one.
+
+The `[)` range means the check-out day is free, so a new guest can check in the same day. Clients cannot write to the reservation tables directly; all writes go through the functions.
+
 ## Running it
 
 Demo mode needs no setup: leave the env vars empty and you get sample data. Changes stay in the browser.

@@ -26,3 +26,7 @@ done
 echo "▸ seed (x2)";          run "$DIR/seed.sql"; run "$DIR/seed.sql"
 echo "▸ tests"
 "${PSQL[@]}" -d "$TEST_DB" -f "$DIR/tests/10_rls_and_status_engine.sql"
+echo "▸ reservation tests"
+"${PSQL[@]}" -d "$TEST_DB" -f "$DIR/tests/20_reservations.sql"
+echo "▸ concurrency tests"
+TEST_DB="$TEST_DB" bash "$DIR/tests/30_concurrency.sh"

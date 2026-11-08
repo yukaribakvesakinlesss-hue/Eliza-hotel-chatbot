@@ -5,6 +5,7 @@ import type { MemberRole, Room, RoomType, RoomWithType, StatusDimension } from '
 import { applyStatusChange, isReady, ruleFromError } from '@/lib/rooms/rules';
 import { LABELS, ROLE_LABELS } from '@/lib/i18n/labels';
 import { getBrowserClient } from '@/lib/supabase/client';
+import { AppNav } from './AppNav';
 import { PreferenceToggles, usePreferences } from './Preferences';
 import { RoomCard, type ChangeHandler } from './RoomCard';
 
@@ -202,6 +203,7 @@ export function RoomBoard({
           )}
         </div>
       </header>
+      <AppNav />
 
       <div className="mb-4 grid grid-cols-2 gap-2 sm:grid-cols-5">
         {stats.map((s) => (
