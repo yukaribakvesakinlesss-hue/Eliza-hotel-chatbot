@@ -32,3 +32,18 @@ select '00000000-0000-4000-a000-000000000001', '00000000-0000-4000-a000-00000000
        case when f = 3 and n = 4 then 'Air conditioning repair' end
 from generate_series(1, 4) f, generate_series(1, 6) n
 on conflict (property_id, number) do nothing;
+
+-- Phase 5 demo data: rates (demo values) and verified answers for the assistant
+update public.room_types set base_rate = case code when 'CDBL' then 90 when 'DDBL' then 120 when 'JSTE' then 180 end
+ where property_id = '00000000-0000-4000-a000-000000000101' and base_rate is null;
+insert into public.property_faq (organization_id, property_id, topic, answer_tr, answer_en) values
+  ('00000000-0000-4000-a000-000000000001', '00000000-0000-4000-a000-000000000101', 'checkin_time',
+   'Giriş saatimiz 14:00, çıkış saatimiz 12:00''dir. Erken giriş ve geç çıkış müsaitliğe bağlıdır.',
+   'Check-in is from 14:00 and check-out until 12:00. Early check-in and late check-out depend on availability.'),
+  ('00000000-0000-4000-a000-000000000001', '00000000-0000-4000-a000-000000000101', 'breakfast',
+   'Kahvaltı 07:30–10:30 arasında açık büfe olarak servis edilir.', 'Breakfast is a buffet served from 07:30 to 10:30.'),
+  ('00000000-0000-4000-a000-000000000001', '00000000-0000-4000-a000-000000000101', 'wifi',
+   'Tüm otelde ücretsiz Wi-Fi vardır; şifre odanızdaki kartta yazar.', 'Free Wi-Fi throughout the hotel; the password is on the card in your room.'),
+  ('00000000-0000-4000-a000-000000000001', '00000000-0000-4000-a000-000000000101', 'parking',
+   'Otelimizin kendi otoparkı yoktur; 200 m mesafede ücretli otopark bulunur.', 'We have no private parking; there is a paid car park 200 m away.')
+on conflict (property_id, topic) do nothing;

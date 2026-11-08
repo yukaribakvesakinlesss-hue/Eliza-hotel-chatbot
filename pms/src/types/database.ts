@@ -86,6 +86,8 @@ export type RoomType = {
   name: string;
   base_occupancy: number;
   max_occupancy: number;
+  /** tax-exclusive base nightly rate (the assistant may only quote database rates) */
+  base_rate: number | null;
   description: string | null;
   created_at: string;
   updated_at: string;
@@ -270,6 +272,91 @@ export type HkTaskNote = {
 
 export type HkStaff = { user_id: string; display_name: string; role: 'housekeeping' | 'hk_supervisor' };
 
+export type Guest = {
+  id: string;
+  organization_id: string;
+  full_name: string;
+  email: string | null;
+  phone: string | null;
+  phone_normalized: string | null;
+  nationality: string | null;
+  language: string | null;
+  /** 0 = none, 1–3 = VIP levels */
+  vip_level: number;
+  vip_note: string | null;
+  marketing_consent: boolean;
+  marketing_consent_at: string | null;
+  marketing_consent_source: string | null;
+  kvkk_notice_at: string | null;
+  anonymized_at: string | null;
+  last_activity_at: string;
+  created_at: string;
+  updated_at: string;
+};
+export type GuestNoteCategory = 'PREFERENCE' | 'SPECIAL_REQUEST' | 'ALERT';
+export type GuestNote = { id: number; organization_id: string; guest_id: string; category: GuestNoteCategory; body: string; created_by: string | null; created_at: string; archived_at: string | null };
+
+export type InboxChannel = 'WHATSAPP' | 'INSTAGRAM' | 'WEBCHAT';
+export type ChannelConnection = { id: string; organization_id: string; property_id: string; channel: InboxChannel; mode: 'DEMO' | 'LIVE'; external_account_id: string | null; display_name: string | null; created_at: string; updated_at: string };
+export type Conversation = {
+  id: string;
+  organization_id: string;
+  property_id: string;
+  channel: InboxChannel;
+  external_thread_id: string;
+  guest_id: string | null;
+  contact_name: string | null;
+  contact_handle: string | null;
+  /** AI = assistant answers; HUMAN = staff took over */
+  status: 'AI' | 'HUMAN' | 'CLOSED';
+  is_demo: boolean;
+  context: Record<string, unknown>;
+  unread_count: number;
+  last_message_at: string;
+  last_message_preview: string | null;
+  created_at: string;
+  updated_at: string;
+};
+export type Message = {
+  id: number;
+  organization_id: string;
+  property_id: string;
+  conversation_id: string;
+  channel: InboxChannel;
+  direction: 'IN' | 'OUT';
+  sender: 'GUEST' | 'AI' | 'STAFF' | 'SYSTEM';
+  body: string;
+  /** structured, database-verified data behind an AI reply (availability options, request id …) */
+  payload: Record<string, unknown> | null;
+  external_id: string | null;
+  delivery_status: 'RECEIVED' | 'PENDING' | 'SENT' | 'DELIVERED' | 'FAILED' | 'DEMO_NOT_SENT';
+  author_id: string | null;
+  created_at: string;
+};
+export type Quote = { complete: boolean; currency: string; nights: { date: string; rate: number | null }[]; net: number | null; vat: number | null; lodging: number | null; gross: number | null };
+export type BookingRequest = {
+  id: string;
+  organization_id: string;
+  property_id: string;
+  conversation_id: string | null;
+  guest_id: string | null;
+  room_type_id: string;
+  check_in: string;
+  check_out: string;
+  adults: number;
+  contact_name: string;
+  contact_email: string | null;
+  contact_phone: string | null;
+  quote: Quote;
+  status: 'NEW' | 'CONFIRMED' | 'DECLINED';
+  reservation_id: string | null;
+  handled_by: string | null;
+  handled_at: string | null;
+  decline_reason: string | null;
+  created_at: string;
+};
+export type AvailabilityOption = { room_type_id: string; code: string; name: string; max_occupancy: number; available: number; quote: Quote };
+
 type Table<Row, Insert = Partial<Row>, Update = Partial<Row>> = {
   Row: Row;
   Insert: Insert;
@@ -297,6 +384,12 @@ export type Database = {
       folio_transactions: Table<FolioTransaction>;
       hk_tasks: Table<HkTask>;
       hk_task_notes: Table<HkTaskNote>;
+      guests: Table<Guest>;
+      guest_notes: Table<GuestNote>;
+      channel_connections: Table<ChannelConnection>;
+      conversations: Table<Conversation>;
+      messages: Table<Message>;
+      booking_requests: Table<BookingRequest>;
     };
     Views: Record<string, never>;
     Functions: {
@@ -352,6 +445,30 @@ export type Database = {
       hk_add_note: { Args: { p_task_id: string; p_body: string }; Returns: HkTaskNote };
       hk_list_staff: { Args: { p_property_id: string }; Returns: HkStaff[] };
       hk_set_require_inspection: { Args: { p_property_id: string; p_required: boolean }; Returns: boolean };
+      check_availability: { Args: { p_property_id: string; p_check_in: string; p_check_out: string; p_adults?: number }; Returns: AvailabilityOption[] };
+      channel_configure: { Args: { p_property_id: string; p_channel: InboxChannel; p_mode: 'DEMO' | 'LIVE'; p_external_account_id?: string | null; p_ingest_secret?: string | null }; Returns: ChannelConnection };
+      set_room_type_rate: { Args: { p_room_type_id: string; p_base_rate: number | null }; Returns: RoomType };
+      inbox_public_property: { Args: { p_org_slug: string; p_property_code: string }; Returns: unknown };
+      webchat_start: { Args: { p_org_slug: string; p_property_code: string; p_name?: string | null }; Returns: { conversation_id: string; token: string; property_name: string } };
+      webchat_send: { Args: { p_conversation_id: string; p_token: string; p_body: string; p_client_message_id: string }; Returns: { inserted: boolean; message_id: number | null } };
+      webchat_messages: { Args: { p_conversation_id: string; p_token: string; p_after_id?: number }; Returns: Message[] };
+      inbox_ingest: { Args: { p_org_slug: string; p_property_code: string; p_channel: InboxChannel; p_secret: string; p_external_message_id: string; p_thread_id: string; p_contact_name: string | null; p_body: string }; Returns: { conversation_id: string; inserted: boolean; message_id: number | null; status: string; last_assistant_type: string | null } };
+      inbox_simulate_inbound: { Args: { p_property_id: string; p_channel: InboxChannel; p_thread_id: string; p_contact_name: string | null; p_body: string; p_external_message_id: string }; Returns: { conversation_id: string; inserted: boolean; message_id: number | null; status: string } };
+      inbox_assistant_turn: { Args: { p_conversation_id: string; p_token: string | null; p_intent: string; p_slots: Record<string, unknown>; p_lang?: string }; Returns: unknown };
+      inbox_send_staff_message: { Args: { p_conversation_id: string; p_body: string; p_client_message_id?: string | null }; Returns: Message };
+      inbox_set_delivery: { Args: { p_message_id: number; p_status: string; p_token?: string | null }; Returns: Message };
+      inbox_set_status: { Args: { p_conversation_id: string; p_status: 'AI' | 'HUMAN' | 'CLOSED' }; Returns: Conversation };
+      inbox_mark_read: { Args: { p_conversation_id: string }; Returns: Conversation };
+      inbox_link_guest: { Args: { p_conversation_id: string; p_guest_id: string | null }; Returns: Conversation };
+      booking_request_confirm: { Args: { p_request_id: string }; Returns: BookingRequest };
+      booking_request_decline: { Args: { p_request_id: string; p_reason?: string | null }; Returns: BookingRequest };
+      guest_profile: { Args: { p_guest_id: string }; Returns: unknown };
+      guest_update: { Args: { p_guest_id: string; p_changes: Record<string, unknown> }; Returns: Guest };
+      guest_add_note: { Args: { p_guest_id: string; p_category: GuestNoteCategory; p_body: string }; Returns: GuestNote };
+      guest_archive_note: { Args: { p_note_id: number }; Returns: GuestNote };
+      kvkk_export_guest: { Args: { p_guest_id: string }; Returns: unknown };
+      kvkk_anonymize_guest: { Args: { p_guest_id: string }; Returns: Guest };
+      kvkk_retention_candidates: { Args: { p_organization_id: string }; Returns: { guest_id: string; full_name: string; last_activity_at: string }[] };
       update_reservation: {
         Args: {
           p_reservation_id: string;

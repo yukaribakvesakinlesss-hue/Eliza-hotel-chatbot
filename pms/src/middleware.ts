@@ -5,6 +5,9 @@ import { SUPABASE_ANON_KEY, SUPABASE_URL, isDemoMode } from '@/lib/config';
 /** Refreshes the Supabase session cookie and keeps signed-out users on /login. */
 export async function middleware(request: NextRequest) {
   if (isDemoMode()) return NextResponse.next();
+  // public: the guest web chat and channel webhooks (they authenticate with their own tokens / signatures)
+  const p = request.nextUrl.pathname;
+  if (p.startsWith('/chat/') || p.startsWith('/api/webchat') || p.startsWith('/api/webhooks/')) return NextResponse.next();
 
   let response = NextResponse.next({ request });
   const supabase = createServerClient(SUPABASE_URL, SUPABASE_ANON_KEY, {

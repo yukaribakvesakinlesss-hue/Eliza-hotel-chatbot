@@ -98,6 +98,40 @@ Tax rates (VAT 10 % on rooms, lodging tax 2 %) are demo defaults stored per prop
 - The front desk can create tasks and add notes.
 - Supervisors and managers assign, inspect and cancel tasks.
 
+## Phase 5: guest CRM and AI omnichannel inbox
+
+| Path | What |
+|---|---|
+| `supabase/migrations/20261108000600_guest_crm_inbox.sql` | guests, notes, KVKK access log, export, anonymisation and retention; rates; channel connections; conversations, messages and booking requests; the assistant turn |
+| `src/lib/inbox/nlu.ts` | rule-based TR/EN understanding of guest messages (intent and slots only) |
+| `src/lib/inbox/adapters.ts` | WhatsApp Cloud API, Instagram Messaging and web chat adapters; Meta signature check; DEMO when there are no credentials |
+| `src/app/inbox`, `src/app/guests`, `src/app/chat/[org]/[code]` | staff inbox, guest 360° profile, public guest chat |
+| `supabase/tests/70_crm_inbox.sql`, `tests/nlu.test.ts`, `tests/inbox.test.ts` | database rules, language understanding, adapters and webhooks |
+
+**The assistant never invents rooms or prices**
+
+- The app only extracts intent and slots (dates, guests, room type, contact) from a message.
+- `inbox_assistant_turn` in the database computes availability from real rooms (bookings and out-of-order periods) and prices from `room_types.base_rate` and `rate_calendar`, with the property's taxes. It writes the reply text itself.
+- A room type without a rate is answered with "the front desk will send the price", never with a number.
+- A booking request is recorded as a request; only staff turn it into a reservation, with one click.
+
+**Webhook retries**
+
+- Messages are unique per (property, channel, external id).
+- A retried delivery is acknowledged but not stored or answered again.
+
+**Channels**
+
+- WhatsApp and Instagram stay DEMO until these are set: `META_APP_SECRET`, `META_VERIFY_TOKEN`, `WHATSAPP_TOKEN`, `WHATSAPP_PHONE_NUMBER_ID` / `INSTAGRAM_PAGE_TOKEN`, `INBOX_PROPERTY` (`org-slug/CODE`) and `INBOX_INGEST_SECRET` (at least 24 characters, also registered with `channel_configure`).
+- In DEMO, staff can simulate incoming messages. Replies are marked `DEMO_NOT_SENT`.
+
+**KVKK**
+
+- Guest data is visible to owners, managers and the front desk only.
+- Lists mask contact data. Profile views, updates, exports and anonymisations are logged.
+- Anonymisation removes personal data but keeps bookings and the financial ledger.
+- This is technical support for KVKK; legal compliance needs your own review.
+
 ## Running it
 
 Demo mode needs no setup: leave the env vars empty and you get sample data. Changes stay in the browser.

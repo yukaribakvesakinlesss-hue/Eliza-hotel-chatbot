@@ -35,6 +35,8 @@ echo "▸ finance tests"
 "${PSQL[@]}" -d "$TEST_DB" -f "$DIR/tests/40_finance.sql"
 echo "▸ housekeeping tests"
 "${PSQL[@]}" -d "$TEST_DB" -f "$DIR/tests/60_housekeeping.sql"
+echo "▸ crm & inbox tests"
+"${PSQL[@]}" -d "$TEST_DB" -f "$DIR/tests/70_crm_inbox.sql"
 echo "▸ demo finance seed (x2, second run must skip)"
 run "$DIR/seed_finance.sql"; run "$DIR/seed_finance.sql"
 if [ -n "${CROSSCHECK_OUT:-}" ]; then

@@ -186,7 +186,11 @@ const STATUS_BY_CODE: Record<string, number> = {
   HK_NOT_FOUND: 404,
   HK_NOT_YOURS: 403,
   HK_BAD_STATE: 409,
-  HK_OPEN_TASK: 409
+  HK_OPEN_TASK: 409,
+  INBOX_NOT_FOUND: 404,
+  GUEST_NOT_FOUND: 404,
+  INBOX_RATE_LIMIT: 429,
+  INBOX_BAD_STATE: 409
 };
 
 /**
@@ -196,7 +200,7 @@ const STATUS_BY_CODE: Record<string, number> = {
 export function mapDbError(err: { message?: string | null; code?: string | null } | null | undefined): ApiError {
   const msg = err?.message ?? '';
   const m = /^([A-Z_]+):\s*(.+)$/s.exec(msg);
-  if (m && m[1] && m[2] && (m[1].startsWith('RES_') || m[1].startsWith('FOLIO_') || m[1].startsWith('HK_') || m[1].startsWith('RULE_') || m[1].startsWith('IDEMPOTENCY_') || m[1] === 'FORBIDDEN' || m[1] === 'AUTH_REQUIRED')) {
+  if (m && m[1] && m[2] && (m[1].startsWith('RES_') || m[1].startsWith('FOLIO_') || m[1].startsWith('HK_') || m[1].startsWith('RULE_') || m[1].startsWith('INBOX_') || m[1].startsWith('GUEST_') || m[1].startsWith('IDEMPOTENCY_') || m[1] === 'FORBIDDEN' || m[1] === 'AUTH_REQUIRED')) {
     return { status: STATUS_BY_CODE[m[1]] ?? 422, code: m[1], message: m[2].trim() };
   }
   // the EXCLUDE constraint fired without the friendly pre-check (should not happen, but never show raw SQL)

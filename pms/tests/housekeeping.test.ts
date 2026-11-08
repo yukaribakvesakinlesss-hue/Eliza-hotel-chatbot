@@ -58,9 +58,9 @@ describe('screens per role', () => {
     expect(hrefs('hk_supervisor')).toEqual(['/housekeeping']);
     expect(isHousekeepingRole('hk_supervisor')).toBe(true);
   });
-  it('front desk sees rooms, reservations and housekeeping; managers also reports', () => {
-    expect(hrefs('front_desk')).toEqual(['/rooms', '/reservations', '/housekeeping']);
-    expect(hrefs('manager')).toEqual(['/rooms', '/reservations', '/housekeeping', '/reports']);
+  it('front desk sees rooms, reservations, inbox, guests and housekeeping; managers also reports', () => {
+    expect(hrefs('front_desk')).toEqual(['/rooms', '/reservations', '/inbox', '/guests', '/housekeeping']);
+    expect(hrefs('manager')).toEqual(['/rooms', '/reservations', '/inbox', '/guests', '/housekeeping', '/reports']);
   });
 });
 

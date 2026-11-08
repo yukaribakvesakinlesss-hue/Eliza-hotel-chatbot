@@ -13,9 +13,9 @@ export const demoProperty: Property = { id: PROP, organization_id: ORG, name: 'A
 export const demoRole: MemberRole = 'owner';
 
 export const demoRoomTypes: RoomType[] = [
-  { id: '00000000-0000-4000-a000-000000000201', organization_id: ORG, property_id: PROP, code: 'CDBL', name: 'Classic Double', base_occupancy: 2, max_occupancy: 2, description: '22 m², city side', created_at: T0, updated_at: T0 },
-  { id: '00000000-0000-4000-a000-000000000202', organization_id: ORG, property_id: PROP, code: 'DDBL', name: 'Deluxe Double', base_occupancy: 2, max_occupancy: 2, description: '28 m², city view', created_at: T0, updated_at: T0 },
-  { id: '00000000-0000-4000-a000-000000000203', organization_id: ORG, property_id: PROP, code: 'JSTE', name: 'Junior Suite', base_occupancy: 2, max_occupancy: 3, description: '38 m², sitting area', created_at: T0, updated_at: T0 }
+  { id: '00000000-0000-4000-a000-000000000201', organization_id: ORG, property_id: PROP, code: 'CDBL', name: 'Classic Double', base_occupancy: 2, max_occupancy: 2, base_rate: 90, description: '22 m², city side', created_at: T0, updated_at: T0 },
+  { id: '00000000-0000-4000-a000-000000000202', organization_id: ORG, property_id: PROP, code: 'DDBL', name: 'Deluxe Double', base_occupancy: 2, max_occupancy: 2, base_rate: 120, description: '28 m², city view', created_at: T0, updated_at: T0 },
+  { id: '00000000-0000-4000-a000-000000000203', organization_id: ORG, property_id: PROP, code: 'JSTE', name: 'Junior Suite', base_occupancy: 2, max_occupancy: 3, base_rate: 180, description: '38 m², sitting area', created_at: T0, updated_at: T0 }
 ];
 
 const OCC = ['OCCUPIED', 'OCCUPIED', 'VACANT', 'RESERVED', 'OCCUPIED', 'VACANT'] as const;
