@@ -549,6 +549,8 @@
           result('err', L('Please check the highlighted fields.', 'Lütfen işaretli alanları kontrol edin.'));
         } else if (res.status === 400 && res.j.error === 'too_fast') {
           result('err', L('That was very quick. Please wait a moment and send again.', 'Çok hızlı gönderildi. Lütfen birkaç saniye bekleyip tekrar gönderin.'));
+        } else if (res.status === 503 && res.j.error === 'activation_pending') {
+          result('warn', '<p class="font-semibold">' + L('One-time setup: the form is waiting for activation.', 'Tek seferlik kurulum: form etkinleştirme bekliyor.') + '</p><p class="mt-1 text-mist">' + L('The site owner needs to click the activation link once. Meanwhile, send your details by email or WhatsApp.', 'Site sahibinin etkinleştirme bağlantısına bir kez tıklaması gerekiyor. Bu arada bilgilerinizi e-posta veya WhatsApp ile gönderebilirsiniz.') + '</p>' + fallbackLinks(d));
         } else if (res.status === 429) {
           result('err', '<p>' + L('Too many requests. Please try again in a few minutes, or write to us directly.', 'Çok fazla deneme yapıldı. Birkaç dakika sonra tekrar deneyin ya da bize doğrudan yazın.') + '</p>' + fallbackLinks(d));
         } else {

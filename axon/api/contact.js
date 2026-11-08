@@ -1,17 +1,16 @@
 // POST /api/contact: validates a demo request and emails it to the AXON team via Resend.
-// Required environment variables (Vercel > Project > Settings > Environment Variables):
-//   RESEND_API_KEY      API key from resend.com
-//   CONTACT_TO_EMAIL    inbox that receives requests
-// Optional:
-//   CONTACT_FROM_EMAIL  verified sender, e.g. "AXON Systems <hello@yourdomain.com>"
-// Without the required variables the endpoint answers 503 { error: "not_configured" }
-// and the page tells the visitor to use email or WhatsApp instead. It never fakes success.
+// Delivery:
+//   default   FormSubmit (formsubmit.co), no key; the inbox owner clicks a one-time activation link
+//   optional  Resend, when RESEND_API_KEY is set (CONTACT_FROM_EMAIL = verified sender)
+//   CONTACT_TO_EMAIL overrides the receiving inbox (default below).
+// Success is returned only after the provider accepts the message; otherwise the page offers email/WhatsApp.
 
 const { rateLimited, clientIp, sameOrigin, readBody, send, escapeHtml } = require('./_lib');
 
 const CHALLENGES = ['Missed Guest Inquiries', 'Slow Response Times', 'Manual Reservation Management', 'Multilingual Communication', 'High Staff Workload', 'Other'];
 const ROOMS = ['1-20', '21-50', '51-100', '101-200', '200+'];
 const PACKAGES = ['', 'Start', 'Pro', 'Enterprise', 'Personal'];
+const DEFAULT_TO = 'gulcanyesilbudak@icloud.com';
 const EMAIL_RE = /^[^\s@]{1,64}@[^\s@]{1,190}\.[^\s@]{2,24}$/;
 
 function validate(b) {
@@ -48,11 +47,34 @@ module.exports = async function handler(req, res) {
   const { d, errors } = validate(b);
   if (Object.keys(errors).length) return send(res, 400, { error: 'validation', fields: errors });
 
-  const key = process.env.RESEND_API_KEY, to = process.env.CONTACT_TO_EMAIL;
-  if (!key || !to) return send(res, 503, { error: 'not_configured' });
+  const key = process.env.RESEND_API_KEY;
+  const to = process.env.CONTACT_TO_EMAIL || DEFAULT_TO;
 
   const rows = [['Name', d.name], ['Business email', d.email], ['Hotel', d.hotel], ['Rooms', d.rooms], ['Main challenge', d.challenge],
     ['WhatsApp', d.whatsapp || '-'], ['Package of interest', d.package || '-'], ['Page language', d.lang || '-'], ['Message', d.message || '-']];
+
+  // No Resend key: deliver through FormSubmit (no account or key needed; the inbox owner
+  // confirms once via an activation email). Success is reported only if FormSubmit accepts it.
+  if (!key) {
+    try {
+      const site = 'https://' + (req.headers.host || 'axon-systems-three.vercel.app');
+      const payload = { _subject: 'AXON demo request: ' + d.hotel, _template: 'table', _captcha: 'false', _replyto: d.email };
+      rows.forEach(([k, v]) => { payload[k] = v; });
+      const r = await fetch('https://formsubmit.co/ajax/' + encodeURIComponent(to.split(',')[0].trim()), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json', Origin: site, Referer: site + '/' },
+        body: JSON.stringify(payload)
+      });
+      const j = await r.json().catch(() => ({}));
+      if (r.ok && String(j.success) === 'true') return send(res, 200, { ok: true });
+      console.error('formsubmit_failed', r.status, JSON.stringify(j).slice(0, 300));
+      if (/activat/i.test(j.message || '')) return send(res, 503, { error: 'activation_pending' });
+      return send(res, 502, { error: 'delivery_failed' });
+    } catch (e) {
+      console.error('formsubmit_error', e && e.message);
+      return send(res, 502, { error: 'delivery_failed' });
+    }
+  }
   const html = '<h2 style="font-family:sans-serif">New AXON demo request</h2><table style="font-family:sans-serif;font-size:14px;border-collapse:collapse">' +
     rows.map(([k, v]) => '<tr><td style="padding:6px 12px 6px 0;color:#555;vertical-align:top">' + k + '</td><td style="padding:6px 0;white-space:pre-wrap">' + escapeHtml(v) + '</td></tr>').join('') + '</table>';
   const text = rows.map(([k, v]) => k + ': ' + v).join('\n');
