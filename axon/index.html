@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
 <script>try{if(localStorage.getItem('axonTheme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
-<link rel="stylesheet" href="assets/site.css?v=d39579f4">
+<link rel="stylesheet" href="assets/site.css?v=1b5cebfb">
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://axon-systems-three.vercel.app/#org", "name": "AXON Systems", "url": "https://axon-systems-three.vercel.app/", "logo": "https://axon-systems-three.vercel.app/images/favicon.svg", "email": "gulcanyesilbudak@icloud.com", "telephone": "+905540248698", "address": {"@type": "PostalAddress", "addressLocality": "Istanbul", "addressCountry": "TR"}, "description": "AI automation for hotels: guest communication, reservation inquiries and multilingual support."}, {"@type": "WebSite", "@id": "https://axon-systems-three.vercel.app/#website", "url": "https://axon-systems-three.vercel.app/", "name": "AXON Systems", "publisher": {"@id": "https://axon-systems-three.vercel.app/#org"}, "inLanguage": ["en", "tr"]}, {"@type": "Service", "name": "AXON Hotel AI", "provider": {"@id": "https://axon-systems-three.vercel.app/#org"}, "serviceType": "AI guest communication for hotels", "areaServed": "Worldwide", "offers": {"@type": "Offer", "name": "Start", "priceSpecification": {"@type": "UnitPriceSpecification", "price": 300, "priceCurrency": "USD", "unitText": "MONTH", "description": "Starting price per month. Setup fee and third-party costs are quoted separately."}}}]}</script>
 </head>
 <body class="bg-navy-950 font-sans text-mist antialiased selection:bg-gold/30 selection:text-ink">
@@ -42,6 +42,7 @@
       <li><a class="nav-a whitespace-nowrap py-2 text-mist transition hover:text-ink" href="#solutions" data-tr="Sistemler">Systems</a></li>
       <li><a class="nav-a whitespace-nowrap py-2 text-mist transition hover:text-ink" href="#how" data-tr="Nasıl çalışır">How it works</a></li>
       <li><a class="nav-a whitespace-nowrap py-2 text-mist transition hover:text-ink" href="#demo" data-tr="Canlı demo">Live demo</a></li>
+      <li><a class="nav-a whitespace-nowrap py-2 text-mist transition hover:text-ink" href="#pms" data-tr="Otel PMS">Hotel PMS</a></li>
       <li><a class="nav-a whitespace-nowrap py-2 text-mist transition hover:text-ink" href="#projects" data-tr="Projeler">Projects</a></li>
       <li><a class="nav-a whitespace-nowrap py-2 text-mist transition hover:text-ink" href="#pricing" data-tr="Paketler">Packages</a></li>
       <li><a class="nav-a whitespace-nowrap py-2 text-mist transition hover:text-ink" href="#personal" data-tr="Kişisel asistan">Personal assistant</a></li>
@@ -436,6 +437,51 @@
   </div>
 </section>
 
+<!-- ===================== 05b Hotel PMS ===================== -->
+<section id="pms" class="scroll-mt-28 border-t border-white/[0.05] py-24 sm:py-28" aria-labelledby="pmsTitle">
+  <div class="mx-auto max-w-7xl px-5 sm:px-8">
+    <div class="reveal mx-auto max-w-2xl text-center">
+      <p class="eyebrow" data-tr="AXON Otel PMS">AXON Hotel PMS</p>
+      <h2 id="pmsTitle" class="h2 mt-4" data-tr="Otelin tamamı tek ekranda.">The Whole Hotel on One Screen.</h2>
+      <p class="lead mt-5" data-tr="Odalar, rezervasyonlar, housekeeping, misafirler, mesajlar ve kanal senkronizasyonu tek sistemde. Kurgusal bir otelle canlı demoyu deneyin; yaptığınız hiçbir şey kaydedilmez.">Rooms, reservations, housekeeping, guests, messages and channel sync in one system. Try the live demo with a fictional hotel; nothing you do is saved.</p>
+    </div>
+
+    <div class="reveal mt-12 grid gap-6 lg:grid-cols-[1.65fr_1fr] lg:items-start">
+      <div class="min-w-0">
+        <div class="noscroll -mx-1 mb-3 flex gap-1 overflow-x-auto px-1 [scrollbar-width:none]" role="tablist" aria-label="PMS screens" data-tr-aria="PMS ekranları">
+          <button type="button" role="tab" data-pms-tab="rooms" aria-selected="true" class="pms-tab whitespace-nowrap rounded-full px-4 py-2 text-[13px] font-semibold text-mist transition hover:text-ink aria-selected:bg-white/10 aria-selected:text-ink" data-tr="Oda durumu">Room status</button>
+          <button type="button" role="tab" data-pms-tab="reservations" aria-selected="false" class="pms-tab whitespace-nowrap rounded-full px-4 py-2 text-[13px] font-semibold text-mist transition hover:text-ink aria-selected:bg-white/10 aria-selected:text-ink" data-tr="Rezervasyonlar">Reservations</button>
+          <button type="button" role="tab" data-pms-tab="inbox" aria-selected="false" class="pms-tab whitespace-nowrap rounded-full px-4 py-2 text-[13px] font-semibold text-mist transition hover:text-ink aria-selected:bg-white/10 aria-selected:text-ink" data-tr="AI inbox">AI inbox</button>
+          <button type="button" role="tab" data-pms-tab="channels" aria-selected="false" class="pms-tab whitespace-nowrap rounded-full px-4 py-2 text-[13px] font-semibold text-mist transition hover:text-ink aria-selected:bg-white/10 aria-selected:text-ink" data-tr="Kanal yöneticisi">Channel manager</button>
+          <button type="button" role="tab" data-pms-tab="reports" aria-selected="false" class="pms-tab whitespace-nowrap rounded-full px-4 py-2 text-[13px] font-semibold text-mist transition hover:text-ink aria-selected:bg-white/10 aria-selected:text-ink" data-tr="Raporlar">Reports</button>
+        </div>
+        <figure class="card overflow-hidden p-0">
+          <img id="pmsShot" src="images/pms/rooms.webp" width="1600" height="1000" loading="lazy" decoding="async" class="block h-auto w-full" alt="AXON PMS room status screen with occupancy, cleaning and maintenance per room">
+        </figure>
+        <p class="mt-3 text-[12.5px] text-mist/80" data-tr="Ekran görüntüleri demo otelden alınmıştır (kurgusal veri).">Screenshots from the demo hotel (fictional data).</p>
+      </div>
+
+      <aside class="grid content-start gap-4">
+        <ul class="card grid gap-5 p-6">
+          <li class="flex gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gold" aria-hidden="true"></span><div><p class="text-[15px] font-semibold text-ink" data-tr="Oda durumu ve housekeeping">Room status &amp; housekeeping</p><p class="mt-1 text-[14px] leading-relaxed" data-tr="Her odanın doluluk, temizlik ve arıza durumu canlı; housekeeping telefondan çalışır, kat şefi onaylar.">Occupancy, cleaning and maintenance per room in real time; housekeeping works from the phone with inspection.</p></div></li>
+          <li class="flex gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gold" aria-hidden="true"></span><div><p class="text-[15px] font-semibold text-ink" data-tr="Çakışmasız rezervasyon">Reservations without double bookings</p><p class="mt-1 text-[14px] leading-relaxed" data-tr="Doluluk tablosu ve hızlı rezervasyon. Aynı anda iki tıklamada bile çakışan rezervasyonu veritabanı reddeder.">Tape chart and quick booking. The database itself refuses overlapping stays, even with two clicks at once.</p></div></li>
+          <li class="flex gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gold" aria-hidden="true"></span><div><p class="text-[15px] font-semibold text-ink" data-tr="Folyo, gece denetimi ve raporlar">Folio, night audit &amp; reports</p><p class="mt-1 text-[14px] leading-relaxed" data-tr="Konaklama, vergi, ekstra ve ödemeler; dönem bazında ADR, RevPAR, doluluk ve OTA komisyonu.">Room charges, taxes, extras and payments; ADR, RevPAR, occupancy and OTA commission per period.</p></div></li>
+          <li class="flex gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gold" aria-hidden="true"></span><div><p class="text-[15px] font-semibold text-ink" data-tr="KVKK araçlarıyla misafir CRM">Guest CRM with KVKK tools</p><p class="mt-1 text-[14px] leading-relaxed" data-tr="Konaklama geçmişi, harcama, VIP, tercihler; erişim kaydı, veri dökümü ve anonimleştirme.">Stay history, spend, VIP, preferences; access log, data export and anonymisation.</p></div></li>
+          <li class="flex gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gold" aria-hidden="true"></span><div><p class="text-[15px] font-semibold text-ink" data-tr="Doğrulanmış fiyatlı AI inbox">AI inbox with verified prices</p><p class="mt-1 text-[14px] leading-relaxed" data-tr="WhatsApp, Instagram ve web sohbet tek panelde. Müsaitlik ve fiyat odalarınızdan gelir, asla tahmin edilmez.">WhatsApp, Instagram and web chat in one panel. Availability and prices come from your rooms, never guessed.</p></div></li>
+          <li class="flex gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gold" aria-hidden="true"></span><div><p class="text-[15px] font-semibold text-ink" data-tr="Kanal yöneticisi ve denetim kaydı">Channel manager &amp; audit log</p><p class="mt-1 text-[14px] leading-relaxed" data-tr="Booking.com ve Expedia senkronizasyonu, aşırı rezervasyon alarmı; her değişiklik silinemez biçimde kaydedilir.">Booking.com and Expedia sync with overbooking alarms; every change is logged and cannot be deleted.</p></div></li>
+        </ul>
+        <div class="card border-gold/20 bg-gradient-to-b from-navy-800 to-navy-900 p-6">
+          <p class="font-display text-[17px] font-semibold text-ink" data-tr="Kendiniz deneyin">Try It Yourself</p>
+          <p class="mt-2 text-[14px] leading-relaxed" data-tr="Giriş gerekmez. Oda durumunu değiştirin, rezervasyon açın, AI inbox&#39;a misafir gibi yazın, kanaldan rezervasyon gelmiş gibi deneyin.">No login needed. Change a room, open a booking, write to the AI inbox like a guest, simulate a booking from a channel.</p>
+          <a href="https://axon-pms-demo.vercel.app/rooms" target="_blank" rel="noopener" class="btn-gold mt-5 w-full" data-cta="pms_demo" data-cta-loc="pms"><span data-tr="Canlı demoyu açın">Open the live demo</span><span aria-hidden="true">&nbsp;↗</span></a>
+          <a href="#contact" class="btn-line mt-3 w-full" data-cta="demo" data-cta-loc="pms" data-tr="Otelim için konuşalım">Talk About My Hotel</a>
+          <p class="mt-4 text-[12px] leading-relaxed text-mist/80" data-tr="Demo kurgusal bir otel kullanır; değişiklikler yalnızca sizin tarayıcınızda kalır. Booking.com ve Expedia bağlantısı demoda simülasyondur.">The demo uses a fictional hotel; changes stay in your browser only. The Booking.com and Expedia connection is simulated in the demo.</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
 <!-- ===================== 06 Use cases ===================== -->
 <section id="use-cases" class="scroll-mt-28 border-y border-white/[0.05] bg-navy-900 py-24 sm:py-28" aria-labelledby="ucTitle">
   <div class="mx-auto max-w-7xl px-5 sm:px-8">
@@ -825,7 +871,7 @@
 </div>
 
 <script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/" } }</script>
-<script src="assets/app.js?v=e010dc8e" defer></script>
+<script src="assets/app.js?v=4e6c3345" defer></script>
 <script src="assets/systems.js?v=b727de6b" defer></script>
 <script src="assets/personal.js?v=8c0911a7" defer></script>
 <script type="module" src="assets/synapse.js?v=5e7b8c87"></script>

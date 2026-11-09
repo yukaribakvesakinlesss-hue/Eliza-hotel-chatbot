@@ -63,4 +63,9 @@ describe('intents and slots', () => {
   it('never invents slots from nothing', () => {
     expect(p('Merhaba').slots).toEqual({});
   });
+  it('English questions without hint words are still English; "park" is a parking question', () => {
+    expect(p('Where can I park my car?')).toMatchObject({ lang: 'en', intent: 'FAQ', slots: { topic: 'parking' } });
+    expect(p('Arabamı nereye park edebilirim?')).toMatchObject({ lang: 'tr', intent: 'FAQ', slots: { topic: 'parking' } });
+    expect(p('Do you have a room for two?').lang).toBe('en');
+  });
 });

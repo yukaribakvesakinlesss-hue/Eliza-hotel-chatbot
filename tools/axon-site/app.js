@@ -576,3 +576,30 @@
   $('#yr').textContent = new Date().getFullYear();
   applyLang(lang);
 })();
+
+/* ---------- Hotel PMS screenshots (tabs) ---------- */
+(function () {
+  var img = document.getElementById('pmsShot');
+  if (!img) return;
+  var ALT = {
+    rooms: ['AXON PMS room status screen with occupancy, cleaning and maintenance per room', 'AXON PMS oda durumu ekranı: her odanın doluluk, temizlik ve arıza durumu'],
+    reservations: ['AXON PMS reservations tape chart', 'AXON PMS rezervasyon doluluk tablosu'],
+    inbox: ['AXON PMS AI inbox answering a guest with verified availability and prices', 'AXON PMS AI inbox: misafire doğrulanmış müsaitlik ve fiyatla yanıt'],
+    channels: ['AXON PMS channel manager for Booking.com and Expedia', 'AXON PMS Booking.com ve Expedia kanal yöneticisi'],
+    reports: ['AXON PMS reports with ADR, RevPAR and occupancy', 'AXON PMS raporları: ADR, RevPAR ve doluluk']
+  };
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('[data-pms-tab]'));
+  function show(k) {
+    tabs.forEach(function (t) { t.setAttribute('aria-selected', t.dataset.pmsTab === k ? 'true' : 'false'); });
+    img.src = 'images/pms/' + k + '.webp';
+    img.alt = ALT[k][document.documentElement.lang === 'tr' ? 1 : 0];
+  }
+  tabs.forEach(function (t, i) {
+    t.addEventListener('click', function () { show(t.dataset.pmsTab); });
+    t.addEventListener('keydown', function (e) {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      var n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+      n.focus(); show(n.dataset.pmsTab);
+    });
+  });
+})();

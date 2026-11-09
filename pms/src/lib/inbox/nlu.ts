@@ -32,7 +32,7 @@ const FAQ_TOPICS: [string, RegExp][] = [
   ['checkin_time', /(giri[sş] saat|[çc][ıi]k[ıi][sş] saat|check[- ]?in|check[- ]?out|ka[çc]ta giri[sş]|erken giri[sş]|ge[çc] [çc][ıi]k[ıi][sş])/],
   ['breakfast', /(kahvalt|breakfast)/],
   ['wifi', /(wi-?fi|internet|kablosuz)/],
-  ['parking', /(otopark|park yeri|araba|parking|car park)/],
+  ['parking', /(otopark|park yeri|park edebil|araba|parking|car park|\bpark\b)/],
   ['transfer', /(transfer|havaliman|airport|shuttle)/],
   ['pets', /(evcil|k[öo]pek|kedi|\bpets?\b|\bdogs?\b|\bcats?\b)/],
   ['cancellation', /(iptal (politika|ko[sş]ul)|[üu]cretsiz iptal|cancell?ation)/]
@@ -43,7 +43,7 @@ const AVAILABILITY = /(m[üu]sait|bo[sş] oda|yer var|oda var m|fiyat|[üu]cret|
 const GREETING = /^(merhaba|selam|iyi g[üu]nler|g[üu]nayd[ıi]n|iyi ak[sş]amlar|hello|hi\b|hey\b|good (morning|afternoon|evening))/;
 const AFFIRMATIVE = /^(evet|olur|tamam|isterim|l[üu]tfen|yes|yeah|sure|ok(ay)?|please)\b/;
 const TR_HINT = /[çğıöşüÇĞİÖŞÜ]|\b(ve|bir|için|mi|mı|var|oda|kişi|gece|merhaba|lütfen|tarih|istiyorum|rezervasyon)\b/i;
-const EN_HINT = /\b(the|is|are|for|room|night|nights|people|guests|please|available|price|book|hello|hi|want)\b/i;
+const EN_HINT = /\b(the|is|are|for|room|night|nights|people|guests|please|available|price|book|hello|hi|want|where|what|when|can|could|my|your|you|have|does|do|with)\b/i;
 
 const pad = (n: number) => String(n).padStart(2, '0');
 const iso = (y: number, m: number, d: number) => `${y}-${pad(m)}-${pad(d)}`;
