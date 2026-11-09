@@ -10,8 +10,10 @@ export const NAV_ITEMS: { href: string; tr: string; en: string; roles: readonly 
   { href: '/reservations', tr: 'Rezervasyonlar', en: 'Reservations', roles: ['owner', 'manager', 'front_desk'] },
   { href: '/inbox', tr: 'Inbox', en: 'Inbox', roles: ['owner', 'manager', 'front_desk'] },
   { href: '/guests', tr: 'Misafirler', en: 'Guests', roles: ['owner', 'manager', 'front_desk'] },
+  { href: '/channels', tr: 'Kanallar', en: 'Channels', roles: ['owner', 'manager', 'front_desk'] },
   { href: '/housekeeping', tr: 'Housekeeping', en: 'Housekeeping', roles: ALL },
-  { href: '/reports', tr: 'Raporlar', en: 'Reports', roles: ['owner', 'manager'] }
+  { href: '/reports', tr: 'Raporlar', en: 'Reports', roles: ['owner', 'manager'] },
+  { href: '/audit', tr: 'Denetim', en: 'Audit', roles: ['owner', 'manager'] }
 ];
 
 /** Screens a role may open (housekeeping staff only see their operational screen). */

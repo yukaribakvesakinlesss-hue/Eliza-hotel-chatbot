@@ -1,13 +1,15 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 import { SUPABASE_ANON_KEY, SUPABASE_URL, isDemoMode } from '@/lib/config';
+import { isPublicPath } from '@/lib/public-paths';
 
 /** Refreshes the Supabase session cookie and keeps signed-out users on /login. */
 export async function middleware(request: NextRequest) {
   if (isDemoMode()) return NextResponse.next();
-  // public: the guest web chat and channel webhooks (they authenticate with their own tokens / signatures)
+  // public: guest web chat, channel webhooks, the cron worker and the health check
+  // (each authenticates with its own token / signature / bearer secret, or exposes no data)
   const p = request.nextUrl.pathname;
-  if (p.startsWith('/chat/') || p.startsWith('/api/webchat') || p.startsWith('/api/webhooks/')) return NextResponse.next();
+  if (isPublicPath(p, request.method)) return NextResponse.next();
 
   let response = NextResponse.next({ request });
   const supabase = createServerClient(SUPABASE_URL, SUPABASE_ANON_KEY, {

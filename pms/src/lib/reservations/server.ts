@@ -5,6 +5,7 @@ import type { Database } from '@/types/database';
 import { isDemoMode } from '@/lib/config';
 import { getServerClient } from '@/lib/supabase/server';
 import { mapDbError, type ApiError } from './api';
+import { log } from '@/lib/log';
 
 export const errorResponse = (e: ApiError) => NextResponse.json({ error: { code: e.code, message: e.message } }, { status: e.status, headers: { 'Cache-Control': 'no-store' } });
 
@@ -47,7 +48,7 @@ export async function withReservationApi(req: NextRequest, handler: Handler): Pr
   try {
     return await handler(supabase);
   } catch (e) {
-    console.error('reservation api', e);
+    log('error', 'api_unhandled', { path: req.nextUrl.pathname, message: e instanceof Error ? e.message.slice(0, 300) : String(e) });
     return errorResponse(mapDbError(null));
   }
 }

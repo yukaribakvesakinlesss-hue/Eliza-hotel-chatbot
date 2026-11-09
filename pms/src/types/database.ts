@@ -151,6 +151,8 @@ export type Reservation = {
   /** commission rate snapshotted from the channel at booking time (0..1) */
   commission_rate: number;
   is_complimentary: boolean;
+  /** the channel's own reservation number (OTA bookings) */
+  external_ref?: string | null;
   created_at: string;
   updated_at: string;
 };
@@ -332,6 +334,8 @@ export type Message = {
   delivery_status: 'RECEIVED' | 'PENDING' | 'SENT' | 'DELIVERED' | 'FAILED' | 'DEMO_NOT_SENT';
   author_id: string | null;
   created_at: string;
+  delivery_attempts?: number;
+  next_delivery_at?: string | null;
 };
 export type Quote = { complete: boolean; currency: string; nights: { date: string; rate: number | null }[]; net: number | null; vat: number | null; lodging: number | null; gross: number | null };
 export type BookingRequest = {
@@ -356,6 +360,36 @@ export type BookingRequest = {
   created_at: string;
 };
 export type AvailabilityOption = { room_type_id: string; code: string; name: string; max_occupancy: number; available: number; quote: Quote };
+
+// ---------- Phase 6: OTA channel manager and audit log ----------
+export type OtaChannel = 'BOOKING' | 'EXPEDIA';
+export type OtaConnection = {
+  id: string; organization_id: string; property_id: string; channel_code: OtaChannel; mode: 'DEMO' | 'LIVE'; enabled: boolean;
+  external_hotel_id: string | null; last_push_at: string | null; last_pull_at: string | null; last_error: string | null; created_at: string; updated_at: string;
+};
+export type OtaRoomMapping = {
+  id: string; organization_id: string; property_id: string; connection_id: string; room_type_id: string; external_room_id: string; external_rate_plan_id: string; created_at: string;
+};
+export type OtaOutboxStatus = 'PENDING' | 'FAILED' | 'SENT' | 'DEMO_SKIPPED' | 'DEAD';
+export type OtaOutboxRow = {
+  id: number; organization_id: string; property_id: string; connection_id: string; room_type_id: string; stay_date: string; status: OtaOutboxStatus;
+  attempts: number; next_attempt_at: string; last_error: string | null; last_sent: { available?: number; rate?: number; closed?: boolean } | null; queued_at: string; sent_at: string | null;
+};
+export type OtaEventStatus = 'RECEIVED' | 'PROCESSED' | 'IGNORED' | 'FAILED' | 'NEEDS_ATTENTION' | 'DEAD' | 'DISMISSED';
+export type OtaInboundEvent = {
+  id: number; organization_id: string; property_id: string; connection_id: string; external_event_id: string; kind: 'NEW' | 'MODIFY' | 'CANCEL';
+  external_reservation_id: string; payload: Record<string, unknown>; is_demo: boolean; status: OtaEventStatus; outcome: string | null; attempts: number;
+  next_attempt_at: string | null; last_error: string | null; reservation_id: string | null; received_at: string; processed_at: string | null; handled_by: string | null;
+};
+/** One availability + rate update, read from the database at send time. */
+export type AriItem = {
+  id: number; channel: OtaChannel; mode: 'DEMO' | 'LIVE'; hotel_id: string | null; room_id: string; rate_plan_id: string; date: string;
+  available: number; rate: number | null; currency: string; closed: boolean; attempts: number;
+};
+export type AuditEntry = {
+  id: number; at: string; actor_kind: 'USER' | 'SYSTEM' | 'DB'; actor_name: string; action: 'INSERT' | 'UPDATE' | 'DELETE';
+  table_name: string; row_id: string | null; property_id: string | null; changes: Record<string, unknown>;
+};
 
 type Table<Row, Insert = Partial<Row>, Update = Partial<Row>> = {
   Row: Row;
@@ -390,6 +424,11 @@ export type Database = {
       conversations: Table<Conversation>;
       messages: Table<Message>;
       booking_requests: Table<BookingRequest>;
+      ota_connections: Table<OtaConnection>;
+      ota_room_mappings: Table<OtaRoomMapping>;
+      ota_outbox: Table<OtaOutboxRow>;
+      ota_inbound_events: Table<OtaInboundEvent>;
+      audit_log: Table<AuditEntry & { organization_id: string | null; actor_id: string | null }>;
     };
     Views: Record<string, never>;
     Functions: {
@@ -446,6 +485,21 @@ export type Database = {
       hk_list_staff: { Args: { p_property_id: string }; Returns: HkStaff[] };
       hk_set_require_inspection: { Args: { p_property_id: string; p_required: boolean }; Returns: boolean };
       check_availability: { Args: { p_property_id: string; p_check_in: string; p_check_out: string; p_adults?: number }; Returns: AvailabilityOption[] };
+      ota_worker_context: { Args: { p_org_slug: string; p_property_code: string; p_secret: string }; Returns: { property_id: string; timezone: string; currency: string; connections: { channel: OtaChannel; mode: 'DEMO' | 'LIVE'; enabled: boolean; hotel_id: string | null; last_pull_at: string | null }[] } };
+      ota_ingest_event: { Args: { p_org_slug: string; p_property_code: string; p_channel: OtaChannel; p_secret: string; p_event: Record<string, unknown> }; Returns: { event_id: number; inserted: boolean; status: OtaEventStatus; outcome: string | null; reservation_id: string | null; error: string | null } };
+      ota_simulate_event: { Args: { p_property_id: string; p_channel: OtaChannel; p_event: Record<string, unknown> }; Returns: OtaInboundEvent };
+      ota_retry_event: { Args: { p_event_id: number }; Returns: OtaInboundEvent };
+      ota_dismiss_event: { Args: { p_event_id: number; p_note: string }; Returns: OtaInboundEvent };
+      ota_retry_due: { Args: { p_property_id: string; p_secret?: string | null }; Returns: { retried: number; succeeded: number; purged: number } };
+      ota_claim_outbox: { Args: { p_property_id: string; p_secret?: string | null; p_limit?: number }; Returns: AriItem[] };
+      ota_outbox_result: { Args: { p_property_id: string; p_secret: string | null; p_results: Record<string, unknown>[] }; Returns: { updated: number } };
+      ota_mark_pulled: { Args: { p_property_id: string; p_secret: string | null; p_channel: OtaChannel; p_error?: string | null }; Returns: undefined };
+      ota_configure: { Args: { p_property_id: string; p_channel: OtaChannel; p_mode: 'DEMO' | 'LIVE'; p_hotel_id?: string | null; p_secret?: string | null; p_enabled?: boolean }; Returns: OtaConnection };
+      ota_set_mapping: { Args: { p_property_id: string; p_channel: OtaChannel; p_room_type_id: string; p_external_room_id: string | null; p_rate_plan_id?: string | null }; Returns: OtaRoomMapping | null };
+      ota_full_resync: { Args: { p_property_id: string }; Returns: { queued: number } };
+      inbox_due_deliveries: { Args: { p_org_slug: string; p_property_code: string; p_channel: InboxChannel; p_secret: string }; Returns: { id: number; body: string; delivery_status: string; thread_id: string; attempts: number }[] };
+      audit_feed: { Args: { p_organization_id: string; p_table?: string | null; p_before_id?: number | null; p_limit?: number }; Returns: AuditEntry[] };
+      health_check: { Args: Record<string, never>; Returns: { ok: boolean; db_time: string; schema: string } };
       channel_configure: { Args: { p_property_id: string; p_channel: InboxChannel; p_mode: 'DEMO' | 'LIVE'; p_external_account_id?: string | null; p_ingest_secret?: string | null }; Returns: ChannelConnection };
       set_room_type_rate: { Args: { p_room_type_id: string; p_base_rate: number | null }; Returns: RoomType };
       inbox_public_property: { Args: { p_org_slug: string; p_property_code: string }; Returns: unknown };

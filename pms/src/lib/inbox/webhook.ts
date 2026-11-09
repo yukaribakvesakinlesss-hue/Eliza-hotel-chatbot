@@ -5,6 +5,7 @@ import type { Database } from '@/types/database';
 import { adapterFor, webhookTarget, type ChannelCode } from './adapters';
 import { assistantReply, deliver, publicProperty } from './service';
 import { todayIn } from '@/lib/reservations/dates';
+import { log } from '@/lib/log';
 
 type Env = Record<string, string | undefined>;
 const json = (body: unknown, status = 200) => NextResponse.json(body, { status, headers: { 'Cache-Control': 'no-store' } });
@@ -40,12 +41,16 @@ export async function handleWebhook(req: NextRequest, channel: ChannelCode, supa
   if (!property) return json({ error: { code: 'NOT_FOUND' } }, 404);
 
   const results: { id: string; inserted: boolean; replied: boolean; delivery?: string }[] = [];
+  let storeFailed = false;
   for (const m of adapter.parse(body)) {
     const { data, error } = await supabase.rpc('inbox_ingest', {
       p_org_slug: target.orgSlug, p_property_code: target.propertyCode, p_channel: channel, p_secret: env.INBOX_INGEST_SECRET,
       p_external_message_id: m.externalId, p_thread_id: m.threadId, p_contact_name: m.contactName, p_body: m.text
     });
     if (error || !data) {
+      // not stored (database unreachable, channel misconfigured): let Meta deliver it again
+      storeFailed = true;
+      log('error', 'inbox_ingest_failed', { channel, code: error?.message.split(':')[0] ?? 'INTERNAL' });
       results.push({ id: m.externalId, inserted: false, replied: false });
       continue;
     }
@@ -60,6 +65,8 @@ export async function handleWebhook(req: NextRequest, channel: ChannelCode, supa
     const delivery = reply ? await deliver(supabase, reply, channel, m.threadId, env.INBOX_INGEST_SECRET, env) : undefined;
     results.push({ id: m.externalId, inserted: true, replied: Boolean(reply), delivery });
   }
-  // Meta retries on non-2xx; duplicates are already harmless, so always acknowledge a verified delivery
+  // Meta retries on non-2xx. Stored duplicates are harmless (unique message id), so: 200 once every message
+  // is stored; 500 if one could not be stored, so Meta sends the batch again and nothing is lost.
+  if (storeFailed) return json({ ok: false, results }, 500);
   return json({ ok: true, results });
 }
