@@ -28,6 +28,8 @@ begin
   end;
 end $$;
 grant execute on function pg_temp.touched(text) to public;
+grant execute on function pg_temp.try(text) to public;
+grant execute on function pg_temp.check(text, boolean, text) to public;
 \o /dev/null
 
 \set ORG '00000000-0000-4000-a000-000000000001'

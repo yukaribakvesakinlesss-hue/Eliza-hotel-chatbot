@@ -1049,3 +1049,21 @@ do $$ begin
     begin alter publication supabase_realtime add table public.ota_inbound_events; exception when duplicate_object then null; end;
   end if;
 end $$;
+
+-- ---------------------------------------------------------------------
+-- Deterministic privileges for internal helpers. Migration 0002 grants
+-- execute on ALL app_private functions; when the migrations are re-run as a
+-- whole (restore, rebuild), that blanket grant would reopen helpers that a
+-- later file had closed. Close everything here, then open only the role
+-- checks the row policies need.
+-- ---------------------------------------------------------------------
+do $$ declare f record; begin
+  for f in select p.oid::regprocedure as sig, p.proname from pg_proc p join pg_namespace n on n.oid = p.pronamespace
+           where n.nspname = 'app_private' loop
+    execute format('revoke all on function %s from public, anon, authenticated', f.sig);
+    if f.proname in ('org_role', 'is_org_member', 'property_role', 'has_property_access', 'is_org_admin', 'can_see_guests',
+                     'my_property_ids', 'my_staff_property_ids', 'my_admin_org_ids') then
+      execute format('grant execute on function %s to authenticated', f.sig);
+    end if;
+  end loop;
+end $$;
