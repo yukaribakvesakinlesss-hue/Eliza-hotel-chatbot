@@ -47,3 +47,11 @@ insert into public.property_faq (organization_id, property_id, topic, answer_tr,
   ('00000000-0000-4000-a000-000000000001', '00000000-0000-4000-a000-000000000101', 'parking',
    'Otelimizin kendi otoparkı yoktur; 200 m mesafede ücretli otopark bulunur.', 'We have no private parking; there is a paid car park 200 m away.')
 on conflict (property_id, topic) do nothing;
+
+-- Phase 6 demo data: channel room codes for Booking.com and Expedia (DEMO connections, sample codes)
+insert into public.ota_room_mappings (organization_id, property_id, connection_id, room_type_id, external_room_id, external_rate_plan_id)
+select c.organization_id, c.property_id, c.id, rt.id,
+       case c.channel_code when 'BOOKING' then 'BDC-' else 'EXP-' end || rt.code, case c.channel_code when 'BOOKING' then 'BAR' else 'RACK' end
+from public.ota_connections c join public.room_types rt on rt.property_id = c.property_id
+where c.property_id = '00000000-0000-4000-a000-000000000101'
+on conflict (connection_id, room_type_id) do nothing;

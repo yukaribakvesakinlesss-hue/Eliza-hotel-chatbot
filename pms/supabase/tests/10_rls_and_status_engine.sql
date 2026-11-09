@@ -29,7 +29,8 @@ select public.admin_add_member('owner@demo.test', 'axon-demo', 'owner');
 select public.admin_add_member('frontdesk@demo.test', 'axon-demo', 'front_desk');
 select public.admin_add_member('housekeeping@demo.test', 'axon-demo', 'housekeeping', 'AUR');
 
-select pg_temp.check('auth trigger created public.users rows', (select count(*) from public.users) = 4);
+select pg_temp.check('auth trigger created public.users rows', (select count(*) from public.users where id <> '00000000-0000-4000-a000-0000000000c1') = 4);
+select pg_temp.check('phase 6 channel-manager service account exists once', (select count(*) from public.users where id = '00000000-0000-4000-a000-0000000000c1') = 1);
 select pg_temp.check('seed: 24 rooms in demo hotel', (select count(*) from public.rooms where property_id = '00000000-0000-4000-a000-000000000101') = 24);
 select pg_temp.check('seed: out-of-order room is not occupied',
   not exists (select 1 from public.rooms where maintenance_status = 'OUT_OF_ORDER' and occupancy_status = 'OCCUPIED'));
