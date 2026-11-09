@@ -5,6 +5,8 @@ import { getBrowserClient } from '@/lib/supabase/client';
 import { addDays, todayIn } from '@/lib/reservations/dates';
 import { AppNav } from '@/components/AppNav';
 import { PreferenceToggles } from '@/components/Preferences';
+import { demoFreeRoom } from '@/lib/demo/crm';
+import type { ReservationWithGuest } from '@/types/database';
 
 type Props = {
   property: { id: string; code: string; currency: string };
@@ -15,6 +17,8 @@ type Props = {
   initialEvents: OtaInboundEvent[];
   openByConnection: Record<string, number>;
   deadByConnection: Record<string, number>;
+  /** sales demo: actions run on local state; channel bookings are checked against the demo hotel's rooms */
+  demo?: { today: string };
 };
 const NAME: Record<OtaChannel, string> = { BOOKING: 'Booking.com', EXPEDIA: 'Expedia' };
 const STATUS: Record<string, { text: string; tone: string }> = {
@@ -44,13 +48,15 @@ async function post<T>(url: string, body: Record<string, unknown>): Promise<{ ok
   }
 }
 
-export function ChannelsBoard({ property, role, connections: initialConnections, mappings: initialMappings, roomTypes, initialEvents, openByConnection, deadByConnection }: Props) {
+export function ChannelsBoard({ property, role, connections: initialConnections, mappings: initialMappings, roomTypes, initialEvents, openByConnection, deadByConnection, demo }: Props) {
   const [connections, setConnections] = useState(initialConnections);
   const [mappings, setMappings] = useState(initialMappings);
   const [events, setEvents] = useState(initialEvents);
   const [busy, setBusy] = useState(false);
   const [flash, setFlash] = useState<{ ok: boolean; text: string } | null>(null);
   const canManage = role === 'owner' || role === 'manager';
+  const [open, setOpen] = useState(openByConnection);
+  const [demoStays, setDemoStays] = useState<(ReservationWithGuest & { ext: string })[]>([]);
   const alarms = events.filter((e) => e.status === 'NEEDS_ATTENTION' || e.status === 'DEAD');
   const connName = useMemo(() => new Map(connections.map((c) => [c.id, NAME[c.channel_code]])), [connections]);
 
@@ -83,7 +89,97 @@ export function ChannelsBoard({ property, role, connections: initialConnections,
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [property.id]);
 
+  /** sales demo: same flow on local state (overbooking check against the demo hotel's rooms) */
+  const demoRun = (url: string, body: Record<string, unknown>): { ok: true; data: Record<string, unknown> } | { ok: false; message: string } => {
+    const now = new Date().toISOString();
+    const queue = (nights: number) => setOpen((o) => Object.fromEntries(connections.map((c) => [c.id, (o[c.id] ?? 0) + nights * roomTypes.length])));
+    if (url === '/api/ota/sync') {
+      const claimed = Object.values(open).reduce((a, b) => a + b, 0);
+      setOpen(Object.fromEntries(connections.map((c) => [c.id, 0])));
+      setConnections((list) => list.map((c) => ({ ...c, last_push_at: now })));
+      return { ok: true, data: { ota: { claimed, sent: 0, demo: claimed, retry: 0, rejected: 0, retriedOk: 0 } } };
+    }
+    switch (body.action) {
+      case 'configure':
+        return body.mode === 'LIVE' ? { ok: false, message: 'Demo: gerçek moda geçiş için kanalın iş ortağı erişimi ve sunucu anahtarları gerekir.' } : { ok: true, data: {} };
+      case 'resync':
+        queue(366);
+        return { ok: true, data: { queued: 366 * roomTypes.length * connections.length } };
+      case 'mapping': {
+        const conn = connections.find((c) => c.channel_code === body.channel)!;
+        const code = String(body.externalRoomId ?? '').trim();
+        if (code && !/^[A-Za-z0-9_.:-]{1,40}$/.test(code)) return { ok: false, message: 'Kodlar yalnızca harf, rakam ve . _ : - içerebilir.' };
+        if (code && mappings.some((m) => m.connection_id === conn.id && m.external_room_id === code && m.room_type_id !== body.roomTypeId)) return { ok: false, message: 'Bu kanal oda kodu başka bir oda tipine bağlı.' };
+        setMappings((list) => [...list.filter((m) => !(m.connection_id === conn.id && m.room_type_id === body.roomTypeId)),
+          ...(code ? [{ id: crypto.randomUUID(), organization_id: conn.organization_id, property_id: conn.property_id, connection_id: conn.id, room_type_id: String(body.roomTypeId), external_room_id: code, external_rate_plan_id: String(body.ratePlanId ?? 'BAR'), created_at: now }] : [])]);
+        if (code) setOpen((o) => ({ ...o, [conn.id]: (o[conn.id] ?? 0) + 366 }));
+        return { ok: true, data: {} };
+      }
+      case 'retry':
+      case 'dismiss': {
+        const ev = events.find((e) => e.id === body.eventId);
+        if (!ev) return { ok: false, message: 'Kanal mesajı bulunamadı.' };
+        const next: OtaInboundEvent = body.action === 'dismiss'
+          ? { ...ev, status: 'DISMISSED', outcome: `MANUAL: ${String(body.note).slice(0, 200)}`, processed_at: now }
+          : { ...ev, attempts: ev.attempts + 1, last_error: `${ev.last_error ?? ''} (demo: oda hâlâ dolu; önce bir rezervasyonu taşıyın ya da "Elle çözüldü" deyin)`.trim() };
+        setEvents((list) => list.map((e) => (e.id === ev.id ? next : e)));
+        return { ok: true, data: { event: next } };
+      }
+      case 'simulate': {
+        const e = body.event as { event_id: string; kind: OtaInboundEvent['kind']; reservation_id: string; room_id?: string; check_in?: string; check_out?: string; total_amount?: number };
+        const conn = connections.find((c) => c.channel_code === body.channel)!;
+        const ext = `demo-${e.reservation_id}`;
+        const base: OtaInboundEvent = { id: Date.now(), organization_id: conn.organization_id, property_id: conn.property_id, connection_id: conn.id, external_event_id: `demo-${e.event_id}`,
+          kind: e.kind, external_reservation_id: ext, payload: {}, is_demo: true, status: 'PROCESSED', outcome: null, attempts: 1, next_attempt_at: null, last_error: null,
+          reservation_id: null, received_at: now, processed_at: now, handled_by: null };
+        const existing = demoStays.find((r) => r.ext === ext && r.status !== 'CANCELLED');
+        let ev: OtaInboundEvent;
+        if (e.kind === 'CANCEL' || e.kind === 'MODIFY') {
+          if (!existing) ev = { ...base, status: 'FAILED', processed_at: null, next_attempt_at: new Date(Date.now() + 120_000).toISOString(), last_error: `OTA_NOT_FOUND: ${NAME[conn.channel_code]} rezervasyonu ${ext} henüz sistemde yok; yeni rezervasyon mesajı gelince otomatik işlenecek.` };
+          else if (e.kind === 'CANCEL') {
+            setDemoStays((l) => l.map((r) => (r.ext === ext ? { ...r, status: 'CANCELLED' } : r)));
+            ev = { ...base, outcome: 'CANCELLED' };
+          } else {
+            const map = mappings.find((m) => m.connection_id === conn.id && m.external_room_id === e.room_id);
+            const others = demoStays.filter((r) => r.ext !== ext);
+            const room = map ? demoFreeRoom(demo!.today, map.room_type_id, e.check_in!, e.check_out!, others) : null;
+            if (!room) ev = { ...base, status: 'NEEDS_ATTENTION', processed_at: null, last_error: 'OTA_NO_ROOM: Değişiklik için boş oda yok; rezervasyon eski haliyle duruyor.' };
+            else {
+              setDemoStays((l) => l.map((r) => (r.ext === ext ? { ...r, room_id: room, check_in: e.check_in!, check_out: e.check_out! } : r)));
+              ev = { ...base, outcome: room === existing.room_id ? 'MODIFIED' : 'MODIFIED_ROOM_CHANGED' };
+            }
+          }
+        } else if (existing) {
+          ev = { ...base, status: 'IGNORED', outcome: 'DUPLICATE' };
+        } else {
+          const map = mappings.find((m) => m.connection_id === conn.id && m.external_room_id === e.room_id);
+          const room = map ? demoFreeRoom(demo!.today, map.room_type_id, e.check_in!, e.check_out!, demoStays) : null;
+          if (!map) ev = { ...base, status: 'NEEDS_ATTENTION', processed_at: null, last_error: `OTA_MAPPING: Kanal oda kodu "${e.room_id}" hiçbir oda tipiyle eşleşmiyor.` };
+          else if (!room) ev = { ...base, status: 'NEEDS_ATTENTION', processed_at: null, last_error: `OTA_NO_ROOM: ${NAME[conn.channel_code]} için seçilen tarihlerde boş ${roomTypes.find((r) => r.id === map.room_type_id)?.name} odası yok. Kanal oda sattı: aşırı rezervasyon, hemen müdahale edin.` };
+          else {
+            setDemoStays((l) => [...l, { id: crypto.randomUUID(), room_id: room, check_in: e.check_in!, check_out: e.check_out!, status: 'CONFIRMED', ext } as ReservationWithGuest & { ext: string }]);
+            ev = { ...base, outcome: 'CREATED' };
+            queue(Math.max(1, Math.round((Date.parse(e.check_out!) - Date.parse(e.check_in!)) / 86_400_000)) / roomTypes.length);
+          }
+        }
+        setEvents((list) => [ev, ...list]);
+        return { ok: true, data: { event: ev } };
+      }
+      default:
+        return { ok: false, message: 'Bu işlem demoda kapalı.' };
+    }
+  };
+
   const run = async (url: string, body: Record<string, unknown>, success: (d: Record<string, unknown>) => string) => {
+    if (demo) {
+      const r = demoRun(url, body);
+      if (!r.ok) {
+        setFlash({ ok: false, text: r.message });
+        return false;
+      }
+      setFlash({ ok: true, text: `${success(r.data)} (demo)` });
+      return true;
+    }
     setBusy(true);
     const r = await post<Record<string, unknown>>(url, body);
     setBusy(false);
@@ -113,6 +209,7 @@ export function ChannelsBoard({ property, role, connections: initialConnections,
         <PreferenceToggles />
       </header>
       <AppNav role={role} />
+      {demo && <p className="tone tone-amber mb-3 rounded-xl px-4 py-2.5 text-[13px]">Demo: Booking.com ve Expedia bağlı değil. Sağdaki simülatörle kanaldan rezervasyon, değişiklik veya iptal gelmiş gibi deneyin; boş oda yoksa sistem rezervasyonu sıkıştırmaz, alarm verir. Değişiklikler bu tarayıcıda kalır.</p>}
 
       {alarms.length > 0 && (
         <p role="alert" className="tone tone-rose mb-3 rounded-xl px-4 py-3 text-[14px] font-semibold">
@@ -122,7 +219,7 @@ export function ChannelsBoard({ property, role, connections: initialConnections,
 
       <section className="grid gap-3 md:grid-cols-2">
         {connections.map((c) => (
-          <ConnectionCard key={c.id} c={c} open={openByConnection[c.id] ?? 0} dead={deadByConnection[c.id] ?? 0} canManage={canManage} busy={busy}
+          <ConnectionCard key={c.id} c={c} open={open[c.id] ?? 0} dead={deadByConnection[c.id] ?? 0} canManage={canManage} busy={busy}
             onSave={(mode, hotelId) => run('/api/ota', { action: 'configure', propertyId: property.id, channel: c.channel_code, mode, hotelId },
               () => (mode === 'LIVE' ? `${NAME[c.channel_code]} gerçek moda alındı; 365 gecelik tam gönderim kuyruğa eklendi.` : `${NAME[c.channel_code]} DEMO moduna alındı.`))} />
         ))}
@@ -303,7 +400,7 @@ function Simulator({ connections, mappings, roomTypes, currency, busy, onSend }:
           <option value="CANCEL">İptal</option>
         </select>
       </div>
-      <input name="res" required pattern="[A-Za-z0-9_.:-]{1,50}" aria-label="Kanal rezervasyon numarası" className="field min-h-[44px]" defaultValue={`T${Date.now().toString().slice(-6)}`} />
+      <input name="res" required pattern="[A-Za-z0-9_.:\-]{1,50}" aria-label="Kanal rezervasyon numarası" className="field min-h-[44px]" defaultValue={`T${Date.now().toString().slice(-6)}`} />
       {kind !== 'CANCEL' && (
         <>
           <select name="room" aria-label="Kanal oda kodu" className="field min-h-[44px]" required>

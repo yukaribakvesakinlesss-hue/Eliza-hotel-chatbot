@@ -7,6 +7,7 @@ import { formatDate } from '@/lib/reservations/dates';
 import { formatMoney, toCents } from '@/lib/finance/metrics';
 import { AppNav } from '@/components/AppNav';
 import { PreferenceToggles, usePreferences } from '@/components/Preferences';
+import { demoAssistantTurn, type DemoContext } from '@/lib/demo/crm';
 
 type Props = {
   property: { id: string; name: string; code: string; currency: string; orgSlug: string };
@@ -15,6 +16,8 @@ type Props = {
   initialRequests: BookingRequest[];
   channels: ChannelConnection[];
   roomTypes: Pick<RoomType, 'id' | 'code' | 'name' | 'max_occupancy' | 'base_rate'>[];
+  /** sales demo: no database; the demo assistant answers from the demo hotel's rooms and stays */
+  demo?: { today: string; threads: Record<string, Message[]>; contexts: Record<string, DemoContext> };
 };
 type Side = 'requests' | 'simulate' | 'channels';
 
@@ -31,7 +34,7 @@ async function api<T>(body: Record<string, unknown>): Promise<{ ok: true; data: 
   }
 }
 
-export function InboxBoard({ property, role, initialConversations, initialRequests, channels, roomTypes }: Props) {
+export function InboxBoard({ property, role, initialConversations, initialRequests, channels, roomTypes, demo }: Props) {
   const { lang } = usePreferences();
   const [convs, setConvs] = useState(initialConversations);
   const [requests, setRequests] = useState(initialRequests);
@@ -46,6 +49,9 @@ export function InboxBoard({ property, role, initialConversations, initialReques
   const money = (v: number | string | null | undefined) => (v === null || v === undefined ? '—' : formatMoney(toCents(v), property.currency, lang));
   const canManage = role === 'owner' || role === 'manager';
   const replyKey = useRef(crypto.randomUUID());
+  const threadsRef = useRef<Record<string, Message[]>>(demo?.threads ?? {});
+  const contextsRef = useRef<Record<string, DemoContext>>(demo?.contexts ?? {});
+  const [demoRates, setDemoRates] = useState<Record<string, number | null>>({});
 
   useEffect(() => {
     if (!flash) return;
@@ -64,11 +70,15 @@ export function InboxBoard({ property, role, initialConversations, initialReques
     if (r) setRequests(r);
   }, [property.id]);
   const loadThread = useCallback(async (id: string) => {
+    if (demo) {
+      setMessages([...(threadsRef.current[id] ?? [])]);
+      return;
+    }
     const supabase = getBrowserClient();
     if (!supabase) return;
     const { data } = await supabase.from('messages').select('*').eq('conversation_id', id).order('id').limit(500);
     setMessages(data ?? []);
-  }, []);
+  }, [demo]);
 
   const selectedRef = useRef(selected);
   selectedRef.current = selected;
@@ -105,7 +115,96 @@ export function InboxBoard({ property, role, initialConversations, initialReques
     }
   };
 
+  /** sales demo: the same actions on local state only */
+  const demoRun = (body: Record<string, unknown>): { ok: true; selectId?: string } | { ok: false; message: string } => {
+    if (!demo) return { ok: false, message: 'demo' };
+    const now = new Date().toISOString();
+    let nextId = Math.max(0, ...Object.values(threadsRef.current).flat().map((m) => m.id)) + 1;
+    const push = (c: Conversation, sender: Message['sender'], text: string, payload: Record<string, unknown> | null = null) => {
+      const m: Message = { id: nextId++, organization_id: c.organization_id, property_id: c.property_id, conversation_id: c.id, channel: c.channel,
+        direction: sender === 'GUEST' ? 'IN' : 'OUT', sender, body: text, payload, external_id: null,
+        delivery_status: sender === 'GUEST' ? 'RECEIVED' : c.channel === 'WEBCHAT' ? 'DELIVERED' : 'DEMO_NOT_SENT', author_id: null, created_at: now };
+      threadsRef.current = { ...threadsRef.current, [c.id]: [...(threadsRef.current[c.id] ?? []), m] };
+      return m;
+    };
+    const patch = (cid: string, change: Partial<Conversation>) => setConvs((list) => list.map((x) => (x.id === cid ? { ...x, ...change } : x)));
+    const find = (cid: unknown) => convs.find((c) => c.id === cid);
+    switch (body.action) {
+      case 'read': {
+        patch(String(body.conversationId), { unread_count: 0 });
+        return { ok: true };
+      }
+      case 'reply': {
+        const c = find(body.conversationId);
+        if (!c) return { ok: false, message: 'Konuşma bulunamadı.' };
+        const m = push(c, 'STAFF', String(body.body));
+        patch(c.id, { status: 'HUMAN', last_message_at: now, last_message_preview: m.body.slice(0, 140) });
+        return { ok: true };
+      }
+      case 'status': {
+        patch(String(body.conversationId), { status: body.status as Conversation['status'] });
+        return { ok: true };
+      }
+      case 'link_guest':
+        return { ok: false, message: 'Demo: misafir profillerini Misafirler ekranında inceleyebilirsiniz.' };
+      case 'confirm_request':
+      case 'decline_request': {
+        const r = requests.find((x) => x.id === body.requestId);
+        if (!r) return { ok: false, message: 'Talep bulunamadı.' };
+        const confirmed = body.action === 'confirm_request';
+        setRequests((list) => list.map((x) => (x.id === r.id ? { ...x, status: confirmed ? 'CONFIRMED' : 'DECLINED', handled_at: now } : x)));
+        const c = find(r.conversation_id);
+        if (c && confirmed) {
+          const code = `R${String(900000 + Math.floor(Math.random() * 99999))}`;
+          const m = push(c, 'SYSTEM', `Rezervasyonunuz onaylandı: ${code}, ${formatDate(r.check_in)} – ${formatDate(r.check_out)}. / Your reservation is confirmed: ${code}.`, { type: 'reservation_confirmed', code });
+          patch(c.id, { last_message_at: now, last_message_preview: m.body.slice(0, 140) });
+        }
+        return { ok: true };
+      }
+      case 'simulate': {
+        const channel = body.channel as InboxChannel;
+        const thread = String(body.threadId);
+        let c = convs.find((x) => x.channel === channel && x.external_thread_id === thread);
+        if (!c) {
+          c = { id: crypto.randomUUID(), organization_id: property.id, property_id: property.id, channel, external_thread_id: thread, guest_id: null,
+            contact_name: String(body.name ?? '') || null, contact_handle: channel === 'WHATSAPP' ? `+${thread.replace(/\D/g, '')}` : `@${thread}`, status: 'AI',
+            is_demo: true, context: {}, unread_count: 0, last_message_at: now, last_message_preview: null, created_at: now, updated_at: now };
+          const fresh = c;
+          setConvs((list) => [fresh, ...list]);
+        }
+        push(c, 'GUEST', String(body.body));
+        let status = c.status;
+        if (status === 'AI') {
+          const prev = [...(threadsRef.current[c.id] ?? [])].reverse().find((m) => m.sender === 'AI');
+          const t = demoAssistantTurn(demo.today, c, String(body.body), contextsRef.current[c.id] ?? {}, ((prev?.payload as { type?: string } | null)?.type) ?? null, demoRates);
+          contextsRef.current = { ...contextsRef.current, [c.id]: t.context };
+          push(c, 'AI', t.text, { ...t.payload, intent: 'demo' });
+          if (t.request) setRequests((list) => [t.request!, ...list]);
+          if (t.handoff) status = 'HUMAN';
+        }
+        const last = threadsRef.current[c.id]!.at(-1)!;
+        const cid = c.id;
+        setConvs((list) => list.map((x) => (x.id === cid ? { ...x, status, unread_count: x.unread_count + 1, last_message_at: now, last_message_preview: last.body.slice(0, 140) } : x)));
+        return { ok: true, selectId: cid };
+      }
+      default:
+        return { ok: false, message: 'Bu işlem demoda kapalı.' };
+    }
+  };
+
   const run = async (body: Record<string, unknown>, done: string) => {
+    if (demo) {
+      const r = demoRun(body);
+      if (!r.ok) {
+        setFlash({ ok: false, text: r.message });
+        return false;
+      }
+      setFlash({ ok: true, text: `${done} (demo)` });
+      const target = r.selectId ?? selected;
+      if (r.selectId) setSelected(r.selectId);
+      if (target) setMessages([...(threadsRef.current[target] ?? [])]);
+      return true;
+    }
     setBusy(true);
     const r = await api<Record<string, unknown>>(body);
     setBusy(false);
@@ -147,6 +246,7 @@ export function InboxBoard({ property, role, initialConversations, initialReques
         <PreferenceToggles />
       </header>
       <AppNav role={role} />
+      {demo && <p className="tone tone-amber mb-3 rounded-xl px-4 py-2.5 text-[13px]">Demo: kurgusal konuşmalar. Sağdaki Simülatör&apos;den misafir gibi yazın; AI asistan müsaitlik ve fiyatı örnek otelin oda ve rezervasyon verisinden hesaplar. Dışarıya mesaj gönderilmez, değişiklikler bu tarayıcıda kalır.</p>}
 
       <div className="grid gap-3 lg:grid-cols-[320px_minmax(0,1fr)_340px]">
         {/* conversation list */}
@@ -271,7 +371,8 @@ export function InboxBoard({ property, role, initialConversations, initialReques
               </ul>
             )}
             {side === 'simulate' && <Simulator propertyId={property.id} channels={channels} busy={busy} onSend={(body) => run(body, 'Mesaj simüle edildi; AI asistan veritabanından yanıtladı')} />}
-            {side === 'channels' && <Channels property={property} channels={channels} roomTypes={roomTypes} canManage={canManage} money={money} onSaved={(t) => setFlash({ ok: true, text: t })} onError={(t) => setFlash({ ok: false, text: t })} />}
+            {side === 'channels' && <Channels property={property} channels={channels} roomTypes={roomTypes} canManage={canManage} money={money} onSaved={(t) => setFlash({ ok: true, text: t })} onError={(t) => setFlash({ ok: false, text: t })}
+              onDemoRate={demo ? (id, rate) => setDemoRates((r) => ({ ...r, [id]: rate })) : undefined} />}
           </div>
         </aside>
       </div>
@@ -311,9 +412,10 @@ function Simulator({ propertyId, channels, busy, onSend }: { propertyId: string;
   );
 }
 
-function Channels({ property, channels, roomTypes, canManage, money, onSaved, onError }: {
+function Channels({ property, channels, roomTypes, canManage, money, onSaved, onError, onDemoRate }: {
   property: Props['property']; channels: ChannelConnection[]; roomTypes: Props['roomTypes']; canManage: boolean;
   money: (v: number | string | null | undefined) => string; onSaved: (t: string) => void; onError: (t: string) => void;
+  onDemoRate?: (roomTypeId: string, rate: number | null) => void;
 }) {
   const [rates, setRates] = useState(() => Object.fromEntries(roomTypes.map((r) => [r.id, r.base_rate === null ? '' : String(r.base_rate)])));
   const chatUrl = typeof window !== 'undefined' ? `${window.location.origin}/chat/${property.orgSlug}/${property.code}` : '';
@@ -321,6 +423,10 @@ function Channels({ property, channels, roomTypes, canManage, money, onSaved, on
     const raw = rates[id]?.replace(',', '.').trim() ?? '';
     const baseRate = raw === '' ? null : Number(raw);
     if (baseRate !== null && (!Number.isFinite(baseRate) || baseRate < 0)) return onError('Fiyat geçersiz.');
+    if (onDemoRate) {
+      onDemoRate(id, baseRate);
+      return onSaved(baseRate === null ? 'Demo: fiyat kaldırıldı; AI asistan bu oda tipi için fiyat söylemez' : 'Demo: fiyat bu tarayıcıda kaydedildi; AI asistan yeni fiyatı kullanır');
+    }
     const res = await fetch('/api/rates', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ roomTypeId: id, baseRate }) }).catch(() => null);
     const json = (await res?.json().catch(() => null)) as { error?: { message?: string } } | null;
     if (res?.ok) onSaved('Fiyat kaydedildi; AI asistan artık bu fiyatı kullanır');

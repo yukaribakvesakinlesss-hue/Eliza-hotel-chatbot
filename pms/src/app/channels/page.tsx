@@ -1,6 +1,8 @@
 import { redirect } from 'next/navigation';
 import { ChannelsBoard } from '@/components/channels/ChannelsBoard';
-import { DemoNotice } from '@/components/DemoNotice';
+import { demoProperty, demoRole, demoRoomTypes } from '@/lib/demo/data';
+import { demoChannels } from '@/lib/demo/crm';
+import { todayIn } from '@/lib/reservations/dates';
 import { isHousekeepingRole } from '@/lib/rooms/rules';
 import { getPropertyContext } from '@/lib/supabase/context';
 import { getServerClient } from '@/lib/supabase/server';
@@ -10,7 +12,14 @@ export const dynamic = 'force-dynamic';
 
 export default async function ChannelsPage() {
   const supabase = await getServerClient();
-  if (!supabase) return <DemoNotice title="Kanal yöneticisi" />;
+  if (!supabase) {
+    const today = todayIn(demoProperty.timezone);
+    const d = demoChannels(today);
+    return (
+      <ChannelsBoard property={{ id: demoProperty.id, code: demoProperty.code, currency: demoProperty.currency }} role={demoRole} connections={d.connections}
+        mappings={d.mappings} roomTypes={demoRoomTypes} initialEvents={d.events} openByConnection={d.open} deadByConnection={d.dead} demo={{ today }} />
+    );
+  }
   const ctx = await getPropertyContext(supabase);
   if (isHousekeepingRole(ctx.role)) redirect('/housekeeping');
   const pid = ctx.property.id;

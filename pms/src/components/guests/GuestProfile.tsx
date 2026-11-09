@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 import type { Guest, GuestNote, MemberRole } from '@/types/database';
 import { formatMoney, toCents } from '@/lib/finance/metrics';
 import { formatDate } from '@/lib/reservations/dates';
@@ -32,8 +32,42 @@ async function call(id: string, body: Record<string, unknown>) {
   }
 }
 
-export function GuestProfile({ role, propertyCode, data }: { role: MemberRole; propertyCode: string; data: ProfileData }) {
+/** Sales demo: the same actions applied to local state only (nothing leaves the browser). */
+function demoApply(d: ProfileData, body: Record<string, unknown>): { ok: true; data: ProfileData; payload?: unknown } | { ok: false; message: string } {
+  const now = new Date().toISOString();
+  const g = d.guest;
+  switch (body.action) {
+    case 'update': {
+      const c = body.changes as Record<string, unknown>;
+      const next = { ...g };
+      for (const k of ['full_name', 'email', 'phone', 'nationality', 'language', 'vip_note'] as const) if (typeof c[k] === 'string') (next as Record<string, unknown>)[k] = (c[k] as string).trim() || (k === 'full_name' ? g.full_name : null);
+      if (typeof c.vip_level === 'number') next.vip_level = c.vip_level;
+      if (typeof c.marketing_consent === 'boolean') { next.marketing_consent = c.marketing_consent; next.marketing_consent_at = now; }
+      if (c.kvkk_notice) next.kvkk_notice_at = now;
+      return { ok: true, data: { ...d, guest: next } };
+    }
+    case 'note': {
+      const body2 = String(body.body ?? '').trim();
+      if (!body2) return { ok: false, message: 'Not boş olamaz.' };
+      return { ok: true, data: { ...d, notes: [{ id: Date.now(), organization_id: g.organization_id, guest_id: g.id, category: body.category as GuestNote['category'], body: body2.slice(0, 500), created_by: null, created_at: now, archived_at: null }, ...d.notes] } };
+    }
+    case 'archive_note':
+      return { ok: true, data: { ...d, notes: d.notes.filter((n) => n.id !== body.noteId) } };
+    case 'export':
+      return { ok: true, data: d, payload: { exported_at: now, demo: true, guest: g, stays: d.stays, notes: d.notes } };
+    case 'anonymize':
+      if (body.confirm !== 'ANONİMLEŞTİR') return { ok: false, message: 'Onay için ANONİMLEŞTİR yazın.' };
+      if (d.stats.upcoming > 0 || d.stats.in_house > 0) return { ok: false, message: 'Aktif veya gelecek rezervasyonu olan misafir anonimleştirilemez.' };
+      return { ok: true, data: { ...d, notes: [], guest: { ...g, full_name: 'Anonim misafir', email: null, phone: null, phone_normalized: null, nationality: null, language: null, vip_note: null, marketing_consent: false, anonymized_at: now } } };
+    default:
+      return { ok: false, message: 'Bu işlem demoda kapalı.' };
+  }
+}
+
+export function GuestProfile({ role, propertyCode, data: initial, demo = false }: { role: MemberRole; propertyCode: string; data: ProfileData; demo?: boolean }) {
   const router = useRouter();
+  const [data, setData] = useState(initial);
+  useEffect(() => setData(initial), [initial]);
   const g = data.guest;
   const manager = role === 'owner' || role === 'manager';
   const [flash, setFlash] = useState<{ ok: boolean; text: string } | null>(null);
@@ -44,6 +78,12 @@ export function GuestProfile({ role, propertyCode, data }: { role: MemberRole; p
   const anonymized = Boolean(g.anonymized_at);
 
   const run = async (body: Record<string, unknown>, done: string) => {
+    if (demo) {
+      const r = demoApply(data, body);
+      if (r.ok) setData(r.data);
+      setFlash(r.ok ? { ok: true, text: `${done} (demo: yalnızca bu tarayıcıda)` } : { ok: false, text: r.message });
+      return r.ok ? { ok: true as const, data: null } : { ok: false as const, message: r.message };
+    }
     setBusy(true);
     const r = await call(g.id, body);
     setBusy(false);
@@ -68,7 +108,7 @@ export function GuestProfile({ role, propertyCode, data }: { role: MemberRole; p
   };
 
   const exportData = async () => {
-    const r = await call(g.id, { action: 'export' });
+    const r = demo ? (() => { const x = demoApply(data, { action: 'export' }); return x.ok ? { ok: true as const, data: x.payload } : { ok: false as const, message: x.message }; })() : await call(g.id, { action: 'export' });
     if (!r.ok) return setFlash({ ok: false, text: r.message });
     const blob = new Blob([JSON.stringify(r.data, null, 2)], { type: 'application/json' });
     const a = document.createElement('a');
@@ -83,6 +123,7 @@ export function GuestProfile({ role, propertyCode, data }: { role: MemberRole; p
     <div className="mx-auto max-w-5xl px-3 pb-16 pt-5 sm:px-6">
       <GuestsHeader role={role} propertyCode={propertyCode} title="Misafir profili" />
       <Link href="/guests" className="mb-3 inline-block text-[13px] text-gold">← Misafirler</Link>
+      {demo && <p className="tone tone-amber mb-3 rounded-xl px-4 py-2.5 text-[13px]">Demo: kurgusal misafir. Konaklama ve harcama örnek otelin verisinden hesaplanır; değişiklikler yalnızca bu tarayıcıda kalır.</p>}
 
       <section className="card mb-4 p-4">
         <div className="flex flex-wrap items-start justify-between gap-3">

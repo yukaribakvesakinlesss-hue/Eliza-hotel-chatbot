@@ -37,14 +37,19 @@ function Changes({ e }: { e: AuditEntry }) {
   );
 }
 
-export function AuditLog({ organizationId, propertyCode, role, initial }: { organizationId: string; propertyCode: string; role: MemberRole; initial: AuditEntry[] }) {
+export function AuditLog({ organizationId, propertyCode, role, initial, demo = false }: { organizationId: string; propertyCode: string; role: MemberRole; initial: AuditEntry[]; demo?: boolean }) {
   const [rows, setRows] = useState(initial);
   const [table, setTable] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [done, setDone] = useState(initial.length < 100);
+  const [done, setDone] = useState(demo || initial.length < 100);
 
   const load = async (nextTable: string, more: boolean) => {
+    if (demo) {
+      setRows(initial.filter((r) => !nextTable || r.table_name === nextTable));
+      setDone(true);
+      return;
+    }
     const supabase = getBrowserClient();
     if (!supabase) return;
     setBusy(true);
@@ -69,6 +74,7 @@ export function AuditLog({ organizationId, propertyCode, role, initial }: { orga
         <PreferenceToggles />
       </header>
       <AppNav role={role} />
+      {demo && <p className="tone tone-amber mb-3 rounded-xl px-4 py-2.5 text-[13px]">Demo: örnek kayıtlar. Gerçek sistemde rezervasyon, fiyat, misafir, yetki ve kanal ayarlarındaki her değişiklik buraya silinemez biçimde yazılır.</p>}
       <div className="mb-3 flex flex-wrap items-center gap-2">
         <select aria-label="Kayıt türü" className="field min-h-[44px]" value={table} onChange={(e) => { setTable(e.target.value); void load(e.target.value, false); }}>
           <option value="">Tüm kayıtlar</option>

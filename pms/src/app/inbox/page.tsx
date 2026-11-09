@@ -1,6 +1,8 @@
 import { redirect } from 'next/navigation';
 import { InboxBoard } from '@/components/inbox/InboxBoard';
-import { DemoNotice } from '@/components/DemoNotice';
+import { demoOrganization, demoProperty, demoRole, demoRoomTypes } from '@/lib/demo/data';
+import { demoInbox } from '@/lib/demo/crm';
+import { todayIn } from '@/lib/reservations/dates';
 import { isHousekeepingRole } from '@/lib/rooms/rules';
 import { getPropertyContext } from '@/lib/supabase/context';
 import { getServerClient } from '@/lib/supabase/server';
@@ -9,7 +11,21 @@ export const dynamic = 'force-dynamic';
 
 export default async function InboxPage() {
   const supabase = await getServerClient();
-  if (!supabase) return <DemoNotice title="Inbox" />;
+  if (!supabase) {
+    const today = todayIn(demoProperty.timezone);
+    const demo = demoInbox(today);
+    return (
+      <InboxBoard
+        property={{ id: demoProperty.id, name: demoProperty.name, code: demoProperty.code, currency: demoProperty.currency, orgSlug: demoOrganization.slug }}
+        role={demoRole}
+        initialConversations={demo.conversations}
+        initialRequests={demo.requests}
+        channels={(['WHATSAPP', 'INSTAGRAM', 'WEBCHAT'] as const).map((c) => ({ id: c, organization_id: demoProperty.organization_id, property_id: demoProperty.id, channel: c, mode: c === 'WEBCHAT' ? 'LIVE' : 'DEMO', external_account_id: null, display_name: null, created_at: today, updated_at: today }))}
+        roomTypes={demoRoomTypes}
+        demo={{ today, threads: demo.threads, contexts: demo.contexts }}
+      />
+    );
+  }
   const ctx = await getPropertyContext(supabase);
   if (isHousekeepingRole(ctx.role)) redirect('/housekeeping');
 
