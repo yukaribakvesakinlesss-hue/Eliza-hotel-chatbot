@@ -233,6 +233,22 @@ select pg_temp.check('injection: quotes and SQL in text inputs are treated as da
   and (select count(*) from public.rooms) > 0);
 reset role;
 
+-- flood protection that holds across server instances (the API's in-memory limiter does not)
+set role anon;
+select set_config('request.jwt.claim.sub', '', false);
+create temp table _flood (n int, err text);
+do $$ declare i int; e text; begin
+  for i in 1..40 loop
+    begin perform public.webchat_start('axon-demo', 'AUR', null); e := null; exception when others then e := sqlerrm; end;
+    insert into _flood values (i, e);
+  end loop;
+end $$;
+reset role;
+select pg_temp.check('rate limit: the database stops a flood of new public web chats (≤ 30 per hotel per minute)',
+  exists (select 1 from _flood where err like 'INBOX_RATE_LIMIT:%')
+  and (select count(*) from public.conversations where property_id = '00000000-0000-4000-a000-000000000101' and channel = 'WEBCHAT' and created_at > now() - interval '1 minute') <= 30,
+  (select count(*) || ' accepted before the limit' from _flood where err is null));
+
 \o
 \set QUIET off
 select n, case when ok then 'PASS' else 'FAIL' end as result, name, left(detail, 160) as detail from _results order by n;

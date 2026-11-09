@@ -132,6 +132,41 @@ Tax rates (VAT 10 % on rooms, lodging tax 2 %) are demo defaults stored per prop
 - Anonymisation removes personal data but keeps bookings and the financial ledger.
 - This is technical support for KVKK; legal compliance needs your own review.
 
+## Phase 6: OTA channel manager and production readiness
+
+| Path | What |
+|---|---|
+| `supabase/migrations/20261108000700_ota_audit_ops.sql` | Booking.com / Expedia connections (DEMO by default), room mappings, availability and rate queue, inbound reservation events, service account, retries, audit log, health check, faster RLS |
+| `supabase/migrations/20261108000800_webchat_rate_limit.sql` | web chat flood protection in the database |
+| `src/lib/ota/` | adapters (Booking.com B.XML, Expedia EQC; not certified), signed webhook, sync run |
+| `src/app/channels`, `src/app/audit` | channel manager screen; audit log (owners and managers) |
+| `src/app/api/ota/**`, `src/app/api/health` | staff actions, cron worker (`Authorization: Bearer CRON_SECRET`), webhook `/api/ota/webhook/booking\|expedia`, health |
+| `supabase/tests/80_ota_audit.sql`, `85_security_scan.sql`, `90_performance.sql`, `tests/ota.test.ts` | 81 channel/audit checks, 21 whole-schema security checks, 9 performance checks, 22 unit tests |
+| `scripts/db-backup.sh`, `scripts/db-restore-check.sh` | backup and a verified restore drill |
+| `docs/PRODUCTION_READINESS.md`, `docs/BACKUP_RESTORE.md` | readiness report, missing integrations, known issues, pilot checklist; backup strategy |
+
+**Channel sync**
+
+- A change to a reservation, an out-of-order period or a rate marks the affected nights.
+- The worker reads the current availability and rate when it sends.
+- A night without a rate is sent closed, never with a guessed price.
+
+**Inbound channel messages**
+
+- Each message is stored once per channel event id.
+- It is processed through the normal reservation functions, as the channel-manager service account.
+- Transient failures retry with backoff.
+- Overbooking, an unknown room code or the wrong currency wait for staff with an alarm.
+
+**Server environment for LIVE channels**
+
+- `OTA_PROPERTY` (`org-slug/CODE`)
+- `OTA_SYNC_SECRET`, `OTA_WEBHOOK_SECRET`, `CRON_SECRET` (each at least 24 characters)
+- `BOOKING_XML_USERNAME` / `BOOKING_XML_PASSWORD`
+- `EXPEDIA_EQC_USERNAME` / `EXPEDIA_EQC_PASSWORD`
+
+Without them everything stays DEMO.
+
 ## Running it
 
 Demo mode needs no setup: leave the env vars empty and you get sample data. Changes stay in the browser.
@@ -157,5 +192,5 @@ Connecting to Supabase:
 npm run typecheck    # tsc --noEmit
 npm test             # vitest: rules + demo data
 npm run build        # next build
-PGHOST=127.0.0.1 PGPORT=5432 PGUSER=postgres npm run db:test   # migrations x2 + seed x2 + 38 SQL tests
+PGHOST=127.0.0.1 PGPORT=5432 PGUSER=postgres npm run db:test   # migrations x2 + seed x2 + all SQL suites (376 checks)
 ```
