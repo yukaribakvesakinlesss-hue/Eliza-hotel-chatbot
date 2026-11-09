@@ -1,0 +1,176 @@
+[
+  {
+    "name": "availability then booking request",
+    "turns": [
+      {
+        "lang": "tr",
+        "intent": "AVAILABILITY",
+        "slots": {
+          "in": 300,
+          "out": 303,
+          "adults": 2
+        }
+      },
+      {
+        "lang": "tr",
+        "intent": "BOOKING",
+        "slots": {}
+      },
+      {
+        "lang": "tr",
+        "intent": "BOOKING",
+        "slots": {
+          "room_type": "DDBL"
+        }
+      },
+      {
+        "lang": "tr",
+        "intent": "BOOKING",
+        "slots": {
+          "name": "Parite Testi",
+          "phone": "0532 000 00 00"
+        }
+      }
+    ]
+  },
+  {
+    "name": "english, nights instead of check-out, suite for three",
+    "turns": [
+      {
+        "lang": "en",
+        "intent": "AVAILABILITY",
+        "slots": {
+          "in": 310,
+          "nights": 2,
+          "adults": 3
+        }
+      },
+      {
+        "lang": "en",
+        "intent": "BOOKING",
+        "slots": {
+          "email": "parity@example.com",
+          "name": "Parity Test"
+        }
+      }
+    ]
+  },
+  {
+    "name": "dates first missing, then invalid, then valid",
+    "turns": [
+      {
+        "lang": "tr",
+        "intent": "AVAILABILITY",
+        "slots": {}
+      },
+      {
+        "lang": "tr",
+        "intent": "AVAILABILITY",
+        "slots": {
+          "in": -3,
+          "out": -1
+        }
+      },
+      {
+        "lang": "tr",
+        "intent": "AVAILABILITY",
+        "slots": {
+          "in": 320,
+          "out": 360
+        }
+      },
+      {
+        "lang": "tr",
+        "intent": "AVAILABILITY",
+        "slots": {
+          "in": 320,
+          "out": 322,
+          "adults": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "faq known and unknown, greeting, fallback, handoff",
+    "turns": [
+      {
+        "lang": "en",
+        "intent": "GREETING",
+        "slots": {}
+      },
+      {
+        "lang": "tr",
+        "intent": "FAQ",
+        "slots": {
+          "topic": "breakfast"
+        }
+      },
+      {
+        "lang": "en",
+        "intent": "FAQ",
+        "slots": {
+          "topic": "parking"
+        }
+      },
+      {
+        "lang": "tr",
+        "intent": "FAQ",
+        "slots": {
+          "topic": "pets"
+        }
+      },
+      {
+        "lang": "tr",
+        "intent": "UNKNOWN",
+        "slots": {}
+      },
+      {
+        "lang": "en",
+        "intent": "HANDOFF",
+        "slots": {}
+      },
+      {
+        "lang": "en",
+        "intent": "GREETING",
+        "slots": {}
+      }
+    ]
+  },
+  {
+    "name": "too many guests for every room type",
+    "turns": [
+      {
+        "lang": "en",
+        "intent": "AVAILABILITY",
+        "slots": {
+          "in": 330,
+          "out": 331,
+          "adults": 5
+        }
+      }
+    ]
+  },
+  {
+    "name": "long suite stay (thousands separator)",
+    "turns": [
+      {
+        "lang": "tr",
+        "intent": "AVAILABILITY",
+        "slots": {
+          "in": 340,
+          "out": 347,
+          "adults": 3
+        }
+      },
+      {
+        "lang": "en",
+        "intent": "AVAILABILITY",
+        "slots": {
+          "in": 340,
+          "out": 347,
+          "adults": 3
+        }
+      }
+    ]
+  }
+]

@@ -10,7 +10,7 @@ import type {
 } from '@/types/database';
 import type { ProfileData } from '@/components/guests/GuestProfile';
 import { addDays, formatDate, nightsBetween } from '@/lib/reservations/dates';
-import { parseGuestMessage } from '@/lib/inbox/nlu';
+import { parseGuestMessage, type Parsed } from '@/lib/inbox/nlu';
 import { demoProperty, demoRoomTypes, demoRooms } from './data';
 import { demoFinance } from './reservations';
 
@@ -56,7 +56,13 @@ export function demoFreeRoom(today: string, roomTypeId: string, checkIn: string,
     && !stays.some((s) => s.room_id === r.id && s.check_in < checkOut && s.check_out > checkIn))?.id ?? null;
 }
 
-const money = (v: number | null) => (v === null ? '—' : `€${v.toFixed(2).replace('.', ',')}`);
+// same format as app_private.fmt_money: decimal comma in Turkish, decimal point in English
+const money = (v: number | null, en = false) => {
+  if (v === null) return '—';
+  const [int, dec] = v.toFixed(2).split('.');
+  const grouped = int!.replace(/\B(?=(\d{3})+(?!\d))/g, en ? ',' : '.');
+  return `€${grouped}${en ? '.' : ','}${dec}`;
+};
 export const DEMO_FAQ: Record<string, { tr: string; en: string }> = {
   checkin_time: { tr: "Giriş saatimiz 14:00, çıkış saatimiz 12:00'dir. Erken giriş ve geç çıkış müsaitliğe bağlıdır.", en: 'Check-in is from 14:00 and check-out until 12:00. Early check-in and late check-out depend on availability.' },
   breakfast: { tr: 'Kahvaltı 07:30–10:30 arasında açık büfe olarak servis edilir.', en: 'Breakfast is a buffet served from 07:30 to 10:30.' },
@@ -72,6 +78,14 @@ export type DemoTurn = { text: string; payload: Record<string, unknown>; context
 
 export function demoAssistantTurn(today: string, conv: Conversation, text: string, ctx: DemoContext, lastType: string | null, rates: Record<string, number | null> = {}): DemoTurn {
   const p = parseGuestMessage(text, today, { roomTypes: demoRoomTypes.map((r) => ({ code: r.code, name: r.name })), lastAssistantType: lastType });
+  return demoAssistantTurnParsed(today, conv, p, ctx, rates);
+}
+
+/**
+ * The turn itself, from already-parsed intent and slots. Must behave exactly like the database's
+ * inbox_assistant_turn; tests/assistant-parity.test.ts compares both on the same scenarios.
+ */
+export function demoAssistantTurnParsed(today: string, conv: Conversation, p: Parsed, ctx: DemoContext, rates: Record<string, number | null> = {}): DemoTurn {
   const s = p.slots as Record<string, unknown>;
   const en = p.lang === 'en';
   const c: DemoContext = { ...ctx };
@@ -105,12 +119,12 @@ export function demoAssistantTurn(today: string, conv: Conversation, text: strin
     const nights = nightsBetween(c.check_in, c.check_out);
     const opts = demoAvailability(today, c.check_in, c.check_out, adults, [], rates);
     const lines = opts.map((o) => `\n• ${o.name}: ` + (o.available === 0 ? (en ? 'not available' : 'müsait değil')
-      : o.quote.complete ? (en ? `${o.available} room(s) available, ${nights} nights total ${money(o.quote.gross)} incl. taxes` : `${o.available} oda müsait, ${nights} gece toplam ${money(o.quote.gross)} (vergiler dahil)`)
+      : o.quote.complete ? (en ? `${o.available} room(s) available, ${nights} nights total ${money(o.quote.gross, true)} incl. taxes` : `${o.available} oda müsait, ${nights} gece toplam ${money(o.quote.gross)} (vergiler dahil)`)
         : en ? `${o.available} room(s) available; the price is not in our system yet, the front desk will send it` : `${o.available} oda müsait; fiyat sistemde tanımlı değil, resepsiyon iletecek`)).join('');
     const base = { type: 'availability', check_in: c.check_in, check_out: c.check_out, adults, options: opts, checked_at: new Date().toISOString() };
     const range = `${formatDate(c.check_in)} – ${formatDate(c.check_out)}`;
     if (!opts.some((o) => o.available > 0)) {
-      return { text: en ? `Sorry, we have no room for ${adults} guest(s) between ${range}. I can pass you to the front desk for alternatives.` : `Üzgünüm, ${range} tarihleri arasında ${adults} kişilik müsait odamız yok. Alternatifler için sizi resepsiyona aktarabilirim.`, payload: base, context: c };
+      return { text: en ? `Sorry, we have no room for ${adults} guest(s) between ${formatDate(c.check_in)} and ${formatDate(c.check_out)}. I can pass you to the front desk for alternatives.` : `Üzgünüm, ${range} tarihleri arasında ${adults} kişilik müsait odamız yok. Alternatifler için sizi resepsiyona aktarabilirim.`, payload: base, context: c };
     }
     if (p.intent === 'AVAILABILITY') {
       return { text: (en ? `Live availability for ${range}, ${adults} guest(s):` : `${range}, ${adults} kişi için güncel müsaitlik:`) + lines + (en ? '\nWould you like me to create a booking request?' : '\nRezervasyon talebi oluşturmamı ister misiniz?'), payload: base, context: c };

@@ -64,6 +64,7 @@
   'use strict';
   var $ = function (s) { return document.querySelector(s); };
   var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+  var TR = {}; // allowed status moves, sent by the server
   var ST = {
     new: ['Yeni', 'border-sky-300/40 text-sky-200 bg-sky-400/10'],
     contacted: ['İletişime geçildi', 'border-violet-300/40 text-violet-200 bg-violet-400/10'],
@@ -100,7 +101,7 @@
       if (r.status === 401) { token = null; try { sessionStorage.removeItem('axonPanel'); } catch (e) {} return boot(); }
       if (r.status === 503) return setup(r.j.error);
       if (r.status !== 200) { $('#list').innerHTML = '<li class="card p-5 text-rose-300">Talepler yüklenemedi (' + esc(r.j.error || r.status) + ').</li>'; return; }
-      items = r.j.items || []; show('app'); render();
+      items = r.j.items || []; TR = r.j.transitions || {}; show('app'); render();
       var h = location.hash.slice(1); if (h && !selected) select(h);
     });
   }
@@ -147,7 +148,8 @@
       '<div class="mt-5 flex flex-wrap gap-2"><a class="btn-gold !px-4 !py-2 text-[13.5px]" href="' + mail + '">E-postayla cevapla</a>' +
       (wa ? '<a class="btn-line !px-4 !py-2 text-[13.5px]" target="_blank" rel="noopener" href="https://wa.me/' + wa + '?text=' + encodeURIComponent('Merhaba ' + i.contact.name + ', AXON\'dan yazıyorum. Demo talebiniz bize ulaştı.') + '">WhatsApp\'tan yaz</a>' : '') + '</div>' +
       '<p class="mt-6 text-[12px] font-semibold uppercase tracking-[0.16em] text-gold">Durum</p><div class="mt-2 flex flex-wrap gap-2">' +
-      Object.keys(ST).map(function (k) { return '<button type="button" data-st="' + k + '" class="rounded-full border px-3 py-1.5 text-[12.5px] ' + (i.status === k ? 'border-gold/60 bg-gold/15 text-ink' : 'border-white/10 text-mist hover:text-ink') + '">' + ST[k][0] + '</button>'; }).join('') + '</div>' +
+      // only the moves the server allows (won and lost are final; a lost lead can be reopened)
+      Object.keys(ST).filter(function (k) { return k === i.status || (TR[i.status] || []).indexOf(k) >= 0; }).map(function (k) { return '<button type="button" data-st="' + k + '" ' + (i.status === k ? 'disabled aria-current="true" ' : '') + 'class="rounded-full border px-3 py-1.5 text-[12.5px] ' + (i.status === k ? 'border-gold/60 bg-gold/15 text-ink' : 'border-white/10 text-mist hover:text-ink') + '">' + (i.status === k ? ST[k][0] : '→ ' + ST[k][0]) + '</button>'; }).join('') + '</div>' +
       '<form id="noteForm" class="mt-5 flex gap-2"><label for="note" class="sr-only">Not</label><input id="note" class="field flex-1" maxlength="2000" placeholder="Not ekle (ör. 15:00\'te arandı, fiyat istedi)"><button class="btn-line !px-4 !py-2 text-[13.5px]">Ekle</button></form>' +
       '<p class="mt-6 text-[12px] font-semibold uppercase tracking-[0.16em] text-gold">Geçmiş</p><ol class="mt-2 grid gap-2">' +
       i.history.slice().reverse().map(function (h) { return '<li class="flex gap-3 text-[13.5px]"><span class="w-24 flex-none text-mist/70">' + fmt(h.at) + '</span><span class="text-ink/90">' + (h.type === 'note' ? '📝 ' : h.type === 'status' ? '↪ ' : h.type === 'notify' ? '✉ ' : '• ') + esc(histText(h)) + '</span></li>'; }).join('') + '</ol>' +
@@ -159,7 +161,7 @@
     var msg = $('#saveMsg'); if (msg) { msg.className = 'mt-3 min-h-[1.2rem] text-[12.5px] text-mist'; msg.textContent = 'Kaydediliyor…'; }
     return api('POST', Object.assign({ action: 'update', id: selected }, patch)).then(function (r) {
       if (r.status === 401) return boot();
-      if (r.status !== 200) { if (msg) { msg.className = 'mt-3 text-[12.5px] text-rose-300'; msg.textContent = 'Kaydedilemedi (' + (r.j.error || r.status) + ')'; } return; }
+      if (r.status !== 200) { if (msg) { msg.className = 'mt-3 text-[12.5px] text-rose-300'; msg.textContent = r.j.error === 'bad_transition' ? 'Bu durum değişikliğine izin yok (kazanıldı ve kaybedildi son durumlardır).' : 'Kaydedilemedi (' + (r.j.error || r.status) + ')'; } return; }
       items = items.map(function (x) { return x.id === r.j.item.id ? r.j.item : x; }); render();
       var m2 = $('#saveMsg'); if (m2) { m2.className = 'mt-3 text-[12.5px] text-emerald-300'; m2.textContent = 'Kaydedildi ✓'; }
     });

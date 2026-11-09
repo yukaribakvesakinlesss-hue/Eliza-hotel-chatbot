@@ -7,6 +7,16 @@ const path = require('path');
 
 const PREFIX = 'crm/inquiries/';
 const STATUSES = ['new', 'contacted', 'quoted', 'won', 'lost'];
+// Allowed moves. 'won' and 'lost' are final; a lost lead can be reopened (back to contacted),
+// a won deal can only be marked lost (e.g. the hotel cancelled). Everything else is refused.
+const TRANSITIONS = {
+  new: ['contacted', 'quoted', 'lost'],
+  contacted: ['quoted', 'won', 'lost'],
+  quoted: ['contacted', 'won', 'lost'],
+  won: ['lost'],
+  lost: ['contacted']
+};
+function canMove(from, to) { return (TRANSITIONS[from] || []).includes(to); }
 
 function configured() { return !!(process.env.BLOB_READ_WRITE_TOKEN || process.env.CRM_LOCAL_DIR); }
 
@@ -75,7 +85,12 @@ async function updateInquiry(id, patch, actor) {
   const doc = await getInquiry(id);
   if (!doc) return null;
   const now = new Date().toISOString();
-  if (patch.status && STATUSES.includes(patch.status) && patch.status !== doc.status) {
+  if (patch.status && patch.status !== doc.status) {
+    if (!STATUSES.includes(patch.status) || !canMove(doc.status, patch.status)) {
+      const err = new Error('bad_transition: ' + doc.status + ' → ' + patch.status);
+      err.code = 'bad_transition';
+      throw err;
+    }
     doc.history.push({ at: now, type: 'status', text: doc.status + ' → ' + patch.status, by: actor || 'panel' });
     doc.status = patch.status;
   }
@@ -88,4 +103,4 @@ async function updateInquiry(id, patch, actor) {
   return doc;
 }
 
-module.exports = { configured, createInquiry, getInquiry, listInquiries, updateInquiry, STATUSES };
+module.exports = { configured, createInquiry, getInquiry, listInquiries, updateInquiry, STATUSES, TRANSITIONS, canMove };

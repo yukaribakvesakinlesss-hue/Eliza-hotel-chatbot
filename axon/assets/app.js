@@ -333,6 +333,9 @@
   function simulate(text) {
     var s = low(text);
     var d = parseDates(text), g = parseGuests(text), r = parseRoom(text), c = parseContact(text);
+    var booking0 = /\b(book|reserve|reservation|available|availability|rezervasyon|müsait|musait|yer var|zimmer|frei|reservier\w*|reserva\w*|disponible|réserv\w*)\b/.test(s);
+    // a captured lead is final for that inquiry; new dates or a new booking request start the next one (same contact)
+    if (chat.done && (d || booking0)) { chat.done = false; chat.flow = true; chat.dates = null; chat.guests = null; chat.room = null; chat.expect = null; }
     if (d) chat.dates = d; if (g) chat.guests = g; if (r) chat.room = r; if (c.email) chat.email = c.email; if (c.name) chat.name = c.name;
     var booking = /\b(book|reserve|reservation|available|availability|stay|rezervasyon|müsait|musait|yer var|oda|zimmer|frei|reservier\w*|reserva\w*|disponible|habitación|habitacion|chambre|réserv\w*)\b/.test(s);
     if (d || g || booking || c.email || (r && chat.flow)) chat.flow = true;

@@ -43,7 +43,7 @@ module.exports = async function handler(req, res) {
   try {
     if (req.method === 'GET') {
       const items = await crm.listInquiries();
-      return send(res, 200, { items, statuses: crm.STATUSES });
+      return send(res, 200, { items, statuses: crm.STATUSES, transitions: crm.TRANSITIONS });
     }
     if (req.method === 'POST') {
       const b = readBody(req) || {};
@@ -57,6 +57,7 @@ module.exports = async function handler(req, res) {
     res.setHeader('Allow', 'GET, POST');
     return send(res, 405, { error: 'method_not_allowed' });
   } catch (e) {
+    if (e && e.code === 'bad_transition') return send(res, 409, { error: 'bad_transition' });
     console.error('panel_error', e && e.message);
     return send(res, 500, { error: 'storage_error' });
   }
