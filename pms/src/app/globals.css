@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* AXON design tokens · identical values to tools/axon-site/input.css */
+@layer base {
+  :root { --c-navy-950: 11 20 35; --c-navy-900: 16 28 48; --c-navy-800: 23 36 58; --c-navy-700: 34 50 77; --c-navy-600: 46 64 98;
+    --c-ink: 244 246 249; --c-mist: 170 182 200; --c-silver: 195 201 210; --c-white: 255 255 255;
+    --c-gold: 56 189 248; --c-gold-soft: 125 211 252; --c-gold-deep: 37 99 235; --c-gold-light: 224 242 254; color-scheme: dark; }
+  html.light { --c-navy-950: 255 255 255; --c-navy-900: 244 246 250; --c-navy-800: 255 255 255; --c-navy-700: 232 236 243; --c-navy-600: 213 220 232;
+    --c-ink: 15 23 42; --c-mist: 71 85 105; --c-silver: 51 65 85; --c-white: 15 23 42;
+    --c-gold: 29 78 216; --c-gold-soft: 30 64 175; --c-gold-deep: 30 58 138; --c-gold-light: 29 78 216; color-scheme: light; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { @apply bg-navy-950 text-ink antialiased; }
+  .noscroll { scrollbar-width: none; }
+  .noscroll::-webkit-scrollbar { display: none; }
+  :focus-visible { outline: 2px solid rgb(var(--c-gold)); outline-offset: 3px; border-radius: 6px; }
+}
+
+@layer components {
+  .card { @apply rounded-2xl border border-silver/10 bg-navy-800/70; }
+  .eyebrow { @apply font-display text-[12px] font-semibold uppercase tracking-[0.2em] text-gold; }
+  .btn-gold { @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-[14px] font-semibold text-navy-950 transition hover:-translate-y-px disabled:opacity-60;
+    background: linear-gradient(135deg, #E0F2FE 0%, #7DD3FC 22%, #38BDF8 55%, #2563EB 100%);
+    box-shadow: 0 10px 34px -10px rgba(56,189,248,.75), inset 0 1px 0 rgba(255,255,255,.65); }
+  html.light .btn-gold { @apply text-white; }
+  .btn-line { @apply inline-flex items-center justify-center gap-2 rounded-full border border-silver/25 px-4 py-2 text-[13px] font-medium text-ink transition hover:border-silver/50 hover:bg-silver/[0.06]; }
+  .field { @apply w-full rounded-xl border border-silver/15 bg-navy-950/60 px-3.5 py-2.5 text-[15px] text-ink outline-none transition placeholder:text-mist/50 focus:border-gold/60 focus:ring-4 focus:ring-gold/10; }
+  .status-select { @apply w-full cursor-pointer appearance-none rounded-lg border px-2.5 py-1.5 text-[12.5px] font-semibold outline-none transition focus:ring-2 focus:ring-gold/30 disabled:cursor-not-allowed disabled:opacity-80; }
+}
+
+/* Status tones · readable in dark and light mode */
+@layer components {
+  .tone { border-width: 1px; }
+  .tone-green  { background: rgba(16,185,129,.12); border-color: rgba(16,185,129,.38); color: #6EE7B7; }
+  .tone-blue   { background: rgba(56,189,248,.12); border-color: rgba(56,189,248,.40); color: #7DD3FC; }
+  .tone-amber  { background: rgba(245,158,11,.12); border-color: rgba(245,158,11,.40); color: #FCD34D; }
+  .tone-violet { background: rgba(139,92,246,.13); border-color: rgba(139,92,246,.42); color: #C4B5FD; }
+  .tone-rose   { background: rgba(244,63,94,.13);  border-color: rgba(244,63,94,.45);  color: #FDA4AF; }
+  .tone-slate  { background: rgba(148,163,184,.10); border-color: rgba(148,163,184,.30); color: rgb(var(--c-silver)); }
+  html.light .tone-green  { color: #047857; }
+  html.light .tone-blue   { color: #1D4ED8; }
+  html.light .tone-amber  { color: #B45309; }
+  html.light .tone-violet { color: #6D28D9; }
+  html.light .tone-rose   { color: #BE123C; }
+  .status-select option { color: initial; background: initial; }
+}

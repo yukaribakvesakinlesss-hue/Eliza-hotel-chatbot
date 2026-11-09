@@ -1,0 +1,30 @@
+{
+  "name": "axon-pms",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "db:test": "CROSSCHECK_OUT=${TMPDIR:-/tmp}/axon-crosscheck.json bash supabase/tests/run.sh && PMS_CROSSCHECK_FILE=${TMPDIR:-/tmp}/axon-crosscheck.json PMS_ASSISTANT_PARITY_FILE=${TMPDIR:-/tmp}/axon-crosscheck-assistant.json vitest run tests/db-crosscheck.test.ts tests/assistant-parity.test.ts"
+  },
+  "dependencies": {
+    "@supabase/ssr": "0.12.7",
+    "@supabase/supabase-js": "2.119.0",
+    "next": "15.5.29",
+    "react": "19.1.10",
+    "react-dom": "19.1.10"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "3.4.19",
+    "typescript": "5.9.3",
+    "vitest": "^3.2.4"
+  }
+}
