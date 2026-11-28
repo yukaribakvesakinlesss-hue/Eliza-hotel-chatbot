@@ -9,9 +9,9 @@ Email texts: `templates.md`.
 2. Has its own website (the assistant is installed there).
 3. The email address is published on the hotel's own website. Never guessed, never scraped from OTAs.
 4. Tourism areas with many foreign guests: Alaçatı, Cappadocia, Kaş/Kalkan, Istanbul old city,
-   Assos/Ayvalık, Bodrum; abroad Greek islands, Portugal, Spain.
+   Assos/Ayvalık, Bodrum, Şirince; abroad Greek islands and Portugal.
 5. Language: Turkish for hotels in Turkey (English when the hotel is foreign-run), English abroad.
-6. Skip countries that require prior consent for B2B email (e.g. Germany, Austria).
+6. Skip countries that require prior consent for B2B email (e.g. Germany, Austria, Spain, Italy).
 7. Lower priority if the site already has a chatbot or live chat; a plain WhatsApp link is a good sign
    (messages wait for a person).
 
