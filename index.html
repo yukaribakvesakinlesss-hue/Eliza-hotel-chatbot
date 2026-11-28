@@ -2466,7 +2466,7 @@
             <div class="res-section-title" data-i18n="res_pay_title">Ödeme Yöntemi</div>
             <div class="pay-methods">
               <label class="pay-method" id="payMethodCard">
-                <input type="radio" name="payMethod" value="card" checked onchange="handlePayMethodChange()">
+                <input type="radio" name="payMethod" value="card" onchange="handlePayMethodChange()">
                 <span>
                   <strong data-i18n="res_pay_card">Kartla Öde (Güvenli Ödeme)</strong>
                   <small data-i18n="res_pay_card_desc">iyzico güvencesiyle 3D Secure ödeme</small>
@@ -2474,7 +2474,7 @@
                 </span>
               </label>
               <label class="pay-method">
-                <input type="radio" name="payMethod" value="hotel" onchange="handlePayMethodChange()">
+                <input type="radio" name="payMethod" value="hotel" checked onchange="handlePayMethodChange()">
                 <span>
                   <strong data-i18n="res_pay_hotel">Otelde Öde</strong>
                   <small data-i18n="res_pay_hotel_desc">Talebiniz otele iletilir, ödeme girişte alınır</small>
@@ -3481,6 +3481,7 @@
             return updateReservationSummary();
           }
           if (!res.ok || !q.success) {
+            setPaymentsEnabled(false);
             total.textContent = "—";
             document.getElementById("basketCancel").textContent = q.error || "";
             return;
@@ -3492,7 +3493,10 @@
           setPaymentsEnabled(q.paymentsEnabled);
           renderAvailability(q, room, checkin, checkout);
         } catch {
-          if (reqId === updateReservationSummary._id) total.textContent = dict.res_total_on_request;
+          if (reqId === updateReservationSummary._id) {
+            total.textContent = dict.res_total_on_request;
+            setPaymentsEnabled(false);   // no verified amount, so no online payment
+          }
         }
       }, 250);
     }
@@ -3922,7 +3926,7 @@
     }
 
     /* ---------- Ödeme yöntemi ---------- */
-    let PAYMENTS_ENABLED = true;
+    let PAYMENTS_ENABLED = false;   // turned on only when /api/quote says online payment works
     function selectedPayMethod() {
       const el = document.querySelector('input[name="payMethod"]:checked');
       return el ? el.value : "hotel";
@@ -4362,7 +4366,9 @@
         const isPast = dateStr < todayStr;
         const isToday = dateStr === todayStr;
 
-        const isAvailable = Boolean(calState.data?.configured && !isPast && dayData?.available);
+        // without live availability data (service not connected) a day is unknown, not "booked"
+        const known = Boolean(calState.data?.configured);
+        const isAvailable = Boolean(known && !isPast && dayData?.available);
         const fromPrice = dayData ? dayData.fromPrice : null;
         const minStay = (dayData && dayData.minStay) ? dayData.minStay : 1;
 
@@ -4373,14 +4379,15 @@
         let cellClasses = ["cal-day-cell"];
         if (isToday) cellClasses.push("today");
         if (isPast) cellClasses.push("past");
-        if (!isAvailable && !isPast) cellClasses.push("unavailable");
+        if (known && !isAvailable && !isPast) cellClasses.push("unavailable");
         if (isInRange) cellClasses.push("in-range");
         if (isCheckin) cellClasses.push("selected-checkin");
         if (isCheckout) cellClasses.push("selected-checkout");
 
         const ariaDate = new Date(dateStr + "T00:00:00").toLocaleDateString(currentLang === "tr" ? "tr-TR" : "en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
-        const priceLabel = fromPrice !== null ? formatCalPrice(fromPrice, calState.data?.currency) : (isAvailable ? "" : dict.cal_booked);
-        const ariaLabel = `${ariaDate}, ${priceLabel ? priceLabel + ", " : ""}${isAvailable ? "müsait" : "müsait değil"}`;
+        const priceLabel = !known ? "" : fromPrice !== null ? formatCalPrice(fromPrice, calState.data?.currency) : (isAvailable ? "" : dict.cal_booked);
+        const availText = !known ? "" : isAvailable ? (currentLang === "tr" ? "müsait" : "available") : (currentLang === "tr" ? "müsait değil" : "not available");
+        const ariaLabel = [ariaDate, priceLabel, availText].filter(Boolean).join(", ");
 
         html += `<button type="button" role="gridcell" class="${cellClasses.join(" ")}"
           tabindex="${isPast ? "-1" : "0"}"
@@ -4472,6 +4479,11 @@
       </div>`;
 
       // Hata / Uyarı şeridi
+      if (!calState.loading && !calState.data?.configured) {
+        html += `<div class="cal-alert-box" role="note" style="display:flex;">
+          <span>${currentLang === "tr" ? "Canlı müsaitlik şu an gösterilemiyor. Tarihlerinizi seçip talebinizi gönderin; ekibimiz müsaitliği ve fiyatı onaylasın." : "Live availability cannot be shown right now. Choose your dates and send your request; our team will confirm availability and price."}</span>
+        </div>`;
+      }
       if (calState.alertMsg) {
         html += `<div class="cal-alert-box" style="display:flex;">
           <span class="icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg></span>
@@ -4543,6 +4555,8 @@
     }
 
     document.addEventListener("DOMContentLoaded", () => {
+      setPaymentsEnabled(PAYMENTS_ENABLED);
+      handlePayMethodChange();
       initDateInputs();
       initAvailabilityCalendar();
       renderCompareTables();
